@@ -35,8 +35,15 @@ const CertificationsSection = () => {
         const newProviders = {...selectedProviders, [providerKey]: content};
 
         const isAllSelected = Object.values(newProviders).every(providerObj => providerObj.value);
+        const isNoneSelected = Object.values(newProviders).every(providerObj => !providerObj.value);
 
         if (isAllSelected) {
+            setAll(true)
+            setSelectedProviders(providersMap)
+            return;
+        }
+
+        if (isNoneSelected){
             setAll(true)
             setSelectedProviders(providersMap)
             return;
@@ -87,7 +94,7 @@ const CertificationsSection = () => {
                     name="All"
                     isSelected={all}
                 />
-                {Object.values(selectedProviders).map(({value, label, key}) => (
+                {Object.values(selectedProviders).sort((a, b) => a.label.localeCompare(b.label)).map(({value, label, key}) => (
                     <ProjectTag
                         skillKey={key}
                         key={key}
