@@ -78,7 +78,7 @@ const PublicationsSection = () => {
                             key={article.guid}
                             title={article.title}
                             description={article.description}
-                            imgUrl={article?.images[0] || undefined}
+                            imgUrl={article && article.images && article.images.length > 0 ? article.images[0] : undefined}
                             gitUrl={article.link}
                             previewUrl={article.link}
                         />
