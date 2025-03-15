@@ -2,7 +2,7 @@
 import React, {useRef, useState} from "react";
 import ProjectCard from "@/components/ProjectCard";
 import ProjectTag from "@/components/ProjectTag";
-import {motion, useInView} from "framer-motion";
+// import {motion, useInView} from "framer-motion";
 import certifications from "./Certifications.json"
 
 const {data} = certifications;
@@ -18,7 +18,7 @@ const CertificationsSection = () => {
     const [selectedProviders, setSelectedProviders] = useState(providersMap);
     const [all, setAll] = useState(true)
     const ref = useRef(null);
-    const isInView = useInView(ref, {once: true});
+    // const isInView = useInView(ref, {once: true});
 
     const handleToggleAll = () => {
         if (all){
@@ -60,12 +60,12 @@ const CertificationsSection = () => {
             // return Object.values(selectedProviders).some(({label}) => label === badge.issuer_linked_in_name) || all
         }).reverse();
 
-    console.info({filteredBadges, all})
-
-    const cardVariants = {
-        initial: {y: 50, opacity: 0},
-        animate: {y: 0, opacity: 1},
-    };
+    // console.info({filteredBadges, all})
+    //
+    // const cardVariants = {
+    //     initial: {y: 50, opacity: 0},
+    //     animate: {y: 0, opacity: 1},
+    // };
 
     return (
         <section id="certifications">
@@ -79,12 +79,12 @@ const CertificationsSection = () => {
                 Anyone can write code, but not everyone writes scalable, maintainable, and high-quality code.
             </p>
             <p>
-                Certifications go beyond badges; they're proof that an external authority has reviewed, tested, and
+                Certifications go beyond badges; they&apos;re proof that an external authority has reviewed, tested, and
                 validated both knowledge and skills.
             </p>
             <p>
-                When you hire a certified developer, you're not just trusting what they say — you're trusting what
-                they've proven.
+                When you hire a certified developer, you&apos;re not just trusting what they say — you&apos;re trusting what
+                they&apos;ve proven.
             </p>
 
             <div className="text-white flex flex-row flex-wrap justify-center items-center gap-2 py-6">
@@ -105,7 +105,7 @@ const CertificationsSection = () => {
                 ))}
             </div>
             <ul ref={ref} className="grid md:grid-cols-3 gap-8 md:gap-12">
-                {filteredBadges.map((project, index) => (
+                {filteredBadges.map(project => (
                     // <motion.li
                     //     key={index}
                     //     variants={cardVariants}
@@ -116,9 +116,8 @@ const CertificationsSection = () => {
                         <ProjectCard
                             key={project.id}
                             title={project.badge_template.name}
-                            description={project.badge_template.description}
+                            // description={project.badge_template.description}
                             imgUrl={project.image_url}
-                            gitUrl={project.image_url}
                             previewUrl={project.badge_url}
                         />
                     // </motion.li>

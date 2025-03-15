@@ -38,7 +38,7 @@ type MediumData = {
 }
 
 const PublicationsSection = () => {
-    const {data, error, isLoading} = useQuery({
+    const {data, error} = useQuery({ //TODO: add isLoading state
         queryKey: ['posts'],
         queryFn: () => fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@jonakrusze').then(res => {
             if (!res.ok) {
@@ -77,9 +77,8 @@ const PublicationsSection = () => {
                         <ProjectCard
                             key={article.guid}
                             title={article.title}
-                            description={article.description}
+                            // description={article.description}
                             imgUrl={article && article.images && article.images.length > 0 ? article.images[0] : undefined}
-                            gitUrl={article.link}
                             previewUrl={article.link}
                         />
                     </motion.li>

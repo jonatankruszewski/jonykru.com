@@ -1,5 +1,5 @@
 "use client";
-import React, {useState} from "react";
+import React from "react";
 import GithubIcon from "/public/github-icon.svg";
 import LinkedinIcon from "/public/linkedin-icon.svg";
 import MediumIcon from "/public/medium-icon-white.svg";
@@ -17,27 +17,20 @@ type FormData = {
 
 const EmailSection = () => {
     const [state, handleSubmit] = useFormSpreeForm<FormData>("xwpleawo");
-    const [email, setEmail] = useState("")
-    const [subject, setSubject] = useState("")
-    const [message, setMessage] = useState("")
 
     const {
         register,
         handleSubmit: useFormSubmit,
-        watch,
-        formState: {errors},
+        // watch,
+        // formState: {errors},
     } = useReactHookForm<FormData>()
 
-    React.useEffect(() => {
-        if (!state.succeeded) {
-            return;
-        }
-
-        setEmail("");
-        setSubject("");
-        setMessage("");
-
-    }, [state.succeeded])
+    // React.useEffect(() => {
+    //     if (!state.succeeded) {
+    //         return;
+    //     }
+    //
+    // }, [state.succeeded])
 
     //
     // const submit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,7 +41,7 @@ const EmailSection = () => {
     return (
         <section id="contact" className='my-12 md:my-12 py-24'>
             <h2 className="text-4xl font-bold text-white mt-4 mb-8 md:mb-12">
-                Let's Connect
+                Let&apos;s Connect
             </h2>
             <div className="grid md:grid-cols-2 gap-4 relative">
                 <div
@@ -56,7 +49,7 @@ const EmailSection = () => {
                 <div className="z-10">
                     <p className="text-[#ADB7BE] mb-4 max-w-md">
                         {" "}
-                        I’m open to new projects and collaborations. If you're looking for a developer or have a
+                        I’m open to new projects and collaborations. If you&apos;re looking for a developer or have a
                         relevant opportunity, feel free to reach out. I’ll get back to you as soon as possible.
                     </p>
                     <div className="socials flex flex-row gap-2 items-center">
@@ -84,7 +77,7 @@ const EmailSection = () => {
                                 Your email
                             </label>
                             <input
-                                {...register("email", { required: true })}                                onChange={e => setEmail(e.target.value)}
+                                {...register("email", { required: true })}
                                 name="email"
                                 type="email"
                                 id="email"
@@ -108,7 +101,6 @@ const EmailSection = () => {
                                 required
                                 className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
                                 placeholder="Just saying hi"
-                                value={subject}
                             />
                         </div>
                         <form className="mb-6" onSubmit={useFormSubmit(handleSubmit)}>
@@ -124,7 +116,6 @@ const EmailSection = () => {
                                 id="message"
                                 className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
                                 placeholder="Let's talk about..."
-                                value={message}
                             />
                         </form>
                         <button
