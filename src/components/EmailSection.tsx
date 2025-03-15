@@ -6,7 +6,8 @@ import MediumIcon from "/public/medium-icon-white.svg";
 import StackOverflow from "/public/stack-overflow-icon.svg";
 import Link from "next/link";
 import Image from "next/image";
-import {useForm} from '@formspree/react';
+import {useForm as useFormSpreeForm} from '@formspree/react';
+import {useForm as useReactHookForm} from "react-hook-form"
 
 type FormData = {
     email: string;
@@ -15,10 +16,17 @@ type FormData = {
 };
 
 const EmailSection = () => {
-    const [state, handleSubmit] = useForm<FormData>("xwpleawo");
+    const [state, handleSubmit] = useFormSpreeForm<FormData>("xwpleawo");
     const [email, setEmail] = useState("")
     const [subject, setSubject] = useState("")
     const [message, setMessage] = useState("")
+
+    const {
+        register,
+        handleSubmit: useFormSubmit,
+        watch,
+        formState: {errors},
+    } = useReactHookForm<FormData>()
 
     React.useEffect(() => {
         if (!state.succeeded) {
@@ -31,11 +39,11 @@ const EmailSection = () => {
 
     }, [state.succeeded])
 
-
-    const submit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        return handleSubmit({email, subject, message});
-    }
+    //
+    // const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     return handleSubmit({email, subject, message});
+    // }
 
     return (
         <section id="contact" className='my-12 md:my-12 py-24'>
@@ -67,7 +75,7 @@ const EmailSection = () => {
                     </div>
                 </div>
                 <div>
-                    <form className="flex flex-col" onSubmit={submit}>
+                    <form className="flex flex-col" onSubmit={useFormSubmit(handleSubmit)}>
                         <div className="mb-6">
                             <label
                                 htmlFor="email"
@@ -76,14 +84,13 @@ const EmailSection = () => {
                                 Your email
                             </label>
                             <input
-                                onChange={e => setEmail(e.target.value)}
+                                {...register("email", { required: true })}                                onChange={e => setEmail(e.target.value)}
                                 name="email"
                                 type="email"
                                 id="email"
                                 required
                                 className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
                                 placeholder="jacob@google.com"
-                                value={email}
                             />
                         </div>
                         <div className="mb-6">
@@ -94,7 +101,7 @@ const EmailSection = () => {
                                 Subject
                             </label>
                             <input
-                                onChange={e => setSubject(e.target.value)}
+                                {...register("subject", { required: true })}
                                 name="subject"
                                 type="text"
                                 id="subject"
@@ -104,7 +111,7 @@ const EmailSection = () => {
                                 value={subject}
                             />
                         </div>
-                        <div className="mb-6">
+                        <form className="mb-6" onSubmit={useFormSubmit(handleSubmit)}>
                             <label
                                 htmlFor="message"
                                 className="text-white block text-sm mb-2 font-medium"
@@ -112,14 +119,14 @@ const EmailSection = () => {
                                 Message
                             </label>
                             <textarea
-                                onChange={e => setMessage(e.target.value)}
+                                {...register("message", { required: true })}
                                 name="message"
                                 id="message"
                                 className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
                                 placeholder="Let's talk about..."
                                 value={message}
                             />
-                        </div>
+                        </form>
                         <button
                             type="submit"
                             disabled={state.submitting}
