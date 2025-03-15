@@ -50,7 +50,7 @@ const AboutMeCards = () => {
             <h2 className="my-12 text-4xl font-bold text-white">About Me</h2>
             <div className="overflow-hidden" ref={emblaRef}>
                 <div className="flex flex-row gap-4 w-full px-4">
-                    {cards.map((card, index) => (
+                    {cards.map(card => (
                         <div key={card.title}
                              className="bg-[#1E1E2E] text-white p-6 rounded-2xl shadow-lg transform-gpu flex-[0_0_30%] min-w-[300px] pl-5">
                             <h2 className="text-xl font-semibold mb-2">{card.title}</h2>
