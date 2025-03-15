@@ -23,7 +23,7 @@ const HeroSection = () => {
                 </span>
                 <br></br>
                 <span className="text-white bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-600">
-                    I'm Jonatan Kruszewski
+                    I&apos;m Jonatan Kruszewski
                 </span>
             </h1>
 
