@@ -35,9 +35,9 @@ const HeroSection = () => {
                     speed={50}
                     repeat={Infinity}
                 />
-                <p className="mt-4 text-[#ADB7BE] text-base sm:text-lg mb-6 lg:text-xl">
+                <h2 className="text-gray-200 mt-8 mb-4 text-2xl sm:text-3xl lg:text-2xl lg:leading-normal font-extrabold">
                     I specialize in building scalable, maintainable front-end solutions that work seamlessly—without the
-                    tech debt nightmare. </p>
+                    tech debt nightmare. </h2>
                 <div className="flex items-center justify-center gap-4 py-4">
                     <Link
                         href="/#contact"
