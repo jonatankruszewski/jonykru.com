@@ -89,18 +89,16 @@ const CertificationsSection = () => {
 
             <div className="text-white flex flex-row flex-wrap justify-center items-center gap-2 py-6">
                 <ProjectTag
-                    skillKey={"All"}
-                    onClick={handleToggleAll}
-                    name="All"
+                    label="All"
                     isSelected={all}
+                    onClick={handleToggleAll}
                 />
                 {Object.values(selectedProviders).sort((a, b) => a.label.localeCompare(b.label)).map(({value, label, key}) => (
                     <ProjectTag
-                        skillKey={key}
                         key={key}
-                        onClick={handleToggleProvider}
-                        name={label}
                         isSelected={value && !all}
+                        label={key}
+                        onClick={()=> handleToggleProvider(key)}
                     />
                 ))}
             </div>
