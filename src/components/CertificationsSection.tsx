@@ -57,15 +57,7 @@ const CertificationsSection = () => {
         (badge) => {
             const providersList = Object.values(selectedProviders);
             return providersList.some(provider=> provider.value && provider.label === badge.issuer_linked_in_name) || all;
-            // return Object.values(selectedProviders).some(({label}) => label === badge.issuer_linked_in_name) || all
         }).reverse();
-
-    // console.info({filteredBadges, all})
-    //
-    // const cardVariants = {
-    //     initial: {y: 50, opacity: 0},
-    //     animate: {y: 0, opacity: 1},
-    // };
 
     return (
         <section id="certifications">
