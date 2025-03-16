@@ -50,7 +50,7 @@ const EmailSection = () => {
                     <p className="text-[#ADB7BE] mb-4 max-w-md">
                         {" "}
                         I’m open to new projects and collaborations. If you&apos;re looking for a developer or have a
-                        relevant opportunity, feel free to reach out. I’ll get back to you as soon as possible.
+                        relevant opportunity, please feel free to reach out. I’ll get back to you as soon as possible.
                     </p>
                     <div className="socials flex flex-row gap-3 items-center">
                         <Link href="https://github.com/jonatankruszewski">
