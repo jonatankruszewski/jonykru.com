@@ -38,7 +38,7 @@ type MediumData = {
 }
 
 const PublicationsSection = () => {
-    const {data, error} = useQuery({ //TODO: add isLoading state
+    const {data} = useQuery({ //TODO: add isLoading state
         queryKey: ['posts'],
         queryFn: () => fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@jonakrusze').then(res => {
             if (!res.ok) {
@@ -49,8 +49,6 @@ const PublicationsSection = () => {
     });
 
     data?.items.map(item => item.images = extractImageLinks(item.content));
-
-    // console.info({data, error, isLoading})
 
     const ref = useRef(null);
     const isInView = useInView(ref, {once: true});
@@ -63,21 +61,20 @@ const PublicationsSection = () => {
     return (
         <section id="publications">
             <h2 className="text-center text-4xl font-bold text-white mt-4 mb-8 md:mb-12">
-                {`My ${!error && '10 Latest '}Publications`}
+                {`Latest Publications`}
             </h2>
-            <ul ref={ref} className="grid md:grid-cols-3 gap-8 md:gap-12">
+            <ul ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
                 {data && data.items.length > 0 && data.items.map((article, index) => (
                     <motion.li
                         key={article.guid}
                         variants={cardVariants}
                         initial="initial"
                         animate={isInView ? "animate" : "initial"}
-                        transition={{duration: 0.3, delay: index * 0.25}}
+                        transition={{duration: 0.2, delay: index * 0.15}}
                     >
                         <ProjectCard
                             key={article.guid}
                             title={article.title}
-                            // description={article.description}
                             imgUrl={article && article.images && article.images.length > 0 ? article.images[0] : undefined}
                             previewUrl={article.link}
                         />
