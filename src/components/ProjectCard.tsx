@@ -15,6 +15,10 @@ const ProjectCard: React.FC<ProjectCardProps> = (
     }) => {
 
     const styles = imgUrl ? {background: `url(${imgUrl})`, backgroundSize: "cover", backgroundPosition: "center"} : {}
+    //
+    // if (!imgUrl){
+    //     return null;
+    // }
 
     return (
         <Link href={previewUrl} className="bg-[#1E1E2E] rounded-xl border border-gray-700 shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg flex flex-col flex-1 h-full cursor-pointer">

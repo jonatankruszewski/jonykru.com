@@ -77,7 +77,7 @@ const EmailSection = () => {
                                 Your email
                             </label>
                             <input
-                                {...register("email", { required: true })}
+                                {...register("email", {required: true})}
                                 name="email"
                                 type="email"
                                 id="email"
@@ -94,7 +94,7 @@ const EmailSection = () => {
                                 Subject
                             </label>
                             <input
-                                {...register("subject", { required: true })}
+                                {...register("subject", {required: true})}
                                 name="subject"
                                 type="text"
                                 id="subject"
@@ -103,21 +103,19 @@ const EmailSection = () => {
                                 placeholder="Just saying hi"
                             />
                         </div>
-                        <form className="mb-6" onSubmit={useFormSubmit(handleSubmit)}>
-                            <label
-                                htmlFor="message"
-                                className="text-white block text-sm mb-2 font-medium"
-                            >
-                                Message
-                            </label>
-                            <textarea
-                                {...register("message", { required: true })}
-                                name="message"
-                                id="message"
-                                className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
-                                placeholder="Let's talk about..."
-                            />
-                        </form>
+                        <label
+                            htmlFor="message"
+                            className="text-white block text-sm mb-2 font-medium"
+                        >
+                            Message
+                        </label>
+                        <textarea
+                            {...register("message", {required: true})}
+                            name="message"
+                            id="message"
+                            className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
+                            placeholder="Let's talk about..."
+                        />
                         <button
                             type="submit"
                             disabled={state.submitting}
