@@ -52,18 +52,18 @@ const EmailSection = () => {
                         I’m open to new projects and collaborations. If you&apos;re looking for a developer or have a
                         relevant opportunity, feel free to reach out. I’ll get back to you as soon as possible.
                     </p>
-                    <div className="socials flex flex-row gap-2 items-center">
+                    <div className="socials flex flex-row gap-3 items-center">
                         <Link href="https://github.com/jonatankruszewski">
-                            <Image width={48} src={GithubIcon} alt="Github Icon"/>
+                            <Image width={48} src={GithubIcon} alt="Github Icon" className="rounded-lg"/>
                         </Link>
                         <Link href="https://www.linkedin.com/in/jonatankruszewski">
-                            <Image width={48} src={LinkedinIcon} alt="Linkedin Icon"/>
+                            <Image width={48} src={LinkedinIcon} alt="Linkedin Icon" className="rounded-lg"/>
                         </Link>
                         <Link href="https://medium.com/@jonakrusze">
-                            <Image width={38} src={MediumIcon} alt="Medium Icon"/>
+                            <Image width={48} src={MediumIcon} alt="Medium Icon" className="rounded-lg"/>
                         </Link>
                         <Link href="https://stackoverflow.com/users/17625486/jonatan-kruszewski">
-                            <Image width={38} src={StackOverflow} alt="Medium Icon"/>
+                            <Image width={48} src={StackOverflow} alt="Medium Icon" className="rounded-lg"/>
                         </Link>
                     </div>
                 </div>
