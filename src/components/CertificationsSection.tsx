@@ -1,9 +1,9 @@
 "use client";
 import React, {useRef, useState} from "react";
-import ProjectCard from "@/components/ProjectCard";
 import ProjectTag from "@/components/ProjectTag";
 // import {motion, useInView} from "framer-motion";
 import certifications from "./Certifications.json"
+import CertificationCard from "@/components/CertificationCard";
 
 const {data} = certifications;
 const uniqueSkills = [...new Set(data.flatMap(badge => badge.issuer_linked_in_name))];
@@ -87,7 +87,7 @@ const CertificationsSection = () => {
                 they&apos;ve proven.
             </p>
 
-            <div className="text-white flex flex-row flex-wrap justify-center items-center gap-2 py-6">
+            <div className="text-white flex flex-row flex-wrap justify-center items-center gap-2 py-6 max-w-[900px] mx-auto">
                 <ProjectTag
                     label="All"
                     isSelected={all}
@@ -97,13 +97,13 @@ const CertificationsSection = () => {
                     <ProjectTag
                         key={key}
                         isSelected={value && !all}
-                        label={key}
+                        label={label}
                         onClick={()=> handleToggleProvider(key)}
                     />
                 ))}
             </div>
-            <ul ref={ref} className="grid md:grid-cols-3 gap-8 md:gap-12">
-                {filteredBadges.map(project => (
+            <ul ref={ref} className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12">
+                {filteredBadges.map(badge => (
                     // <motion.li
                     //     key={index}
                     //     variants={cardVariants}
@@ -111,12 +111,13 @@ const CertificationsSection = () => {
                     //     animate={isInView ? "animate" : "initial"}
                     //     transition={{duration: 0.3, delay: index * 0.4}}
                     // >
-                        <ProjectCard
-                            key={project.id}
-                            title={project.badge_template.name}
+                        <CertificationCard
+                            badgeData={badge}
+                            key={badge.id}
+                            title={badge.badge_template.name}
                             // description={project.badge_template.description}
-                            imgUrl={project.image_url}
-                            previewUrl={project.badge_url}
+                            imgUrl={badge.image_url}
+                            previewUrl={badge.badge_url}
                         />
                     // </motion.li>
                 ))}
