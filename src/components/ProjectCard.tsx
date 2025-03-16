@@ -1,5 +1,4 @@
 import React from "react";
-import {EyeIcon} from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 type ProjectCardProps = {
@@ -15,30 +14,17 @@ const ProjectCard: React.FC<ProjectCardProps> = (
         previewUrl,
     }) => {
 
-    const styles = imgUrl ? {background: `url(${imgUrl})`, backgroundSize: "cover"} : {}
+    const styles = imgUrl ? {background: `url(${imgUrl})`, backgroundSize: "cover", backgroundPosition: "center"} : {}
 
     return (
-        <div>
-            <div
-                className="h-52 md:h-72 rounded-t-xl relative group"
-                style={styles}
-            >
-                <div
-                    className="overlay items-center justify-center absolute top-0 left-0 w-full h-full bg-[#181818] bg-opacity-0 hidden group-hover:flex group-hover:bg-opacity-30 transition-all duration-500 ">
-                    <Link
-                        href={previewUrl}
-                        className="h-14 w-14 border-2 relative rounded-full border-[#ADB7BE] hover:border-white group/link"
-                    >
-                        <EyeIcon
-                            className="h-10 w-10 text-[#ADB7BE] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  cursor-pointer group-hover/link:text-white"/>
-                    </Link>
-                </div>
+        <Link href={previewUrl} className="bg-[#1E1E2E] rounded-xl border border-gray-700 shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg flex flex-col flex-1 h-full cursor-pointer">
+            <div className="h-52 md:h-72 rounded-t-xl relative group overflow-hidden" style={styles}>  {/* Added overflow-hidden */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/20"></div> {/* Gradient */}
             </div>
-            <div className="text-white rounded-b-xl mt-3 bg-[#181818]py-6 px-4">
-                <h5 className="text-xl font-semibold mb-2">{title}</h5>
-                {/*<p className="text-[#ADB7BE]">{description}</p>*/}
+            <div className="text-white rounded-b-xl p-6">
+                <p className="text-xl font-bold tracking-tight mb-2">{title}</p>
             </div>
-        </div>
+        </Link>
     );
 };
 
