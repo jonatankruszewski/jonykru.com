@@ -12,7 +12,7 @@ export default function Home() {
         <>
             <Navbar/>
             <main className="flex min-h-screen flex-col bg-[#121212]">
-                <div className="container mt-24 mx-auto px-12 py-4">
+                <div className="container mx-auto mt-24 px-4 md:px-6 lg:px-12 py-4">
                     <HeroSection/>
                     <AchievementsSection/>
                     <AboutMeCardsSection/>
