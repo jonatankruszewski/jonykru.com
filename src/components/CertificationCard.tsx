@@ -1,4 +1,5 @@
 import React from "react";
+import {transformCredlyUrl} from "@/utils/transformCredlyUrl";
 
 type CertificationCardProps = {
     badgeData: Record<string, unknown> & {
@@ -57,7 +58,7 @@ const CertificationCard: React.FC<CertificationCardProps> = (
 
     return (
         <a href={previewUrl} target="_blank" rel="noopener noreferrer" className="overflow-hidden lg:p-6 block cursor-pointer">
-            <img className="w-full max-w-[200px] mx-auto p-4" src={imgUrl} alt="Badge"/>
+            <img className="w-full max-w-[200px] mx-auto p-4" src={transformCredlyUrl(imgUrl)} alt="Badge"/>
             <div className="font-bold text-xl mb-5 text-center">
                 {title}
             </div>
