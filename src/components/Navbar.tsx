@@ -1,32 +1,36 @@
 "use client";
 
 import React, {useState} from "react";
-import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/solid";
 import MenuOverlay from "@/components/MenuOverlay";
 import NavbarLinks from "@/components/NavbarLinks";
+import {SquareChevronRight, X} from 'lucide-react';
 
 const Navbar = () => {
     const [navbarOpen, setNavbarOpen] = useState(false);
 
     return (
-        <nav className="fixed mx-auto border border-[#33353F] top-0 left-0 right-0 z-10 bg-[#121212] bg-opacity-100">
-            <div className="flex container lg:py-4 flex-wrap items-center justify-between mx-auto px-4 py-2">
+        <nav className="fixed border border-[#33353F] top-0 left-0 right-0 z-10 bg-[#121212] bg-opacity-100">
+
+            <div className="flex w-full flex-wrap items-center justify-between px-4 py-4">
+                <p>
+                    jonykru<span>.</span>com
+                </p>
                 <div className="mobile-menu block md:hidden">
                     {!navbarOpen ? (
                         <button
                             name="Open Menu"
                             onClick={() => setNavbarOpen(true)}
-                            className="cursor-pointer flex items-center px-3 py-2 border rounded border-slate-200 text-slate-200 hover:text-white hover:border-white"
+                            className="cursor-pointer flex items-center px-2 py-2 border-slate-200 text-slate-200 hover:text-white hover:border-white"
                         >
-                            <Bars3Icon className="h-5 w-5"/>
+                            <SquareChevronRight />
                         </button>
                     ) : (
                         <button
                             name="Close Menu"
                             onClick={() => setNavbarOpen(false)}
-                            className="cursor-pointer flex items-center px-3 py-2 border rounded border-slate-200 text-slate-200 hover:text-white hover:border-white"
+                            className="cursor-pointer flex items-center px-2 py-2 border-slate-200 text-slate-200 hover:text-white hover:border-white"
                         >
-                            <XMarkIcon className="h-5 w-5"/>
+                            <X/>
                         </button>
                     )}
                 </div>
@@ -36,7 +40,9 @@ const Navbar = () => {
                     </ul>
                 </div>
             </div>
-            {navbarOpen && <MenuOverlay/>}
+            {navbarOpen && <MenuOverlay onClick={() => {
+                setNavbarOpen(false)
+            }}/>}
         </nav>
     );
 };
