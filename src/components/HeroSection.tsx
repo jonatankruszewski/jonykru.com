@@ -29,7 +29,7 @@ const HeroSection = () => {
 
             <div className="">
                 <TypeAnimation
-                   className="text-base sm:text-xl md:text-4xl lg:text-4xl font-extrabold bg-gradient-to-br from-purple-400 to-indigo-500 text-transparent bg-clip-text"
+                   className="text-base sm:text-xl md:text-4xl lg:text-4xl font-semibold bg-gradient-to-br from-purple-400 to-indigo-500 text-transparent bg-clip-text"
                     sequence={sequence}
                     wrapper="span"
                     speed={50}
@@ -37,7 +37,7 @@ const HeroSection = () => {
                 />
 
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                    <h2 className="text-gray-200 mt-8 mb-4 text-2xl sm:text-3xl lg:text-2xl lg:leading-normal font-extrabold">
+                    <h2 className="text-gray-200 mt-8 mb-4 text-xl sm:text-2xl lg:text-xl lg:leading-normal font-light">
                         I specialize in building scalable, maintainable front-end solutions that work seamlessly—without
                         the
                         tech debt nightmare.

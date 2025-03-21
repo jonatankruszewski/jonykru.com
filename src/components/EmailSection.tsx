@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {useForm as useFormSpreeForm} from '@formspree/react';
 import {useForm as useReactHookForm} from "react-hook-form"
+import {Button} from "@headlessui/react";
 
 type FormData = {
     email: string;
@@ -114,13 +115,14 @@ const EmailSection = () => {
                             className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
                             placeholder="Let's talk about..."
                         />
-                        <button
+                        <Button
+                            name="Send Message"
                             type="submit"
                             disabled={state.submitting}
                             className="bg-primary-500 hover:bg-primary-600 text-white cursor-pointer font-medium py-2.5 px-5 rounded-lg w-full"
                         >
                             Send Message
-                        </button>
+                        </Button>
                     </form>
                 </div>
             </div>
