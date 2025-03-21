@@ -5,6 +5,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import {ChevronLeft, ChevronRight} from "lucide-react";
 import AchievementsSection from "@/components/AchievementsSection";
+import { Button } from '@headlessui/react'
 
 const AboutMeCards = () => {
     const cards = [
@@ -64,19 +65,22 @@ const AboutMeCards = () => {
                     ))}
                 </div>
                 <div className="flex justify-center gap-4 mt-4">
-                    <button
+                    <Button
                         className="bg-transparent text-white font-semibold w-8 h-8 border-2 border-white rounded-full cursor-pointer flex justify-center items-center"
+                        name="Previous"
                         onClick={scrollPrev}
                     >
+                        <span className="sr-only">Previous</span>
                         <ChevronLeft/>
-                    </button>
+                    </Button>
 
-                    <button
+                    <Button
                         className="bg-transparent text-white font-semibold w-8 h-8 border-2 border-white rounded-full cursor-pointer flex justify-center items-center"
+                        name="Next"
                         onClick={scrollNext}>
                         <span className="sr-only">Next</span>
                         <ChevronRight/>
-                    </button>
+                    </Button>
                 </div>
 
             </div>

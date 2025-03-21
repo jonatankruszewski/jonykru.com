@@ -55,7 +55,7 @@ const AchievementsSection = () => {
                                 className="text-white text-4xl font-semibold"
                             />
                         </h2>
-                        <p className="text-gray-400 text-base font-light">{achievement.metric}</p>
+                        <p className="text-gray-400 text-base font-light leading-tight">{achievement.metric}</p>
                     </div>
                 );
             })}
