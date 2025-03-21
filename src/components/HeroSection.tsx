@@ -42,8 +42,6 @@ const HeroSection = () => {
                         the
                         tech debt nightmare.
                     </h2>
-
-
                     <Link
                         href="/#contact"
                         className="whitespace-nowrap max-w-max border-1 border-transparent bg-gradient-to-br from-purple-400 to-indigo-500 p-[1px] rounded-full transition-all duration-300 ease-in-out "

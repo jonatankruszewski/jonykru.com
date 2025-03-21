@@ -1,6 +1,5 @@
 import NavLink from "@/components/NavLink";
 import React from "react";
-import {CircleUser, Newspaper, ShieldCheck, UserPen} from 'lucide-react';
 
 type NavbarLinksProps = {
     onClick?: () => void
@@ -9,16 +8,16 @@ type NavbarLinksProps = {
 const NavbarLinks = ({onClick}: NavbarLinksProps) => {
     return <>
         <li>
-            <NavLink href={"#about"} title="About" icon={<CircleUser/>} onClick={onClick}/>
+            <NavLink href={"#about"} title="about" onClick={onClick}/>
         </li>
         <li>
-            <NavLink href={"#publications"} title="Publications" icon={<Newspaper/>} onClick={onClick}/>
+            <NavLink href={"#publications"} title="publications" onClick={onClick}/>
         </li>
         <li>
-            <NavLink href={"#certifications"} title="Certifications" icon={<ShieldCheck/>} onClick={onClick}/>
+            <NavLink href={"#certifications"} title="certifications" onClick={onClick}/>
         </li>
         <li>
-            <NavLink href={"#contact"} title="Contact" icon={<UserPen/>} onClick={onClick}/>
+            <NavLink href={"#contact"} title="contact" onClick={onClick}/>
         </li>
     </>
 }

@@ -1,10 +1,8 @@
 import type {Metadata} from "next";
-import {Inter} from 'next/font/google'
 import "./globals.css";
 import {ReactNode} from "react";
 import QueryProvider from "@/components/QueryProvider";
-
-const inter = Inter({subsets: ['latin']})
+import {FontInter} from "@/app/fonts";
 
 export const metadata: Metadata = {
     title: "Jonatan Kruszewski - Web Developer | Software Engineer",
@@ -14,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: { children: ReactNode }) {
     return (
         <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
+        <body className={FontInter.className}>
         <QueryProvider>
             {children}
         </QueryProvider>

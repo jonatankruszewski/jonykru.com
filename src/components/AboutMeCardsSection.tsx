@@ -3,6 +3,8 @@
 import React from "react";
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
+import {ChevronLeft, ChevronRight} from "lucide-react";
+import AchievementsSection from "@/components/AchievementsSection";
 
 const AboutMeCards = () => {
     const cards = [
@@ -47,7 +49,10 @@ const AboutMeCards = () => {
 
     return (
         <section className="text-white" id="about">
-            <h2 className="my-12 text-4xl font-bold text-white">About Me</h2>
+            <h2 className="text-center text-4xl font-bold text-white mb-12">
+                About
+            </h2>
+            <AchievementsSection/>
             <div className="overflow-hidden" ref={emblaRef}>
                 <div className="flex flex-row gap-4 w-full px-4">
                     {cards.map(card => (
@@ -58,25 +63,19 @@ const AboutMeCards = () => {
                         </div>
                     ))}
                 </div>
-                <div className="flex justify-between mt-4">
+                <div className="flex justify-center gap-4 mt-4">
                     <button
-                        className="bg-transparent text-white font-semibold w-8 h-8 border border-white rounded-full cursor-pointer flex justify-center items-center"
+                        className="bg-transparent text-white font-semibold w-8 h-8 border-2 border-white rounded-full cursor-pointer flex justify-center items-center"
                         onClick={scrollPrev}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
-                             stroke="currentColor" className="size-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
-                        </svg>
+                        <ChevronLeft/>
                     </button>
 
                     <button
-                        className="bg-transparent text-white font-semibold w-8 h-8 border border-white rounded-full cursor-pointer flex justify-center items-center"
+                        className="bg-transparent text-white font-semibold w-8 h-8 border-2 border-white rounded-full cursor-pointer flex justify-center items-center"
                         onClick={scrollNext}>
                         <span className="sr-only">Next</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
-                             stroke="currentColor" className="size-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
-                        </svg>
+                        <ChevronRight/>
                     </button>
                 </div>
 

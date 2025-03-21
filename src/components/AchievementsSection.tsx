@@ -32,34 +32,33 @@ const achievementsList: Achievement[] = [ // Type the array
 
 const AchievementsSection = () => {
     return (
-        <div className="py-4 xl:gap-16 sm:py-16">
-            <div
-                className="gap-2 sm:border-[#33353F] sm:flex-wrap sm:border rounded-md py-8 px-16
-           flex flex-col sm:flex-row items-start justify-between
-           xs:grid xs:grid-cols-2 xs:gap-4">
-                {achievementsList.map((achievement) => { // No need for index if not used in rendering logic
-                    return (
-                        <div
-                            key={achievement.metric}
-                            className="flex-1 w-full flex flex-col align-top items-center text-center justify-center"
-                        >
-                            <h2 className="text-white text-4xl font-bold flex flex-row">
-                                <AnimatedNumbers
-                                    key={achievement.metric}
-                                    transitions={(index) => ({
-                                        type: "spring",
-                                        duration: index + 0.3,
-                                    })}
-                                    animateToNumber={Number(achievement.value)}
-                                    locale="en-US"
-                                    className="text-white text-4xl font-bold"
-                                />
-                            </h2>
-                            <p className="text-[#ADB7BE] text-base">{achievement.metric}</p>
-                        </div>
-                    );
-                })}
-            </div>
+        <div
+            className="grid mb-20 sm:grid-cols-2 md:grid-cols-4 gap-4 gap-y-6 py-7
+               sm:border-[#33353F] sm:border sm:rounded-md sm:py-8 sm:px-8
+               items-start justify-center text-center"
+        >
+            {achievementsList.map((achievement) => { // No need for index if not used in rendering logic
+                return (
+                    <div
+                        key={achievement.metric}
+                        className="flex-1 w-full flex flex-col sm:gap-2 md:gap-3 align-top items-center text-center justify-center"
+                    >
+                        <h2 className="text-white text-4xl font-bold flex flex-row">
+                            <AnimatedNumbers
+                                key={achievement.metric}
+                                transitions={(index) => ({
+                                    type: "spring",
+                                    duration: index + 0.3,
+                                })}
+                                animateToNumber={Number(achievement.value)}
+                                locale="en-US"
+                                className="text-white text-4xl font-semibold"
+                            />
+                        </h2>
+                        <p className="text-gray-400 text-base font-light">{achievement.metric}</p>
+                    </div>
+                );
+            })}
         </div>
     );
 };
