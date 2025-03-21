@@ -61,20 +61,20 @@ const CertificationsSection = () => {
 
     return (
         <section id="certifications">
-            <h2 className="text-center text-4xl font-bold text-white mt-8 md:mt-12 mb-8 md:mb-12">
-                My Certifications
+            <h2 className="text-center text-4xl font-bold text-white mb-12">
+               Certifications
             </h2>
             <h3 className="text-2xl font-bold text-white mt-4 md:mt-6 mb-4 md:mb-6">
                 Why Hire a Certified Developer?
             </h3>
-            <p>
+            <p className="text-white">
                 Anyone can write code, but not everyone writes scalable, maintainable, and high-quality code.
             </p>
-            <p>
+            <p className="text-white">
                 Certifications go beyond badges; they&apos;re proof that an external authority has reviewed, tested, and
                 validated both knowledge and skills.
             </p>
-            <p>
+            <p className="text-white">
                 When you hire a certified developer, you&apos;re not just trusting what they say — you&apos;re trusting what
                 they&apos;ve proven.
             </p>
