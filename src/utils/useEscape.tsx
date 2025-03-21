@@ -2,10 +2,10 @@ import {useEffect} from "react";
 
 const ESCAPE_KEY = 27;
 
-export const useEscapeKey = (callback: (e: { keyCode: any }) => void, {
+export const useEscapeKey = (callback: (e: { keyCode: number }) => void, {
     dependencies = [],
-    window: customWindow = window
-}: { dependencies?: any[]; window?: Window | null } = {}) => {
+    window: customWindow = null
+}: { dependencies?: (string | number | boolean)[]; window?: Window | null } = {}) => {
     useEffect(() => {
         if (!customWindow || !customWindow.document || !callback) {
             return;
@@ -15,7 +15,7 @@ export const useEscapeKey = (callback: (e: { keyCode: any }) => void, {
             return;
         }
 
-        const onKeyPress = (event: { keyCode: any; }) => event.keyCode === ESCAPE_KEY && callback(event);
+        const onKeyPress = (event: { keyCode: number; }) => event.keyCode === ESCAPE_KEY && callback(event);
         window.document.addEventListener('keydown', onKeyPress);
         return () => {
             window.document.removeEventListener('keydown', onKeyPress);
