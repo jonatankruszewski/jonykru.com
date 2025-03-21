@@ -60,8 +60,8 @@ const PublicationsSection = () => {
 
     return (
         <section id="publications">
-            <h2 className="text-center text-4xl font-bold text-white mt-4 mb-8 md:mb-12">
-                {`Latest Publications`}
+            <h2 className="text-center text-4xl font-bold text-white mb-12">
+                Latest Publications
             </h2>
             <ul ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
                 {data && data.items.length > 0 && data.items.map((article, index) => (
