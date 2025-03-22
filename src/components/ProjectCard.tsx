@@ -15,20 +15,24 @@ const ProjectCard: React.FC<ProjectCardProps> = (
     }) => {
 
     const styles = imgUrl ? {background: `url(${imgUrl})`, backgroundSize: "cover", backgroundPosition: "center"} : {}
-    //
-    // if (!imgUrl){
-    //     return null;
-    // }
+
+    if (!imgUrl) {
+        return null;
+    }
 
     return (
-        <Link href={previewUrl} className="bg-[#1E1E2E] rounded-xl border border-gray-700 shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg flex flex-col flex-1 h-full cursor-pointer">
+        <li
+              className="bg-[#1E1E2E] rounded-xl border border-gray-700 shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg flex flex-col flex-1 h-full cursor-pointer">
             <div className="md:h-72 rounded-t-xl relative group overflow-hidden aspect-square w-full" style={styles}>
                 <div className="max-h-[250px] absolute inset-0 bg-gradient-to-b from-transparent to-white/20"></div>
             </div>
             <div className="text-white rounded-b-xl p-6">
-                <p className="text-xl font-bold tracking-tight mb-2">{title}</p>
+                <Link href={previewUrl} target="_blank" rel="noopener noreferrer"
+                   className="font-bold text-xl mb-2 text-center cursor-pointer text-white transition-opacity duration-200 hover:opacity-80 hover:underline">
+                    {title}
+                </Link>
             </div>
-        </Link>
+        </li>
     );
 };
 
