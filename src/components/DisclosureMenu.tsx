@@ -11,7 +11,7 @@ import {useOnClickOutside} from 'usehooks-ts'
 import {useFocusTrap} from '@mantine/hooks';
 import {useEscapeKey} from "@/utils/useEscape";
 
-const DisclosureMenu = ({open, close}: {open: boolean, close: () => void}) => {
+const DisclosureMenu = ({open, close}: { open: boolean, close: () => void }) => {
     const ref = useRef<HTMLDivElement>(null)
     useOnClickOutside(ref as React.RefObject<HTMLElement>, () => close())
     useEscapeKey(() => close(), {dependencies: [open]})
@@ -30,6 +30,7 @@ const DisclosureMenu = ({open, close}: {open: boolean, close: () => void}) => {
                 </div>
                 <DisclosureButton
                     name={open ? 'Close' : "Menu"}
+                    aria-label={open ? 'Close' : "Menu"}
                     className="cursor-pointer px-2 py-2 text-slate-200 hover:text-white hover:border-white md:hidden ml-auto">
                     {open ? <X/> : <Menu/>}
                 </DisclosureButton>
