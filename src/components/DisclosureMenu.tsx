@@ -29,6 +29,7 @@ const DisclosureMenu = ({open, close}: {open: boolean, close: () => void}) => {
                     </ul>
                 </div>
                 <DisclosureButton
+                    name={open ? 'Close' : "Menu"}
                     className="cursor-pointer px-2 py-2 text-slate-200 hover:text-white hover:border-white md:hidden ml-auto">
                     {open ? <X/> : <Menu/>}
                 </DisclosureButton>
