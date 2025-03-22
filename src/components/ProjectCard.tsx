@@ -21,7 +21,7 @@ const ProjectCard: React.FC<ProjectCardProps> = (
     }
 
     return (
-        <li
+        <div
               className="bg-[#1E1E2E] rounded-xl border border-gray-700 shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg flex flex-col flex-1 h-full cursor-pointer">
             <div className="md:h-72 rounded-t-xl relative group overflow-hidden aspect-square w-full" style={styles}>
                 <div className="max-h-[250px] absolute inset-0 bg-gradient-to-b from-transparent to-white/20"></div>
@@ -32,7 +32,7 @@ const ProjectCard: React.FC<ProjectCardProps> = (
                     {title}
                 </Link>
             </div>
-        </li>
+        </div>
     );
 };
 
