@@ -9,6 +9,7 @@ import Image from "next/image";
 import {useForm as useFormSpreeForm} from '@formspree/react';
 import {useForm as useReactHookForm} from "react-hook-form"
 import {Button} from "@headlessui/react";
+import Section from "@/utils/Section";
 
 type FormData = {
     email: string;
@@ -40,8 +41,8 @@ const EmailSection = () => {
     // }
 
     return (
-        <section id="contact">
-            <h2 className="text-center text-4xl font-bold text-white mb-12">
+        <Section id="contact">
+            <h2 className="text-center text-4xl font-bold text-white mb-12 mt-20">
                 Let&apos;s Connect
             </h2>
             <div className="grid md:grid-cols-2 gap-4 relative">
@@ -126,7 +127,7 @@ const EmailSection = () => {
                     </form>
                 </div>
             </div>
-        </section>
+        </Section>
     );
 };
 

@@ -1,7 +1,7 @@
 "use client";
-import React from "react";
 import {TypeAnimation} from "react-type-animation";
 import Link from "next/link";
+import React from "react";
 
 const sequence = [
     "Web Developer",
@@ -14,10 +14,10 @@ const sequence = [
     1200,
 ]
 
-const HeroSection = () => {
+const Presentation = () => {
     return (
-        <section className="items-center lg:pt-16">
-            <h1 className="text-white mb-4 text-4xl sm:text-5xl lg:text-6xl lg:leading-normal font-extrabold">
+        <>
+            <h1 className="text-white mb-4 text-4xl sm:text-5xl lg:text-6xl lg:leading-normal font-extrabold mt-24">
                 <span className="text-white bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-600">
                     Hi! 👋,
                 </span>
@@ -29,7 +29,7 @@ const HeroSection = () => {
 
             <div className="">
                 <TypeAnimation
-                   className="text-base sm:text-xl md:text-4xl lg:text-4xl font-semibold bg-gradient-to-br from-purple-400 to-indigo-500 text-transparent bg-clip-text"
+                    className="text-base sm:text-xl md:text-4xl lg:text-4xl font-semibold bg-gradient-to-br from-purple-400 to-indigo-500 text-transparent bg-clip-text"
                     sequence={sequence}
                     wrapper="span"
                     speed={50}
@@ -74,11 +74,10 @@ const HeroSection = () => {
                             </svg>
                         </div>
                     </Link>
-
                 </div>
             </div>
-        </section>
-    );
-};
+        </>
+    )
+}
 
-export default HeroSection;
+export default Presentation;

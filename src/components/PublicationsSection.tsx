@@ -1,9 +1,11 @@
 "use client";
+
 import React, {useRef} from "react";
 import ProjectCard from "@/components/ProjectCard";
-import {motion, useInView} from "framer-motion";
+import {motion, useInView as useMotionInView} from "framer-motion";
 import {useQuery} from '@tanstack/react-query';
 import {extractImageLinks} from "@/utils/extractImageLinks";
+import Section from "@/utils/Section";
 
 type Feed = {
     url: string;
@@ -49,9 +51,8 @@ const PublicationsSection = () => {
     });
 
     data?.items.map(item => item.images = extractImageLinks(item.content));
-
-    const ref = useRef(null);
-    const isInView = useInView(ref, {once: true});
+    const cardRef = useRef(null);
+    const isCardInView = useMotionInView(cardRef, {once: true});
 
     const cardVariants = {
         initial: {y: 50, opacity: 0},
@@ -59,17 +60,17 @@ const PublicationsSection = () => {
     };
 
     return (
-        <section id="publications">
-            <h2 className="text-center text-4xl font-bold text-white mb-12">
+        <Section id="publications">
+            <h2 className="text-center text-4xl font-bold text-white mb-12 mt-20">
                 Latest Publications
             </h2>
-            <ul ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+            <ul ref={cardRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
                 {data && data.items.length > 0 && data.items.map((article, index) => (
                     <motion.li
                         key={article.guid}
                         variants={cardVariants}
                         initial="initial"
-                        animate={isInView ? "animate" : "initial"}
+                        animate={isCardInView ? "animate" : "initial"}
                         transition={{duration: 0.2, delay: index * 0.15}}
                     >
                         <ProjectCard
@@ -81,8 +82,8 @@ const PublicationsSection = () => {
                     </motion.li>
                 ))}
             </ul>
-        </section>
-    );
+        </Section>
+    )
 };
 
 export default PublicationsSection;

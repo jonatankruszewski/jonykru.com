@@ -30,7 +30,7 @@ const achievementsList: Achievement[] = [ // Type the array
     },
 ];
 
-const AchievementsSection = () => {
+const Achievements = () => {
     return (
         <div
             className="grid mb-20 sm:grid-cols-2 md:grid-cols-4 gap-4 gap-y-6 py-7
@@ -63,4 +63,4 @@ const AchievementsSection = () => {
     );
 };
 
-export default AchievementsSection;
+export default Achievements;
