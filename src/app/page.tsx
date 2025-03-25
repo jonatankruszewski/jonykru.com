@@ -12,7 +12,7 @@ export default function Home() {
         <SectionProvider>
             <Navbar/>
             <main
-                className="flex min-h-screen flex-col bg-[#121212] container mx-auto px-4 md:px-6 lg:px-12 py-4 gap-20">
+                className="flex min-h-screen flex-col container mx-auto px-4 md:px-6 lg:px-12 py-4 gap-20">
                 <AboutSection/>
                 <PublicationsSection/>
                 <CertificationsSection/>
