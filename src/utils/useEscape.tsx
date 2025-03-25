@@ -4,10 +4,11 @@ const ESCAPE_KEY = 27;
 
 export const useEscapeKey = (callback: (e: { keyCode: number }) => void, {
     dependencies = [],
-    window: customWindow = null
 }: { dependencies?: (string | number | boolean)[]; window?: Window | null } = {}) => {
+    const onKeyPress = (event: { keyCode: number; }) => event.keyCode === ESCAPE_KEY && callback(event);
+
     useEffect(() => {
-        if (!customWindow || !customWindow.document || !callback) {
+        if (!window || !callback) {
             return;
         }
 
@@ -15,12 +16,12 @@ export const useEscapeKey = (callback: (e: { keyCode: number }) => void, {
             return;
         }
 
-        const onKeyPress = (event: { keyCode: number; }) => event.keyCode === ESCAPE_KEY && callback(event);
         window.document.addEventListener('keydown', onKeyPress);
         return () => {
             window.document.removeEventListener('keydown', onKeyPress);
         };
-    }, [...dependencies, callback, customWindow]);
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [...dependencies]);
 };
 
 export default useEscapeKey;
