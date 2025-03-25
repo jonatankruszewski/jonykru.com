@@ -26,8 +26,6 @@ export const useSectionContext = () => useContext(sectionContext);
 const SectionProvider = ({children}: { children: ReactNode }) => {
     const [visibleSection, setVisibleSection] = useState<NullableSections>('about');
 
-    console.info({visibleSection})
-
     return (
         <sectionContext.Provider value={{visibleSection, setVisibleSection}}>
             {children}
