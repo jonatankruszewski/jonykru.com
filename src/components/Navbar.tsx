@@ -5,7 +5,6 @@ import {Disclosure} from '@headlessui/react'
 import DisclosureMenu from "@/components/DisclosureMenu";
 
 const Navbar = () => {
-
     return (
         <nav>
             <div
