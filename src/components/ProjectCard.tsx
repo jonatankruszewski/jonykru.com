@@ -14,7 +14,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ imgUrl, title, previewUrl }) 
     }
 
     return (
-        <div className="bg-[#1E1E2E] rounded-xl border border-gray-700 shadow-md transform transition duration-300 flex flex-col flex-1 h-full">
+        <div className="bg-[#1E1E2E] rounded-xl border border-gray-700 shadow-md transform transition duration-300 flex flex-col flex-1 h-full max-w-[450px] mx-auto ">
             <div className="md:h-72 rounded-t-xl relative group overflow-hidden aspect-square w-full">
                 <Image
                     src={imgUrl}

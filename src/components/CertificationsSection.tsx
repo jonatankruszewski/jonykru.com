@@ -1,9 +1,9 @@
 "use client";
-import React, {useRef, useState} from "react";
+import React, {useState} from "react";
 import ProjectTag from "@/components/ProjectTag";
-// import {motion, useInView} from "framer-motion";
 import certifications from "./Certifications.json"
 import CertificationCard from "@/components/CertificationCard";
+import Section from "@/utils/Section";
 
 const {data} = certifications;
 const uniqueSkills = [...new Set(data.flatMap(badge => badge.issuer_linked_in_name))];
@@ -17,8 +17,6 @@ const providersMap = Object.fromEntries(uniqueSkills.map(skill => [skill.replace
 const CertificationsSection = () => {
     const [selectedProviders, setSelectedProviders] = useState(providersMap);
     const [all, setAll] = useState(true)
-    const ref = useRef(null);
-    // const isInView = useInView(ref, {once: true});
 
     const handleToggleAll = () => {
         if (all){
@@ -60,8 +58,8 @@ const CertificationsSection = () => {
         }).reverse();
 
     return (
-        <section id="certifications">
-            <h2 className="text-center text-4xl font-bold text-white mb-12">
+        <Section id="certifications">
+            <h2 className="text-center text-4xl font-bold text-white mb-12 mt-20">
                Certifications
             </h2>
             <h3 className="text-2xl font-bold text-white mt-4 md:mt-6 mb-4 md:mb-6">
@@ -94,27 +92,18 @@ const CertificationsSection = () => {
                     />
                 ))}
             </div>
-            <ul ref={ref} className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12">
+            <ul className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12">
                 {filteredBadges.map(badge => (
-                    // <motion.li
-                    //     key={index}
-                    //     variants={cardVariants}
-                    //     initial="initial"
-                    //     animate={isInView ? "animate" : "initial"}
-                    //     transition={{duration: 0.3, delay: index * 0.4}}
-                    // >
                         <CertificationCard
                             badgeData={badge}
                             key={badge.id}
                             title={badge.badge_template.name}
-                            // description={project.badge_template.description}
                             imgUrl={badge.image_url}
                             previewUrl={badge.badge_url}
                         />
-                    // </motion.li>
-                ))}
+                 ))}
             </ul>
-        </section>
+        </Section>
     );
 };
 

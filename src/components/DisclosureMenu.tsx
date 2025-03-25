@@ -48,7 +48,7 @@ const DisclosureMenu = ({open, close}: { open: boolean, close: () => void }) => 
                                     transition={{duration: 0.2, ease: "easeInOut"}}
                                     className="origin-top"
                                 >
-                                    <ul className={`flex-1 px-4 pb-4 flex flex-col overflow-y-scroll bg-[#121212]`}>
+                                    <ul className={`flex-1 px-4 pb-4 flex flex-col bg-[#121212]`}>
                                         <NavbarLinks onClick={close}/>
                                     </ul>
                                 </motion.div>

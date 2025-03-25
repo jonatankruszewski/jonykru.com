@@ -20,7 +20,7 @@ export const useEscapeKey = (callback: (e: { keyCode: number }) => void, {
         return () => {
             window.document.removeEventListener('keydown', onKeyPress);
         };
-    }, dependencies);
+    }, [...dependencies, callback, customWindow]);
 };
 
 export default useEscapeKey;

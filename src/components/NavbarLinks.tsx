@@ -6,6 +6,7 @@ type NavbarLinksProps = {
 }
 
 const NavbarLinks = ({onClick}: NavbarLinksProps) => {
+
     return <>
         <li>
             <NavLink href={"#about"} title="about" onClick={onClick}/>
