@@ -18,7 +18,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ imgUrl, title, previewUrl }) 
             <div className="md:h-72 rounded-t-xl relative group overflow-hidden aspect-square w-full">
                 <Image
                     src={imgUrl}
-                    alt={title}
+                    alt={"Medium article cover"}
                     layout="fill"
                     objectFit="cover"
                     className="rounded-t-xl"
