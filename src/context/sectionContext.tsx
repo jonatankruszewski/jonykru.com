@@ -1,9 +1,9 @@
 "use client"
 
-import {createContext, Dispatch, ReactNode, SetStateAction, useContext, useState} from "react";
+import {createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState} from "react";
+import {useInView} from "react-intersection-observer";
 
 const sectionIds = [
-    'hero',
     'about',
     'publications',
     'certifications',
@@ -11,24 +11,28 @@ const sectionIds = [
 ];
 
 export type Sections = typeof sectionIds[number];
-type NullableSections = Sections | null;
 
 const sectionContext = createContext<{
-    visibleSection: NullableSections;
-    setVisibleSection: Dispatch<SetStateAction<NullableSections>>
+    visibleSection: Sections;
+    setVisibleSection: Dispatch<SetStateAction<Sections>>
 }>({
-    visibleSection: null,
-    setVisibleSection: () => null
+    visibleSection: sectionIds[0],
+    setVisibleSection: () => undefined
 });
 
 export const useSectionContext = () => useContext(sectionContext);
 
 const SectionProvider = ({children}: { children: ReactNode }) => {
-    const [visibleSection, setVisibleSection] = useState<NullableSections>('about');
+    const [visibleSection, setVisibleSection] = useState<Sections>(sectionIds[0]);
+    const {ref} = useInView({
+        threshold: 0.2,
+    });
 
     return (
         <sectionContext.Provider value={{visibleSection, setVisibleSection}}>
-            {children}
+            <div ref={ref} id="section-wrapper">
+                {children}
+            </div>
         </sectionContext.Provider>
     )
 }
