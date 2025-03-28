@@ -82,6 +82,7 @@ const EmailSection = () => {
                                 type="email"
                                 id="email"
                                 required
+                                autoComplete="email"
                                 className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
                                 placeholder="jacob@google.com"
                             />
@@ -99,6 +100,7 @@ const EmailSection = () => {
                                 type="text"
                                 id="subject"
                                 required
+                                autoComplete="off"
                                 className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
                                 placeholder="Just saying hi"
                             />
@@ -110,6 +112,7 @@ const EmailSection = () => {
                             Message
                         </label>
                         <textarea
+                            autoComplete="off"
                             {...register("message", {required: true})}
                             name="message"
                             id="message"
