@@ -5,22 +5,12 @@ import EmailSection from "@/components/EmailSection";
 import Footer from "@/components/Footer";
 import CertificationsSection from "@/components/CertificationsSection";
 import SectionProvider from "@/context/sectionContext";
-import {MediumData} from "@/types/mediumArticles";
-
-const getMediumData = async () => {
-    const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@jonakrusze", {
-        next: { revalidate: 3600 },
-    });
-
-    if (!res.ok) {
-        return {items: []} satisfies MediumData
-    }
-
-    return await res.json() as MediumData;
-};
+import {getMediumData} from "@/dataFetchers/medium.dataFetcher";
+import {getCredlyData} from "@/dataFetchers/credly.dataFetcher";
 
 export default async function Home() {
     const mediumData = await getMediumData();
+    const credlyData = await getCredlyData();
 
     return (
         <SectionProvider>
@@ -30,7 +20,7 @@ export default async function Home() {
             >
                 <AboutSection/>
                 <PublicationsSection mediumData={mediumData}/>
-                <CertificationsSection/>
+                <CertificationsSection credlyData={credlyData}/>
                 <EmailSection/>
             </main>
             <Footer/>
