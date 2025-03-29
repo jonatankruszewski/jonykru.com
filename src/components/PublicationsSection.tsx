@@ -2,7 +2,7 @@
 import React, {useRef} from "react";
 
 import {extractImageLinks} from "@/utils/extractImageLinks";
-import {MediumData} from "@/types/mediumArticles";
+import {MediumData} from "@/types/medium.types";
 import {motion, useInView as useMotionInView} from "framer-motion";
 import Section from "@/utils/Section";
 import ProjectCard from "@/components/ProjectCard";
