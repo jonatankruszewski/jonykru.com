@@ -1,7 +1,6 @@
 import type {Metadata} from "next";
 import "./globals.css";
 import {ReactNode} from "react";
-import QueryProvider from "@/components/QueryProvider";
 import {FontInter} from "@/app/fonts";
 
 export const metadata: Metadata = {
@@ -13,9 +12,7 @@ export default function RootLayout({children}: { children: ReactNode }) {
     return (
         <html lang="en" suppressHydrationWarning>
         <body className={FontInter.className}>
-        <QueryProvider>
-            {children}
-        </QueryProvider>
+          {children}
         </body>
         </html>
     )

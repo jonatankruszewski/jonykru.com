@@ -1,56 +1,19 @@
 "use client";
-
 import React, {useRef} from "react";
-import ProjectCard from "@/components/ProjectCard";
-import {motion, useInView as useMotionInView} from "framer-motion";
-import {useQuery} from '@tanstack/react-query';
+
 import {extractImageLinks} from "@/utils/extractImageLinks";
+import {MediumData} from "@/types/mediumArticles";
+import {motion, useInView as useMotionInView} from "framer-motion";
 import Section from "@/utils/Section";
+import ProjectCard from "@/components/ProjectCard";
 
-type Feed = {
-    url: string;
-    title: string;
-    link: string;
-    author: string;
-    description: string;
-    image: string;
-};
-
-type Article = {
-    title: string;
-    pubDate: string;
-    link: string;
-    guid: string;
-    author: string;
-    thumbnail: string;
-    description: string;
-    content: string;
-    enclosure?: {
-        url: string;
-        length: string;
-        type: string;
-    };
-    categories?: string[];
-    images?: string[];
-};
-
-type MediumData = {
-    feed: Feed;
-    items: Article[];
-}
-
-const PublicationsSection = () => {
-    const {data} = useQuery({ //TODO: add isLoading state
-        queryKey: ['posts'],
-        queryFn: () => fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@jonakrusze').then(res => {
-            if (!res.ok) {
-                throw new Error('Failed to fetch posts');
-            }
-            return res.json() as unknown as MediumData;
-        }),
+const PublicationsSection = ({mediumData}: { mediumData: MediumData }) => {
+    const data = mediumData?.items.map(item => {
+        const newItem = {...item};
+        newItem.images = extractImageLinks(item.content)
+        return newItem;
     });
 
-    data?.items.map(item => item.images = extractImageLinks(item.content));
     const cardRef = useRef(null);
     const isCardInView = useMotionInView(cardRef, {once: true});
 
@@ -65,7 +28,7 @@ const PublicationsSection = () => {
                 Latest Publications
             </h2>
             <ul ref={cardRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                {data && data.items.length > 0 && data.items.map((article, index) => (
+                {data && data.length > 0 && data.map((article, index) => (
                     <motion.li
                         key={article.guid}
                         variants={cardVariants}
