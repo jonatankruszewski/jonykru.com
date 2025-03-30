@@ -22,7 +22,7 @@ export const getCredlyData = async () => {
     });
 
     if (!res.ok) {
-        return {data: []} satisfies CredlyData;
+        throw new Error('Failed to fetch Credly')
     }
 
     return await res.json() as CredlyData;
