@@ -14,7 +14,7 @@ const CertificationsSection = ({credlyData}: CertificationsSectionProps) => {
     const uniqueSkills = [...new Set(data.flatMap(badge => badge.issuer.entities[0].entity.name || ""))].filter(Boolean);
     const providersMap = Object.fromEntries(uniqueSkills.map(skill => [skill.replaceAll(" ", "_").toLowerCase(), {
         value: false,
-        label: skill,
+        label: skill.split(" ", 3).join(" "),
         key: skill.replaceAll(" ", "_").toLowerCase(),
     }]));
 
@@ -57,7 +57,7 @@ const CertificationsSection = ({credlyData}: CertificationsSectionProps) => {
     const filteredBadges = data.filter(
         (badge) => {
             const providersList = Object.values(selectedProviders);
-            return providersList.some(provider => provider.value && provider.label === badge.issuer_linked_in_name) || all;
+            return providersList.some(provider => provider.value && provider.key === badge.issuer.entities[0].entity.name.toLowerCase().replaceAll(" ", "_")) || all;
         }).reverse();
 
     return (
