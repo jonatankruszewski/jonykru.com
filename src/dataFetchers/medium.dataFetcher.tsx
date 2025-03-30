@@ -6,7 +6,7 @@ export const getMediumData = async () => {
     });
 
     if (!res.ok) {
-        return {items: []} satisfies MediumData
+        throw new Error('Failed to fetch Medium')
     }
 
     return await res.json() as MediumData;
