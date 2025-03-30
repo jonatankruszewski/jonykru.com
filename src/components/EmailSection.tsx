@@ -10,12 +10,15 @@ import {useForm as useFormSpreeForm} from '@formspree/react';
 import {useForm as useReactHookForm} from "react-hook-form"
 import {Button} from "@headlessui/react";
 import Section from "@/utils/Section";
+import {Info} from "lucide-react";
 
 type FormData = {
     email: string;
     subject: string;
     message: string;
 };
+
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const EmailSection = () => {
     const [state, handleSubmit] = useFormSpreeForm<FormData>("xwpleawo");
@@ -24,17 +27,15 @@ const EmailSection = () => {
         register,
         handleSubmit: useFormSubmit,
         // watch,
-        // formState: {errors},
-    } = useReactHookForm<FormData>()
+        formState,
+        ...rest
+    } = useReactHookForm<FormData>({mode: 'onTouched'})
 
-    // React.useEffect(() => {
-    //     if (!state.succeeded) {
-    //         return;
-    //     }
-    //
-    // }, [state.succeeded])
+    const {errors} = formState;
 
-    //
+    const onSubmit = (data: FormData) => console.log(data);
+    console.log({errors, rest, formState});
+
     // const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     //     e.preventDefault();
     //     return handleSubmit({email, subject, message});
@@ -68,8 +69,8 @@ const EmailSection = () => {
                     </div>
                 </div>
                 <div>
-                    <form className="flex flex-col" onSubmit={useFormSubmit(handleSubmit)}>
-                        <div className="mb-6">
+                    <form className="flex flex-col" onSubmit={useFormSubmit(onSubmit)}>
+                        <div className="mb-1">
                             <label
                                 htmlFor="email"
                                 className="text-white block mb-2 text-sm font-medium"
@@ -77,17 +78,35 @@ const EmailSection = () => {
                                 Your email
                             </label>
                             <input
-                                {...register("email", {required: true})}
+                                {...register("email",
+                                    {
+                                        required: "Email is required",
+                                        maxLength: {
+                                            value: 64, message: 'Email must be at most 128 characters long',
+                                        },
+                                        pattern: {value: emailRegex, message: "Please enter a valid email address"}
+                                    })}
                                 name="email"
                                 type="email"
                                 id="email"
                                 required
                                 autoComplete="email"
-                                className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
+                                className={`bg-[#18191E] border placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5 transition-all focus:outline-none ${
+                                    errors.email ? "border-red-500 focus:ring-2 focus:ring-red-500" : "border-[#33353F] focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                                }`}
                                 placeholder="jacob@google.com"
                             />
+                            {<div className="p-2 flex gap-2 text-[#9CA2A9] items-center min-h-[32px]">
+                                {errors.email &&
+                                    <>
+                                        <Info size={16}/>
+                                        <p className="text-xs">
+                                            {errors.email.message}
+                                        </p>
+                                    </>}
+                            </div>}
                         </div>
-                        <div className="mb-6">
+                        <div className="mb-1">
                             <label
                                 htmlFor="subject"
                                 className="text-white block text-sm mb-2 font-medium"
@@ -95,30 +114,54 @@ const EmailSection = () => {
                                 Subject
                             </label>
                             <input
-                                {...register("subject", {required: true})}
+                                {...register("subject", {required: true, maxLength: 120})}
                                 name="subject"
                                 type="text"
                                 id="subject"
                                 required
                                 autoComplete="off"
-                                className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
+                                className={`bg-[#18191E] border placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5 transition-all focus:outline-none ${
+                                    errors.subject ? "border-red-500 focus:ring-2 focus:ring-red-500" : "border-[#33353F] focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                                }`}
                                 placeholder="Just saying hi"
                             />
+                            {<div className="p-2 flex gap-2 text-[#9CA2A9] items-center min-h-[32px]">
+                                {errors.subject &&
+                                    <>
+                                        <Info size={16}/>
+                                        <p className="text-xs">
+                                            {errors.subject.message}
+                                        </p>
+                                    </>}
+                            </div>}
                         </div>
-                        <label
-                            htmlFor="message"
-                            className="text-white block text-sm mb-2 font-medium"
-                        >
-                            Message
-                        </label>
-                        <textarea
-                            autoComplete="off"
-                            {...register("message", {required: true})}
-                            name="message"
-                            id="message"
-                            className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
-                            placeholder="Let's talk about..."
-                        />
+                        <div className="mb-1">
+                            <label
+                                htmlFor="message"
+                                className="text-white block text-sm mb-2 font-medium"
+                            >
+                                Message
+                            </label>
+                            <textarea
+                                autoComplete="off"
+                                {...register("message", {required: true, maxLength: 500})}
+                                name="message"
+                                id="message"
+                                className={`bg-[#18191E] border placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5 transition-all focus:outline-none ${
+                                    errors.message ? "border-red-500 focus:ring-2 focus:ring-red-500" : "border-[#33353F] focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                                }`}
+                                placeholder="Let's talk about..."
+                            />
+                            {<div className="p-2 flex gap-2 text-[#9CA2A9] items-center min-h-[32px]">
+                                {errors.message &&
+                                    <>
+                                        <Info size={16}/>
+                                        <p className="text-xs">
+                                            {errors.message.message}
+                                        </p>
+                                    </>}
+                            </div>}
+                        </div>
                         <Button
                             name="Send Message"
                             type="submit"
@@ -131,7 +174,8 @@ const EmailSection = () => {
                 </div>
             </div>
         </Section>
-    );
+    )
+        ;
 };
 
 export default EmailSection;
