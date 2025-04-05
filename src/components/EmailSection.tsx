@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, {useEffect} from "react";
 import GithubIcon from "/public/github-icon.svg";
 import LinkedinIcon from "/public/linkedin-icon.svg";
 import MediumIcon from "/public/medium-icon-white.svg";
@@ -7,10 +7,11 @@ import StackOverflow from "/public/stack-overflow-icon.svg";
 import Link from "next/link";
 import Image from "next/image";
 import {useForm as useFormSpreeForm} from '@formspree/react';
-import {useForm as useReactHookForm} from "react-hook-form"
+import {FormProvider, useForm as useReactHookForm} from "react-hook-form"
 import {Button} from "@headlessui/react";
 import Section from "@/utils/Section";
-import {Info} from "lucide-react";
+import TextInput from "@/components/TextInput";
+import TextAreaInput from "@/components/TextAreaInput";
 
 type FormData = {
     email: string;
@@ -22,24 +23,24 @@ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const EmailSection = () => {
     const [state, handleSubmit] = useFormSpreeForm<FormData>("xwpleawo");
+    const methods = useReactHookForm<FormData>({mode: 'onTouched'})
+    const {handleSubmit: useFormSubmit, control} = methods;
 
-    const {
-        register,
-        handleSubmit: useFormSubmit,
-        // watch,
-        formState,
-        ...rest
-    } = useReactHookForm<FormData>({mode: 'onTouched'})
+    const onSubmit = (data: FormData) => {
+        console.log(data)
+        return handleSubmit(data);
+    };
 
-    const {errors} = formState;
-
-    const onSubmit = (data: FormData) => console.log(data);
-    console.log({errors, rest, formState});
-
-    // const submit = async (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //     return handleSubmit({email, subject, message});
-    // }
+    useEffect(() => {
+        if (state.succeeded){
+            methods.reset({
+                email: "",
+                subject: "",
+                message: ""
+            })
+        }
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.succeeded]);
 
     return (
         <Section id="contact">
@@ -49,7 +50,6 @@ const EmailSection = () => {
             <div className="grid md:grid-cols-2 gap-4 relative">
                 <div>
                     <p className="text-[#ADB7BE] mb-4 max-w-md">
-                        {" "}
                         I’m open to new projects and collaborations. If you&apos;re looking for a developer or have a
                         relevant opportunity, please feel free to reach out. I’ll get back to you as soon as possible.
                     </p>
@@ -69,113 +69,77 @@ const EmailSection = () => {
                     </div>
                 </div>
                 <div>
-                    <form className="flex flex-col" onSubmit={useFormSubmit(onSubmit)}>
-                        <div className="mb-1">
-                            <label
-                                htmlFor="email"
-                                className="text-white block mb-2 text-sm font-medium"
-                            >
-                                Your email
-                            </label>
-                            <input
-                                {...register("email",
-                                    {
-                                        required: "Email is required",
-                                        maxLength: {
-                                            value: 64, message: 'Email must be at most 128 characters long',
-                                        },
-                                        pattern: {value: emailRegex, message: "Please enter a valid email address"}
-                                    })}
-                                name="email"
-                                type="email"
-                                id="email"
-                                required
-                                autoComplete="email"
-                                className={`bg-[#18191E] border placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5 transition-all focus:outline-none ${
-                                    errors.email ? "border-red-500 focus:ring-2 focus:ring-red-500" : "border-[#33353F] focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-                                }`}
+                    <FormProvider {...methods}>
+                        <form className="flex flex-col" onSubmit={useFormSubmit(onSubmit)}>
+                            <TextInput<FormData, 'email'>
+                                label="Your Email"
+                                control={control}
                                 placeholder="jacob@google.com"
+                                name={'email'}
+                                rules={{
+                                    required: "Email is required",
+                                    maxLength: {
+                                        value: 128,
+                                        message: "Email must be at most 128 characters long",
+                                    },
+                                    validate: (value) => {
+                                        if (!value.includes("@")) {
+                                            return "Please include '@' in your email address";
+                                        }
+                                        return true;
+                                    },
+                                    pattern: {
+                                        value: emailRegex,
+                                        message: "Please enter a valid email address",
+                                    },
+                                }}
+                                id="email"
+                                autoComplete="email"
                             />
-                            {<div className="p-2 flex gap-2 text-[#9CA2A9] items-center min-h-[32px]">
-                                {errors.email &&
-                                    <>
-                                        <Info size={16}/>
-                                        <p className="text-xs">
-                                            {errors.email.message}
-                                        </p>
-                                    </>}
-                            </div>}
-                        </div>
-                        <div className="mb-1">
-                            <label
-                                htmlFor="subject"
-                                className="text-white block text-sm mb-2 font-medium"
-                            >
-                                Subject
-                            </label>
-                            <input
-                                {...register("subject", {required: true, maxLength: 120})}
+                            <TextInput<FormData, 'subject'>
+                                label="Subject"
+                                control={control}
                                 name="subject"
                                 type="text"
                                 id="subject"
-                                required
                                 autoComplete="off"
-                                className={`bg-[#18191E] border placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5 transition-all focus:outline-none ${
-                                    errors.subject ? "border-red-500 focus:ring-2 focus:ring-red-500" : "border-[#33353F] focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-                                }`}
                                 placeholder="Just saying hi"
+                                rules={{
+                                    required: "Subject is required",
+                                    maxLength: {
+                                        value: 128, message: 'Subject must be at most 128 characters long',
+                                    },
+                                    minLength: {
+                                        value: 4, message: "Subject must be at least 4 characters long"
+                                    }
+                                }}
                             />
-                            {<div className="p-2 flex gap-2 text-[#9CA2A9] items-center min-h-[32px]">
-                                {errors.subject &&
-                                    <>
-                                        <Info size={16}/>
-                                        <p className="text-xs">
-                                            {errors.subject.message}
-                                        </p>
-                                    </>}
-                            </div>}
-                        </div>
-                        <div className="mb-1">
-                            <label
-                                htmlFor="message"
-                                className="text-white block text-sm mb-2 font-medium"
-                            >
-                                Message
-                            </label>
-                            <textarea
-                                autoComplete="off"
-                                {...register("message", {required: true, maxLength: 500})}
+                            <TextAreaInput<FormData, 'message'>
                                 name="message"
-                                id="message"
-                                className={`bg-[#18191E] border placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5 transition-all focus:outline-none ${
-                                    errors.message ? "border-red-500 focus:ring-2 focus:ring-red-500" : "border-[#33353F] focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-                                }`}
-                                placeholder="Let's talk about..."
-                            />
-                            {<div className="p-2 flex gap-2 text-[#9CA2A9] items-center min-h-[32px]">
-                                {errors.message &&
-                                    <>
-                                        <Info size={16}/>
-                                        <p className="text-xs">
-                                            {errors.message.message}
-                                        </p>
-                                    </>}
-                            </div>}
-                        </div>
-                        <Button
-                            name="Send Message"
-                            type="submit"
-                            disabled={state.submitting}
-                            className="bg-primary-500 hover:bg-primary-600 text-white cursor-pointer font-medium py-2.5 px-5 rounded-lg w-full"
-                        >
-                            Send Message
-                        </Button>
-                    </form>
+                                label="Message"
+                                control={control}
+                                rules={
+                                    {
+                                        required: "Message is required",
+                                        maxLength: {
+                                            value: 256, message: 'Subject must be at most 256 characters long',
+                                        },
+                                    }
+                                }/>
+                            <Button
+                                name="Send Message"
+                                type="submit"
+                                disabled={state.submitting}
+                                className="self-center inline-block flex-shrink-0 max-w-min whitespace-nowrap border-2 border-gray-300 text-gray-200 hover:border-white hover:text-white cursor-pointer font-medium py-2.5 px-5 rounded-full"
+                            >
+                                Send Message
+                            </Button>
+                        </form>
+                    </FormProvider>
                 </div>
             </div>
         </Section>
-    )
-        ;
+    );
 };
 
 export default EmailSection;

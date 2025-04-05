@@ -17,16 +17,13 @@ export type Article = {
     thumbnail: string;
     description: string;
     content: string;
-    enclosure?: {
-        url: string;
-        length: string;
-        type: string;
-    };
+    enclosure?: Record<string, unknown>
     categories?: string[];
     images?: string[];
 };
 
 export type MediumData = {
+    status: string;
     feed?: Feed;
     items: Article[];
 }
