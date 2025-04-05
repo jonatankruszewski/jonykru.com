@@ -12,6 +12,8 @@ import {Button} from "@headlessui/react";
 import Section from "@/utils/Section";
 import TextInput from "@/components/TextInput";
 import TextAreaInput from "@/components/TextAreaInput";
+import {Toast} from "radix-ui";
+import {Check, X} from "lucide-react";
 
 type FormData = {
     email: string;
@@ -27,12 +29,12 @@ const EmailSection = () => {
     const {handleSubmit: useFormSubmit, control} = methods;
 
     const onSubmit = (data: FormData) => {
-        console.log(data)
         return handleSubmit(data);
     };
 
+
     useEffect(() => {
-        if (state.succeeded){
+        if (state.succeeded) {
             methods.reset({
                 email: "",
                 subject: "",
@@ -41,6 +43,29 @@ const EmailSection = () => {
         }
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.succeeded]);
+
+    const timerRef = React.useRef(0);
+    const [open, setOpen] = React.useState(true);
+
+    React.useEffect(() => {
+        return () => clearTimeout(timerRef.current);
+    }, []);
+
+    React.useEffect(() => {
+        if (!state.succeeded) {
+            return;
+        }
+
+        clearTimeout(timerRef.current);
+        setOpen(true);
+        // setTimeout(() => {
+        //     setOpen(false);
+        // }, 100);
+
+        return () => clearTimeout(timerRef.current);
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.succeeded])
+
 
     return (
         <Section id="contact">
@@ -138,6 +163,34 @@ const EmailSection = () => {
                     </FormProvider>
                 </div>
             </div>
+            <Toast.Provider swipeDirection="right">
+                <Toast.Root
+                    className="flex justify-between items-center gap-x-[15px] rounded-lg bg-white p-[15px] data-[swipe=cancel]:translate-x-0 data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[state=closed]:animate-hide data-[state=open]:animate-slideIn data-[swipe=end]:animate-swipeOut data-[swipe=cancel]:transition-[transform_200ms_ease-out]"
+                    open={open}
+                    onOpenChange={setOpen}
+                >
+                    <Toast.Title className="flex gap-3 items-center text-[15px] font-medium text-slate12">
+                        <Check className='text-green-500' size={28}/>
+                        Thanks for your message!
+                    </Toast.Title>
+                    <Toast.Action
+                        asChild
+                        altText="Close"
+                    >
+                        <button
+                            onClick={() => {
+                                setOpen(false);
+                                clearTimeout(timerRef.current);
+                            }}
+                            className="cursor-pointer ml-auto"
+                        >
+                            <X className="text-slate-900" size={28}/>
+                        </button>
+                    </Toast.Action>
+                </Toast.Root>
+                <Toast.Viewport
+                    className="fixed bottom-0 right-0 z-[2147483647] m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2.5 p-[var(--viewport-padding)] outline-none [--viewport-padding:_25px]"/>
+            </Toast.Provider>
         </Section>
     );
 };
