@@ -5,9 +5,12 @@ export const getMediumData = async () => {
         next: { revalidate: 3600 },
     });
 
-    if (!res.ok) {
+    if (!res.ok && (process.env.NODE_ENV !== 'production')) {
         return mediumBackup;
-        // throw new Error('Failed to fetch Medium')
+    }
+
+    if (!res.ok) {
+        throw new Error('Failed to fetch Medium')
     }
 
     return await res.json() as MediumData;
