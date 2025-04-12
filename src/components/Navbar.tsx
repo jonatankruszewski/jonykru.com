@@ -1,7 +1,7 @@
 'use client'
 
-import React from 'react'
 import { Disclosure } from '@headlessui/react'
+import React from 'react'
 import DisclosureMenu from '@/components/DisclosureMenu'
 
 const Navbar = () => {

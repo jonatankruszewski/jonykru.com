@@ -1,11 +1,11 @@
 'use client'
+import { motion, useInView as useMotionInView } from 'framer-motion'
 import React, { useRef } from 'react'
 
-import { extractImageLinks } from '@/utils/extractImageLinks'
-import { MediumData } from '@/types/medium.types'
-import { motion, useInView as useMotionInView } from 'framer-motion'
-import Section from '@/utils/Section'
 import ProjectCard from '@/components/ProjectCard'
+import { MediumData } from '@/types/medium.types'
+import { extractImageLinks } from '@/utils/extractImageLinks'
+import Section from '@/utils/Section'
 
 const PublicationsSection = ({ mediumData }: { mediumData: MediumData }) => {
   const data = mediumData?.items.map((item) => {

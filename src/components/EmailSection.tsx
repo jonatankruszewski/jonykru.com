@@ -1,19 +1,19 @@
 'use client'
-import React, { useEffect } from 'react'
-import GithubIcon from '/public/github-icon.svg'
-import LinkedinIcon from '/public/linkedin-icon.svg'
-import MediumIcon from '/public/medium-icon-white.svg'
-import StackOverflow from '/public/stack-overflow-icon.svg'
-import Link from 'next/link'
-import Image from 'next/image'
 import { useForm as useFormSpreeForm } from '@formspree/react'
-import { FormProvider, useForm as useReactHookForm } from 'react-hook-form'
 import { Button } from '@headlessui/react'
-import Section from '@/utils/Section'
-import TextInput from '@/components/TextInput'
-import TextAreaInput from '@/components/TextAreaInput'
-import { Toast } from 'radix-ui'
 import { Check, X } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Toast } from 'radix-ui'
+import React, { useEffect } from 'react'
+import { FormProvider, useForm as useReactHookForm } from 'react-hook-form'
+import GithubIcon from '@/assets/github-icon.svg'
+import LinkedinIcon from '@/assets/linkedin-icon.svg'
+import MediumIcon from '@/assets/medium-icon-white.svg'
+import StackOverflow from '@/assets/stack-overflow-icon.svg'
+import TextAreaInput from '@/components/TextAreaInput'
+import TextInput from '@/components/TextInput'
+import Section from '@/utils/Section'
 
 type FormData = {
   email: string
@@ -64,7 +64,6 @@ const EmailSection = () => {
     }, 5000)
 
     return () => clearTimeout(timerRef.current)
-     
   }, [state.succeeded])
 
   console.info({ state })
@@ -124,23 +123,23 @@ const EmailSection = () => {
                 control={control}
                 placeholder="jacob@google.com"
                 name={'email'}
-                // rules={{
-                //     required: "Email is required",
-                //     maxLength: {
-                //         value: 128,
-                //         message: "Email must be at most 128 characters long",
-                //     },
-                //     validate: (value) => {
-                //         if (!value.includes("@")) {
-                //             return "Please include '@' in your email address";
-                //         }
-                //         return true;
-                //     },
-                //     pattern: {
-                //         value: emailRegex,
-                //         message: "Please enter a valid email address",
-                //     },
-                // }}
+                rules={{
+                  required: 'Email is required',
+                  maxLength: {
+                    value: 128,
+                    message: 'Email must be at most 128 characters long'
+                  },
+                  validate: (value) => {
+                    if (!value.includes('@')) {
+                      return "Please include '@' in your email address"
+                    }
+                    return true
+                  },
+                  pattern: {
+                    value: emailRegex,
+                    message: 'Please enter a valid email address'
+                  }
+                }}
                 id="email"
                 autoComplete="email"
               />
