@@ -1,9 +1,9 @@
+import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
+import { CredlyBadge } from '@/types/credly.types'
 import { transformCredlyUrl } from '@/utils/transformCredlyUrl'
 import { zigZagSort } from '@/utils/zigZagSort'
-import Link from 'next/link'
-import Image from 'next/image'
-import { CredlyBadge } from '@/types/credly.types'
 
 type CertificationCardProps = {
   badge: CredlyBadge

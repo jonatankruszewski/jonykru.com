@@ -1,12 +1,12 @@
 import AboutSection from '@/components/AboutSection'
-import Navbar from '@/components/Navbar'
-import PublicationsSection from '@/components/PublicationsSection'
+import CertificationsSection from '@/components/CertificationsSection'
 import EmailSection from '@/components/EmailSection'
 import Footer from '@/components/Footer'
-import CertificationsSection from '@/components/CertificationsSection'
+import Navbar from '@/components/Navbar'
+import PublicationsSection from '@/components/PublicationsSection'
 import SectionProvider from '@/context/sectionContext'
-import { getMediumData } from '@/dataFetchers/medium.dataFetcher'
 import { getCredlyData } from '@/dataFetchers/credly.dataFetcher'
+import { getMediumData } from '@/dataFetchers/medium.dataFetcher'
 
 export default async function Home() {
   const mediumData = await getMediumData()

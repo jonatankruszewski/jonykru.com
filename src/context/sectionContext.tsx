@@ -6,7 +6,6 @@ import {
   ReactNode,
   SetStateAction,
   useContext,
-  useEffect,
   useState
 } from 'react'
 import { useInView } from 'react-intersection-observer'

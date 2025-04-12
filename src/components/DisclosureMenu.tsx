@@ -1,14 +1,14 @@
 'use client'
 
-import React, { Fragment, useRef } from 'react'
+import { DisclosureButton, DisclosurePanel } from '@headlessui/react'
+import { useFocusTrap } from '@mantine/hooks'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
+import React, { Fragment, useRef } from 'react'
+import { useOnClickOutside } from 'usehooks-ts'
 import { FontJetBrainsMono } from '@/app/fonts'
 
 import NavbarLinks from '@/components/NavbarLinks'
-import { DisclosureButton, DisclosurePanel } from '@headlessui/react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { useOnClickOutside } from 'usehooks-ts'
-import { useFocusTrap } from '@mantine/hooks'
 import { useEscapeKey } from '@/utils/useEscape'
 
 const DisclosureMenu = ({

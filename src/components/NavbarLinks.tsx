@@ -1,5 +1,5 @@
-import NavLink from '@/components/NavLink'
 import React from 'react'
+import NavLink from '@/components/NavLink'
 
 type NavbarLinksProps = {
   onClick?: () => void

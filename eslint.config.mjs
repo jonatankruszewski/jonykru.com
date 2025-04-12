@@ -3,6 +3,7 @@ import * as fs from "fs"
 import eslintPluginImport from "eslint-plugin-import"
 import eslintPluginNext from "@next/eslint-plugin-next"
 import typescriptEslint from "typescript-eslint"
+import eslintPluginReactHooks from "eslint-plugin-react-hooks"
 
 const eslintIgnore = [
     ".git/",
@@ -25,10 +26,13 @@ const config = typescriptEslint.config(
     {
         plugins: {
             "@next/next": eslintPluginNext,
+            "react-hooks": eslintPluginReactHooks,
         },
         rules: {
             ...eslintPluginNext.configs.recommended.rules,
             ...eslintPluginNext.configs["core-web-vitals"].rules,
+            "react-hooks/rules-of-hooks": "error",
+            "react-hooks/exhaustive-deps": "warn",
         },
     },
     {
@@ -36,7 +40,6 @@ const config = typescriptEslint.config(
             tailwindcss: {
                 callees: ["classnames", "clsx", "ctl", "cn", "cva"],
             },
-
             "import/resolver": {
                 typescript: true,
                 node: true,

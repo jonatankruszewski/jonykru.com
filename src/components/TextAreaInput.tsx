@@ -1,11 +1,11 @@
+import { Info } from 'lucide-react'
+import React, { TextareaHTMLAttributes, useRef, useState } from 'react'
 import {
   FieldValues,
   Path,
   useController,
   UseControllerProps
 } from 'react-hook-form'
-import React, { TextareaHTMLAttributes, useRef, useState } from 'react'
-import { Info } from 'lucide-react'
 
 type TextAreaInputProps<
   TFieldValues extends FieldValues,

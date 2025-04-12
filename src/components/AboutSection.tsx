@@ -1,9 +1,9 @@
 'use client'
 
-import Section from '@/utils/Section'
-import Achievements from '@/components/Achievements'
 import AboutMeCardsSection from '@/components/AboutMeCards'
+import Achievements from '@/components/Achievements'
 import Presentation from '@/components/Presentation'
+import Section from '@/utils/Section'
 
 const AboutSection = () => {
   return (

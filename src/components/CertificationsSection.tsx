@@ -1,9 +1,9 @@
 'use client'
 import React, { useState } from 'react'
-import ProjectTag from '@/components/ProjectTag'
 import CertificationCard from '@/components/CertificationCard'
-import Section from '@/utils/Section'
+import ProjectTag from '@/components/ProjectTag'
 import { CredlyData } from '@/types/credly.types'
+import Section from '@/utils/Section'
 
 type CertificationsSectionProps = {
   credlyData: CredlyData

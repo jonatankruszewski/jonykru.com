@@ -1,9 +1,9 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { HTMLAttributes, ReactNode } from 'react'
 import { InView } from 'react-intersection-observer'
 import { Sections, useSectionContext } from '@/context/sectionContext'
-import { useRouter } from 'next/navigation'
 
 const Section = ({
   children,
