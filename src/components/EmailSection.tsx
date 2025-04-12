@@ -1,11 +1,12 @@
 'use client'
 import { useForm as useFormSpreeForm } from '@formspree/react'
 import { Button } from '@headlessui/react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Check, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Toast } from 'radix-ui'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FormProvider, useForm as useReactHookForm } from 'react-hook-form'
 import GithubIcon from '@/assets/github-icon.svg'
 import LinkedinIcon from '@/assets/linkedin-icon.svg'
@@ -14,7 +15,6 @@ import StackOverflow from '@/assets/stack-overflow-icon.svg'
 import TextAreaInput from '@/components/TextAreaInput'
 import TextInput from '@/components/TextInput'
 import Section from '@/utils/Section'
-import { motion } from 'framer-motion'
 
 type FormData = {
   email: string
@@ -25,12 +25,12 @@ type FormData = {
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
 const EmailSection = () => {
-  const [state, handleSubmit, handleReset] =
+  const [state, handleSubmit, resetFormSubmission] =
     useFormSpreeForm<FormData>('xwpleawo')
   const methods = useReactHookForm<FormData>({ mode: 'onTouched' })
   const { handleSubmit: useFormSubmit, control } = methods
   const timerRef = useRef<NodeJS.Timeout | undefined>(undefined)
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   const onSubmit = async (data: FormData) => {
     await handleSubmit(data)
@@ -43,31 +43,33 @@ const EmailSection = () => {
         subject: '',
         message: ''
       })
-      handleReset()
-      // setOpen(true)
+      resetFormSubmission()
     }
-    //eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.succeeded])
 
-  React.useEffect(() => {
-    return () => timerRef && clearTimeout(timerRef.current)
-  }, [])
-
+  // TODO: make this imperative
   React.useEffect(() => {
     if (!state.succeeded) {
       return
     }
 
-    timerRef && clearTimeout(timerRef.current)
+    const currentTimerRef = timerRef.current
+    if (currentTimerRef) {
+      clearTimeout(timerRef.current)
+    }
+
     setOpen(true)
-    setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       setOpen(false)
-    }, 5000)
+    }, 500000)
 
-    return () => timerRef && clearTimeout(timerRef.current)
+    return () => {
+      if (currentTimerRef) {
+        clearTimeout(timerRef.current)
+      }
+    }
   }, [state.succeeded])
-
-  console.info({ state })
 
   return (
     <Section id="contact">
@@ -188,55 +190,43 @@ const EmailSection = () => {
           </FormProvider>
         </div>
       </div>
+
+      {/*TODO: move this out to its own*/}
       <Toast.Provider swipeDirection="right">
-        <Toast.Root
-          className="flex justify-between items-center gap-x-[15px] rounded-lg bg-white p-[15px]"
-          open={open}
-          onOpenChange={setOpen}
-        >
-          <motion.li
-            // initial={{ opacity: 0, scale: 0.95 }}
-            // animate={{
-            //   opacity: 1,
-            //   scale: 1,
-            //   transition: { duration: 0.1, ease: 'easeOut' }
-            // }}
-            // exit={{
-            //   opacity: 0,
-            //   scale: 0.95,
-            //   transition: { duration: 0.1, ease: 'easeOut' }
-            // }}
-            initial={{ x: 100, opacity: 0 }}
-            animate={{
-              x: 0,
-              opacity: 1,
-              transition: { duration: 0.2, ease: 'easeOut' }
-            }}
-            exit={{
-              x: 100,
-              opacity: 0,
-              transition: { duration: 0.2, ease: 'easeIn' }
-            }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-          >
-            <Toast.Title className="flex gap-3 items-center text-[15px] font-medium text-slate12">
-              <Check className="text-green-500" size={28} />
-              Thanks for your message!
-            </Toast.Title>
-            <Toast.Action asChild altText="Close">
-              <button
-                onClick={() => {
-                  setOpen(false)
-                  clearTimeout(timerRef.current)
-                }}
-                className="cursor-pointer ml-auto"
+        <AnimatePresence>
+          {open && (
+            <Toast.Root
+              key={crypto.randomUUID()}
+              asChild
+              forceMount
+              className="border-2  flex justify-between items-center gap-x-[15px] rounded-xl p-[15px] border-gray-200 bg-[#1e1e1e] "
+            >
+              <motion.div
+                layoutId={crypto.randomUUID()}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 100 }}
               >
-                <X className="text-slate-500 hover:text-slate-900" size={28} />
-              </button>
-            </Toast.Action>
-          </motion.li>
-        </Toast.Root>
-        <Toast.Viewport className="fixed bottom-0 right-0 z-[2147483647] m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2.5 outline-none [--viewport-padding:_25px]" />
+                <Toast.Title className="flex gap-3 items-center text-[15px] font-medium text-[#e0e0e0]">
+                  <Check className="text-green-500" size={28} />
+                  Message successfully sent
+                </Toast.Title>
+                <Toast.Action asChild altText="Close">
+                  <Button
+                    className="cursor-pointer ml-auto"
+                    onClick={() => setOpen(false)}
+                  >
+                    <X
+                      className="cursor-pointer hover:text-[#fff] text-[#aaa]"
+                      size={28}
+                    />
+                  </Button>
+                </Toast.Action>
+              </motion.div>
+            </Toast.Root>
+          )}
+        </AnimatePresence>
+        <Toast.Viewport className="fixed bottom-0 right-0 z-[2147483647] m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2.5 p-[var(--viewport-padding)] outline-none [--viewport-padding:_25px]" />
       </Toast.Provider>
     </Section>
   )
