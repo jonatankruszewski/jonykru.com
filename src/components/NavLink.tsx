@@ -1,34 +1,35 @@
-import type {LinkProps} from 'next/link'
-import Link from "next/link";
-import {ReactNode} from "react";
-import {FontJetBrainsMono} from "@/app/fonts";
-import {useSectionContext} from "@/context/sectionContext";
+import type { LinkProps } from 'next/link'
+import Link from 'next/link'
+import { ReactNode } from 'react'
+import { FontJetBrainsMono } from '@/app/fonts'
+import { useSectionContext } from '@/context/sectionContext'
 
 type NavLinkProps = {
-    href: string;
-    title: string;
-    icon?: ReactNode;
-    onClick?: () => void;
-} & LinkProps;
+  href: string
+  title: string
+  icon?: ReactNode
+  onClick?: () => void
+} & LinkProps
 
-const NavLink = ({href, title, icon, onClick}: NavLinkProps) => {
-    const {visibleSection, setVisibleSection} = useSectionContext();
-    const selected = visibleSection === title;
+const NavLink = ({ href, title, icon, onClick }: NavLinkProps) => {
+  const { visibleSection, setVisibleSection } = useSectionContext()
+  const selected = visibleSection === title
 
-    return (
-        <Link
-            onClick={() => {
-                setVisibleSection(title);
-                if (onClick) {
-                    onClick();
-                }
-            }}
-            href={href}
-            className={`${FontJetBrainsMono.className} py-2 pl-3 pr-4 text-[#ADB7BE] sm:text-xl md:p-0 hover:text-white flex gap-2 font-extralight ${selected ? 'text-white' : ''}`}>
-            {icon && icon}
-            {title}
-        </Link>
-    );
-};
+  return (
+    <Link
+      onClick={() => {
+        setVisibleSection(title)
+        if (onClick) {
+          onClick()
+        }
+      }}
+      href={href}
+      className={`${FontJetBrainsMono.className} py-2 pl-3 pr-4 text-[#ADB7BE] sm:text-xl md:p-0 hover:text-white flex gap-2 font-extralight ${selected ? 'text-white' : ''}`}
+    >
+      {icon && icon}
+      {title}
+    </Link>
+  )
+}
 
-export default NavLink;
+export default NavLink
