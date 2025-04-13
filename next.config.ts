@@ -1,4 +1,7 @@
 import type { NextConfig } from 'next'
+import withBundleAnalyzer from '@next/bundle-analyzer'
+
+const isAnalyze = process.env.NODE_ENV !== 'production'
 
 const nextConfig: NextConfig = {
   devIndicators: false,
@@ -13,7 +16,12 @@ const nextConfig: NextConfig = {
         hostname: '**.medium.com'
       }
     ]
-  }
+  },
+  compress: true,
+  reactStrictMode: true,
+  output: 'standalone'
 }
 
-export default nextConfig
+export default isAnalyze
+  ? withBundleAnalyzer({ enabled: true })(nextConfig)
+  : nextConfig
