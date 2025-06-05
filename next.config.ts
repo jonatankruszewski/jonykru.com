@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
   },
   compress: true,
   reactStrictMode: true,
-  output: 'standalone'
+  output: 'export'
 }
 
 export default isAnalyze
