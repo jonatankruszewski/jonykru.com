@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import OptimizedImage from '@/components/OptimizedImage'
 
 type ProjectCardProps = {
   imgUrl?: string
@@ -20,13 +20,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   return (
     <div className="bg-[#1E1E2E] rounded-xl border border-gray-700 shadow-md transform transition duration-300 flex flex-col flex-1 h-full max-w-[450px] mx-auto ">
       <div className="md:h-72 rounded-t-xl relative group overflow-hidden aspect-square w-full">
-        <Image
+        <OptimizedImage
           src={imgUrl}
           alt={'Medium article cover'}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-t-xl"
-          unoptimized
+          className="rounded-t-xl h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/20"></div>
       </div>

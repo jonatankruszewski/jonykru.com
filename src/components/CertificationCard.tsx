@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import OptimizedImage from '@/components/OptimizedImage'
 import { CredlyBadge } from '@/types/credly.types'
 import { transformCredlyUrl } from '@/utils/transformCredlyUrl'
 import { zigZagSort } from '@/utils/zigZagSort'
@@ -21,12 +21,13 @@ const CertificationCard: React.FC<CertificationCardProps> = ({
 
   return (
     <li className="overflow-hidden lg:p-6 text-center flex flex-col gap-2">
-      <Image
+      <OptimizedImage
         width={200}
         height={200}
         className="w-full max-w-[200px] mx-auto p-4"
         src={transformCredlyUrl(imgUrl)}
         alt={`${title} Badge`}
+        preload={true}
       />
       <Link
         href={previewUrl}

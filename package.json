@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "NODE_ENV=production next build",
     "build-analyize": "NODE_ENV=development next build",
-    "start": "next start",
+    "start": "npx serve out",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "prettier": "prettier --check \"**/*.{js,jsx,ts,tsx}\"",
@@ -52,6 +52,7 @@
     "postcss": "^8.5.4",
     "prettier": "^3.5.3",
     "tailwindcss": "^4.1.8",
+    "tsc-files": "^1.1.4",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.33.1"
   },
@@ -61,7 +62,7 @@
       "prettier --write"
     ],
     "!(*.config).{ts,tsx}": [
-      "tsc --noEmit"
+      "tsc-files --skipLibCheck --noEmit --project tsconfig.json"
     ],
     "*.{json,md,css,scss}": [
       "prettier --write"

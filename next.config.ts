@@ -15,7 +15,8 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: '**.medium.com'
       }
-    ]
+    ],
+    unoptimized: true
   },
   compress: true,
   reactStrictMode: true,
