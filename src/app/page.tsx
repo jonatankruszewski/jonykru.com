@@ -6,10 +6,9 @@ import Navbar from '@/components/Navbar'
 import PublicationsSection from '@/components/PublicationsSection'
 import SectionProvider from '@/context/sectionContext'
 import { getCredlyData } from '@/dataFetchers/credly.dataFetcher'
-import { getMediumData } from '@/dataFetchers/medium.dataFetcher'
+import mediumData from '@/dataFetchers/mediumData.json'
 
 export default async function Home() {
-  const mediumData = await getMediumData()
   const credlyData = await getCredlyData()
 
   return (

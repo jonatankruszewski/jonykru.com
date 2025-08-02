@@ -26,3 +26,12 @@ export type MediumData = {
   feed?: Feed
   items: Article[]
 }
+
+export type MediumFlatData = {
+  title: string
+  pubDate: string
+  guid: string
+  link: string
+  categories: string[]
+  image: string
+}

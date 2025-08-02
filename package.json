@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "NODE_ENV=production next build",
-    "build-analyize": "NODE_ENV=development next build",
+    "build-analyze": "ANALYZE=true NODE_ENV=development next build",
     "start": "npx serve out",
     "lint": "next lint",
     "lint:fix": "next lint --fix",

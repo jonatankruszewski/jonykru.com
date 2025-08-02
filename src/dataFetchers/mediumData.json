@@ -1,0 +1,124 @@
+[
+  {
+    "title": "Migrating a Large SCSS Codebase in a Monorepo To SASS ^1.80.0",
+    "pubDate": "2024-12-31 21:37:40",
+    "guid": "https://medium.com/p/ed7faec2a8b6",
+    "link": "https://levelup.gitconnected.com/migrating-a-large-scss-codebase-in-a-monorepo-to-sass-1-80-0-ed7faec2a8b6?source=rss-9d104c42e755------2",
+    "categories": ["scss", "javascript", "sass", "monorepo", "react"],
+    "image": "/images/medium/ed7faec2a8b6.jpg"
+  },
+  {
+    "title": "Learn TypeScript One Snippet at a Time: 150+ Code Samples Across 11 Key Topics",
+    "pubDate": "2024-12-17 21:08:18",
+    "guid": "https://medium.com/p/ce6844f008ad",
+    "link": "https://levelup.gitconnected.com/learn-typescript-one-snippet-at-a-time-150-code-samples-across-11-key-topics-ce6844f008ad?source=rss-9d104c42e755------2",
+    "categories": [
+      "react",
+      "typescript",
+      "web-development",
+      "programming",
+      "javascript"
+    ],
+    "image": "/images/medium/ce6844f008ad.jpg"
+  },
+  {
+    "title": "Building Features in React the Right Way: A Scalable Solution Case Study",
+    "pubDate": "2024-12-03 18:44:28",
+    "guid": "https://medium.com/p/b95a77853701",
+    "link": "https://levelup.gitconnected.com/building-features-in-react-the-right-way-a-scalable-solution-case-study-b95a77853701?source=rss-9d104c42e755------2",
+    "categories": [
+      "user-experience",
+      "data-structures",
+      "software-development",
+      "javascript",
+      "react"
+    ],
+    "image": "/images/medium/b95a77853701.jpg"
+  },
+  {
+    "title": "Why Years of Experience Don’t Matter — How to Keep Your Skills Relevant in Tech",
+    "pubDate": "2024-11-14 21:23:29",
+    "guid": "https://medium.com/p/9dbb2dc4e86e",
+    "link": "https://levelup.gitconnected.com/why-years-of-experience-dont-matter-how-to-keep-your-skills-relevant-in-tech-9dbb2dc4e86e?source=rss-9d104c42e755------2",
+    "categories": [
+      "tech",
+      "software-engineering",
+      "personal-growth",
+      "career-development",
+      "self-improvement"
+    ],
+    "image": "/images/medium/9dbb2dc4e86e.jpg"
+  },
+  {
+    "title": "Why Zero Tech Debt is a Myth (and Maybe a Red Flag)",
+    "pubDate": "2024-10-21 23:40:04",
+    "guid": "https://medium.com/p/4a83ebc66e60",
+    "link": "https://levelup.gitconnected.com/why-zero-tech-debt-is-a-myth-and-maybe-a-red-flag-4a83ebc66e60?source=rss-9d104c42e755------2",
+    "categories": [
+      "agile",
+      "software-development",
+      "productivity",
+      "tech-debt",
+      "coding"
+    ],
+    "image": "/images/medium/4a83ebc66e60.jpg"
+  },
+  {
+    "title": "Mastering TypeScript Migration in a Create React App Monorepo: A Practical Guide with CRACO",
+    "pubDate": "2024-10-08 16:38:48",
+    "guid": "https://medium.com/p/cad3de4acfa0",
+    "link": "https://levelup.gitconnected.com/mastering-typescript-migration-in-a-create-react-app-monorepo-a-practical-guide-with-craco-cad3de4acfa0?source=rss-9d104c42e755------2",
+    "categories": ["monorepo", "typescript", "babel", "react", "eslint"],
+    "image": "/images/medium/cad3de4acfa0.jpg"
+  },
+  {
+    "title": "React Tabs: Prevent Flickering When Highlighting with Bold Text",
+    "pubDate": "2024-09-23 01:08:16",
+    "guid": "https://medium.com/p/fa12d319cb18",
+    "link": "https://levelup.gitconnected.com/react-tabs-prevent-flickering-when-highlighting-with-bold-text-fa12d319cb18?source=rss-9d104c42e755------2",
+    "categories": ["reactjs", "ui-ux-design", "react", "radix", "tabs"],
+    "image": "/images/medium/fa12d319cb18.jpg"
+  },
+  {
+    "title": "My GitHub Administration Exam Certification Experience",
+    "pubDate": "2024-09-12 14:49:07",
+    "guid": "https://medium.com/p/65a999a008da",
+    "link": "https://levelup.gitconnected.com/my-github-administration-exam-certification-experience-65a999a008da?source=rss-9d104c42e755------2",
+    "categories": [
+      "administration",
+      "github-administration",
+      "github",
+      "certification",
+      "github-certification"
+    ],
+    "image": "/images/medium/65a999a008da.png"
+  },
+  {
+    "title": "5 Ways I Use AI in Front-End Development",
+    "pubDate": "2024-09-02 12:17:34",
+    "guid": "https://medium.com/p/ee3490516dd4",
+    "link": "https://javascript.plainenglish.io/5-ways-i-use-ai-in-front-end-development-ee3490516dd4?source=rss-9d104c42e755------2",
+    "categories": [
+      "ai",
+      "web-development",
+      "artificial-intelligence",
+      "javascript",
+      "front-end-development"
+    ],
+    "image": "/images/medium/ee3490516dd4.jpg"
+  },
+  {
+    "title": "Rebase Multiple GIT Branches Like a Pro: Creating Continuous PR Chains",
+    "pubDate": "2024-08-27 16:36:02",
+    "guid": "https://medium.com/p/22df25b5fe50",
+    "link": "https://levelup.gitconnected.com/rebase-multiple-git-branches-like-a-pro-master-continuous-pr-chains-22df25b5fe50?source=rss-9d104c42e755------2",
+    "categories": [
+      "pull-request",
+      "git",
+      "version-control",
+      "gitlab",
+      "github"
+    ],
+    "image": "/images/medium/22df25b5fe50.jpg"
+  }
+]

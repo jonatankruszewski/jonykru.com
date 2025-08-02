@@ -1,7 +1,7 @@
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import type { NextConfig } from 'next'
 
-const isAnalyze = process.env.NODE_ENV !== 'production'
+const isAnalyze = process.env.ANALYZE === 'true'
 
 const nextConfig: NextConfig = {
   devIndicators: false,
@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: '**.medium.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn-images-1.medium.com'
       }
     ],
     unoptimized: true
