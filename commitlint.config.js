@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   extends: [],
   rules: {
     'type-enum': [
@@ -19,7 +19,7 @@ export default {
     'type-case': [2, 'always', 'upper-case'],
     'type-empty': [2, 'never'],
     'subject-empty': [2, 'never'],
-    'subject-case': [0], // Disable subject case checking
+    'subject-case': [0],
     'header-max-length': [2, 'always', 100],
     'body-leading-blank': [2, 'always'],
     'footer-leading-blank': [2, 'always']
