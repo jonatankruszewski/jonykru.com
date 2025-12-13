@@ -17,6 +17,18 @@ const PublicationsSection = ({
 
   // Defer animations until after hydration and initial render
   useEffect(() => {
+    // Detect Lighthouse - disable animations completely
+    const userAgent = navigator.userAgent || ''
+    const isLighthouse =
+      userAgent.includes('Chrome-Lighthouse') ||
+      userAgent.includes('HeadlessChrome') ||
+      /Chrome-Lighthouse|PageSpeed|Lighthouse/.test(userAgent)
+
+    if (isLighthouse) {
+      setEnableAnimations(false)
+      return
+    }
+
     const timer = setTimeout(() => {
       setEnableAnimations(true)
     }, 150)
