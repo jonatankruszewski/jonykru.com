@@ -13,6 +13,7 @@
     "prettier:fix": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
     "prepare": "husky",
     "update-credly": "tsx scripts/update-credly.ts",
+    "update-medium": "tsx scripts/update-medium.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
