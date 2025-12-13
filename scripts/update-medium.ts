@@ -6,14 +6,15 @@
  * This script:
  * 1. Fetches article data from Medium RSS feed via rss2json API
  * 2. Filters to only required fields
- * 3. Downloads article images (resized to 370px width)
+ * 3. Downloads article images, resizes to 370px width, and converts to WebP
  * 4. Saves to mediumData.json
  *
  * Usage:
  *   Run: pnpm update-medium
  */
 
-import { execSync } from 'child_process'
+import sharp from 'sharp'
+
 import * as fs from 'fs'
 import * as path from 'path'
 
@@ -143,140 +144,54 @@ export function extractArticleId(guid: string): string {
 }
 
 /**
- * Get file extension from URL or default to jpg
+ * Download image from URL and return as Buffer
  */
-export function getFileExtension(url: string): string {
-  const match = url.match(/\.([a-zA-Z]+)(?:\?|$)/)
-  if (
-    match &&
-    ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(match[1].toLowerCase())
-  ) {
-    return match[1].toLowerCase()
+export async function downloadImage(url: string): Promise<Buffer> {
+  const response = await fetch(url, {
+    headers: {
+      'User-Agent':
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      Accept: 'image/webp,image/apng,image/*,*/*;q=0.8',
+      'Accept-Language': 'en-US,en;q=0.9',
+      Referer: 'https://medium.com/'
+    }
+  })
+  if (!response.ok) {
+    throw new Error(`Failed to download image: ${response.status}`)
   }
-  return 'jpg'
+  const arrayBuffer = await response.arrayBuffer()
+  return Buffer.from(arrayBuffer)
 }
 
 /**
- * Detect actual file type from file content using magic bytes
+ * Download, resize, and convert an image to WebP format
+ * Returns the final file path (always .webp)
  */
-export function detectFileType(filePath: string): string {
-  try {
-    const fd = fs.openSync(filePath, 'r')
-    const buffer = Buffer.alloc(8)
-    fs.readSync(fd, buffer, 0, 8, 0)
-    fs.closeSync(fd)
-
-    // Check magic bytes
-    // JPEG: FF D8 FF
-    if (buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
-      return 'jpeg'
-    }
-    // PNG: 89 50 4E 47 0D 0A 1A 0A
-    if (
-      buffer[0] === 0x89 &&
-      buffer[1] === 0x50 &&
-      buffer[2] === 0x4e &&
-      buffer[3] === 0x47
-    ) {
-      return 'png'
-    }
-    // GIF: 47 49 46 38
-    if (
-      buffer[0] === 0x47 &&
-      buffer[1] === 0x49 &&
-      buffer[2] === 0x46 &&
-      buffer[3] === 0x38
-    ) {
-      return 'gif'
-    }
-    // WebP: 52 49 46 46 ... 57 45 42 50
-    if (
-      buffer[0] === 0x52 &&
-      buffer[1] === 0x49 &&
-      buffer[2] === 0x46 &&
-      buffer[3] === 0x46
-    ) {
-      return 'webp'
-    }
-
-    return 'jpg' // Default
-  } catch {
-    return 'jpg'
-  }
-}
-
-/**
- * Download and resize an image, returns the actual file path (may differ from destPath if extension changed)
- */
-export function downloadAndResizeImage(
+export async function downloadAndConvertToWebP(
   url: string,
   destPath: string,
   maxWidth: number
-): string {
-  try {
-    // Create a temp file for the original
-    const tempPath = `${destPath}.tmp`
+): Promise<string> {
+  // Download the image
+  const imageBuffer = await downloadImage(url)
 
-    // Download the image using curl
-    execSync(`curl -s -L -o "${tempPath}" "${url}"`, { stdio: 'pipe' })
-
-    // Check if file was downloaded and has content
-    const stats = fs.statSync(tempPath)
-    if (stats.size === 0) {
-      throw new Error('Downloaded file is empty')
-    }
-
-    // Resize using sips (macOS) or ImageMagick (Linux)
-    try {
-      // Try sips first (macOS)
-      execSync(
-        `sips --resampleWidth ${maxWidth} "${tempPath}" --out "${destPath}" 2>/dev/null`,
-        { stdio: 'pipe' }
-      )
-    } catch {
-      // Fallback to ImageMagick convert
-      try {
-        execSync(
-          `convert "${tempPath}" -resize ${maxWidth}x "${destPath}" 2>/dev/null`,
-          { stdio: 'pipe' }
-        )
-      } catch {
-        // If neither works, just use the original
-        fs.renameSync(tempPath, destPath)
-      }
-    }
-
-    // Clean up temp file if it still exists
-    if (fs.existsSync(tempPath)) {
-      fs.unlinkSync(tempPath)
-    }
-
-    // Detect actual file type and rename if necessary
-    const actualType = detectFileType(destPath)
-    const currentExt = path.extname(destPath).slice(1).toLowerCase()
-
-    if (
-      (actualType !== currentExt && actualType !== 'jpg') ||
-      (actualType === 'jpg' && currentExt !== 'jpg' && currentExt !== 'jpeg')
-    ) {
-      const newExt = actualType === 'jpg' ? 'jpeg' : actualType
-      const newPath = destPath.replace(/\.[^.]+$/, `.${newExt}`)
-      fs.renameSync(destPath, newPath)
-      return newPath
-    }
-
-    return destPath
-  } catch (error) {
-    // Delete failed download
-    const tempPath = `${destPath}.tmp`
-    if (fs.existsSync(destPath)) {
-      fs.unlinkSync(destPath)
-    }
-    if (fs.existsSync(tempPath)) {
-      fs.unlinkSync(tempPath)
-    }
-    throw error
+  if (imageBuffer.length === 0) {
+    throw new Error('Downloaded file is empty')
   }
+
+  // Use sharp to resize and convert to WebP
+  await sharp(imageBuffer)
+    .resize(maxWidth, null, {
+      withoutEnlargement: true,
+      fit: 'inside'
+    })
+    .webp({
+      quality: 80,
+      effort: 6
+    })
+    .toFile(destPath)
+
+  return destPath
 }
 
 /**
@@ -296,7 +211,14 @@ export function filterMediumData(
 }
 
 /**
- * Download all article images
+ * Sleep for a specified number of milliseconds
+ */
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+/**
+ * Download all article images and convert to WebP
  */
 export async function downloadImages(
   articles: MediumFlatData[],
@@ -307,7 +229,9 @@ export async function downloadImages(
 ): Promise<MediumFlatData[]> {
   const verbose = !options.silent
   if (verbose) {
-    console.log(`📥 Downloading article images (max ${maxWidth}px width)...\n`)
+    console.log(
+      `📥 Downloading article images (max ${maxWidth}px width, WebP format)...\n`
+    )
   }
 
   const stats: DownloadStats = {
@@ -321,6 +245,8 @@ export async function downloadImages(
   for (const article of fullData.items) {
     articleMap.set(article.guid, article)
   }
+
+  let isFirstDownload = true
 
   for (const article of articles) {
     const originalArticle = articleMap.get(article.guid)
@@ -342,12 +268,12 @@ export async function downloadImages(
     }
 
     const articleId = extractArticleId(article.guid)
-    const extension = getFileExtension(imageUrl)
-    const filename = `${articleId}.${extension}`
+    // Always use .webp extension
+    const filename = `${articleId}.webp`
     const destPath = path.join(imagesDir, filename)
     const localUrl = `/images/medium/${filename}`
 
-    // Check if already downloaded
+    // Check if already downloaded (WebP version)
     if (fs.existsSync(destPath)) {
       if (verbose) {
         console.log(`⏭️  Skip: ${filename} (already exists)`)
@@ -358,15 +284,20 @@ export async function downloadImages(
     }
 
     try {
-      if (verbose) {
-        console.log(`⬇️  Downloading: ${filename}...`)
+      // Add delay between downloads to avoid rate limiting (429)
+      if (!isFirstDownload) {
+        await sleep(2000)
       }
-      const actualPath = downloadAndResizeImage(imageUrl, destPath, maxWidth)
-      const actualFilename = path.basename(actualPath)
-      article.image = `/images/medium/${actualFilename}`
+      isFirstDownload = false
+
+      if (verbose) {
+        console.log(`⬇️  Downloading & converting: ${filename}...`)
+      }
+      await downloadAndConvertToWebP(imageUrl, destPath, maxWidth)
+      article.image = localUrl
       stats.downloaded++
       if (verbose) {
-        console.log(`✅ Saved: ${actualFilename}`)
+        console.log(`✅ Saved: ${filename}`)
       }
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error)

@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
+    "sharp": "^0.33.5",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/eslintrc": "^3.3.3",
     "@next/bundle-analyzer": "^15.5.9",

@@ -5,7 +5,7 @@
     "guid": "https://medium.com/p/ed7faec2a8b6",
     "link": "https://levelup.gitconnected.com/migrating-a-large-scss-codebase-in-a-monorepo-to-sass-1-80-0-ed7faec2a8b6?source=rss-9d104c42e755------2",
     "categories": ["scss", "javascript", "sass", "monorepo", "react"],
-    "image": "/images/medium/ed7faec2a8b6.jpeg"
+    "image": "/images/medium/ed7faec2a8b6.webp"
   },
   {
     "title": "Learn TypeScript One Snippet at a Time: 150+ Code Samples Across 11 Key Topics",
@@ -19,7 +19,7 @@
       "programming",
       "javascript"
     ],
-    "image": "/images/medium/ce6844f008ad.jpeg"
+    "image": "/images/medium/ce6844f008ad.webp"
   },
   {
     "title": "Building Features in React the Right Way: A Scalable Solution Case Study",
@@ -33,7 +33,7 @@
       "javascript",
       "react"
     ],
-    "image": "/images/medium/b95a77853701.jpeg"
+    "image": "/images/medium/b95a77853701.webp"
   },
   {
     "title": "Why Years of Experience Don’t Matter — How to Keep Your Skills Relevant in Tech",
@@ -47,7 +47,7 @@
       "career-development",
       "self-improvement"
     ],
-    "image": "/images/medium/9dbb2dc4e86e.jpeg"
+    "image": "/images/medium/9dbb2dc4e86e.webp"
   },
   {
     "title": "Why Zero Tech Debt is a Myth (and Maybe a Red Flag)",
@@ -61,7 +61,7 @@
       "tech-debt",
       "coding"
     ],
-    "image": "/images/medium/4a83ebc66e60.jpeg"
+    "image": "/images/medium/4a83ebc66e60.webp"
   },
   {
     "title": "Mastering TypeScript Migration in a Create React App Monorepo: A Practical Guide with CRACO",
@@ -69,7 +69,7 @@
     "guid": "https://medium.com/p/cad3de4acfa0",
     "link": "https://levelup.gitconnected.com/mastering-typescript-migration-in-a-create-react-app-monorepo-a-practical-guide-with-craco-cad3de4acfa0?source=rss-9d104c42e755------2",
     "categories": ["monorepo", "typescript", "babel", "react", "eslint"],
-    "image": "/images/medium/cad3de4acfa0.jpeg"
+    "image": "/images/medium/cad3de4acfa0.webp"
   },
   {
     "title": "React Tabs: Prevent Flickering When Highlighting with Bold Text",
@@ -77,7 +77,7 @@
     "guid": "https://medium.com/p/fa12d319cb18",
     "link": "https://levelup.gitconnected.com/react-tabs-prevent-flickering-when-highlighting-with-bold-text-fa12d319cb18?source=rss-9d104c42e755------2",
     "categories": ["reactjs", "ui-ux-design", "react", "radix", "tabs"],
-    "image": "/images/medium/fa12d319cb18.jpeg"
+    "image": "/images/medium/fa12d319cb18.webp"
   },
   {
     "title": "My GitHub Administration Exam Certification Experience",
@@ -91,7 +91,7 @@
       "certification",
       "github-certification"
     ],
-    "image": "/images/medium/65a999a008da.png"
+    "image": "/images/medium/65a999a008da.webp"
   },
   {
     "title": "5 Ways I Use AI in Front-End Development",
@@ -105,7 +105,7 @@
       "javascript",
       "front-end-development"
     ],
-    "image": "/images/medium/ee3490516dd4.jpeg"
+    "image": "/images/medium/ee3490516dd4.webp"
   },
   {
     "title": "Rebase Multiple GIT Branches Like a Pro: Creating Continuous PR Chains",
@@ -119,6 +119,6 @@
       "gitlab",
       "github"
     ],
-    "image": "/images/medium/22df25b5fe50.jpeg"
+    "image": "/images/medium/22df25b5fe50.webp"
   }
 ]

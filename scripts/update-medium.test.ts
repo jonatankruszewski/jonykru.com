@@ -1,15 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import * as fs from 'fs'
 import {
-  detectFileType,
-  downloadAndResizeImage,
+  downloadAndConvertToWebP,
+  downloadImage,
   downloadImages,
   ensureImagesDir,
   extractArticleId,
   extractImageUrl,
   fetchMediumData,
   filterMediumData,
-  getFileExtension,
   type MediumApiResponse,
   type MediumArticle,
   type MediumFlatData,
@@ -18,7 +17,13 @@ import {
 
 // Mock dependencies
 vi.mock('fs')
-vi.mock('child_process')
+vi.mock('sharp', () => ({
+  default: vi.fn(() => ({
+    resize: vi.fn().mockReturnThis(),
+    webp: vi.fn().mockReturnThis(),
+    toFile: vi.fn().mockResolvedValue(undefined)
+  }))
+}))
 
 describe('update-medium', () => {
   beforeEach(() => {
@@ -40,33 +45,6 @@ describe('update-medium', () => {
       const guid = 'https://medium.com/p/abc123xyz'
       const id = extractArticleId(guid)
       expect(id).toBe('abc123xyz')
-    })
-  })
-
-  describe('getFileExtension', () => {
-    it('should extract jpg extension', () => {
-      const url = 'https://cdn-images-1.medium.com/max/1024/image.jpg'
-      expect(getFileExtension(url)).toBe('jpg')
-    })
-
-    it('should extract png extension', () => {
-      const url = 'https://cdn-images-1.medium.com/max/1024/image.png'
-      expect(getFileExtension(url)).toBe('png')
-    })
-
-    it('should handle URLs with query parameters', () => {
-      const url = 'https://cdn-images-1.medium.com/max/1024/image.jpeg?v=123'
-      expect(getFileExtension(url)).toBe('jpeg')
-    })
-
-    it('should default to jpg for unknown extensions', () => {
-      const url = 'https://cdn-images-1.medium.com/max/1024/image'
-      expect(getFileExtension(url)).toBe('jpg')
-    })
-
-    it('should handle webp extension', () => {
-      const url = 'https://cdn-images-1.medium.com/max/1024/image.webp'
-      expect(getFileExtension(url)).toBe('webp')
     })
   })
 
@@ -279,7 +257,7 @@ describe('update-medium', () => {
           guid: 'https://medium.com/p/123',
           link: 'https://medium.com/article',
           categories: ['test'],
-          image: '/images/medium/123.jpg'
+          image: '/images/medium/123.webp'
         }
       ]
 
@@ -368,255 +346,68 @@ describe('update-medium', () => {
     })
   })
 
-  describe('detectFileType', () => {
-    it('should detect JPEG files', () => {
-      const jpegBuffer = Buffer.from([
-        0xff, 0xd8, 0xff, 0xe0, 0x00, 0x00, 0x00, 0x00
-      ])
-      vi.mocked(fs.openSync).mockReturnValue(1)
-      vi.mocked(fs.readSync).mockImplementation((fd, buffer) => {
-        jpegBuffer.copy(buffer as Buffer)
-        return 8
+  describe('downloadImage', () => {
+    it('should download image and return buffer', async () => {
+      const mockBuffer = new ArrayBuffer(100)
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(mockBuffer)
       })
-      vi.mocked(fs.closeSync).mockImplementation(() => undefined)
 
-      expect(detectFileType('/test/image.jpg')).toBe('jpeg')
+      const result = await downloadImage('https://cdn.com/image.jpg')
+
+      expect(result).toBeInstanceOf(Buffer)
+      expect(result.length).toBe(100)
     })
 
-    it('should detect PNG files', () => {
-      const pngBuffer = Buffer.from([
-        0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a
-      ])
-      vi.mocked(fs.openSync).mockReturnValue(1)
-      vi.mocked(fs.readSync).mockImplementation((fd, buffer) => {
-        pngBuffer.copy(buffer as Buffer)
-        return 8
-      })
-      vi.mocked(fs.closeSync).mockImplementation(() => undefined)
-
-      expect(detectFileType('/test/image.png')).toBe('png')
-    })
-
-    it('should detect GIF files', () => {
-      const gifBuffer = Buffer.from([
-        0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 0x00, 0x00
-      ])
-      vi.mocked(fs.openSync).mockReturnValue(1)
-      vi.mocked(fs.readSync).mockImplementation((fd, buffer) => {
-        gifBuffer.copy(buffer as Buffer)
-        return 8
-      })
-      vi.mocked(fs.closeSync).mockImplementation(() => undefined)
-
-      expect(detectFileType('/test/image.gif')).toBe('gif')
-    })
-
-    it('should detect WebP files', () => {
-      const webpBuffer = Buffer.from([
-        0x52, 0x49, 0x46, 0x46, 0x00, 0x00, 0x00, 0x00
-      ])
-      vi.mocked(fs.openSync).mockReturnValue(1)
-      vi.mocked(fs.readSync).mockImplementation((fd, buffer) => {
-        webpBuffer.copy(buffer as Buffer)
-        return 8
-      })
-      vi.mocked(fs.closeSync).mockImplementation(() => undefined)
-
-      expect(detectFileType('/test/image.webp')).toBe('webp')
-    })
-
-    it('should default to jpg for unknown types', () => {
-      const unknownBuffer = Buffer.from([
-        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-      ])
-      vi.mocked(fs.openSync).mockReturnValue(1)
-      vi.mocked(fs.readSync).mockImplementation((fd, buffer) => {
-        unknownBuffer.copy(buffer as Buffer)
-        return 8
-      })
-      vi.mocked(fs.closeSync).mockImplementation(() => undefined)
-
-      expect(detectFileType('/test/image.unknown')).toBe('jpg')
-    })
-
-    it('should default to jpg on error', () => {
-      vi.mocked(fs.openSync).mockImplementation(() => {
-        throw new Error('File not found')
+    it('should throw error if download fails', async () => {
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: false,
+        status: 404
       })
 
-      expect(detectFileType('/test/nonexistent.jpg')).toBe('jpg')
+      await expect(downloadImage('https://cdn.com/image.jpg')).rejects.toThrow(
+        'Failed to download image: 404'
+      )
     })
   })
 
-  describe('downloadAndResizeImage', () => {
-    it('should download and resize image successfully', async () => {
-      const { execSync } = await import('child_process')
-      vi.mocked(execSync).mockReturnValue('')
-      vi.mocked(fs.statSync).mockReturnValue({ size: 1000 } as fs.Stats)
-      vi.mocked(fs.existsSync).mockReturnValue(false)
-      // Mock detectFileType to return jpeg
-      const jpegBuffer = Buffer.from([
-        0xff, 0xd8, 0xff, 0xe0, 0x00, 0x00, 0x00, 0x00
-      ])
-      vi.mocked(fs.openSync).mockReturnValue(1)
-      vi.mocked(fs.readSync).mockImplementation((fd, buffer) => {
-        jpegBuffer.copy(buffer as Buffer)
-        return 8
+  describe('downloadAndConvertToWebP', () => {
+    it('should download and convert image to WebP', async () => {
+      const mockBuffer = new ArrayBuffer(100)
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(mockBuffer)
       })
-      vi.mocked(fs.closeSync).mockImplementation(() => undefined)
 
-      const result = downloadAndResizeImage(
-        'https://test.com/image.jpg',
-        '/tmp/image.jpeg',
+      const result = await downloadAndConvertToWebP(
+        'https://cdn.com/image.jpg',
+        '/tmp/image.webp',
         370
       )
 
-      expect(result).toBe('/tmp/image.jpeg')
-      expect(execSync).toHaveBeenCalled()
+      expect(result).toBe('/tmp/image.webp')
     })
 
     it('should throw error if downloaded file is empty', async () => {
-      const { execSync } = await import('child_process')
-      vi.mocked(execSync).mockReturnValue('')
-      vi.mocked(fs.statSync).mockReturnValue({ size: 0 } as fs.Stats)
-      vi.mocked(fs.existsSync).mockReturnValue(true)
-      vi.mocked(fs.unlinkSync).mockImplementation(() => undefined)
+      const mockBuffer = new ArrayBuffer(0)
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(mockBuffer)
+      })
 
-      expect(() =>
-        downloadAndResizeImage(
-          'https://test.com/image.jpg',
-          '/tmp/image.jpg',
+      await expect(
+        downloadAndConvertToWebP(
+          'https://cdn.com/image.jpg',
+          '/tmp/image.webp',
           370
         )
-      ).toThrow('Downloaded file is empty')
-    })
-
-    it('should clean up files on error', async () => {
-      const { execSync } = await import('child_process')
-      vi.mocked(execSync).mockImplementation(() => {
-        throw new Error('Download failed')
-      })
-      vi.mocked(fs.existsSync).mockReturnValue(true)
-      vi.mocked(fs.unlinkSync).mockImplementation(() => undefined)
-
-      expect(() =>
-        downloadAndResizeImage(
-          'https://test.com/image.jpg',
-          '/tmp/image.jpg',
-          370
-        )
-      ).toThrow('Download failed')
-
-      expect(fs.unlinkSync).toHaveBeenCalled()
-    })
-
-    it('should fallback to ImageMagick if sips fails', async () => {
-      const { execSync } = await import('child_process')
-      let callCount = 0
-      vi.mocked(execSync).mockImplementation((_cmd: string) => {
-        callCount++
-        if (callCount === 1) {
-          // curl download succeeds
-          return ''
-        }
-        if (callCount === 2) {
-          // sips fails
-          throw new Error('sips not found')
-        }
-        // convert succeeds
-        return ''
-      })
-      vi.mocked(fs.statSync).mockReturnValue({ size: 1000 } as fs.Stats)
-      vi.mocked(fs.existsSync).mockReturnValue(false)
-      // Mock detectFileType
-      const jpegBuffer = Buffer.from([
-        0xff, 0xd8, 0xff, 0xe0, 0x00, 0x00, 0x00, 0x00
-      ])
-      vi.mocked(fs.openSync).mockReturnValue(1)
-      vi.mocked(fs.readSync).mockImplementation((fd, buffer) => {
-        jpegBuffer.copy(buffer as Buffer)
-        return 8
-      })
-      vi.mocked(fs.closeSync).mockImplementation(() => undefined)
-
-      const result = downloadAndResizeImage(
-        'https://test.com/image.jpg',
-        '/tmp/image.jpeg',
-        370
-      )
-
-      expect(result).toBe('/tmp/image.jpeg')
-    })
-
-    it('should use original file if both sips and convert fail', async () => {
-      const { execSync } = await import('child_process')
-      let callCount = 0
-      vi.mocked(execSync).mockImplementation(() => {
-        callCount++
-        if (callCount === 1) {
-          // curl download succeeds
-          return ''
-        }
-        // sips and convert both fail
-        throw new Error('resize failed')
-      })
-      vi.mocked(fs.statSync).mockReturnValue({ size: 1000 } as fs.Stats)
-      vi.mocked(fs.existsSync).mockReturnValue(false)
-      vi.mocked(fs.renameSync).mockImplementation(() => undefined)
-      // Mock detectFileType
-      const jpegBuffer = Buffer.from([
-        0xff, 0xd8, 0xff, 0xe0, 0x00, 0x00, 0x00, 0x00
-      ])
-      vi.mocked(fs.openSync).mockReturnValue(1)
-      vi.mocked(fs.readSync).mockImplementation((fd, buffer) => {
-        jpegBuffer.copy(buffer as Buffer)
-        return 8
-      })
-      vi.mocked(fs.closeSync).mockImplementation(() => undefined)
-
-      const result = downloadAndResizeImage(
-        'https://test.com/image.jpg',
-        '/tmp/image.jpeg',
-        370
-      )
-
-      expect(result).toBe('/tmp/image.jpeg')
-      expect(fs.renameSync).toHaveBeenCalled()
-    })
-
-    it('should rename file if detected type differs from extension', async () => {
-      const { execSync } = await import('child_process')
-      vi.mocked(execSync).mockReturnValue('')
-      vi.mocked(fs.statSync).mockReturnValue({ size: 1000 } as fs.Stats)
-      vi.mocked(fs.existsSync).mockReturnValue(false)
-      vi.mocked(fs.renameSync).mockImplementation(() => undefined)
-      // Mock detectFileType to return png but file has .jpg extension
-      const pngBuffer = Buffer.from([
-        0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a
-      ])
-      vi.mocked(fs.openSync).mockReturnValue(1)
-      vi.mocked(fs.readSync).mockImplementation((fd, buffer) => {
-        pngBuffer.copy(buffer as Buffer)
-        return 8
-      })
-      vi.mocked(fs.closeSync).mockImplementation(() => undefined)
-
-      const result = downloadAndResizeImage(
-        'https://test.com/image.jpg',
-        '/tmp/image.jpg',
-        370
-      )
-
-      expect(result).toBe('/tmp/image.png')
-      expect(fs.renameSync).toHaveBeenCalledWith(
-        '/tmp/image.jpg',
-        '/tmp/image.png'
-      )
+      ).rejects.toThrow('Downloaded file is empty')
     })
   })
 
   describe('downloadImages', () => {
-    it('should download new images and skip existing ones', async () => {
+    it('should download new images as WebP and skip existing ones', async () => {
       const articles: MediumFlatData[] = [
         {
           title: 'Article 1',
@@ -662,26 +453,16 @@ describe('update-medium', () => {
         ]
       }
 
-      const { execSync } = await import('child_process')
-      vi.mocked(execSync).mockReturnValue('')
-      vi.mocked(fs.statSync).mockReturnValue({ size: 1000 } as fs.Stats)
-
-      // First image exists, second doesn't
-      vi.mocked(fs.existsSync)
-        .mockReturnValueOnce(true) // existing.jpg exists
-        .mockReturnValueOnce(false) // new.jpg doesn't exist
-        .mockReturnValueOnce(false) // temp file doesn't exist
-
-      // Mock detectFileType to return jpeg
-      const jpegBuffer = Buffer.from([
-        0xff, 0xd8, 0xff, 0xe0, 0x00, 0x00, 0x00, 0x00
-      ])
-      vi.mocked(fs.openSync).mockReturnValue(1)
-      vi.mocked(fs.readSync).mockImplementation((fd, buffer) => {
-        jpegBuffer.copy(buffer as Buffer)
-        return 8
+      const mockBuffer = new ArrayBuffer(100)
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(mockBuffer)
       })
-      vi.mocked(fs.closeSync).mockImplementation(() => undefined)
+
+      // First image exists (WebP version), second doesn't
+      vi.mocked(fs.existsSync)
+        .mockReturnValueOnce(true) // existing.webp exists
+        .mockReturnValueOnce(false) // new.webp doesn't exist
 
       const result = await downloadImages(
         articles,
@@ -691,8 +472,9 @@ describe('update-medium', () => {
         { silent: true }
       )
 
-      expect(result[0].image).toBe('/images/medium/existing.jpg')
-      expect(result[1].image).toBe('/images/medium/new.jpeg')
+      // Both should have .webp extension
+      expect(result[0].image).toBe('/images/medium/existing.webp')
+      expect(result[1].image).toBe('/images/medium/new.webp')
     })
 
     it('should handle articles without images gracefully', async () => {
@@ -762,11 +544,8 @@ describe('update-medium', () => {
         ]
       }
 
-      const { execSync } = await import('child_process')
       vi.mocked(fs.existsSync).mockReturnValue(false)
-      vi.mocked(execSync).mockImplementation(() => {
-        throw new Error('Download failed')
-      })
+      global.fetch = vi.fn().mockRejectedValue(new Error('Download failed'))
 
       const result = await downloadImages(
         articles,
@@ -829,14 +608,13 @@ describe('update-medium', () => {
         ]
       }
 
+      const mockBuffer = new ArrayBuffer(100)
       global.fetch = vi.fn().mockResolvedValue({
         ok: true,
-        json: () => Promise.resolve(mockResponse)
+        json: () => Promise.resolve(mockResponse),
+        arrayBuffer: () => Promise.resolve(mockBuffer)
       })
 
-      const { execSync } = await import('child_process')
-      vi.mocked(execSync).mockReturnValue('')
-      vi.mocked(fs.statSync).mockReturnValue({ size: 1000 } as fs.Stats)
       vi.mocked(fs.existsSync).mockReturnValue(false)
       vi.mocked(fs.mkdirSync).mockImplementation(() => undefined)
       vi.mocked(fs.writeFileSync).mockImplementation(() => undefined)
@@ -848,7 +626,7 @@ describe('update-medium', () => {
       await main({ silent: true })
 
       expect(exitSpy).not.toHaveBeenCalled()
-      expect(fs.writeFileSync).toHaveBeenCalledTimes(1) // data only
+      expect(fs.writeFileSync).toHaveBeenCalledTimes(1)
     })
 
     it('should handle errors and exit with code 1', async () => {
@@ -881,8 +659,6 @@ describe('update-medium', () => {
         json: () => Promise.resolve(mockResponse)
       })
 
-      const { execSync } = await import('child_process')
-      vi.mocked(execSync).mockReturnValue('')
       vi.mocked(fs.existsSync).mockReturnValue(false)
       vi.mocked(fs.mkdirSync).mockImplementation(() => undefined)
       vi.mocked(fs.writeFileSync).mockImplementation(() => undefined)
