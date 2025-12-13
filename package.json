@@ -11,7 +11,8 @@
     "lint:fix": "next lint --fix",
     "prettier": "prettier --check \"**/*.{js,jsx,ts,tsx}\"",
     "prettier:fix": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "update-credly": "node scripts/update-credly.js"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.4.0",
