@@ -1,6 +1,5 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { HTMLAttributes, ReactNode, useEffect, useRef, useState } from 'react'
 import { InView } from 'react-intersection-observer'
 import { Sections, useSectionContext } from '@/context/sectionContext'
@@ -10,7 +9,6 @@ const Section = ({
   id,
   ...props
 }: { children: ReactNode; id: Sections } & HTMLAttributes<HTMLElement>) => {
-  const router = useRouter()
   const { setVisibleSection } = useSectionContext()
   const [isMounted, setIsMounted] = useState(false)
   const updateTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
@@ -44,26 +42,12 @@ const Section = ({
         const sectionId = entry.target.id as Sections
         setVisibleSection(sectionId)
 
-        // Use a try-catch and requestIdleCallback to handle router updates
-        // This ensures updates happen only when browser is idle
-        if (typeof window !== 'undefined' && window.history) {
-          const updateRouter = () => {
-            try {
-              router.replace(`#${sectionId}`, { scroll: false })
-            } catch {
-              // Silent fail during performance tests
-            }
-          }
-
-          if ('requestIdleCallback' in window) {
-            requestIdleCallback(updateRouter, { timeout: 500 })
-          } else {
-            setTimeout(updateRouter, 0)
-          }
-        }
+        // DISABLED: Router updates cause Lighthouse Navigation crashes
+        // The active navigation highlighting works fine without URL hash changes
+        // Users can still use navigation links which update the hash directly
       } catch (error) {
         // Silently fail during performance tests
-        console.debug('Router update skipped:', error)
+        console.debug('Section update skipped:', error)
       }
     }, 150)
   }
