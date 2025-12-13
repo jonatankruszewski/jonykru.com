@@ -21,3 +21,62 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* Animated numbers using CSS @property and keyframes */
+@property --num {
+  syntax: '<integer>';
+  initial-value: 0;
+  inherits: false;
+}
+
+.number-animation {
+  --num: 0;
+  counter-reset: num var(--num);
+  font-variant-numeric: tabular-nums;
+}
+
+.number-animation::after {
+  content: counter(num);
+}
+
+/* Keyframe animations for each target value */
+@keyframes counter-6 {
+  to {
+    --num: 6;
+  }
+}
+
+@keyframes counter-24 {
+  to {
+    --num: 24;
+  }
+}
+
+@keyframes counter-36 {
+  to {
+    --num: 36;
+  }
+}
+
+@keyframes counter-1316 {
+  to {
+    --num: 1316;
+  }
+}
+
+/* Animation classes */
+.animate-6 {
+  animation: counter-6 1s ease-out forwards;
+}
+
+.animate-24 {
+  animation: counter-24 1.2s ease-out forwards;
+}
+
+.animate-36 {
+  animation: counter-36 1.4s ease-out forwards;
+}
+
+.animate-1316 {
+  animation: counter-1316 2s ease-out forwards;
+}

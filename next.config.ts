@@ -25,12 +25,6 @@ const nextConfig: NextConfig = {
   compress: true,
   reactStrictMode: true,
   output: 'export',
-  // Optimize imports for smaller bundles
-  optimizePackageImports: [
-    'framer-motion',
-    'lucide-react',
-    '@headlessui/react'
-  ],
   experimental: {
     webpackBuildWorker: true
   }
