@@ -35,10 +35,9 @@ const cards = [
 ]
 
 const AboutMeCards = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, watchDrag: true },
-    [Autoplay({ playOnInit: false, delay: 3000, stopOnInteraction: true })]
-  )
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ playOnInit: false, delay: 3000 })
+  ])
 
   const scrollPrev = () => {
     if (emblaApi) emblaApi.scrollPrev()
