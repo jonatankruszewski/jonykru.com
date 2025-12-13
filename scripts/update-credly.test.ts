@@ -11,13 +11,13 @@ import {
   getResizedUrl,
   readCurlFile,
   saveBackupJson
-} from './credly-updater'
+} from './update-credly'
 
 // Mock dependencies
 vi.mock('fs')
 vi.mock('child_process')
 
-describe('credly-updater', () => {
+describe('update-credly', () => {
   beforeEach(() => {
     vi.clearAllMocks()
   })
@@ -507,6 +507,110 @@ describe('credly-updater', () => {
       expect(result.data[0].image_url).toBe(
         '/images/badges/credly/existing-badge.png'
       )
+    })
+  })
+
+  describe('main', () => {
+    it('should execute full workflow successfully', async () => {
+      const { main } = await import('./update-credly')
+      const { execSync } = await import('child_process')
+
+      const mockResponse = JSON.stringify({
+        data: [
+          {
+            id: 'test-id',
+            badge_template: {
+              name: 'Test Badge',
+              skill_ids: [{ id: 's1', name: 'Skill 1' }],
+              skills: [],
+              url: 'https://test.com'
+            },
+            image_url: 'https://images.credly.com/images/uuid1/test-badge.png',
+            issuer_linked_in_name: 'Test Issuer',
+            issuer: {
+              entities: [{ entity: { name: 'Test Entity' } }]
+            }
+          }
+        ]
+      })
+
+      // Mock file operations
+      vi.mocked(fs.existsSync).mockImplementation((p) => {
+        const pathStr = String(p)
+        if (pathStr.includes('.credly-curl')) return true
+        if (pathStr.includes('badges/credly')) return false // Images dir
+        return true // Image files exist
+      })
+
+      vi.mocked(fs.readFileSync).mockReturnValue(
+        'curl "https://api.credly.com"'
+      )
+      vi.mocked(fs.mkdirSync).mockImplementation(() => undefined)
+      vi.mocked(fs.writeFileSync).mockImplementation(() => undefined)
+      vi.mocked(fs.statSync).mockReturnValue({ size: 1000 } as fs.Stats)
+
+      // Mock execSync for both curl commands (fetch and download)
+      vi.mocked(execSync).mockReturnValue(mockResponse)
+
+      const exitSpy = vi
+        .spyOn(process, 'exit')
+        .mockImplementation(() => undefined as never)
+
+      await main()
+
+      expect(exitSpy).not.toHaveBeenCalled()
+      expect(fs.writeFileSync).toHaveBeenCalled()
+    })
+
+    it('should handle errors and exit with code 1', async () => {
+      const { main } = await import('./update-credly')
+
+      vi.mocked(fs.existsSync).mockReturnValue(false)
+
+      const exitSpy = vi
+        .spyOn(process, 'exit')
+        .mockImplementation(() => undefined as never)
+
+      await main()
+
+      expect(exitSpy).toHaveBeenCalledWith(1)
+    })
+
+    it('should show helpful message when file not found', async () => {
+      const { main } = await import('./update-credly')
+      const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
+
+      vi.mocked(fs.existsSync).mockReturnValue(false)
+
+      const exitSpy = vi
+        .spyOn(process, 'exit')
+        .mockImplementation(() => undefined as never)
+
+      await main()
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Please create a .credly-curl file in the project root.'
+      )
+      expect(exitSpy).toHaveBeenCalledWith(1)
+    })
+
+    it('should show helpful message when file is empty', async () => {
+      const { main } = await import('./update-credly')
+      const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
+
+      vi.mocked(fs.existsSync).mockReturnValue(true)
+      vi.mocked(fs.readFileSync).mockReturnValue('   ')
+
+      const exitSpy = vi
+        .spyOn(process, 'exit')
+        .mockImplementation(() => undefined as never)
+
+      await main()
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Please paste your curl command from the browser DevTools.\n'
+      )
+      expect(exitSpy).toHaveBeenCalledWith(1)
     })
   })
 })
