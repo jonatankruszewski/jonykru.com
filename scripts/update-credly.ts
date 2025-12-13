@@ -76,6 +76,10 @@ export interface DownloadStats {
   failed: number
 }
 
+export interface UpdateOptions {
+  silent?: boolean
+}
+
 /**
  * Create images directory if it doesn't exist
  */
@@ -88,7 +92,10 @@ export function ensureImagesDir(imagesDir: string): void {
 /**
  * Fetch data from Credly API using the full curl command
  */
-export function fetchCredlyData(curlCommand: string): CredlyData {
+export function fetchCredlyData(
+  curlCommand: string,
+  options: UpdateOptions = {}
+): CredlyData {
   try {
     // Execute the curl command directly (it already has auth cookies)
     const response = execSync(curlCommand, {
@@ -197,8 +204,9 @@ export function getResizedUrl(url: string): string {
 export async function downloadImages(
   data: CredlyData,
   imagesDir: string,
-  verbose: boolean = true
+  options: UpdateOptions = {}
 ): Promise<CredlyData> {
+  const verbose = !options.silent
   if (verbose) {
     console.log('📥 Downloading badge images (200x200px)...\n')
   }
@@ -288,65 +296,91 @@ export function readCurlFile(curlFilePath: string): string {
 /**
  * Main execution
  */
-export async function main(): Promise<void> {
-  console.log('\n🎖️  Credly Badge Updater\n' + '='.repeat(50) + '\n')
+export async function main(options: UpdateOptions = {}): Promise<void> {
+  const silent = options.silent ?? false
+
+  if (!silent) {
+    console.log('\n🎖️  Credly Badge Updater\n' + '='.repeat(50) + '\n')
+  }
 
   try {
     // Ensure images directory exists
     ensureImagesDir(IMAGES_DIR)
 
     // Step 1: Read curl command from file
-    console.log(`📄 Reading curl command from ${path.basename(CURL_FILE)}...`)
+    if (!silent) {
+      console.log(`📄 Reading curl command from ${path.basename(CURL_FILE)}...`)
+    }
     const curlCommand = readCurlFile(CURL_FILE)
-    console.log('✅ Curl command loaded\n')
+    if (!silent) {
+      console.log('✅ Curl command loaded\n')
+    }
 
     // Step 2: Fetch data from Credly using the curl command
-    console.log('🌐 Fetching data from Credly API...')
-    const fullData = fetchCredlyData(curlCommand)
-    console.log(`✅ Fetched ${fullData.data.length} badges from Credly\n`)
+    if (!silent) {
+      console.log('🌐 Fetching data from Credly API...')
+    }
+    const fullData = fetchCredlyData(curlCommand, { silent })
+    if (!silent) {
+      console.log(`✅ Fetched ${fullData.data.length} badges from Credly\n`)
+    }
 
     // Step 3: Filter to required fields
-    console.log('🔍 Filtering to required fields...')
+    if (!silent) {
+      console.log('🔍 Filtering to required fields...')
+    }
     const filteredData = filterCredlyData(fullData)
-    console.log(`✅ Filtered ${filteredData.data.length} badges\n`)
+    if (!silent) {
+      console.log(`✅ Filtered ${filteredData.data.length} badges\n`)
+    }
 
     // Step 4: Download images and update paths
-    const dataWithLocalPaths = await downloadImages(filteredData, IMAGES_DIR)
+    const dataWithLocalPaths = await downloadImages(filteredData, IMAGES_DIR, {
+      silent
+    })
 
     // Step 5: Save to backup JSON
     saveBackupJson(dataWithLocalPaths, BACKUP_JSON)
-    console.log('✅ Updated credly.backup.json with local image paths\n')
+    if (!silent) {
+      console.log('✅ Updated credly.backup.json with local image paths\n')
+    }
 
-    console.log('🎉 Success! Credly badges updated.\n')
-    console.log('Next steps:')
-    console.log('  1. Review the changes')
-    console.log('  2. Run: pnpm run build')
-    console.log('  3. Commit and push\n')
+    if (!silent) {
+      console.log('🎉 Success! Credly badges updated.\n')
+      console.log('Next steps:')
+      console.log('  1. Review the changes')
+      console.log('  2. Run: pnpm run build')
+      console.log('  3. Commit and push\n')
+    }
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
-    console.error(`\n❌ Error: ${message}\n`)
+    if (!silent) {
+      console.error(`\n❌ Error: ${message}\n`)
 
-    if (message.includes('File not found')) {
-      console.log('Please create a .credly-curl file in the project root.')
-      console.log(
-        'Paste your curl command from the browser DevTools into this file.\n'
-      )
-    } else if (message.includes('File is empty')) {
-      console.log('Please paste your curl command from the browser DevTools.\n')
-      console.log('Steps:')
-      console.log('  1. Open your browser DevTools (F12)')
-      console.log('  2. Go to Network tab')
-      console.log('  3. Visit your Credly badges page')
-      console.log('  4. Find the API request')
-      console.log('  5. Right-click → Copy → Copy as cURL')
-      console.log(`  6. Paste into .credly-curl\n`)
+      if (message.includes('File not found')) {
+        console.log('Please create a .credly-curl file in the project root.')
+        console.log(
+          'Paste your curl command from the browser DevTools into this file.\n'
+        )
+      } else if (message.includes('File is empty')) {
+        console.log(
+          'Please paste your curl command from the browser DevTools.\n'
+        )
+        console.log('Steps:')
+        console.log('  1. Open your browser DevTools (F12)')
+        console.log('  2. Go to Network tab')
+        console.log('  3. Visit your Credly badges page')
+        console.log('  4. Find the API request')
+        console.log('  5. Right-click → Copy → Copy as cURL')
+        console.log(`  6. Paste into .credly-curl\n`)
+      }
     }
 
     process.exit(1)
   }
 }
 
-// Run if executed directly
+// Run if executed directly - use CI env var to control verbosity
 if (require.main === module) {
-  main().catch(console.error)
+  main({ silent: !!process.env.CI }).catch(console.error)
 }

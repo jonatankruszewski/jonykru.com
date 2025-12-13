@@ -308,7 +308,9 @@ describe('update-credly', () => {
       const { execSync } = await import('child_process')
       vi.mocked(execSync).mockReturnValue(mockResponse)
 
-      const data = fetchCredlyData('curl "https://api.credly.com"')
+      const data = fetchCredlyData('curl "https://api.credly.com"', {
+        silent: true
+      })
 
       expect(data.data).toHaveLength(1)
       expect(data.data[0].id).toBe('test-id')
@@ -318,18 +320,18 @@ describe('update-credly', () => {
       const { execSync } = await import('child_process')
       vi.mocked(execSync).mockReturnValue('not json')
 
-      expect(() => fetchCredlyData('curl "https://api.credly.com"')).toThrow(
-        'Failed to fetch from Credly'
-      )
+      expect(() =>
+        fetchCredlyData('curl "https://api.credly.com"', { silent: true })
+      ).toThrow('Failed to fetch from Credly')
     })
 
     it('should throw error if response has no data array', async () => {
       const { execSync } = await import('child_process')
       vi.mocked(execSync).mockReturnValue('{"invalid": "data"}')
 
-      expect(() => fetchCredlyData('curl "https://api.credly.com"')).toThrow(
-        'Invalid response from Credly API'
-      )
+      expect(() =>
+        fetchCredlyData('curl "https://api.credly.com"', { silent: true })
+      ).toThrow('Invalid response from Credly API')
     })
 
     it('should throw error if execSync fails', async () => {
@@ -338,9 +340,9 @@ describe('update-credly', () => {
         throw new Error('Network error')
       })
 
-      expect(() => fetchCredlyData('curl "https://api.credly.com"')).toThrow(
-        'Failed to fetch from Credly: Network error'
-      )
+      expect(() =>
+        fetchCredlyData('curl "https://api.credly.com"', { silent: true })
+      ).toThrow('Failed to fetch from Credly: Network error')
     })
   })
 
@@ -444,7 +446,9 @@ describe('update-credly', () => {
         .mockReturnValueOnce(true) // badge1 exists
         .mockReturnValueOnce(false) // badge2 doesn't exist
 
-      const result = await downloadImages(mockData, '/test/images', false)
+      const result = await downloadImages(mockData, '/test/images', {
+        silent: true
+      })
 
       expect(result.data[0].image_url).toBe('/images/badges/credly/badge1.png')
       expect(result.data[1].image_url).toBe('/images/badges/credly/badge2.png')
@@ -474,7 +478,9 @@ describe('update-credly', () => {
         throw new Error('Download failed')
       })
 
-      const result = await downloadImages(mockData, '/test/images', false)
+      const result = await downloadImages(mockData, '/test/images', {
+        silent: true
+      })
 
       // Image URL should remain unchanged on failure
       expect(result.data[0].image_url).toBe(
@@ -502,7 +508,9 @@ describe('update-credly', () => {
 
       vi.mocked(fs.existsSync).mockReturnValue(true) // File exists
 
-      const result = await downloadImages(mockData, '/test/images', false)
+      const result = await downloadImages(mockData, '/test/images', {
+        silent: true
+      })
 
       expect(result.data[0].image_url).toBe(
         '/images/badges/credly/existing-badge.png'
@@ -571,7 +579,7 @@ describe('update-credly', () => {
         .spyOn(process, 'exit')
         .mockImplementation(() => undefined as never)
 
-      await main()
+      await main({ silent: true })
 
       expect(exitSpy).toHaveBeenCalledWith(1)
     })
@@ -586,7 +594,7 @@ describe('update-credly', () => {
         .spyOn(process, 'exit')
         .mockImplementation(() => undefined as never)
 
-      await main()
+      await main({ silent: false })
 
       expect(consoleSpy).toHaveBeenCalledWith(
         'Please create a .credly-curl file in the project root.'
@@ -605,12 +613,59 @@ describe('update-credly', () => {
         .spyOn(process, 'exit')
         .mockImplementation(() => undefined as never)
 
-      await main()
+      await main({ silent: false })
 
       expect(consoleSpy).toHaveBeenCalledWith(
         'Please paste your curl command from the browser DevTools.\n'
       )
       expect(exitSpy).toHaveBeenCalledWith(1)
+    })
+
+    it('should use CI environment variable when executed directly', async () => {
+      const { main } = await import('./update-credly')
+      const originalCI = process.env.CI
+
+      // Set CI environment variable
+      process.env.CI = 'true'
+
+      const mockResponse = JSON.stringify({
+        data: [
+          {
+            id: 'ci-test',
+            badge_template: {
+              name: 'CI Test',
+              skills: [],
+              url: 'https://test.com'
+            },
+            image_url: 'https://images.credly.com/images/uuid/ci-test.png',
+            issuer_linked_in_name: 'Test',
+            issuer: { entities: [{ entity: { name: 'Test' } }] }
+          }
+        ]
+      })
+
+      const { execSync } = await import('child_process')
+      vi.mocked(fs.existsSync).mockReturnValue(true)
+      vi.mocked(fs.readFileSync).mockReturnValue('curl "https://api.com"')
+      vi.mocked(execSync).mockReturnValue(mockResponse)
+      vi.mocked(fs.mkdirSync).mockImplementation(() => undefined)
+      vi.mocked(fs.writeFileSync).mockImplementation(() => undefined)
+      vi.mocked(fs.statSync).mockReturnValue({ size: 1000 } as fs.Stats)
+
+      const consoleSpy = vi.spyOn(console, 'log')
+      const exitSpy = vi
+        .spyOn(process, 'exit')
+        .mockImplementation(() => undefined as never)
+
+      // Pass silent: !!process.env.CI to mimic CLI behavior
+      await main({ silent: !!process.env.CI })
+
+      // Restore original
+      process.env.CI = originalCI
+
+      expect(exitSpy).not.toHaveBeenCalled()
+      // In CI mode, console.log should not be called
+      expect(consoleSpy).not.toHaveBeenCalled()
     })
   })
 })
