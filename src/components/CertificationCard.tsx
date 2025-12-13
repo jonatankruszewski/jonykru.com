@@ -18,6 +18,10 @@ const CertificationCard: React.FC<CertificationCardProps> = ({
   const imgUrl = badge.image_url
   const previewUrl = badge.badge_template.url
 
+  // Validate previewUrl to prevent chrome://terms navigation
+  const isValidUrl =
+    previewUrl && previewUrl.trim() !== '' && previewUrl.startsWith('http')
+
   return (
     <li className="overflow-hidden lg:p-6 text-center flex flex-col gap-2">
       <img
@@ -27,14 +31,20 @@ const CertificationCard: React.FC<CertificationCardProps> = ({
         src={imgUrl}
         alt={`${title} Badge`}
       />
-      <Link
-        href={previewUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-bold text-xl mb-2 text-center cursor-pointer text-white transition-opacity duration-200 hover:opacity-80 hover:underline"
-      >
-        {title}
-      </Link>
+      {isValidUrl ? (
+        <Link
+          href={previewUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-bold text-xl mb-2 text-center cursor-pointer text-white transition-opacity duration-200 hover:opacity-80 hover:underline"
+        >
+          {title}
+        </Link>
+      ) : (
+        <span className="font-bold text-xl mb-2 text-center text-white">
+          {title}
+        </span>
+      )}
       <div className="flex items-center flex-wrap justify-center">
         {zigZagSort(skillsNames)
           .slice(0, 5)
