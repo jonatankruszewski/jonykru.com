@@ -1,0 +1,1604 @@
+{
+  "data": [
+    {
+      "id": "d88f0286-6bf2-4bd5-8b78-b83c601d0dad",
+      "badge_template": {
+        "name": "MTA: Introduction to Programming Using JavaScript - Certified 2021",
+        "skills": [
+          {
+            "id": "3addd75a-55d3-4f2d-86a9-dc5215dd602a",
+            "name": "JavaScript"
+          }
+        ],
+        "url": "https://www.credly.com/org/microsoft-certification/badge/mta-introduction-to-programming-using-javascript-certified-2021"
+      },
+      "image_url": "https://images.credly.com/images/16840ea3-5c9a-4599-853e-7e15bac7748e/MTA-Introduction_to_Programming_Using_JavaScript-600x600.png",
+      "issuer_linked_in_name": "Microsoft",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Microsoft"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "2a1138cd-46d5-4c5f-9d9d-ffda34e3a063",
+      "badge_template": {
+        "name": "MTA: HTML5 Application Development Fundamentals - Certified 2021",
+        "skills": [
+          {
+            "id": "dffe277d-fb56-4c19-835e-d0fcc59c4490",
+            "name": "Application Lifecycle Management"
+          },
+          {
+            "id": "c2282baf-247c-4ee3-8a2b-b2d721134332",
+            "name": "HTML5 Build User Interface"
+          },
+          {
+            "id": "7d76ff23-56ff-4077-8994-6524205dc804",
+            "name": "HTML5 Technology"
+          },
+          {
+            "id": "3addd75a-55d3-4f2d-86a9-dc5215dd602a",
+            "name": "JavaScript"
+          },
+          {
+            "id": "4051902b-2ff5-46aa-9b83-e0a24cf7d525",
+            "name": "User Interface CSS Formatting"
+          }
+        ],
+        "url": "https://www.credly.com/org/microsoft-certification/badge/mta-html5-application-development-fundamentals-certified-2021"
+      },
+      "image_url": "https://images.credly.com/images/d7c8cb0a-56d9-4178-a7be-de745a3b88f7/MTA-HTML5_Application_Development_Fundamentals-600x600.png",
+      "issuer_linked_in_name": "Microsoft",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Microsoft"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "a80e29c7-dc98-4e07-9ce3-443d57d24fb4",
+      "badge_template": {
+        "name": "MTA: Introduction to Programming Using HTML and CSS - Certified 2021",
+        "skills": [
+          {
+            "id": "79fafda9-f2bf-45a9-b234-20515e4d09f4",
+            "name": "CSS"
+          },
+          {
+            "id": "b593439e-ae89-4c76-bbf9-306e8f1cb35c",
+            "name": "HTML"
+          },
+          {
+            "id": "c296716f-2919-4af8-9273-3c670528ceca",
+            "name": "HTML5"
+          }
+        ],
+        "url": "https://www.credly.com/org/microsoft-certification/badge/mta-introduction-to-programming-using-html-and-css-certified-2021"
+      },
+      "image_url": "https://images.credly.com/images/241488f4-9110-41aa-804e-51a8f8ba430d/MTA-Introduction_to_Programming_Using_HTML_and_CSS-600x600.png",
+      "issuer_linked_in_name": "Microsoft",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Microsoft"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "10a85c53-2c17-4f84-a3bf-c69b842bdd31",
+      "badge_template": {
+        "name": "MTA: Introduction to Programming Using Python - Certified 2021",
+        "skills": [
+          {
+            "id": "94c11ea3-cc1b-4177-9f1e-f98291a69850",
+            "name": "Python"
+          },
+          {
+            "id": "66961257-3068-4b62-b4b1-9acd1769cce8",
+            "name": "Python Programming"
+          }
+        ],
+        "url": "https://www.credly.com/org/microsoft-certification/badge/mta-introduction-to-programming-using-python-certified-2021"
+      },
+      "image_url": "https://images.credly.com/images/ebfba101-5b78-49b6-903a-ac9ad518fe8a/MTA-Introduction_to_Programming_Using_Python-600x600.png",
+      "issuer_linked_in_name": "Microsoft",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Microsoft"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "915b92dd-6c70-4cec-b1af-8666deca6783",
+      "badge_template": {
+        "name": "[PCEP-30-01] PCEP – Certified Entry-Level Python Programmer",
+        "skills": [
+          {
+            "id": "9b2b5695-db4f-4bc2-8694-daf68f0087e8",
+            "name": "Basic Python Programming"
+          },
+          {
+            "id": "0374467f-1430-4d3e-823f-d9be0536f720",
+            "name": "Computer Programming"
+          },
+          {
+            "id": "9a2eccd0-a46e-4427-89f9-62b0e98b3bd2",
+            "name": "Entry-level"
+          },
+          {
+            "id": "94c11ea3-cc1b-4177-9f1e-f98291a69850",
+            "name": "Python"
+          }
+        ],
+        "url": "https://www.credly.com/org/python-institute/badge/pcep-30-01-pcep-certified-entry-level-python-programmer"
+      },
+      "image_url": "https://images.credly.com/images/d8017c77-3cc0-4fdf-8e17-62e50632812e/bronze_1_small.png",
+      "issuer_linked_in_name": "Python Institute",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Python Institute"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "59f32e65-e6b7-4e59-92e6-e0300b96668e",
+      "badge_template": {
+        "name": "[PCAP-31-03] PCAP™ – Certified Associate Python Programmer",
+        "skills": [
+          {
+            "id": "a543994c-b45a-4b11-a547-73a25086dd58",
+            "name": "Algorithmic Thinking"
+          },
+          {
+            "id": "456a6ff4-a5c1-4dc9-8d54-5fce6bf303a7",
+            "name": "Associate"
+          },
+          {
+            "id": "0374467f-1430-4d3e-823f-d9be0536f720",
+            "name": "Computer Programming"
+          },
+          {
+            "id": "2a3810cc-576c-491c-9280-616a271b7dd4",
+            "name": "Object-oriented Programming"
+          },
+          {
+            "id": "94c11ea3-cc1b-4177-9f1e-f98291a69850",
+            "name": "Python"
+          }
+        ],
+        "url": "https://www.credly.com/org/python-institute/badge/pcap-31-03-pcap-certified-associate-python-programm"
+      },
+      "image_url": "https://images.credly.com/images/4e248e82-9e87-4a63-9263-250fafe5fb1f/image.png",
+      "issuer_linked_in_name": "Python Institute",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Python Institute"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "af552a4b-e2db-4897-b896-83a3c9420023",
+      "badge_template": {
+        "name": "AWS Certified Cloud Practitioner",
+        "skills": [
+          {
+            "id": "87f75c05-6cff-4044-b641-f871a1ea345a",
+            "name": "Amazon Web Services"
+          },
+          {
+            "id": "682d4927-14e7-490c-96d3-c8f3ef0995de",
+            "name": "AWS"
+          },
+          {
+            "id": "d914920b-ba3e-4220-9b51-957642f3104a",
+            "name": "AWS Certification"
+          },
+          {
+            "id": "918edc32-0894-4957-a91f-d96300b8b8d3",
+            "name": "AWS Cloud"
+          },
+          {
+            "id": "c42a5758-3258-4516-9188-5b019ddd1241",
+            "name": "Cloud Certification"
+          },
+          {
+            "id": "f8e4fd7f-3cf6-40bd-95a0-b832e21c2f8f",
+            "name": "Cloud Computing"
+          },
+          {
+            "id": "f468a452-e13e-4ca4-ae58-f4131989f1fe",
+            "name": "Cloud Platform"
+          },
+          {
+            "id": "f056df54-cafe-4713-bdc5-d4ac6734d76c",
+            "name": "Cloud Services"
+          }
+        ],
+        "url": "https://www.credly.com/org/amazon-web-services/badge/aws-certified-cloud-practitioner"
+      },
+      "image_url": "https://images.credly.com/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png",
+      "issuer_linked_in_name": "Amazon Web Services (AWS)",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Amazon Web Services Training and Certification"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "5ff5b7d1-5d8b-4253-bd05-74dce1b3fdbb",
+      "badge_template": {
+        "name": "Professional Scrum Master™ I (PSM I)",
+        "skills": [
+          {
+            "id": "377d1202-560c-467b-b263-3bbb637667a4",
+            "name": "Agile"
+          },
+          {
+            "id": "c68e36c2-21f4-48d7-b9d2-f0177683c170",
+            "name": "PSM"
+          },
+          {
+            "id": "e9764be7-332b-4983-b79a-185b4e63f2f4",
+            "name": "Scrum"
+          },
+          {
+            "id": "0ad1d84f-f647-4f9e-9796-0463cd667baa",
+            "name": "Scrum Master"
+          }
+        ],
+        "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-master-i-psm-i"
+      },
+      "image_url": "https://images.credly.com/images/a2790314-008a-4c3d-9553-f5e84eb359ba/image.png",
+      "issuer_linked_in_name": "Scrum.org",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Scrum.org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "7a01bf8f-72ef-4fda-b7c4-3742b09d6517",
+      "badge_template": {
+        "name": "Professional Scrum Master™ II (PSM II)",
+        "skills": [
+          {
+            "id": "377d1202-560c-467b-b263-3bbb637667a4",
+            "name": "Agile"
+          },
+          {
+            "id": "c68e36c2-21f4-48d7-b9d2-f0177683c170",
+            "name": "PSM"
+          },
+          {
+            "id": "e9764be7-332b-4983-b79a-185b4e63f2f4",
+            "name": "Scrum"
+          },
+          {
+            "id": "0ad1d84f-f647-4f9e-9796-0463cd667baa",
+            "name": "Scrum Master"
+          },
+          {
+            "id": "05ae449f-3bac-4546-84f5-433f5d49610c",
+            "name": "Senior Scrum Master"
+          }
+        ],
+        "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-master-ii-psm-ii"
+      },
+      "image_url": "https://images.credly.com/images/d90cc9bc-3e9a-49b2-ac09-7930db400e32/image.png",
+      "issuer_linked_in_name": "Scrum.org",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Scrum.org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "08780305-13a6-4b56-84a9-84cfd3709df2",
+      "badge_template": {
+        "name": "Professional Scrum Developer™ I (PSD I)",
+        "skills": [
+          {
+            "id": "377d1202-560c-467b-b263-3bbb637667a4",
+            "name": "Agile"
+          },
+          {
+            "id": "199ea79c-522a-4c45-b4cf-ab5592aaea05",
+            "name": "Developer"
+          },
+          {
+            "id": "f9025ef4-6727-488a-a70b-b3021e457c6a",
+            "name": "Development"
+          },
+          {
+            "id": "e64b67f9-26f1-435e-b219-be5ab436c16d",
+            "name": "PSD"
+          },
+          {
+            "id": "e9764be7-332b-4983-b79a-185b4e63f2f4",
+            "name": "Scrum"
+          },
+          {
+            "id": "b3259332-0bbf-4db2-afbe-744f131988fd",
+            "name": "Software"
+          },
+          {
+            "id": "f68a52ba-8508-49d0-a70d-a647e1cabfcb",
+            "name": "Software Development"
+          }
+        ],
+        "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-developer-i-psd-i"
+      },
+      "image_url": "https://images.credly.com/images/d2298e82-b671-434a-876b-21a0ebc3af0e/image.png",
+      "issuer_linked_in_name": "Scrum.org",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Scrum.org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "a25863e1-bdad-47f9-a0e2-01dcc2427ca7",
+      "badge_template": {
+        "name": "Professional Scrum Product Owner™ I (PSPO I)",
+        "skills": [
+          {
+            "id": "377d1202-560c-467b-b263-3bbb637667a4",
+            "name": "Agile"
+          },
+          {
+            "id": "f8e4afa7-b688-4274-8d80-ac2f71f2623a",
+            "name": "Product Owner"
+          },
+          {
+            "id": "ffcfdf66-a638-498f-926d-6141ae3656d1",
+            "name": "Product Ownership"
+          },
+          {
+            "id": "5b536d1c-07df-4fc2-84bc-3183b60b2d00",
+            "name": "PSPO"
+          },
+          {
+            "id": "e9764be7-332b-4983-b79a-185b4e63f2f4",
+            "name": "Scrum"
+          }
+        ],
+        "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-product-owner-i-pspo-i"
+      },
+      "image_url": "https://images.credly.com/images/591762c5-fae7-49c6-b326-e1756979928d/image.png",
+      "issuer_linked_in_name": "Scrum.org",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Scrum.org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "8d3b7df8-0b88-490a-9dbb-bb2cc9b39f09",
+      "badge_template": {
+        "name": "Professional Scrum Product Owner™ II (PSPO II)",
+        "skills": [
+          {
+            "id": "377d1202-560c-467b-b263-3bbb637667a4",
+            "name": "Agile"
+          },
+          {
+            "id": "f8e4afa7-b688-4274-8d80-ac2f71f2623a",
+            "name": "Product Owner"
+          },
+          {
+            "id": "ffcfdf66-a638-498f-926d-6141ae3656d1",
+            "name": "Product Ownership"
+          },
+          {
+            "id": "5b536d1c-07df-4fc2-84bc-3183b60b2d00",
+            "name": "PSPO"
+          },
+          {
+            "id": "e9764be7-332b-4983-b79a-185b4e63f2f4",
+            "name": "Scrum"
+          },
+          {
+            "id": "e33f235c-e791-4caa-b39f-1a0e462010fa",
+            "name": "Senior Product Owner"
+          }
+        ],
+        "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-product-owner-ii-pspo-ii"
+      },
+      "image_url": "https://images.credly.com/images/0a8590ce-08e2-493f-b45a-e2c9ee8c848c/image.png",
+      "issuer_linked_in_name": "Scrum.org",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Scrum.org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "61d7a70a-659a-4553-a785-41e0bc8c0a47",
+      "badge_template": {
+        "name": "Professional Agile Leadership™ I (PAL I)",
+        "skills": [
+          {
+            "id": "377d1202-560c-467b-b263-3bbb637667a4",
+            "name": "Agile"
+          },
+          {
+            "id": "51b73999-e9cb-43b4-aa9d-f5b33ad7f41c",
+            "name": "Leader"
+          },
+          {
+            "id": "e3b797ca-6bf5-4b6d-8447-7ed78c3d1a52",
+            "name": "Leadership"
+          },
+          {
+            "id": "d2b1e0c5-32b4-4b81-ab0e-12cc3e344440",
+            "name": "PAL"
+          },
+          {
+            "id": "e9764be7-332b-4983-b79a-185b4e63f2f4",
+            "name": "Scrum"
+          }
+        ],
+        "url": "https://www.credly.com/org/scrum-org/badge/professional-agile-leadership-i-pal-i"
+      },
+      "image_url": "https://images.credly.com/images/78c772ee-6b3c-4348-ac66-58ac5a2cf581/image.png",
+      "issuer_linked_in_name": "Scrum.org",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Scrum.org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "c583ba79-97b7-4a6e-ac8d-44d7bbaf9e19",
+      "badge_template": {
+        "name": "Professional Agile Leadership™ - Evidence-Based Management™ (PAL-EBM)",
+        "skills": [
+          {
+            "id": "377d1202-560c-467b-b263-3bbb637667a4",
+            "name": "Agile"
+          },
+          {
+            "id": "81257add-4d92-40e9-904f-a3e8ae1e0887",
+            "name": "Agile Measurement"
+          },
+          {
+            "id": "be7b2d43-b123-45e0-ac89-f9b1ad03a941",
+            "name": "Empiricism"
+          },
+          {
+            "id": "89df1a58-6878-4f11-8055-fc23d4aaac85",
+            "name": "Evidence-Based Management"
+          },
+          {
+            "id": "a147628e-db0a-4bdb-a604-5b10401ce308",
+            "name": "Goal Setting"
+          },
+          {
+            "id": "51b73999-e9cb-43b4-aa9d-f5b33ad7f41c",
+            "name": "Leader"
+          },
+          {
+            "id": "e3b797ca-6bf5-4b6d-8447-7ed78c3d1a52",
+            "name": "Leadership"
+          },
+          {
+            "id": "d2b1e0c5-32b4-4b81-ab0e-12cc3e344440",
+            "name": "PAL"
+          },
+          {
+            "id": "e9764be7-332b-4983-b79a-185b4e63f2f4",
+            "name": "Scrum"
+          }
+        ],
+        "url": "https://www.credly.com/org/scrum-org/badge/professional-agile-leadership-evidence-based-management-pal-ebm"
+      },
+      "image_url": "https://images.credly.com/images/c1247f46-35db-4092-b3d7-0c42628d4947/image.png",
+      "issuer_linked_in_name": "Scrum.org",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Scrum.org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "0311192b-2193-4e2e-83d7-3df95f310cc7",
+      "badge_template": {
+        "name": "Scaled Professional Scrum™ (SPS)",
+        "skills": [
+          {
+            "id": "377d1202-560c-467b-b263-3bbb637667a4",
+            "name": "Agile"
+          },
+          {
+            "id": "484a44a4-145b-48e5-9084-6c1a4a99cb4a",
+            "name": "Scaled Professional Scrum"
+          },
+          {
+            "id": "da974cff-7ec8-48d9-b130-5c903d83195e",
+            "name": "Scaling"
+          },
+          {
+            "id": "e9764be7-332b-4983-b79a-185b4e63f2f4",
+            "name": "Scrum"
+          },
+          {
+            "id": "cab910b4-ac24-49e1-929b-33e4290ef6f2",
+            "name": "SPS"
+          }
+        ],
+        "url": "https://www.credly.com/org/scrum-org/badge/scaled-professional-scrum-sps"
+      },
+      "image_url": "https://images.credly.com/images/ab5a94a3-3d62-4d02-a3c8-7a72524f4d12/image.png",
+      "issuer_linked_in_name": "Scrum.org",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Scrum.org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "90fde7a7-f08c-4126-ab1d-eb7ec761fbdc",
+      "badge_template": {
+        "name": "Professional Scrum™ with Kanban I (PSK I)",
+        "skills": [
+          {
+            "id": "377d1202-560c-467b-b263-3bbb637667a4",
+            "name": "Agile"
+          },
+          {
+            "id": "123e0108-b69f-4cdd-87f5-7139a81db47c",
+            "name": "Flow"
+          },
+          {
+            "id": "87574e1c-2e7b-4e38-833f-daa85d7e6da9",
+            "name": "Kanban"
+          },
+          {
+            "id": "087f0756-a07b-4643-bc0e-dab4450e9bd6",
+            "name": "PSK"
+          },
+          {
+            "id": "e9764be7-332b-4983-b79a-185b4e63f2f4",
+            "name": "Scrum"
+          }
+        ],
+        "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-with-kanban-i-psk-i"
+      },
+      "image_url": "https://images.credly.com/images/78c2bf96-9468-40ac-aee7-3eac9d79a6d5/image.png",
+      "issuer_linked_in_name": "Scrum.org",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Scrum.org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "bba62d59-74c2-4d9a-af89-b7f342710dd9",
+      "badge_template": {
+        "name": "Microsoft Certified: Azure Fundamentals",
+        "skills": [
+          {
+            "id": "89898f70-0bf1-4dcd-bb88-57f48fde2d43",
+            "name": "Azure"
+          },
+          {
+            "id": "37229bc7-1a4e-478d-b834-17402ba02862",
+            "name": "Cloud Data"
+          },
+          {
+            "id": "069c9097-511a-4671-b167-36824826bc7d",
+            "name": "Cloud Networking"
+          },
+          {
+            "id": "68fab466-80d0-441e-8db4-a036d2e711eb",
+            "name": "Cloud Security"
+          },
+          {
+            "id": "f056df54-cafe-4713-bdc5-d4ac6734d76c",
+            "name": "Cloud Services"
+          },
+          {
+            "id": "3dbe6ef4-5675-4a81-82e1-a67d9965bb4e",
+            "name": "Cloud Storage"
+          },
+          {
+            "id": "35abc0ba-fd68-400c-a55f-e3fce62267b6",
+            "name": "Virtualization"
+          }
+        ],
+        "url": "https://www.credly.com/org/microsoft-certification/badge/microsoft-certified-azure-fundamentals"
+      },
+      "image_url": "https://images.credly.com/images/be8fcaeb-c769-4858-b567-ffaaa73ce8cf/image.png",
+      "issuer_linked_in_name": "Microsoft",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Microsoft"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ebfaff37-7260-410e-9aa4-6c97dab03b37",
+      "badge_template": {
+        "name": "Microsoft Certified: Azure Data Fundamentals",
+        "skills": [
+          {
+            "id": "89898f70-0bf1-4dcd-bb88-57f48fde2d43",
+            "name": "Azure"
+          },
+          {
+            "id": "9448f54d-65a6-48b7-8944-9bfa8538f15c",
+            "name": "Azure Cosmos DB"
+          },
+          {
+            "id": "6f3f6f2d-3677-4379-8262-22dff51ae719",
+            "name": "Azure Data Analyst"
+          },
+          {
+            "id": "88a6ba43-498c-4286-a5d6-cb7e358ebb2e",
+            "name": "Azure Database Administrator"
+          },
+          {
+            "id": "e0744aed-713b-4c9e-8d9a-7114580f4a34",
+            "name": "Azure Databricks"
+          },
+          {
+            "id": "ff428efe-ff57-4929-a0c3-f85afcae6988",
+            "name": "Azure Data Engineer"
+          },
+          {
+            "id": "f80cf032-5438-4d72-865f-5e7a1f1f0499",
+            "name": "Azure Data Warehouse"
+          },
+          {
+            "id": "130288cc-7784-4318-879e-dfed1ca1deed",
+            "name": "Azure SQL Database"
+          },
+          {
+            "id": "023ca02e-0615-4ac0-bd96-a8e897341175",
+            "name": "Azure SQL Data Warehouse"
+          },
+          {
+            "id": "a7998d25-6a74-4f5e-b9af-2ca6219984cc",
+            "name": "Azure Synapse Analytics"
+          },
+          {
+            "id": "3fa750a1-613e-4b51-88c8-42e18a2a8ce7",
+            "name": "Cloud"
+          },
+          {
+            "id": "37229bc7-1a4e-478d-b834-17402ba02862",
+            "name": "Cloud Data"
+          },
+          {
+            "id": "f983ef47-6ad4-45f9-8e9f-00c9a640a2d6",
+            "name": "Cloud Data Services"
+          },
+          {
+            "id": "bb52a06a-943a-44e7-86ed-e37002191ff7",
+            "name": "Data Analytics"
+          },
+          {
+            "id": "660b6dbb-55bd-4d5d-806d-eae1325a910a",
+            "name": "Data Processing"
+          },
+          {
+            "id": "f7d62d7d-1b77-4c1e-8df0-14756de6d6a8",
+            "name": "Data Visualization"
+          },
+          {
+            "id": "3c928c36-f085-479a-ad03-47fda9daf6bb",
+            "name": "MariaDB"
+          },
+          {
+            "id": "0be1581f-71b6-42e5-8367-681fe1166354",
+            "name": "MySQL"
+          },
+          {
+            "id": "32111192-1ecb-4a6b-9f4e-bf0d1172814d",
+            "name": "PostgreSQL"
+          },
+          {
+            "id": "9db37812-dcd9-4167-9680-d1dc2a49b102",
+            "name": "Power BI"
+          },
+          {
+            "id": "ca90e372-db14-46a6-a0fb-372e59941825",
+            "name": "SQL Server On Azure Virtual Machines"
+          },
+          {
+            "id": "35abc0ba-fd68-400c-a55f-e3fce62267b6",
+            "name": "Virtualization"
+          }
+        ],
+        "url": "https://www.credly.com/org/microsoft-certification/badge/microsoft-certified-azure-data-fundamentals"
+      },
+      "image_url": "https://images.credly.com/images/70eb1e3f-d4de-4377-a062-b20fb29594ea/azure-data-fundamentals-600x600.png",
+      "issuer_linked_in_name": "Microsoft",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Microsoft"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "a696e3cf-9b95-4e2f-a644-10d4a530e848",
+      "badge_template": {
+        "name": "Microsoft Certified: Azure AI Fundamentals",
+        "skills": [
+          {
+            "id": "1d11aa06-42b6-4b12-bca2-d0bc5b0b3b3f",
+            "name": "Azure Bot Services"
+          },
+          {
+            "id": "ffd3e571-4aad-4bf8-bbd5-cc0d00d5ae61",
+            "name": "Azure Machine Learning"
+          },
+          {
+            "id": "14ff2a62-40ef-412f-999e-f9df4baee9ed",
+            "name": "Cognitive Services"
+          }
+        ],
+        "url": "https://www.credly.com/org/microsoft-certification/badge/microsoft-certified-azure-ai-fundamentals"
+      },
+      "image_url": "https://images.credly.com/images/4136ced8-75d5-4afb-8677-40b6236e2672/azure-ai-fundamentals-600x600.png",
+      "issuer_linked_in_name": "Microsoft",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Microsoft"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "22e6799b-4777-4c7d-85b6-4c0a1b880534",
+      "badge_template": {
+        "name": "MongoDB Associate Developer",
+        "skills": [
+          {
+            "id": "03936165-3feb-440b-8d56-12551b17975c",
+            "name": "CRUD"
+          },
+          {
+            "id": "9c3129ea-3609-44b0-ba44-56c99a5b8e33",
+            "name": "Data Modeling"
+          },
+          {
+            "id": "aa3f8dc5-0e08-4b61-aead-df944ae12ddc",
+            "name": "Drivers"
+          },
+          {
+            "id": "9129eb3c-482d-443d-8981-a6c36ed8816d",
+            "name": "MongoDB"
+          },
+          {
+            "id": "ff14584a-8c1f-4d61-927f-e23cd7c0718d",
+            "name": "MongoDB Document Model"
+          },
+          {
+            "id": "cd029326-e2a6-4b34-ad07-6088ea80c247",
+            "name": "MongoDB Indexes"
+          },
+          {
+            "id": "287b97e4-3377-422b-a2a8-0000eb51b2bd",
+            "name": "MongoDB Tools & Tooling"
+          },
+          {
+            "id": "4bc95338-c7bd-43ff-b19d-1f4557198e08",
+            "name": "Software Engineering"
+          }
+        ],
+        "url": "https://www.credly.com/org/mongodb/badge/mongodb-associate-developer"
+      },
+      "image_url": "https://images.credly.com/images/6096167c-91fd-4e74-bc85-d2100672fef7/image.png",
+      "issuer_linked_in_name": "MongoDB",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "MongoDB"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fcb28525-cb86-46bd-85ad-63856073d83d",
+      "badge_template": {
+        "name": "Professional Scrum™ with User Experience I (PSU I)",
+        "skills": [
+          {
+            "id": "377d1202-560c-467b-b263-3bbb637667a4",
+            "name": "Agile"
+          },
+          {
+            "id": "75701174-2447-4ade-ad50-957bcd9c4261",
+            "name": "Design"
+          },
+          {
+            "id": "7ec79c81-7967-416b-b7b8-cf8f1293b57b",
+            "name": "PSU"
+          },
+          {
+            "id": "e9764be7-332b-4983-b79a-185b4e63f2f4",
+            "name": "Scrum"
+          },
+          {
+            "id": "a64e4f71-f4bc-4dd0-917b-14ca44aee6cf",
+            "name": "User Experience"
+          },
+          {
+            "id": "b1e3f469-552a-46ba-9b84-f45a79f38598",
+            "name": "UX"
+          }
+        ],
+        "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-with-user-experience-i-psu-i"
+      },
+      "image_url": "https://images.credly.com/images/253d8e52-e0bb-4806-87f8-b46784afea51/image.png",
+      "issuer_linked_in_name": "Scrum.org",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Scrum.org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "bb61354d-c22a-4eac-8a27-ec5efcc47e51",
+      "badge_template": {
+        "name": "Professional Scrum Facilitation Skills™",
+        "skills": [
+          {
+            "id": "6c664cb3-80e9-4c2d-9060-3a73f3ae22d2",
+            "name": "Collaboration"
+          },
+          {
+            "id": "1d43281b-b0b3-43e5-bfd7-32c901262149",
+            "name": "Conflict Management"
+          },
+          {
+            "id": "3de76616-44a6-42e0-b141-85219c5a71d5",
+            "name": "Conflict Resolution"
+          },
+          {
+            "id": "7bd21107-46f6-4d9b-b078-f9aad533e1fa",
+            "name": "Consensus Decision-Making"
+          },
+          {
+            "id": "d7727e30-86a3-40b0-9c3b-b85f90e1f415",
+            "name": "Decision Making"
+          },
+          {
+            "id": "63964fdc-32dd-4dba-9e5d-d7bfbffd838b",
+            "name": "Developing Teams"
+          },
+          {
+            "id": "b839f053-882b-4257-9451-93ae0d218703",
+            "name": "Facilitation"
+          },
+          {
+            "id": "08428275-d992-42ea-8b34-b45370bd39c1",
+            "name": "Group Dynamics"
+          },
+          {
+            "id": "9a39824c-514b-456f-bd92-5196b575e8be",
+            "name": "Liberating Structures"
+          },
+          {
+            "id": "e9764be7-332b-4983-b79a-185b4e63f2f4",
+            "name": "Scrum"
+          },
+          {
+            "id": "5d700c12-c12a-4940-8720-dfe1c94bfdc9",
+            "name": "Scrum (Software Development)"
+          }
+        ],
+        "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-facilitation-skills.1"
+      },
+      "image_url": "https://images.credly.com/images/d9b27ef8-c252-4a4b-b4dc-546162a555f7/image.png",
+      "issuer_linked_in_name": "Scrum.org",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Scrum.org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "5262a851-7a37-48bf-9c8d-77fd85112dd6",
+      "badge_template": {
+        "name": "GitLab Certified Git Associate",
+        "skills": [
+          {
+            "id": "6c664cb3-80e9-4c2d-9060-3a73f3ae22d2",
+            "name": "Collaboration"
+          },
+          {
+            "id": "8180c403-010f-4e4f-bdae-c0d0b01079bb",
+            "name": "DevOps"
+          },
+          {
+            "id": "9d6c62cd-9ab1-4b3e-a165-1e95e571f1fd",
+            "name": "Git"
+          },
+          {
+            "id": "962acba9-3c46-4af1-bae7-d49cbcea5c7c",
+            "name": "GIT Commands"
+          },
+          {
+            "id": "6583b9e3-c33f-42e9-a679-c18d24c8cca6",
+            "name": "GitLab Fundamentals"
+          },
+          {
+            "id": "f030baa0-1b14-4157-ab9c-4d7ebd8b209d",
+            "name": "Project Management"
+          },
+          {
+            "id": "84c7ee1d-abe3-4d5f-8886-4bd873e95915",
+            "name": "Version Control"
+          }
+        ],
+        "url": "https://www.credly.com/org/gitlab/badge/gitlab-certified-git-associate"
+      },
+      "image_url": "https://images.credly.com/images/9bc216e6-406e-491f-903f-2f7ca60facc6/image.png",
+      "issuer_linked_in_name": "GitLab",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "GitLab"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "c99785f0-547b-4fb7-94e1-e570bc402d6f",
+      "badge_template": {
+        "name": "Professional Scrum Product Backlog Management Skills™",
+        "skills": [
+          {
+            "id": "415854fd-fbd1-4763-9e14-371d460b843e",
+            "name": "Backlog Management"
+          },
+          {
+            "id": "d7727e30-86a3-40b0-9c3b-b85f90e1f415",
+            "name": "Decision Making"
+          },
+          {
+            "id": "1d2c315f-a95f-45ce-bb3f-7b640fbdcf4e",
+            "name": "Product Backlog"
+          },
+          {
+            "id": "3b7a0151-d186-43f5-8577-88d8588f9330",
+            "name": "Product Management"
+          },
+          {
+            "id": "f8e4afa7-b688-4274-8d80-ac2f71f2623a",
+            "name": "Product Owner"
+          },
+          {
+            "id": "ffcfdf66-a638-498f-926d-6141ae3656d1",
+            "name": "Product Ownership"
+          },
+          {
+            "id": "e9764be7-332b-4983-b79a-185b4e63f2f4",
+            "name": "Scrum"
+          },
+          {
+            "id": "5d700c12-c12a-4940-8720-dfe1c94bfdc9",
+            "name": "Scrum (Software Development)"
+          },
+          {
+            "id": "9fa4f51d-488e-4297-9165-92297ce7e5ef",
+            "name": "Stakeholders"
+          }
+        ],
+        "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-product-backlog-management-skill"
+      },
+      "image_url": "https://images.credly.com/images/55a21a78-59af-4294-810e-e4014e9ca1be/image.png",
+      "issuer_linked_in_name": "Scrum.org",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Scrum.org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "1ac6a12b-d151-476f-a972-5a36769751d5",
+      "badge_template": {
+        "name": "Cloud Digital Leader Certification",
+        "skills": [
+          {
+            "id": "3548013a-e914-4b23-b4fc-3fd5a416fa30",
+            "name": "Artificial Intelligence (AI)"
+          },
+          {
+            "id": "f8e4fd7f-3cf6-40bd-95a0-b832e21c2f8f",
+            "name": "Cloud Computing"
+          },
+          {
+            "id": "dd391e1d-7277-46eb-917a-ce4c914ea879",
+            "name": "Cloud Digital Leader"
+          },
+          {
+            "id": "68fab466-80d0-441e-8db4-a036d2e711eb",
+            "name": "Cloud Security"
+          },
+          {
+            "id": "452da3d9-5bee-4aee-806b-2098665af2ff",
+            "name": "Data Governance"
+          },
+          {
+            "id": "c8c22eec-8d21-472d-b910-1c6ac2f76bea",
+            "name": "Google Cloud"
+          },
+          {
+            "id": "87d98f7f-03d3-4f00-8ba1-fe234fb1aeed",
+            "name": "Google Cloud Platform (GCP)"
+          },
+          {
+            "id": "665e3fce-e0f4-4218-aa41-db420985df1c",
+            "name": "IT Digital Transformation"
+          },
+          {
+            "id": "0a109989-5a77-494e-a91a-36d1c0c2e7b0",
+            "name": "Security and Trust"
+          }
+        ],
+        "url": "https://www.credly.com/org/google-cloud/badge/cloud-digital-leader-certification"
+      },
+      "image_url": "https://images.credly.com/images/44994cda-b5b0-44cb-9a6d-d29b57163073/image.png",
+      "issuer_linked_in_name": "Google",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Google Cloud"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ef232374-caa1-4976-9c01-aa761ee11e46",
+      "badge_template": {
+        "name": "MongoDB Certified Associate Data Modeler",
+        "skills": [
+          {
+            "id": "452da3d9-5bee-4aee-806b-2098665af2ff",
+            "name": "Data Governance"
+          },
+          {
+            "id": "625a3b5a-dd98-4342-b778-8741f763ec34",
+            "name": "Data Management"
+          },
+          {
+            "id": "9c3129ea-3609-44b0-ba44-56c99a5b8e33",
+            "name": "Data Modeling"
+          },
+          {
+            "id": "4323ef85-84a0-4caa-a023-12c9998fb90a",
+            "name": "Data Storage"
+          },
+          {
+            "id": "2178b49d-363c-46cb-9ea7-046c818ec3b5",
+            "name": "JSON"
+          },
+          {
+            "id": "9129eb3c-482d-443d-8981-a6c36ed8816d",
+            "name": "MongoDB"
+          },
+          {
+            "id": "b39bdd99-6687-47b8-bfd5-28d7722272c6",
+            "name": "MongoDB Data"
+          },
+          {
+            "id": "ca8eb9bf-3c8e-47cb-be73-15a2bab16589",
+            "name": "Query Languages"
+          }
+        ],
+        "url": "https://www.credly.com/org/mongodb/badge/mongodb-certified-associate-data-modeler"
+      },
+      "image_url": "https://images.credly.com/images/8d3ec2a5-1a75-49f4-b562-fde221d1c5d1/image.png",
+      "issuer_linked_in_name": "MongoDB",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "MongoDB"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "f467571d-4f47-4317-b09d-ebc46c7dfcb8",
+      "badge_template": {
+        "name": "GitHub Foundations",
+        "skills": [
+          {
+            "id": "1349859b-7d0a-4bd9-9757-5182d2f84f9e",
+            "name": "Build Pipeline"
+          },
+          {
+            "id": "047ebc52-ba7a-4089-8a94-eb18a746afc0",
+            "name": "Continuous Delivery"
+          },
+          {
+            "id": "93b07372-e738-4386-a699-f8ac77f7a8ac",
+            "name": "Continuous Integration"
+          },
+          {
+            "id": "8180c403-010f-4e4f-bdae-c0d0b01079bb",
+            "name": "DevOps"
+          },
+          {
+            "id": "4e9557a6-7a67-4f0c-a6b6-0d860b3ed957",
+            "name": "GitHub"
+          },
+          {
+            "id": "041eebbd-c559-4a39-a1d7-8d1d4a39d0ee",
+            "name": "GitHub Actions"
+          },
+          {
+            "id": "cf2e9f5c-d82e-40ec-b0c5-ecb9658faaf8",
+            "name": "Release Management"
+          }
+        ],
+        "url": "https://www.credly.com/org/github/badge/github-foundations"
+      },
+      "image_url": "https://images.credly.com/images/024d0122-724d-4c5a-bd83-cfe3c4b7a073/image.png",
+      "issuer_linked_in_name": "GitHub",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "GitHub"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "7052f978-811c-4cc8-8caf-0696aabd3588",
+      "badge_template": {
+        "name": "GitHub Actions",
+        "skills": [
+          {
+            "id": "1349859b-7d0a-4bd9-9757-5182d2f84f9e",
+            "name": "Build Pipeline"
+          },
+          {
+            "id": "047ebc52-ba7a-4089-8a94-eb18a746afc0",
+            "name": "Continuous Delivery"
+          },
+          {
+            "id": "93b07372-e738-4386-a699-f8ac77f7a8ac",
+            "name": "Continuous Integration"
+          },
+          {
+            "id": "8180c403-010f-4e4f-bdae-c0d0b01079bb",
+            "name": "DevOps"
+          },
+          {
+            "id": "4e9557a6-7a67-4f0c-a6b6-0d860b3ed957",
+            "name": "GitHub"
+          },
+          {
+            "id": "041eebbd-c559-4a39-a1d7-8d1d4a39d0ee",
+            "name": "GitHub Actions"
+          },
+          {
+            "id": "cf2e9f5c-d82e-40ec-b0c5-ecb9658faaf8",
+            "name": "Release Management"
+          }
+        ],
+        "url": "https://www.credly.com/org/github/badge/github-actions"
+      },
+      "image_url": "https://images.credly.com/images/89efc3e7-842b-4790-b09b-9ea5efc71ec3/image.png",
+      "issuer_linked_in_name": "GitHub",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "GitHub"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "68b87579-8851-493f-a850-11169fee8d90",
+      "badge_template": {
+        "name": "GitHub Advanced Security",
+        "skills": [
+          {
+            "id": "4d27cd5d-28a6-4e2c-a88e-d944215543b0",
+            "name": "Code scanning"
+          },
+          {
+            "id": "72294138-bff0-4183-b613-54f4a4e350a2",
+            "name": "Dependency Management"
+          },
+          {
+            "id": "8180c403-010f-4e4f-bdae-c0d0b01079bb",
+            "name": "DevOps"
+          },
+          {
+            "id": "d907bd8c-1a49-4a7d-9d54-71eea7741dc0",
+            "name": "DevSecOps"
+          },
+          {
+            "id": "8254dc54-cc40-477e-9662-9d1d318a933b",
+            "name": "GHAS"
+          },
+          {
+            "id": "4e9557a6-7a67-4f0c-a6b6-0d860b3ed957",
+            "name": "GitHub"
+          },
+          {
+            "id": "041eebbd-c559-4a39-a1d7-8d1d4a39d0ee",
+            "name": "GitHub Actions"
+          },
+          {
+            "id": "d377b507-b2d4-4e89-ac19-10e0ece791ba",
+            "name": "GitHub Advanced Security"
+          },
+          {
+            "id": "f5d92473-ea30-4c1d-9903-1295ead1b780",
+            "name": "Secret scanning"
+          }
+        ],
+        "url": "https://www.credly.com/org/github/badge/github-advanced-security"
+      },
+      "image_url": "https://images.credly.com/images/c9ed294b-f8ac-48fa-a8c3-96dab1f110f2/image.png",
+      "issuer_linked_in_name": "GitHub",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "GitHub"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "dc9e9733-2d1a-431d-ac72-176e0179a507",
+      "badge_template": {
+        "name": "GitHub Administration",
+        "skills": [
+          {
+            "id": "8180c403-010f-4e4f-bdae-c0d0b01079bb",
+            "name": "DevOps"
+          },
+          {
+            "id": "b8a9f092-aea6-4693-bbef-a10b9bd24d51",
+            "name": "GHEC"
+          },
+          {
+            "id": "145fe419-9db8-497f-bd56-97920e612b55",
+            "name": "GHES"
+          },
+          {
+            "id": "4e9557a6-7a67-4f0c-a6b6-0d860b3ed957",
+            "name": "GitHub"
+          },
+          {
+            "id": "aa00351c-a29e-4d23-a259-30b532003f2d",
+            "name": "GitHub Enterprise"
+          },
+          {
+            "id": "f7284e83-463a-450a-a31a-39a8ea4722f7",
+            "name": "System Administration"
+          }
+        ],
+        "url": "https://www.credly.com/org/github/badge/github-administration"
+      },
+      "image_url": "https://images.credly.com/images/34880f37-8ec8-4542-a78a-73ba6647208e/image.png",
+      "issuer_linked_in_name": "GitHub",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "GitHub"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "abf59625-9900-4f99-ad13-3bb6edeec0db",
+      "badge_template": {
+        "name": "GitHub Copilot",
+        "skills": [
+          {
+            "id": "89e51f17-a396-4819-8e0d-e0eb64e8cc5f",
+            "name": "AI"
+          },
+          {
+            "id": "0ce6c676-e8e0-41cc-a837-1203813e6944",
+            "name": "Data Utilization"
+          },
+          {
+            "id": "4e9557a6-7a67-4f0c-a6b6-0d860b3ed957",
+            "name": "GitHub"
+          },
+          {
+            "id": "d9adaa2d-a55c-4a18-8e31-533416a812d8",
+            "name": "GitHub Copilot"
+          },
+          {
+            "id": "4905d9a2-f6d6-4e17-9472-18bdd7174f02",
+            "name": "Prompt Engineering"
+          },
+          {
+            "id": "bb6fd64d-447f-4721-a9be-f80c487a5a6e",
+            "name": "Workflow Optimization"
+          }
+        ],
+        "url": "https://www.credly.com/org/github/badge/github-copilot"
+      },
+      "image_url": "https://images.credly.com/images/6b924fae-3cd7-4233-b012-97413c62c85d/blob",
+      "issuer_linked_in_name": "GitHub",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "GitHub"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "6529d874-3334-40aa-817d-e4949e8261a0",
+      "badge_template": {
+        "name": "Professional Product Discovery and Validation™",
+        "skills": [
+          {
+            "id": "377d1202-560c-467b-b263-3bbb637667a4",
+            "name": "Agile"
+          },
+          {
+            "id": "9716c620-9133-4c07-a1f4-7120b4371bee",
+            "name": "Discovery"
+          },
+          {
+            "id": "aca08c22-3960-4135-86a8-690866209382",
+            "name": "Product"
+          },
+          {
+            "id": "d8b3016d-3e4b-4cd9-a52f-36fd52e4a764",
+            "name": "Product Delivery"
+          },
+          {
+            "id": "5898a378-30e1-4b7c-a2eb-d32ff958a5bd",
+            "name": "Product Development"
+          },
+          {
+            "id": "3b7a0151-d186-43f5-8577-88d8588f9330",
+            "name": "Product Management"
+          },
+          {
+            "id": "ffcfdf66-a638-498f-926d-6141ae3656d1",
+            "name": "Product Ownership"
+          },
+          {
+            "id": "522e6661-612b-416c-8407-b22dc5a691b2",
+            "name": "Validation"
+          }
+        ],
+        "url": "https://www.credly.com/org/scrum-org/badge/professional-product-discovery-and-validation"
+      },
+      "image_url": "https://images.credly.com/images/0fd554f1-9c19-4da2-9bed-f5ddde452ea6/image.png",
+      "issuer_linked_in_name": "Scrum.org",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Scrum.org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "0e4b67e6-429f-4fd4-a175-5bfb6ad45feb",
+      "badge_template": {
+        "name": "AWS Certified Cloud Practitioner",
+        "skills": [
+          {
+            "id": "87f75c05-6cff-4044-b641-f871a1ea345a",
+            "name": "Amazon Web Services"
+          },
+          {
+            "id": "682d4927-14e7-490c-96d3-c8f3ef0995de",
+            "name": "AWS"
+          },
+          {
+            "id": "d914920b-ba3e-4220-9b51-957642f3104a",
+            "name": "AWS Certification"
+          },
+          {
+            "id": "918edc32-0894-4957-a91f-d96300b8b8d3",
+            "name": "AWS Cloud"
+          },
+          {
+            "id": "c42a5758-3258-4516-9188-5b019ddd1241",
+            "name": "Cloud Certification"
+          },
+          {
+            "id": "f8e4fd7f-3cf6-40bd-95a0-b832e21c2f8f",
+            "name": "Cloud Computing"
+          },
+          {
+            "id": "f468a452-e13e-4ca4-ae58-f4131989f1fe",
+            "name": "Cloud Platform"
+          },
+          {
+            "id": "f056df54-cafe-4713-bdc5-d4ac6734d76c",
+            "name": "Cloud Services"
+          }
+        ],
+        "url": "https://www.credly.com/org/amazon-web-services/badge/aws-certified-cloud-practitioner"
+      },
+      "image_url": "https://images.credly.com/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png",
+      "issuer_linked_in_name": "Amazon Web Services (AWS)",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Amazon Web Services Training and Certification"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "47c6dacf-0a57-4b51-be52-1b9fd352cc9f",
+      "badge_template": {
+        "name": "AWS Certified AI Practitioner",
+        "skills": [
+          {
+            "id": "616959fd-b8d6-433c-9572-cdaca0ea1a9e",
+            "name": "AI and ML on AWS - Foundational"
+          },
+          {
+            "id": "87f75c05-6cff-4044-b641-f871a1ea345a",
+            "name": "Amazon Web Services"
+          },
+          {
+            "id": "3548013a-e914-4b23-b4fc-3fd5a416fa30",
+            "name": "Artificial Intelligence (AI)"
+          },
+          {
+            "id": "682d4927-14e7-490c-96d3-c8f3ef0995de",
+            "name": "AWS"
+          },
+          {
+            "id": "d914920b-ba3e-4220-9b51-957642f3104a",
+            "name": "AWS Certification"
+          },
+          {
+            "id": "918edc32-0894-4957-a91f-d96300b8b8d3",
+            "name": "AWS Cloud"
+          },
+          {
+            "id": "c42a5758-3258-4516-9188-5b019ddd1241",
+            "name": "Cloud Certification"
+          },
+          {
+            "id": "ab05d407-58e3-402e-87e7-c22d89869ec0",
+            "name": "Foundation Models"
+          },
+          {
+            "id": "ce81c19f-f223-4de7-88d4-4604ec817203",
+            "name": "Generative AI"
+          },
+          {
+            "id": "b7c64ba4-9f39-411a-a4ef-eae166561d8b",
+            "name": "Machine Learning (ML)"
+          }
+        ],
+        "url": "https://www.credly.com/org/amazon-web-services/badge/aws-certified-ai-practitioner"
+      },
+      "image_url": "https://images.credly.com/images/4d4693bb-530e-4bca-9327-de07f3aa2348/image.png",
+      "issuer_linked_in_name": "Amazon Web Services (AWS)",
+      "issuer": {
+        "entities": [
+          {
+            "entity": {
+              "name": "Amazon Web Services Training and Certification"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
