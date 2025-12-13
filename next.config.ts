@@ -26,7 +26,14 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   output: 'export',
   // Optimize imports for smaller bundles
-  optimizePackageImports: ['framer-motion', 'lucide-react', '@headlessui/react']
+  optimizePackageImports: [
+    'framer-motion',
+    'lucide-react',
+    '@headlessui/react'
+  ],
+  experimental: {
+    webpackBuildWorker: true
+  }
 }
 
 export default isAnalyze
