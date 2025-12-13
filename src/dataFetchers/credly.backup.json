@@ -12,7 +12,7 @@
         ],
         "url": "https://www.credly.com/org/microsoft-certification/badge/mta-introduction-to-programming-using-javascript-certified-2021"
       },
-      "image_url": "https://images.credly.com/images/16840ea3-5c9a-4599-853e-7e15bac7748e/MTA-Introduction_to_Programming_Using_JavaScript-600x600.png",
+      "image_url": "/images/badges/credly/MTA-Introduction_to_Programming_Using_JavaScript.png",
       "issuer_linked_in_name": "Microsoft",
       "issuer": {
         "entities": [
@@ -52,7 +52,7 @@
         ],
         "url": "https://www.credly.com/org/microsoft-certification/badge/mta-html5-application-development-fundamentals-certified-2021"
       },
-      "image_url": "https://images.credly.com/images/d7c8cb0a-56d9-4178-a7be-de745a3b88f7/MTA-HTML5_Application_Development_Fundamentals-600x600.png",
+      "image_url": "/images/badges/credly/MTA-HTML5_Application_Development_Fundamentals.png",
       "issuer_linked_in_name": "Microsoft",
       "issuer": {
         "entities": [
@@ -84,7 +84,7 @@
         ],
         "url": "https://www.credly.com/org/microsoft-certification/badge/mta-introduction-to-programming-using-html-and-css-certified-2021"
       },
-      "image_url": "https://images.credly.com/images/241488f4-9110-41aa-804e-51a8f8ba430d/MTA-Introduction_to_Programming_Using_HTML_and_CSS-600x600.png",
+      "image_url": "/images/badges/credly/MTA-Introduction_to_Programming_Using_HTML_and_CSS.png",
       "issuer_linked_in_name": "Microsoft",
       "issuer": {
         "entities": [
@@ -112,7 +112,7 @@
         ],
         "url": "https://www.credly.com/org/microsoft-certification/badge/mta-introduction-to-programming-using-python-certified-2021"
       },
-      "image_url": "https://images.credly.com/images/ebfba101-5b78-49b6-903a-ac9ad518fe8a/MTA-Introduction_to_Programming_Using_Python-600x600.png",
+      "image_url": "/images/badges/credly/MTA-Introduction_to_Programming_Using_Python.png",
       "issuer_linked_in_name": "Microsoft",
       "issuer": {
         "entities": [
@@ -148,7 +148,7 @@
         ],
         "url": "https://www.credly.com/org/python-institute/badge/pcep-30-01-pcep-certified-entry-level-python-programmer"
       },
-      "image_url": "https://images.credly.com/images/d8017c77-3cc0-4fdf-8e17-62e50632812e/bronze_1_small.png",
+      "image_url": "/images/badges/credly/bronze_1_small.png",
       "issuer_linked_in_name": "Python Institute",
       "issuer": {
         "entities": [
@@ -188,7 +188,7 @@
         ],
         "url": "https://www.credly.com/org/python-institute/badge/pcap-31-03-pcap-certified-associate-python-programm"
       },
-      "image_url": "https://images.credly.com/images/4e248e82-9e87-4a63-9263-250fafe5fb1f/image.png",
+      "image_url": "/images/badges/credly/4e248e82-9e87-4a63-9263-250fafe5fb1f.png",
       "issuer_linked_in_name": "Python Institute",
       "issuer": {
         "entities": [
@@ -240,7 +240,7 @@
         ],
         "url": "https://www.credly.com/org/amazon-web-services/badge/aws-certified-cloud-practitioner"
       },
-      "image_url": "https://images.credly.com/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png",
+      "image_url": "/images/badges/credly/00634f82-b07f-4bbd-a6bb-53de397fc3a6.png",
       "issuer_linked_in_name": "Amazon Web Services (AWS)",
       "issuer": {
         "entities": [
@@ -276,7 +276,7 @@
         ],
         "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-master-i-psm-i"
       },
-      "image_url": "https://images.credly.com/images/a2790314-008a-4c3d-9553-f5e84eb359ba/image.png",
+      "image_url": "/images/badges/credly/a2790314-008a-4c3d-9553-f5e84eb359ba.png",
       "issuer_linked_in_name": "Scrum.org",
       "issuer": {
         "entities": [
@@ -316,7 +316,7 @@
         ],
         "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-master-ii-psm-ii"
       },
-      "image_url": "https://images.credly.com/images/d90cc9bc-3e9a-49b2-ac09-7930db400e32/image.png",
+      "image_url": "/images/badges/credly/d90cc9bc-3e9a-49b2-ac09-7930db400e32.png",
       "issuer_linked_in_name": "Scrum.org",
       "issuer": {
         "entities": [
@@ -364,7 +364,7 @@
         ],
         "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-developer-i-psd-i"
       },
-      "image_url": "https://images.credly.com/images/d2298e82-b671-434a-876b-21a0ebc3af0e/image.png",
+      "image_url": "/images/badges/credly/d2298e82-b671-434a-876b-21a0ebc3af0e.png",
       "issuer_linked_in_name": "Scrum.org",
       "issuer": {
         "entities": [
@@ -404,7 +404,7 @@
         ],
         "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-product-owner-i-pspo-i"
       },
-      "image_url": "https://images.credly.com/images/591762c5-fae7-49c6-b326-e1756979928d/image.png",
+      "image_url": "/images/badges/credly/591762c5-fae7-49c6-b326-e1756979928d.png",
       "issuer_linked_in_name": "Scrum.org",
       "issuer": {
         "entities": [
@@ -448,7 +448,7 @@
         ],
         "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-product-owner-ii-pspo-ii"
       },
-      "image_url": "https://images.credly.com/images/0a8590ce-08e2-493f-b45a-e2c9ee8c848c/image.png",
+      "image_url": "/images/badges/credly/0a8590ce-08e2-493f-b45a-e2c9ee8c848c.png",
       "issuer_linked_in_name": "Scrum.org",
       "issuer": {
         "entities": [
@@ -488,7 +488,7 @@
         ],
         "url": "https://www.credly.com/org/scrum-org/badge/professional-agile-leadership-i-pal-i"
       },
-      "image_url": "https://images.credly.com/images/78c772ee-6b3c-4348-ac66-58ac5a2cf581/image.png",
+      "image_url": "/images/badges/credly/78c772ee-6b3c-4348-ac66-58ac5a2cf581.png",
       "issuer_linked_in_name": "Scrum.org",
       "issuer": {
         "entities": [
@@ -544,7 +544,7 @@
         ],
         "url": "https://www.credly.com/org/scrum-org/badge/professional-agile-leadership-evidence-based-management-pal-ebm"
       },
-      "image_url": "https://images.credly.com/images/c1247f46-35db-4092-b3d7-0c42628d4947/image.png",
+      "image_url": "/images/badges/credly/c1247f46-35db-4092-b3d7-0c42628d4947.png",
       "issuer_linked_in_name": "Scrum.org",
       "issuer": {
         "entities": [
@@ -584,7 +584,7 @@
         ],
         "url": "https://www.credly.com/org/scrum-org/badge/scaled-professional-scrum-sps"
       },
-      "image_url": "https://images.credly.com/images/ab5a94a3-3d62-4d02-a3c8-7a72524f4d12/image.png",
+      "image_url": "/images/badges/credly/ab5a94a3-3d62-4d02-a3c8-7a72524f4d12.png",
       "issuer_linked_in_name": "Scrum.org",
       "issuer": {
         "entities": [
@@ -624,7 +624,7 @@
         ],
         "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-with-kanban-i-psk-i"
       },
-      "image_url": "https://images.credly.com/images/78c2bf96-9468-40ac-aee7-3eac9d79a6d5/image.png",
+      "image_url": "/images/badges/credly/78c2bf96-9468-40ac-aee7-3eac9d79a6d5.png",
       "issuer_linked_in_name": "Scrum.org",
       "issuer": {
         "entities": [
@@ -672,7 +672,7 @@
         ],
         "url": "https://www.credly.com/org/microsoft-certification/badge/microsoft-certified-azure-fundamentals"
       },
-      "image_url": "https://images.credly.com/images/be8fcaeb-c769-4858-b567-ffaaa73ce8cf/image.png",
+      "image_url": "/images/badges/credly/be8fcaeb-c769-4858-b567-ffaaa73ce8cf.png",
       "issuer_linked_in_name": "Microsoft",
       "issuer": {
         "entities": [
@@ -780,7 +780,7 @@
         ],
         "url": "https://www.credly.com/org/microsoft-certification/badge/microsoft-certified-azure-data-fundamentals"
       },
-      "image_url": "https://images.credly.com/images/70eb1e3f-d4de-4377-a062-b20fb29594ea/azure-data-fundamentals-600x600.png",
+      "image_url": "/images/badges/credly/azure-data-fundamentals.png",
       "issuer_linked_in_name": "Microsoft",
       "issuer": {
         "entities": [
@@ -812,7 +812,7 @@
         ],
         "url": "https://www.credly.com/org/microsoft-certification/badge/microsoft-certified-azure-ai-fundamentals"
       },
-      "image_url": "https://images.credly.com/images/4136ced8-75d5-4afb-8677-40b6236e2672/azure-ai-fundamentals-600x600.png",
+      "image_url": "/images/badges/credly/azure-ai-fundamentals.png",
       "issuer_linked_in_name": "Microsoft",
       "issuer": {
         "entities": [
@@ -864,7 +864,7 @@
         ],
         "url": "https://www.credly.com/org/mongodb/badge/mongodb-associate-developer"
       },
-      "image_url": "https://images.credly.com/images/6096167c-91fd-4e74-bc85-d2100672fef7/image.png",
+      "image_url": "/images/badges/credly/6096167c-91fd-4e74-bc85-d2100672fef7.png",
       "issuer_linked_in_name": "MongoDB",
       "issuer": {
         "entities": [
@@ -908,7 +908,7 @@
         ],
         "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-with-user-experience-i-psu-i"
       },
-      "image_url": "https://images.credly.com/images/253d8e52-e0bb-4806-87f8-b46784afea51/image.png",
+      "image_url": "/images/badges/credly/253d8e52-e0bb-4806-87f8-b46784afea51.png",
       "issuer_linked_in_name": "Scrum.org",
       "issuer": {
         "entities": [
@@ -972,7 +972,7 @@
         ],
         "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-facilitation-skills.1"
       },
-      "image_url": "https://images.credly.com/images/d9b27ef8-c252-4a4b-b4dc-546162a555f7/image.png",
+      "image_url": "/images/badges/credly/d9b27ef8-c252-4a4b-b4dc-546162a555f7.png",
       "issuer_linked_in_name": "Scrum.org",
       "issuer": {
         "entities": [
@@ -1020,7 +1020,7 @@
         ],
         "url": "https://www.credly.com/org/gitlab/badge/gitlab-certified-git-associate"
       },
-      "image_url": "https://images.credly.com/images/9bc216e6-406e-491f-903f-2f7ca60facc6/image.png",
+      "image_url": "/images/badges/credly/9bc216e6-406e-491f-903f-2f7ca60facc6.png",
       "issuer_linked_in_name": "GitLab",
       "issuer": {
         "entities": [
@@ -1076,7 +1076,7 @@
         ],
         "url": "https://www.credly.com/org/scrum-org/badge/professional-scrum-product-backlog-management-skill"
       },
-      "image_url": "https://images.credly.com/images/55a21a78-59af-4294-810e-e4014e9ca1be/image.png",
+      "image_url": "/images/badges/credly/55a21a78-59af-4294-810e-e4014e9ca1be.png",
       "issuer_linked_in_name": "Scrum.org",
       "issuer": {
         "entities": [
@@ -1132,7 +1132,7 @@
         ],
         "url": "https://www.credly.com/org/google-cloud/badge/cloud-digital-leader-certification"
       },
-      "image_url": "https://images.credly.com/images/44994cda-b5b0-44cb-9a6d-d29b57163073/image.png",
+      "image_url": "/images/badges/credly/44994cda-b5b0-44cb-9a6d-d29b57163073.png",
       "issuer_linked_in_name": "Google",
       "issuer": {
         "entities": [
@@ -1184,7 +1184,7 @@
         ],
         "url": "https://www.credly.com/org/mongodb/badge/mongodb-certified-associate-data-modeler"
       },
-      "image_url": "https://images.credly.com/images/8d3ec2a5-1a75-49f4-b562-fde221d1c5d1/image.png",
+      "image_url": "/images/badges/credly/8d3ec2a5-1a75-49f4-b562-fde221d1c5d1.png",
       "issuer_linked_in_name": "MongoDB",
       "issuer": {
         "entities": [
@@ -1232,7 +1232,7 @@
         ],
         "url": "https://www.credly.com/org/github/badge/github-foundations"
       },
-      "image_url": "https://images.credly.com/images/024d0122-724d-4c5a-bd83-cfe3c4b7a073/image.png",
+      "image_url": "/images/badges/credly/024d0122-724d-4c5a-bd83-cfe3c4b7a073.png",
       "issuer_linked_in_name": "GitHub",
       "issuer": {
         "entities": [
@@ -1280,7 +1280,7 @@
         ],
         "url": "https://www.credly.com/org/github/badge/github-actions"
       },
-      "image_url": "https://images.credly.com/images/89efc3e7-842b-4790-b09b-9ea5efc71ec3/image.png",
+      "image_url": "/images/badges/credly/89efc3e7-842b-4790-b09b-9ea5efc71ec3.png",
       "issuer_linked_in_name": "GitHub",
       "issuer": {
         "entities": [
@@ -1336,7 +1336,7 @@
         ],
         "url": "https://www.credly.com/org/github/badge/github-advanced-security"
       },
-      "image_url": "https://images.credly.com/images/c9ed294b-f8ac-48fa-a8c3-96dab1f110f2/image.png",
+      "image_url": "/images/badges/credly/c9ed294b-f8ac-48fa-a8c3-96dab1f110f2.png",
       "issuer_linked_in_name": "GitHub",
       "issuer": {
         "entities": [
@@ -1380,7 +1380,7 @@
         ],
         "url": "https://www.credly.com/org/github/badge/github-administration"
       },
-      "image_url": "https://images.credly.com/images/34880f37-8ec8-4542-a78a-73ba6647208e/image.png",
+      "image_url": "/images/badges/credly/34880f37-8ec8-4542-a78a-73ba6647208e.png",
       "issuer_linked_in_name": "GitHub",
       "issuer": {
         "entities": [
@@ -1424,7 +1424,7 @@
         ],
         "url": "https://www.credly.com/org/github/badge/github-copilot"
       },
-      "image_url": "https://images.credly.com/images/6b924fae-3cd7-4233-b012-97413c62c85d/blob",
+      "image_url": "/images/badges/credly/6b924fae-3cd7-4233-b012-97413c62c85d.png",
       "issuer_linked_in_name": "GitHub",
       "issuer": {
         "entities": [
@@ -1476,7 +1476,7 @@
         ],
         "url": "https://www.credly.com/org/scrum-org/badge/professional-product-discovery-and-validation"
       },
-      "image_url": "https://images.credly.com/images/0fd554f1-9c19-4da2-9bed-f5ddde452ea6/image.png",
+      "image_url": "/images/badges/credly/0fd554f1-9c19-4da2-9bed-f5ddde452ea6.png",
       "issuer_linked_in_name": "Scrum.org",
       "issuer": {
         "entities": [
@@ -1528,7 +1528,7 @@
         ],
         "url": "https://www.credly.com/org/amazon-web-services/badge/aws-certified-cloud-practitioner"
       },
-      "image_url": "https://images.credly.com/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png",
+      "image_url": "/images/badges/credly/00634f82-b07f-4bbd-a6bb-53de397fc3a6.png",
       "issuer_linked_in_name": "Amazon Web Services (AWS)",
       "issuer": {
         "entities": [
@@ -1588,7 +1588,7 @@
         ],
         "url": "https://www.credly.com/org/amazon-web-services/badge/aws-certified-ai-practitioner"
       },
-      "image_url": "https://images.credly.com/images/4d4693bb-530e-4bca-9327-de07f3aa2348/image.png",
+      "image_url": "/images/badges/credly/4d4693bb-530e-4bca-9327-de07f3aa2348.png",
       "issuer_linked_in_name": "Amazon Web Services (AWS)",
       "issuer": {
         "entities": [

@@ -2,7 +2,6 @@
 import Link from 'next/link'
 import React from 'react'
 import { CredlyBadge } from '@/types/credly.types'
-import { transformCredlyUrl } from '@/utils/transformCredlyUrl'
 import { zigZagSort } from '@/utils/zigZagSort'
 
 type CertificationCardProps = {
@@ -25,7 +24,7 @@ const CertificationCard: React.FC<CertificationCardProps> = ({
         width={200}
         height={200}
         className="w-full max-w-[200px] mx-auto p-4"
-        src={transformCredlyUrl(imgUrl)}
+        src={imgUrl}
         alt={`${title} Badge`}
       />
       <Link
