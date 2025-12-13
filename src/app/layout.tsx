@@ -3,6 +3,7 @@ import './globals.css'
 import '@/styles/animations.css'
 import { ReactNode } from 'react'
 import { FontInter } from '@/app/fonts'
+import { ThemeProvider } from '@/context/themeContext'
 
 export const metadata: Metadata = {
   title: 'Jonatan Kruszewski - Web Developer | Software Engineer',
@@ -13,7 +14,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={FontInter.className}>{children}</body>
+      <body className={FontInter.className}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   )
 }

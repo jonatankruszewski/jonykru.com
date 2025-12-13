@@ -9,6 +9,7 @@ import { useOnClickOutside } from 'usehooks-ts'
 import { FontJetBrainsMono } from '@/app/fonts'
 
 import NavbarLinks from '@/components/NavbarLinks'
+import ThemeToggle from '@/components/ThemeToggle'
 import { useEscapeKey } from '@/utils/useEscape'
 
 const DisclosureMenu = ({
@@ -29,20 +30,27 @@ const DisclosureMenu = ({
         <p
           className={`${FontJetBrainsMono.className} py-2 pl-3 pr-4 text-xl md:p-0 select-none bg-gradient-to-br from-indigo-500  to-purple-400 bg-clip-text text-transparent`}
         >
-          jonykru<span className="text-white">.</span>com
+          jonykru<span className="text-gray-900 dark:text-white">.</span>com
         </p>
-        <div className="menu hidden md:block md:w-auto" id="navbar">
+        <div
+          className="menu hidden md:flex md:items-center md:gap-4"
+          id="navbar"
+        >
           <ul className="flex p-4 md:p-0 md:flex-row md:space-x-8 mt-0">
             <NavbarLinks />
           </ul>
+          <ThemeToggle />
         </div>
-        <DisclosureButton
-          name={open ? 'Close' : 'Menu'}
-          aria-label={open ? 'Close' : 'Menu'}
-          className="cursor-pointer px-2 py-2 text-slate-200 hover:text-white hover:border-white md:hidden ml-auto"
-        >
-          {open ? <X /> : <Menu />}
-        </DisclosureButton>
+        <div className="flex items-center gap-2 md:hidden ml-auto">
+          <ThemeToggle />
+          <DisclosureButton
+            name={open ? 'Close' : 'Menu'}
+            aria-label={open ? 'Close' : 'Menu'}
+            className="cursor-pointer px-2 py-2 text-slate-200 hover:text-white hover:border-white"
+          >
+            {open ? <X /> : <Menu />}
+          </DisclosureButton>
+        </div>
       </div>
 
       <div className="overflow-hidden md:hidden" ref={ref}>
@@ -57,7 +65,9 @@ const DisclosureMenu = ({
                   transition={{ duration: 0.2, ease: 'easeInOut' }}
                   className="origin-top"
                 >
-                  <ul className={`flex-1 px-4 pb-4 flex flex-col bg-[#121212]`}>
+                  <ul
+                    className={`flex-1 px-4 pb-4 flex flex-col bg-white dark:bg-[#121212]`}
+                  >
                     <NavbarLinks onClick={close} />
                   </ul>
                 </motion.div>

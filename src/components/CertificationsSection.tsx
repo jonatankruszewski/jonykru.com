@@ -85,26 +85,26 @@ const CertificationsSection = ({ credlyData }: CertificationsSectionProps) => {
 
   return (
     <Section id="certifications">
-      <h2 className="text-center text-4xl font-bold text-white mb-12 mt-20">
+      <h2 className="text-center text-4xl font-bold text-gray-900 dark:text-white mb-12 mt-20">
         Certifications
       </h2>
-      <h3 className="text-2xl font-bold text-white mt-4 md:mt-6 mb-4 md:mb-6">
+      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-4 md:mt-6 mb-4 md:mb-6">
         Why Hire a Certified Developer?
       </h3>
-      <p className="text-white">
+      <p className="text-gray-800 dark:text-white">
         Anyone can write code, but not everyone writes scalable, maintainable,
         and high-quality code.
       </p>
-      <p className="text-white">
+      <p className="text-gray-800 dark:text-white">
         Certifications go beyond badges; they&apos;re proof that an external
         authority has reviewed, tested, and validated both knowledge and skills.
       </p>
-      <p className="text-white">
+      <p className="text-gray-800 dark:text-white">
         When you hire a certified developer, you&apos;re not just trusting what
         they say — you&apos;re trusting what they&apos;ve proven.
       </p>
 
-      <div className="text-white flex flex-row flex-wrap justify-center items-center gap-2 py-6 max-w-[900px] mx-auto">
+      <div className="text-gray-900 dark:text-white flex flex-row flex-wrap justify-center items-center gap-2 py-6 max-w-[900px] mx-auto">
         <ProjectTag label="All" isSelected={all} onClick={handleToggleAll} />
         {Object.values(selectedProviders)
           .sort((a, b) => a.label.localeCompare(b.label))

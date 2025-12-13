@@ -39,12 +39,12 @@ const Presentation = () => {
 
   return (
     <>
-      <h1 className="text-white mb-4 text-4xl sm:text-5xl lg:text-6xl lg:leading-normal font-extrabold mt-24">
-        <span className="text-white bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-600">
+      <h1 className="text-gray-900 dark:text-white mb-4 text-4xl sm:text-5xl lg:text-6xl lg:leading-normal font-extrabold mt-24">
+        <span className="text-gray-900 dark:text-white bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-600">
           Hi! 👋,
         </span>
         <br></br>
-        <span className="text-white bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-600">
+        <span className="text-gray-900 dark:text-white bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-600">
           I&apos;m Jonatan Kruszewski
         </span>
       </h1>
@@ -65,16 +65,16 @@ const Presentation = () => {
         )}
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <h2 className="text-gray-200 mt-8 mb-4 text-xl sm:text-2xl lg:text-xl lg:leading-normal font-light">
+          <h2 className="text-gray-800 dark:text-gray-200 mt-8 mb-4 text-xl sm:text-2xl lg:text-xl lg:leading-normal font-light">
             I specialize in building scalable, maintainable front-end solutions
             that work seamlessly—without the tech debt nightmare.
           </h2>
           <Link
             href="/#contact"
-            className="whitespace-nowrap max-w-max border-1 border-transparent bg-gradient-to-br from-purple-400 to-indigo-500 p-[1px] rounded-full transition-all duration-300 ease-in-out "
+            className="whitespace-nowrap max-w-max bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full transition-all duration-300 ease-in-out hover:from-purple-600 hover:to-indigo-600 hover:scale-105 hover:shadow-lg active:scale-95 shadow-md"
           >
-            <div className="flex items-center gap-2 bg-[#121212] rounded-full px-8 py-4">
-              <span className="bg-gradient-to-br from-purple-400 to-indigo-500 text-transparent bg-clip-text font-semibold text-lg">
+            <div className="flex items-center gap-2 rounded-full px-8 py-4">
+              <span className="text-white font-semibold text-lg">
                 Get In Touch
               </span>
               <svg
@@ -83,22 +83,9 @@ const Presentation = () => {
                 viewBox="0 0 20 14"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <defs>
-                  <linearGradient
-                    id="gradient"
-                    x1="0%"
-                    y1="0%"
-                    x2="100%"
-                    y2="100%"
-                  >
-                    <stop offset="0%" stopColor="#A855F7" />
-                    <stop offset="100%" stopColor="#4F46E5" />
-                  </linearGradient>
-                </defs>
-
                 <path
                   d="M2 7H17M12.5 12.5L17.5 7L12.5 1.5"
-                  stroke="url(#gradient)"
+                  stroke="white"
                   strokeWidth="2.4"
                   strokeLinecap="round"
                   strokeLinejoin="round"

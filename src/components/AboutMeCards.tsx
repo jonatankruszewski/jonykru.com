@@ -53,16 +53,16 @@ const AboutMeCards = () => {
         {cards.map((card) => (
           <div
             key={card.title}
-            className="bg-[#1E1E2E] text-white p-6 rounded-2xl shadow-lg transform-gpu flex-[0_0_30%] min-w-[300px] pl-5"
+            className="bg-gray-100 dark:bg-[#1E1E2E] text-gray-900 dark:text-white p-6 rounded-2xl shadow-lg transform-gpu flex-[0_0_30%] min-w-[300px] pl-5"
           >
             <h2 className="text-xl font-semibold mb-2">{card.title}</h2>
-            <p className="text-gray-300">{card.content}</p>
+            <p className="text-gray-800 dark:text-gray-300">{card.content}</p>
           </div>
         ))}
       </div>
       <div className="flex justify-center gap-4 mt-4">
         <Button
-          className="bg-transparent text-white font-semibold w-8 h-8 border-2 border-white rounded-full cursor-pointer flex justify-center items-center"
+          className="bg-transparent text-black dark:text-white font-semibold w-8 h-8 border-2 border-black dark:border-white rounded-full cursor-pointer flex justify-center items-center hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
           name="Previous"
           onClick={scrollPrev}
         >
@@ -71,7 +71,7 @@ const AboutMeCards = () => {
         </Button>
 
         <Button
-          className="bg-transparent text-white font-semibold w-8 h-8 border-2 border-white rounded-full cursor-pointer flex justify-center items-center"
+          className="bg-transparent text-black dark:text-white font-semibold w-8 h-8 border-2 border-black dark:border-white rounded-full cursor-pointer flex justify-center items-center hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
           name="Next"
           onClick={scrollNext}
         >

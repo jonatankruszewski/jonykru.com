@@ -73,12 +73,12 @@ const EmailSection = () => {
 
   return (
     <Section id="contact">
-      <h2 className="text-center text-4xl font-bold text-white mb-12 mt-20">
+      <h2 className="text-center text-4xl font-bold text-gray-900 dark:text-white mb-12 mt-20">
         Let&apos;s Connect
       </h2>
       <div className="grid md:grid-cols-2 gap-4 relative">
         <div>
-          <p className="text-[#ADB7BE] mb-4 max-w-md">
+          <p className="text-gray-800 dark:text-[#ADB7BE] mb-4 max-w-md">
             I’m open to new projects and collaborations. If you&apos;re looking
             for a developer or have a relevant opportunity, please feel free to
             reach out. I’ll get back to you as soon as possible.
@@ -89,7 +89,7 @@ const EmailSection = () => {
                 width={48}
                 src={GithubIcon}
                 alt="Github Icon"
-                className="rounded-lg"
+                className="rounded-lg invert dark:invert-0"
               />
             </Link>
             <Link href="https://www.linkedin.com/in/jonatankruszewski">
@@ -97,7 +97,7 @@ const EmailSection = () => {
                 width={48}
                 src={LinkedinIcon}
                 alt="Linkedin Icon"
-                className="rounded-lg"
+                className="rounded-lg invert dark:invert-0"
               />
             </Link>
             <Link href="https://medium.com/@jonakrusze">
@@ -105,15 +105,15 @@ const EmailSection = () => {
                 width={48}
                 src={MediumIcon}
                 alt="Medium Icon"
-                className="rounded-lg"
+                className="rounded-lg invert dark:invert-0"
               />
             </Link>
             <Link href="https://stackoverflow.com/users/17625486/jonatan-kruszewski">
               <Image
                 width={48}
                 src={StackOverflow}
-                alt="Medium Icon"
-                className="rounded-lg"
+                alt="Stack Overflow Icon"
+                className="rounded-lg invert dark:invert-0"
               />
             </Link>
           </div>
@@ -182,7 +182,7 @@ const EmailSection = () => {
                 name="Send Message"
                 type="submit"
                 disabled={state.submitting}
-                className="self-center inline-block flex-shrink-0 max-w-min whitespace-nowrap border-2 border-gray-300 text-gray-200 hover:border-white hover:text-white cursor-pointer font-medium py-2.5 px-5 rounded-full"
+                className="self-center inline-block flex-shrink-0 max-w-min whitespace-nowrap border-2 border-gray-600 dark:border-gray-300 text-gray-900 dark:text-gray-200 hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-transparent cursor-pointer font-medium py-2.5 px-5 rounded-full transition-colors"
               >
                 {state.submitting ? 'Sending...' : 'Send Message'}
               </Button>
@@ -199,7 +199,7 @@ const EmailSection = () => {
               key={crypto.randomUUID()}
               asChild
               forceMount
-              className="border-2  flex justify-between items-center gap-x-[15px] rounded-xl p-[15px] border-gray-200 bg-[#1e1e1e] "
+              className="border-2  flex justify-between items-center gap-x-[15px] rounded-xl p-[15px] border-gray-400 dark:border-gray-200 bg-gray-100 dark:bg-[#1e1e1e] "
             >
               <motion.div
                 layoutId={crypto.randomUUID()}
@@ -207,7 +207,7 @@ const EmailSection = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 100 }}
               >
-                <Toast.Title className="flex gap-3 items-center text-[15px] font-medium text-[#e0e0e0]">
+                <Toast.Title className="flex gap-3 items-center text-[15px] font-medium text-gray-900 dark:text-[#e0e0e0]">
                   <Check className="text-green-500" size={28} />
                   Message successfully sent
                 </Toast.Title>

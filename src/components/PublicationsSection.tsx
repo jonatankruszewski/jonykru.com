@@ -46,7 +46,7 @@ const PublicationsSection = ({
 
   return (
     <Section id="publications">
-      <h2 className="text-center text-4xl font-bold text-white mb-12 mt-20">
+      <h2 className="text-center text-4xl font-bold text-gray-900 dark:text-white mb-12 mt-20">
         Latest Publications
       </h2>
       <ul

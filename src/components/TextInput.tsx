@@ -72,7 +72,7 @@ const TextInput = <
     <>
       <label
         htmlFor={name}
-        className="text-white block text-sm mb-2 font-medium"
+        className="text-gray-900 dark:text-white block text-sm mb-2 font-medium"
       >
         {label} {required ? '*' : ''}
       </label>
@@ -88,10 +88,10 @@ const TextInput = <
         }}
         type={type}
         name={name}
-        className={`bg-[#18191E] border placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5 transition-all focus:outline-none ${
+        className={`bg-gray-50 dark:bg-[#18191E] border placeholder-gray-400 dark:placeholder-[#9CA2A9] text-gray-900 dark:text-gray-100 text-sm rounded-lg block w-full p-2.5 transition-all focus:outline-none ${
           hasError
             ? 'border-red-500 focus:ring-2 focus:ring-red-500'
-            : 'border-[#33353F] focus:border-blue-500 focus:ring-2 focus:ring-blue-500'
+            : 'border-gray-300 dark:border-[#33353F] focus:border-blue-500 focus:ring-2 focus:ring-blue-500'
         } ${className}`}
         placeholder="jacob@google.com"
         {...rest}

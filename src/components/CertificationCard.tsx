@@ -36,12 +36,12 @@ const CertificationCard: React.FC<CertificationCardProps> = ({
           href={previewUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-bold text-xl mb-2 text-center cursor-pointer text-white transition-opacity duration-200 hover:opacity-80 hover:underline"
+          className="font-bold text-xl mb-2 text-center cursor-pointer text-gray-900 dark:text-white transition-opacity duration-200 hover:opacity-80 hover:underline"
         >
           {title}
         </Link>
       ) : (
-        <span className="font-bold text-xl mb-2 text-center text-white">
+        <span className="font-bold text-xl mb-2 text-center text-gray-900 dark:text-white">
           {title}
         </span>
       )}

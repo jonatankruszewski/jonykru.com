@@ -7,10 +7,10 @@ import DisclosureMenu from '@/components/DisclosureMenu'
 const Navbar = () => {
   return (
     <nav>
-      <div className="border-1 bg-[#121212] bg-opacity-100 border-b-gray-600 flex w-full  z-40 fixed">
+      <div className="border-1 bg-white dark:bg-[#121212] bg-opacity-100 border-b-gray-300 dark:border-b-gray-600 flex w-full z-40 fixed">
         <Disclosure
           as="div"
-          className="flex w-full flex-col text-white mobile-menu justify-between"
+          className="flex w-full flex-col text-gray-900 dark:text-white mobile-menu justify-between"
         >
           {({ open, close }) => <DisclosureMenu open={open} close={close} />}
         </Disclosure>
