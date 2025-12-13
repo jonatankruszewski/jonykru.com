@@ -20,16 +20,40 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   const isValidUrl =
     previewUrl && previewUrl.trim() !== '' && previewUrl.startsWith('http')
 
+  const ImageContent = (
+    <>
+      <img
+        src={imgUrl}
+        alt={`Medium article cover: ${title}`}
+        className="rounded-t-xl h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/20"></div>
+      {isValidUrl && (
+        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-end p-4">
+          <span className="bg-white text-gray-900 font-semibold px-4 py-2 rounded-full text-sm shadow-lg">
+            Read on Medium
+          </span>
+        </div>
+      )}
+    </>
+  )
+
   return (
-    <div className="bg-gray-100 dark:bg-[#1E1E2E] rounded-xl border border-gray-300 dark:border-gray-700 shadow-md transform transition duration-300 flex flex-col flex-1 h-full max-w-[450px] mx-auto ">
-      <div className="md:h-72 rounded-t-xl relative group overflow-hidden aspect-square w-full">
-        <img
-          src={imgUrl}
-          alt={`Medium article cover: ${title}`}
-          className="rounded-t-xl h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/20"></div>
-      </div>
+    <div className="bg-gray-100 dark:bg-[#1E1E2E] rounded-xl border border-gray-300 dark:border-gray-700 shadow-md transform transition duration-300 flex flex-col flex-1 h-full max-w-[450px] mx-auto">
+      {isValidUrl ? (
+        <Link
+          href={previewUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rounded-t-xl relative group overflow-hidden aspect-square w-full block"
+        >
+          {ImageContent}
+        </Link>
+      ) : (
+        <div className="rounded-t-xl relative group overflow-hidden aspect-square w-full">
+          {ImageContent}
+        </div>
+      )}
       <div className="text-gray-900 dark:text-white rounded-b-xl p-6">
         {isValidUrl ? (
           <Link

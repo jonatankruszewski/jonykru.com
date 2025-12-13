@@ -3,48 +3,60 @@ interface Achievement {
   metric: string
   value: number
   animateClass: string
+  icon: string
 }
 
 const achievementsList: Achievement[] = [
   {
     metric: 'StackOverflow reputation',
     value: 1316,
-    animateClass: 'animate-1316'
+    animateClass: 'animate-1316',
+    icon: '🏆'
   },
   {
     metric: 'Certifications',
     value: 36,
-    animateClass: 'animate-36'
+    animateClass: 'animate-36',
+    icon: '📜'
   },
   {
     suffix: '+',
     metric: 'Publications',
     value: 24,
-    animateClass: 'animate-24'
+    animateClass: 'animate-24',
+    icon: '✍️'
   },
   {
     suffix: '+',
     metric: 'Years of Experience',
     value: 6,
-    animateClass: 'animate-6'
+    animateClass: 'animate-6',
+    icon: '💼'
   }
 ]
 
 const Achievements = () => {
   return (
-    <div className="grid mb-20 sm:grid-cols-2 md:grid-cols-4 gap-4 gap-y-6 py-7 sm:border-gray-300 dark:sm:border-[#33353F] sm:border sm:rounded-md sm:py-8 sm:px-8 items-start justify-center text-center">
+    <div className="grid mt-8 mb-16 grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
       {achievementsList.map((achievement) => (
         <div
           key={achievement.metric}
-          className="flex-1 w-full flex flex-col sm:gap-2 md:gap-3 align-top items-center text-center justify-center"
+          className="group relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-[#1a1a2e] dark:to-[#16162a] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50"
         >
-          <h2 className="text-gray-900 dark:text-white text-4xl font-bold flex flex-row">
-            <span className={`number-animation ${achievement.animateClass}`} />
-            {achievement.suffix && <span>{achievement.suffix}</span>}
-          </h2>
-          <p className="text-gray-700 dark:text-gray-400 text-base font-normal leading-tight">
-            {achievement.metric}
-          </p>
+          <div className="absolute top-3 right-3 text-2xl opacity-60 group-hover:opacity-100 transition-opacity">
+            {achievement.icon}
+          </div>
+          <div className="flex flex-col gap-1">
+            <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-violet-600 to-indigo-600 dark:from-violet-400 dark:to-indigo-400 text-transparent bg-clip-text flex items-baseline">
+              <span
+                className={`number-animation ${achievement.animateClass}`}
+              />
+              {achievement.suffix && <span>{achievement.suffix}</span>}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 text-sm font-medium leading-snug">
+              {achievement.metric}
+            </p>
+          </div>
         </div>
       ))}
     </div>

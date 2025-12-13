@@ -10,7 +10,7 @@ const cards = [
   {
     title: 'About Me 👋',
     content:
-      'Hi! I’m Jonatan—a senior front-end developer who loves building things that actually work and don’t break the moment you look away.'
+      "Hi! I'm Jonatan—a senior front-end developer who loves building things that actually work and don't break the moment you look away."
   },
   {
     title: 'My Expertise ⚛️',

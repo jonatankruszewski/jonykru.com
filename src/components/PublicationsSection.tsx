@@ -61,12 +61,17 @@ const PublicationsSection = ({
 
   return (
     <Section id="publications">
-      <h2 className="text-center text-4xl font-bold text-gray-900 dark:text-white mb-12 mt-20">
-        Latest Publications
-      </h2>
+      <div className="text-center mb-12 mt-20">
+        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          Latest Publications
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          Sharing knowledge through technical articles on Medium
+        </p>
+      </div>
       <ul
         ref={cardRef}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
       >
         {mediumData &&
           mediumData.length > 0 &&

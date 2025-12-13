@@ -85,26 +85,37 @@ const CertificationsSection = ({ credlyData }: CertificationsSectionProps) => {
 
   return (
     <Section id="certifications">
-      <h2 className="text-center text-4xl font-bold text-gray-900 dark:text-white mb-12 mt-20">
-        Certifications
-      </h2>
-      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-4 md:mt-6 mb-4 md:mb-6">
-        Why Hire a Certified Developer?
-      </h3>
-      <p className="text-gray-800 dark:text-white">
-        Anyone can write code, but not everyone writes scalable, maintainable,
-        and high-quality code.
-      </p>
-      <p className="text-gray-800 dark:text-white">
-        Certifications go beyond badges; they&apos;re proof that an external
-        authority has reviewed, tested, and validated both knowledge and skills.
-      </p>
-      <p className="text-gray-800 dark:text-white">
-        When you hire a certified developer, you&apos;re not just trusting what
-        they say — you&apos;re trusting what they&apos;ve proven.
-      </p>
+      <div className="text-center mb-8 mt-20">
+        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          Certifications
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          Validated expertise across multiple platforms and technologies
+        </p>
+      </div>
 
-      <div className="text-gray-900 dark:text-white flex flex-row flex-wrap justify-center items-center gap-2 py-6 max-w-[900px] mx-auto">
+      <div className="bg-gradient-to-br from-violet-50 to-indigo-50 dark:from-violet-950/20 dark:to-indigo-950/20 rounded-2xl p-6 md:p-8 mb-8 border border-violet-100 dark:border-violet-900/30">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          Why Hire a Certified Developer?
+        </h3>
+        <div className="space-y-3 text-gray-600 dark:text-gray-300">
+          <p>
+            Anyone can write code, but not everyone writes scalable,
+            maintainable, and high-quality code.
+          </p>
+          <p>
+            Certifications go beyond badges; they&apos;re proof that an external
+            authority has reviewed, tested, and validated both knowledge and
+            skills.
+          </p>
+          <p>
+            When you hire a certified developer, you&apos;re not just trusting
+            what they say — you&apos;re trusting what they&apos;ve proven.
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-row flex-wrap justify-center items-center gap-2 py-6 max-w-[900px] mx-auto">
         <ProjectTag label="All" isSelected={all} onClick={handleToggleAll} />
         {Object.values(selectedProviders)
           .sort((a, b) => a.label.localeCompare(b.label))
@@ -117,7 +128,7 @@ const CertificationsSection = ({ credlyData }: CertificationsSectionProps) => {
             />
           ))}
       </div>
-      <ul className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12">
+      <ul className="grid md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
         {filteredBadges.map((badge) => (
           <CertificationCard badge={badge} key={badge.id} />
         ))}

@@ -38,64 +38,57 @@ const Presentation = () => {
   }, [])
 
   return (
-    <>
+    <div className="flex flex-col">
       <h1 className="text-gray-900 dark:text-white mb-4 text-4xl sm:text-5xl lg:text-6xl lg:leading-normal font-extrabold mt-24">
-        <span className="text-gray-900 dark:text-white bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-600">
-          Hi! 👋,
-        </span>
-        <br></br>
-        <span className="text-gray-900 dark:text-white bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-600">
-          I&apos;m Jonatan Kruszewski
-        </span>
+        <span className="inline-block">Hi! 👋,</span>
+        <br />
+        <span className="inline-block">I&apos;m Jonatan Kruszewski</span>
       </h1>
 
-      <div className="">
+      <div className="min-h-[2.5rem] sm:min-h-[3rem] md:min-h-[3.5rem]">
         {enableAnimation ? (
           <TypeAnimation
-            className="text-base sm:text-xl md:text-4xl lg:text-4xl font-semibold bg-gradient-to-br from-purple-400 to-indigo-500 text-transparent bg-clip-text"
+            className="text-xl sm:text-2xl md:text-4xl font-semibold bg-gradient-to-r from-violet-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text"
             sequence={sequence}
             wrapper="span"
             speed={50}
             repeat={Infinity}
           />
         ) : (
-          <span className="text-base sm:text-xl md:text-4xl lg:text-4xl font-semibold bg-gradient-to-br from-purple-400 to-indigo-500 text-transparent bg-clip-text">
+          <span className="text-xl sm:text-2xl md:text-4xl font-semibold bg-gradient-to-r from-violet-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text">
             Web Developer
           </span>
         )}
-
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <h2 className="text-gray-800 dark:text-gray-200 mt-8 mb-4 text-xl sm:text-2xl lg:text-xl lg:leading-normal font-light">
-            I specialize in building scalable, maintainable front-end solutions
-            that work seamlessly—without the tech debt nightmare.
-          </h2>
-          <Link
-            href="/#contact"
-            className="whitespace-nowrap max-w-max bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full transition-all duration-300 ease-in-out hover:from-purple-600 hover:to-indigo-600 hover:scale-105 hover:shadow-lg active:scale-95 shadow-md"
-          >
-            <div className="flex items-center gap-2 rounded-full px-8 py-4">
-              <span className="text-white font-semibold text-lg">
-                Get In Touch
-              </span>
-              <svg
-                width="20"
-                height="14"
-                viewBox="0 0 20 14"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M2 7H17M12.5 12.5L17.5 7L12.5 1.5"
-                  stroke="white"
-                  strokeWidth="2.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-          </Link>
-        </div>
       </div>
-    </>
+
+      <p className="text-gray-600 dark:text-gray-300 mt-6 mb-8 text-lg sm:text-xl max-w-2xl leading-relaxed">
+        I specialize in building scalable, maintainable front-end solutions that
+        work seamlessly—without the tech debt nightmare.
+      </p>
+
+      <div className="flex justify-center">
+        <Link
+          href="/#contact"
+          className="group inline-flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold text-lg sm:text-xl md:text-2xl lg:text-3xl px-8 py-4 sm:px-10 sm:py-5 md:px-14 md:py-6 lg:px-16 lg:py-7 rounded-full shadow-lg shadow-violet-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/40 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+        >
+          <span>Get In Touch</span>
+          <svg
+            className="w-5 h-4 sm:w-6 sm:h-5 md:w-7 md:h-6 lg:w-8 lg:h-7 transition-transform duration-300 group-hover:translate-x-1"
+            viewBox="0 0 20 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2 7H17M12.5 12.5L17.5 7L12.5 1.5"
+              stroke="currentColor"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </Link>
+      </div>
+    </div>
   )
 }
 

@@ -73,54 +73,82 @@ const EmailSection = () => {
 
   return (
     <Section id="contact">
-      <h2 className="text-center text-4xl font-bold text-gray-900 dark:text-white mb-12 mt-20">
+      <h2 className="text-center text-4xl font-bold text-gray-900 dark:text-white mb-4 mt-20">
         Let&apos;s Connect
       </h2>
-      <div className="grid md:grid-cols-2 gap-4 relative">
-        <div>
-          <p className="text-gray-800 dark:text-[#ADB7BE] mb-4 max-w-md">
-            I’m open to new projects and collaborations. If you&apos;re looking
-            for a developer or have a relevant opportunity, please feel free to
-            reach out. I’ll get back to you as soon as possible.
-          </p>
-          <div className="socials flex flex-row gap-3 items-center">
-            <Link href="https://github.com/jonatankruszewski">
-              <Image
-                width={48}
-                src={GithubIcon}
-                alt="Github Icon"
-                className="rounded-lg invert dark:invert-0"
-              />
-            </Link>
-            <Link href="https://www.linkedin.com/in/jonatankruszewski">
-              <Image
-                width={48}
-                src={LinkedinIcon}
-                alt="Linkedin Icon"
-                className="rounded-lg invert dark:invert-0"
-              />
-            </Link>
-            <Link href="https://medium.com/@jonakrusze">
-              <Image
-                width={48}
-                src={MediumIcon}
-                alt="Medium Icon"
-                className="rounded-lg invert dark:invert-0"
-              />
-            </Link>
-            <Link href="https://stackoverflow.com/users/17625486/jonatan-kruszewski">
-              <Image
-                width={48}
-                src={StackOverflow}
-                alt="Stack Overflow Icon"
-                className="rounded-lg invert dark:invert-0"
-              />
-            </Link>
+      <p className="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-lg mx-auto">
+        Have a project in mind? Let&apos;s talk about how I can help.
+      </p>
+      <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-start">
+        <div className="order-2 md:order-1">
+          <div className="bg-gradient-to-br from-violet-50 to-indigo-50 dark:from-violet-950/30 dark:to-indigo-950/30 rounded-2xl p-6 md:p-8 border border-violet-100 dark:border-violet-900/50">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              Get in touch
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+              I&apos;m open to new projects and collaborations. If you&apos;re
+              looking for a developer or have a relevant opportunity, please
+              feel free to reach out. I&apos;ll get back to you as soon as
+              possible.
+            </p>
+            <div className="flex flex-row gap-4 items-center">
+              <Link
+                href="https://github.com/jonatankruszewski"
+                className="p-2 rounded-xl bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md hover:border-violet-300 dark:hover:border-violet-600 transition-all duration-200"
+              >
+                <Image
+                  width={32}
+                  height={32}
+                  src={GithubIcon}
+                  alt="Github Icon"
+                  className="invert dark:invert-0"
+                />
+              </Link>
+              <Link
+                href="https://www.linkedin.com/in/jonatankruszewski"
+                className="p-2 rounded-xl bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md hover:border-violet-300 dark:hover:border-violet-600 transition-all duration-200"
+              >
+                <Image
+                  width={32}
+                  height={32}
+                  src={LinkedinIcon}
+                  alt="Linkedin Icon"
+                  className="invert dark:invert-0"
+                />
+              </Link>
+              <Link
+                href="https://medium.com/@jonakrusze"
+                className="p-2 rounded-xl bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md hover:border-violet-300 dark:hover:border-violet-600 transition-all duration-200"
+              >
+                <Image
+                  width={32}
+                  height={32}
+                  src={MediumIcon}
+                  alt="Medium Icon"
+                  className="invert dark:invert-0"
+                />
+              </Link>
+              <Link
+                href="https://stackoverflow.com/users/17625486/jonatan-kruszewski"
+                className="p-2 rounded-xl bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md hover:border-violet-300 dark:hover:border-violet-600 transition-all duration-200"
+              >
+                <Image
+                  width={32}
+                  height={32}
+                  src={StackOverflow}
+                  alt="Stack Overflow Icon"
+                  className="invert dark:invert-0"
+                />
+              </Link>
+            </div>
           </div>
         </div>
-        <div>
+        <div className="order-1 md:order-2">
           <FormProvider {...methods}>
-            <form className="flex flex-col" onSubmit={useFormSubmit(onSubmit)}>
+            <form
+              className="flex flex-col gap-1 bg-white dark:bg-gray-900/50 rounded-2xl p-6 md:p-8 border border-gray-200 dark:border-gray-800 shadow-sm"
+              onSubmit={useFormSubmit(onSubmit)}
+            >
               <TextInput<FormData, 'email'>
                 label="Your Email"
                 control={control}
@@ -182,7 +210,7 @@ const EmailSection = () => {
                 name="Send Message"
                 type="submit"
                 disabled={state.submitting}
-                className="self-center inline-block flex-shrink-0 max-w-min whitespace-nowrap border-2 border-gray-600 dark:border-gray-300 text-gray-900 dark:text-gray-200 hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-transparent cursor-pointer font-medium py-2.5 px-5 rounded-full transition-colors"
+                className="mt-4 w-full sm:w-auto sm:self-center bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg shadow-violet-500/25 hover:shadow-xl hover:shadow-violet-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {state.submitting ? 'Sending...' : 'Send Message'}
               </Button>

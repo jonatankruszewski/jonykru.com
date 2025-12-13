@@ -65,12 +65,13 @@ const TextAreaInput = <
   const required = Boolean(rules?.required)
 
   return (
-    <>
+    <div className="mb-1">
       <label
         htmlFor={name}
-        className="text-gray-900 dark:text-white block text-sm mb-2 font-medium"
+        className="text-gray-700 dark:text-gray-300 block text-sm mb-2 font-medium"
       >
-        {label} {required ? '*' : ''}
+        {label}
+        {required && <span className="text-violet-500 ml-1">*</span>}
       </label>
 
       <textarea
@@ -82,26 +83,24 @@ const TextAreaInput = <
           inputRef.current = el
         }}
         name={name}
-        className={`bg-gray-50 dark:bg-[#18191E] border placeholder-gray-400 dark:placeholder-[#9CA2A9] text-gray-900 dark:text-gray-100 text-sm rounded-lg block w-full p-2.5 transition-all focus:outline-none ${
+        className={`bg-gray-50 dark:bg-gray-800/50 border placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100 text-sm rounded-xl block w-full px-4 py-3 transition-all focus:outline-none resize-none min-h-[120px] ${
           hasError
-            ? 'border-red-500 focus:ring-2 focus:ring-red-500'
-            : 'border-gray-300 dark:border-[#33353F] focus:border-blue-500 focus:ring-2 focus:ring-blue-500'
+            ? 'border-red-400 dark:border-red-500 focus:ring-2 focus:ring-red-500/30'
+            : 'border-gray-200 dark:border-gray-700 focus:border-violet-500 dark:focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20'
         } ${className}`}
         placeholder="Your message here"
         {...textAreaProps}
         value={typeof field.value === 'string' ? field.value : ''}
       />
-      {
-        <div className="p-2 flex gap-2 text-red-600 items-center min-h-[32px]">
-          {hasError && fieldState.error && (
-            <>
-              <Info size={16} />
-              <p className="text-xs">{fieldState.error.message}</p>
-            </>
-          )}
-        </div>
-      }
-    </>
+      <div className="min-h-[24px] mt-1">
+        {hasError && fieldState.error && (
+          <div className="flex gap-1.5 text-red-500 items-center">
+            <Info size={14} />
+            <p className="text-xs">{fieldState.error.message}</p>
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
 
