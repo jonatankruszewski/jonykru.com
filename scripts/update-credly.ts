@@ -7,13 +7,15 @@
  * 1. Reads curl command from .credly-curl file
  * 2. Fetches the badge data from Credly
  * 3. Filters to only required fields
- * 4. Downloads all badge images (200x200px)
+ * 4. Downloads all badge images (200x200px) and converts to WebP
  * 5. Updates credly.backup.json
  *
  * Usage:
  *   1. Paste your curl command in .credly-curl file (in project root)
  *   2. Run: pnpm update-credly
  */
+
+import sharp from 'sharp'
 
 import { execSync } from 'child_process'
 import * as fs from 'fs'
@@ -94,7 +96,7 @@ export function ensureImagesDir(imagesDir: string): void {
  */
 export function fetchCredlyData(
   curlCommand: string,
-  options: UpdateOptions = {}
+  _options: UpdateOptions = {}
 ): CredlyData {
   try {
     // Execute the curl command directly (it already has auth cookies)
@@ -148,45 +150,66 @@ export function filterCredlyData(fullData: CredlyData): CredlyData {
 }
 
 /**
- * Download a file from a URL using curl
+ * Download image from URL and return as Buffer
  */
-export function downloadFile(url: string, destPath: string): boolean {
-  try {
-    execSync(`curl -s -L -o "${destPath}" "${url}"`, { stdio: 'pipe' })
-
-    // Check if file was downloaded and has content
-    const stats = fs.statSync(destPath)
-    if (stats.size === 0) {
-      throw new Error('Downloaded file is empty')
+export async function downloadImage(url: string): Promise<Buffer> {
+  const response = await fetch(url, {
+    headers: {
+      'User-Agent':
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      Accept: 'image/webp,image/apng,image/*,*/*;q=0.8'
     }
-
-    return true
-  } catch (error) {
-    // Delete failed download
-    if (fs.existsSync(destPath)) {
-      fs.unlinkSync(destPath)
-    }
-    throw error
+  })
+  if (!response.ok) {
+    throw new Error(`Failed to download image: ${response.status}`)
   }
+  const arrayBuffer = await response.arrayBuffer()
+  return Buffer.from(arrayBuffer)
 }
 
 /**
- * Extract unique filename from Credly URL
+ * Download, and convert an image to WebP format
+ */
+export async function downloadAndConvertToWebP(
+  url: string,
+  destPath: string
+): Promise<string> {
+  const imageBuffer = await downloadImage(url)
+
+  if (imageBuffer.length === 0) {
+    throw new Error('Downloaded file is empty')
+  }
+
+  // Use sharp to convert to WebP (badges are 200x200, keep that size)
+  await sharp(imageBuffer)
+    .webp({
+      quality: 85, // Higher quality for badge images
+      effort: 6
+    })
+    .toFile(destPath)
+
+  return destPath
+}
+
+/**
+ * Extract unique filename from Credly URL (now with .webp extension)
  */
 export function getFilenameFromUrl(url: string): string {
   const parts = url.split('/')
   const uuid = parts[parts.length - 2]
-  let filename = parts[parts.length - 1]
+  let basename = parts[parts.length - 1]
 
   // If filename is generic, use UUID
-  if (filename === 'image.png' || filename === 'blob' || filename.length < 5) {
-    filename = `${uuid}.png`
+  if (basename === 'image.png' || basename === 'blob' || basename.length < 5) {
+    basename = uuid
   } else {
-    // Remove size suffix for cleaner names
-    filename = filename.replace(/-\d+x\d+/, '')
+    // Remove extension and size suffix for cleaner names
+    basename = basename
+      .replace(/\.(png|jpg|jpeg|gif)$/i, '')
+      .replace(/-\d+x\d+/, '')
   }
 
-  return filename
+  return `${basename}.webp`
 }
 
 /**
@@ -199,7 +222,14 @@ export function getResizedUrl(url: string): string {
 }
 
 /**
- * Download all badge images
+ * Sleep for a specified number of milliseconds
+ */
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+/**
+ * Download all badge images and convert to WebP
  */
 export async function downloadImages(
   data: CredlyData,
@@ -208,7 +238,7 @@ export async function downloadImages(
 ): Promise<CredlyData> {
   const verbose = !options.silent
   if (verbose) {
-    console.log('📥 Downloading badge images (200x200px)...\n')
+    console.log('📥 Downloading badge images (200x200px, WebP format)...\n')
   }
 
   const stats: DownloadStats = {
@@ -217,14 +247,30 @@ export async function downloadImages(
     failed: 0
   }
 
+  let isFirstDownload = true
+
   for (const badge of data.data) {
     const originalUrl = badge.image_url
+
+    // Skip if already a local path
+    if (originalUrl.startsWith('/images/')) {
+      const existingFilename = originalUrl.split('/').pop() || ''
+      // Check if it's already webp
+      if (existingFilename.endsWith('.webp')) {
+        if (verbose) {
+          console.log(`⏭️  Skip: ${existingFilename} (already local webp)`)
+        }
+        stats.skipped++
+        continue
+      }
+    }
+
     const resizedUrl = getResizedUrl(originalUrl)
     const filename = getFilenameFromUrl(originalUrl)
     const destPath = path.join(imagesDir, filename)
     const localUrl = `/images/badges/credly/${filename}`
 
-    // Check if already downloaded
+    // Check if already downloaded (WebP version)
     if (fs.existsSync(destPath)) {
       if (verbose) {
         console.log(`⏭️  Skip: ${filename} (already exists)`)
@@ -235,10 +281,16 @@ export async function downloadImages(
     }
 
     try {
-      if (verbose) {
-        console.log(`⬇️  Downloading: ${filename}...`)
+      // Add delay between downloads to avoid rate limiting
+      if (!isFirstDownload) {
+        await sleep(500)
       }
-      await downloadFile(resizedUrl, destPath)
+      isFirstDownload = false
+
+      if (verbose) {
+        console.log(`⬇️  Downloading & converting: ${filename}...`)
+      }
+      await downloadAndConvertToWebP(resizedUrl, destPath)
       badge.image_url = localUrl
       stats.downloaded++
       if (verbose) {

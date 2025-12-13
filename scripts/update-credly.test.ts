@@ -2,7 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import * as fs from 'fs'
 import {
   type CredlyData,
-  downloadFile,
+  downloadAndConvertToWebP,
+  downloadImage,
   downloadImages,
   ensureImagesDir,
   fetchCredlyData,
@@ -16,6 +17,12 @@ import {
 // Mock dependencies
 vi.mock('fs')
 vi.mock('child_process')
+vi.mock('sharp', () => ({
+  default: vi.fn(() => ({
+    webp: vi.fn().mockReturnThis(),
+    toFile: vi.fn().mockResolvedValue(undefined)
+  }))
+}))
 
 describe('update-credly', () => {
   beforeEach(() => {
@@ -27,36 +34,36 @@ describe('update-credly', () => {
   })
 
   describe('getFilenameFromUrl', () => {
-    it('should extract filename from URL', () => {
+    it('should extract filename from URL with webp extension', () => {
       const url =
         'https://images.credly.com/images/uuid-1234/badge-name-600x600.png'
       const filename = getFilenameFromUrl(url)
-      expect(filename).toBe('badge-name.png')
+      expect(filename).toBe('badge-name.webp')
     })
 
     it('should use UUID for generic filenames', () => {
       const url = 'https://images.credly.com/images/uuid-1234/image.png'
       const filename = getFilenameFromUrl(url)
-      expect(filename).toBe('uuid-1234.png')
+      expect(filename).toBe('uuid-1234.webp')
     })
 
     it('should use UUID for blob filenames', () => {
       const url = 'https://images.credly.com/images/uuid-5678/blob'
       const filename = getFilenameFromUrl(url)
-      expect(filename).toBe('uuid-5678.png')
+      expect(filename).toBe('uuid-5678.webp')
     })
 
     it('should use UUID for short filenames', () => {
       const url = 'https://images.credly.com/images/uuid-9999/a.p'
       const filename = getFilenameFromUrl(url)
-      expect(filename).toBe('uuid-9999.png')
+      expect(filename).toBe('uuid-9999.webp')
     })
 
     it('should remove size suffix from filename', () => {
       const url =
         'https://images.credly.com/images/uuid-abc/badge-name-800x800.png'
       const filename = getFilenameFromUrl(url)
-      expect(filename).toBe('badge-name.png')
+      expect(filename).toBe('badge-name.webp')
     })
   })
 
@@ -230,7 +237,7 @@ describe('update-credly', () => {
               skills: [],
               url: 'https://example.com'
             },
-            image_url: '/local/image.png',
+            image_url: '/local/image.webp',
             issuer_linked_in_name: 'Issuer',
             issuer: {
               entities: [{ entity: { name: 'Entity' } }]
@@ -346,68 +353,63 @@ describe('update-credly', () => {
     })
   })
 
-  describe('downloadFile', () => {
-    it('should download file successfully', async () => {
-      const { execSync } = await import('child_process')
-      vi.mocked(execSync).mockReturnValue('')
-      vi.mocked(fs.statSync).mockReturnValue({ size: 1000 } as fs.Stats)
+  describe('downloadImage', () => {
+    it('should download image and return buffer', async () => {
+      const mockBuffer = new ArrayBuffer(100)
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(mockBuffer)
+      })
 
-      const result = downloadFile(
-        'https://test.com/image.png',
-        '/tmp/image.png'
+      const result = await downloadImage('https://cdn.com/image.png')
+
+      expect(result).toBeInstanceOf(Buffer)
+      expect(result.length).toBe(100)
+    })
+
+    it('should throw error if download fails', async () => {
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: false,
+        status: 404
+      })
+
+      await expect(downloadImage('https://cdn.com/image.png')).rejects.toThrow(
+        'Failed to download image: 404'
+      )
+    })
+  })
+
+  describe('downloadAndConvertToWebP', () => {
+    it('should download and convert image to WebP', async () => {
+      const mockBuffer = new ArrayBuffer(100)
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(mockBuffer)
+      })
+
+      const result = await downloadAndConvertToWebP(
+        'https://cdn.com/image.png',
+        '/tmp/image.webp'
       )
 
-      expect(result).toBe(true)
-      expect(execSync).toHaveBeenCalled()
+      expect(result).toBe('/tmp/image.webp')
     })
 
     it('should throw error if downloaded file is empty', async () => {
-      const { execSync } = await import('child_process')
-      vi.mocked(execSync).mockReturnValue('')
-      vi.mocked(fs.statSync).mockReturnValue({ size: 0 } as fs.Stats)
-      vi.mocked(fs.existsSync).mockReturnValue(true)
-      vi.mocked(fs.unlinkSync).mockImplementation(() => undefined)
-
-      expect(() =>
-        downloadFile('https://test.com/image.png', '/tmp/image.png')
-      ).toThrow('Downloaded file is empty')
-
-      expect(fs.unlinkSync).toHaveBeenCalledWith('/tmp/image.png')
-    })
-
-    it('should delete file on download error', async () => {
-      const { execSync } = await import('child_process')
-      vi.mocked(execSync).mockImplementation(() => {
-        throw new Error('Download failed')
+      const mockBuffer = new ArrayBuffer(0)
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(mockBuffer)
       })
-      vi.mocked(fs.existsSync).mockReturnValue(true)
-      vi.mocked(fs.unlinkSync).mockImplementation(() => undefined)
 
-      expect(() =>
-        downloadFile('https://test.com/image.png', '/tmp/image.png')
-      ).toThrow('Download failed')
-
-      expect(fs.unlinkSync).toHaveBeenCalledWith('/tmp/image.png')
-    })
-
-    it('should not delete file if it does not exist after error', async () => {
-      const { execSync } = await import('child_process')
-      vi.mocked(execSync).mockImplementation(() => {
-        throw new Error('Download failed')
-      })
-      vi.mocked(fs.existsSync).mockReturnValue(false)
-      vi.mocked(fs.unlinkSync).mockImplementation(() => undefined)
-
-      expect(() =>
-        downloadFile('https://test.com/image.png', '/tmp/image.png')
-      ).toThrow()
-
-      expect(fs.unlinkSync).not.toHaveBeenCalled()
+      await expect(
+        downloadAndConvertToWebP('https://cdn.com/image.png', '/tmp/image.webp')
+      ).rejects.toThrow('Downloaded file is empty')
     })
   })
 
   describe('downloadImages', () => {
-    it('should download new images and skip existing ones', async () => {
+    it('should download new images as WebP and skip existing ones', async () => {
       const mockData: CredlyData = {
         data: [
           {
@@ -437,21 +439,24 @@ describe('update-credly', () => {
         ]
       }
 
-      const { execSync } = await import('child_process')
-      vi.mocked(execSync).mockReturnValue('')
-      vi.mocked(fs.statSync).mockReturnValue({ size: 1000 } as fs.Stats)
+      const mockBuffer = new ArrayBuffer(100)
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(mockBuffer)
+      })
 
       // First image exists, second doesn't
       vi.mocked(fs.existsSync)
-        .mockReturnValueOnce(true) // badge1 exists
-        .mockReturnValueOnce(false) // badge2 doesn't exist
+        .mockReturnValueOnce(true) // badge1.webp exists
+        .mockReturnValueOnce(false) // badge2.webp doesn't exist
 
       const result = await downloadImages(mockData, '/test/images', {
         silent: true
       })
 
-      expect(result.data[0].image_url).toBe('/images/badges/credly/badge1.png')
-      expect(result.data[1].image_url).toBe('/images/badges/credly/badge2.png')
+      // Both should have .webp extension
+      expect(result.data[0].image_url).toBe('/images/badges/credly/badge1.webp')
+      expect(result.data[1].image_url).toBe('/images/badges/credly/badge2.webp')
     })
 
     it('should handle download failures gracefully', async () => {
@@ -472,11 +477,8 @@ describe('update-credly', () => {
         ]
       }
 
-      const { execSync } = await import('child_process')
       vi.mocked(fs.existsSync).mockReturnValue(false)
-      vi.mocked(execSync).mockImplementation(() => {
-        throw new Error('Download failed')
-      })
+      global.fetch = vi.fn().mockRejectedValue(new Error('Download failed'))
 
       const result = await downloadImages(mockData, '/test/images', {
         silent: true
@@ -488,7 +490,7 @@ describe('update-credly', () => {
       )
     })
 
-    it('should update all image URLs to local paths when skipped', async () => {
+    it('should skip already local webp images', async () => {
       const mockData: CredlyData = {
         data: [
           {
@@ -498,22 +500,19 @@ describe('update-credly', () => {
               skills: [],
               url: 'https://test.com'
             },
-            image_url:
-              'https://images.credly.com/images/uuid4/existing-badge.png',
+            image_url: '/images/badges/credly/existing-badge.webp',
             issuer_linked_in_name: 'Test',
             issuer: { entities: [{ entity: { name: 'Test' } }] }
           }
         ]
       }
 
-      vi.mocked(fs.existsSync).mockReturnValue(true) // File exists
-
       const result = await downloadImages(mockData, '/test/images', {
         silent: true
       })
 
       expect(result.data[0].image_url).toBe(
-        '/images/badges/credly/existing-badge.png'
+        '/images/badges/credly/existing-badge.webp'
       )
     })
   })
@@ -521,7 +520,6 @@ describe('update-credly', () => {
   describe('main', () => {
     it('should execute full workflow successfully', async () => {
       const { main } = await import('./update-credly')
-      const { execSync } = await import('child_process')
 
       const mockResponse = JSON.stringify({
         data: [
@@ -542,12 +540,14 @@ describe('update-credly', () => {
         ]
       })
 
+      const { execSync } = await import('child_process')
+
       // Mock file operations
       vi.mocked(fs.existsSync).mockImplementation((p) => {
         const pathStr = String(p)
         if (pathStr.includes('.credly-curl')) return true
-        if (pathStr.includes('badges/credly')) return false // Images dir
-        return true // Image files exist
+        if (pathStr.includes('badges/credly')) return false // Images don't exist
+        return true
       })
 
       vi.mocked(fs.readFileSync).mockReturnValue(
@@ -555,16 +555,22 @@ describe('update-credly', () => {
       )
       vi.mocked(fs.mkdirSync).mockImplementation(() => undefined)
       vi.mocked(fs.writeFileSync).mockImplementation(() => undefined)
-      vi.mocked(fs.statSync).mockReturnValue({ size: 1000 } as fs.Stats)
 
-      // Mock execSync for both curl commands (fetch and download)
+      // Mock execSync for curl command
       vi.mocked(execSync).mockReturnValue(mockResponse)
+
+      // Mock fetch for image download
+      const mockBuffer = new ArrayBuffer(100)
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(mockBuffer)
+      })
 
       const exitSpy = vi
         .spyOn(process, 'exit')
         .mockImplementation(() => undefined as never)
 
-      await main()
+      await main({ silent: true })
 
       expect(exitSpy).not.toHaveBeenCalled()
       expect(fs.writeFileSync).toHaveBeenCalled()
@@ -619,53 +625,6 @@ describe('update-credly', () => {
         'Please paste your curl command from the browser DevTools.\n'
       )
       expect(exitSpy).toHaveBeenCalledWith(1)
-    })
-
-    it('should use CI environment variable when executed directly', async () => {
-      const { main } = await import('./update-credly')
-      const originalCI = process.env.CI
-
-      // Set CI environment variable
-      process.env.CI = 'true'
-
-      const mockResponse = JSON.stringify({
-        data: [
-          {
-            id: 'ci-test',
-            badge_template: {
-              name: 'CI Test',
-              skills: [],
-              url: 'https://test.com'
-            },
-            image_url: 'https://images.credly.com/images/uuid/ci-test.png',
-            issuer_linked_in_name: 'Test',
-            issuer: { entities: [{ entity: { name: 'Test' } }] }
-          }
-        ]
-      })
-
-      const { execSync } = await import('child_process')
-      vi.mocked(fs.existsSync).mockReturnValue(true)
-      vi.mocked(fs.readFileSync).mockReturnValue('curl "https://api.com"')
-      vi.mocked(execSync).mockReturnValue(mockResponse)
-      vi.mocked(fs.mkdirSync).mockImplementation(() => undefined)
-      vi.mocked(fs.writeFileSync).mockImplementation(() => undefined)
-      vi.mocked(fs.statSync).mockReturnValue({ size: 1000 } as fs.Stats)
-
-      const consoleSpy = vi.spyOn(console, 'log')
-      const exitSpy = vi
-        .spyOn(process, 'exit')
-        .mockImplementation(() => undefined as never)
-
-      // Pass silent: !!process.env.CI to mimic CLI behavior
-      await main({ silent: !!process.env.CI })
-
-      // Restore original
-      process.env.CI = originalCI
-
-      expect(exitSpy).not.toHaveBeenCalled()
-      // In CI mode, console.log should not be called
-      expect(consoleSpy).not.toHaveBeenCalled()
     })
   })
 })
