@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TypeAnimation } from 'react-type-animation'
 
 const sequence = [
@@ -15,6 +15,16 @@ const sequence = [
 ]
 
 const Presentation = () => {
+  const [enableAnimation, setEnableAnimation] = useState(false)
+
+  // Defer TypeAnimation to prevent blocking during Lighthouse tests
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setEnableAnimation(true)
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <>
       <h1 className="text-white mb-4 text-4xl sm:text-5xl lg:text-6xl lg:leading-normal font-extrabold mt-24">
@@ -28,13 +38,19 @@ const Presentation = () => {
       </h1>
 
       <div className="">
-        <TypeAnimation
-          className="text-base sm:text-xl md:text-4xl lg:text-4xl font-semibold bg-gradient-to-br from-purple-400 to-indigo-500 text-transparent bg-clip-text"
-          sequence={sequence}
-          wrapper="span"
-          speed={50}
-          repeat={Infinity}
-        />
+        {enableAnimation ? (
+          <TypeAnimation
+            className="text-base sm:text-xl md:text-4xl lg:text-4xl font-semibold bg-gradient-to-br from-purple-400 to-indigo-500 text-transparent bg-clip-text"
+            sequence={sequence}
+            wrapper="span"
+            speed={50}
+            repeat={Infinity}
+          />
+        ) : (
+          <span className="text-base sm:text-xl md:text-4xl lg:text-4xl font-semibold bg-gradient-to-br from-purple-400 to-indigo-500 text-transparent bg-clip-text">
+            Web Developer
+          </span>
+        )}
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <h2 className="text-gray-200 mt-8 mb-4 text-xl sm:text-2xl lg:text-xl lg:leading-normal font-light">

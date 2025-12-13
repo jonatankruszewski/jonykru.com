@@ -1,12 +1,10 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import Presentation from '@/components/Presentation'
 import Section from '@/utils/Section'
 
-const Presentation = dynamic(() => import('@/components/Presentation'), {
-  ssr: false
-})
-
+// Only defer non-critical components for better LCP
 const AboutMeCardsSection = dynamic(() => import('@/components/AboutMeCards'), {
   ssr: false
 })
