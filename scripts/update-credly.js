@@ -5,23 +5,22 @@
  * All-in-one script to update Credly badges
  *
  * This script:
- * 1. Accepts a Credly API URL or curl command
+ * 1. Reads curl command from .credly-curl file
  * 2. Fetches the badge data from Credly
  * 3. Filters to only required fields
  * 4. Downloads all badge images (200x200px)
  * 5. Updates credly.backup.json
  *
  * Usage:
- *   pnpm update-credly "https://www.credly.com/api/v1/users/USER_ID/badges?..."
- *
- * Or paste the full curl command:
- *   pnpm update-credly 'curl "https://www.credly.com/api/v1/..." -H "cookie: ..."'
+ *   1. Paste your curl command in .credly-curl file (in project root)
+ *   2. Run: pnpm update-credly
  */
 
 const { execSync } = require('child_process')
 const fs = require('fs')
 const path = require('path')
 
+const CURL_FILE = path.join(__dirname, '..', '.credly-curl')
 const BACKUP_JSON = path.join(
   __dirname,
   '..',
@@ -44,32 +43,14 @@ if (!fs.existsSync(IMAGES_DIR)) {
 }
 
 /**
- * Extract URL from curl command or return as-is if already a URL
+ * Fetch data from Credly API using the full curl command
  */
-function extractUrl(input) {
-  // Check if it's a curl command
-  const curlMatch = input.match(/curl\s+["']([^"']+)["']/)
-  if (curlMatch) {
-    return curlMatch[1]
-  }
-
-  // Check if it's just a URL
-  if (input.startsWith('http')) {
-    return input
-  }
-
-  throw new Error(
-    'Invalid input. Provide either a URL or a curl command from Credly.'
-  )
-}
-
-/**
- * Fetch data from Credly API
- */
-function fetchCredlyData(url) {
+function fetchCredlyData(curlCommand) {
   try {
     console.log('🌐 Fetching data from Credly API...')
-    const response = execSync(`curl -s "${url}"`, {
+
+    // Execute the curl command directly (it already has auth cookies)
+    const response = execSync(curlCommand, {
       encoding: 'utf8',
       maxBuffer: 10 * 1024 * 1024 // 10MB buffer
     })
@@ -229,32 +210,57 @@ function saveBackupJson(data) {
 }
 
 /**
+ * Read curl command from file
+ */
+function readCurlFile() {
+  // Check if file exists
+  if (!fs.existsSync(CURL_FILE)) {
+    console.error(`❌ Error: File not found: ${CURL_FILE}\n`)
+    console.log('Please create a .credly-curl file in the project root.')
+    console.log(
+      'Paste your curl command from the browser DevTools into this file.\n'
+    )
+    console.log('Example:')
+    console.log(
+      '  curl "https://www.credly.com/api/v1/users/USER_ID/badges?..." -H "cookie: ..."\n'
+    )
+    process.exit(1)
+  }
+
+  // Read file content
+  const curlCommand = fs.readFileSync(CURL_FILE, 'utf8').trim()
+
+  // Check if file is empty
+  if (!curlCommand || curlCommand.length === 0) {
+    console.error(`❌ Error: File is empty: ${CURL_FILE}\n`)
+    console.log('Please paste your curl command from the browser DevTools.\n')
+    console.log('Steps:')
+    console.log('  1. Open your browser DevTools (F12)')
+    console.log('  2. Go to Network tab')
+    console.log('  3. Visit your Credly badges page')
+    console.log('  4. Find the API request')
+    console.log('  5. Right-click → Copy → Copy as cURL')
+    console.log(`  6. Paste into ${CURL_FILE}\n`)
+    process.exit(1)
+  }
+
+  return curlCommand
+}
+
+/**
  * Main execution
  */
 async function main() {
   console.log('\n🎖️  Credly Badge Updater\n' + '='.repeat(50) + '\n')
 
-  // Get input from command line
-  const input = process.argv[2]
-
-  if (!input) {
-    console.error('❌ Error: No input provided\n')
-    console.log('Usage:')
-    console.log('  pnpm update-credly "URL"')
-    console.log('  pnpm update-credly \'curl "URL" -H "cookie: ..."\'\n')
-    console.log('Example:')
-    console.log(
-      '  pnpm update-credly "https://www.credly.com/api/v1/users/USER_ID/badges?page=1&page_size=48&state=accepted%2Cpending"\n'
-    )
-    process.exit(1)
-  }
-
   try {
-    // Step 1: Extract URL
-    const url = extractUrl(input)
+    // Step 1: Read curl command from file
+    console.log(`📄 Reading curl command from ${path.basename(CURL_FILE)}...`)
+    const curlCommand = readCurlFile()
+    console.log('✅ Curl command loaded\n')
 
-    // Step 2: Fetch data from Credly
-    const fullData = fetchCredlyData(url)
+    // Step 2: Fetch data from Credly using the curl command
+    const fullData = fetchCredlyData(curlCommand)
 
     // Step 3: Filter to required fields
     const filteredData = filterCredlyData(fullData)
