@@ -1,9 +1,18 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import '@/styles/animations.css'
 import { ReactNode } from 'react'
 import { FontInter } from '@/app/fonts'
 import { ThemeProvider } from '@/context/themeContext'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#121212' }
+  ]
+}
 
 export const metadata: Metadata = {
   title: 'Jonatan Kruszewski - Web Developer | Software Engineer',

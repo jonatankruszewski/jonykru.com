@@ -24,7 +24,9 @@ const nextConfig: NextConfig = {
   },
   compress: true,
   reactStrictMode: true,
-  output: 'export'
+  output: 'export',
+  // Optimize imports for smaller bundles
+  optimizePackageImports: ['framer-motion', 'lucide-react', '@headlessui/react']
 }
 
 export default isAnalyze
