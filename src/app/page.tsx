@@ -5,12 +5,10 @@ import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import PublicationsSection from '@/components/PublicationsSection'
 import SectionProvider from '@/context/sectionContext'
-import { getCredlyData } from '@/dataFetchers/credly.dataFetcher'
+import credlyData from '@/dataFetchers/credly.backup.json'
 import mediumData from '@/dataFetchers/mediumData.json'
 
 export default async function Home() {
-  const credlyData = await getCredlyData()
-
   return (
     <SectionProvider>
       <Navbar />
