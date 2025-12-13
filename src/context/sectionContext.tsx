@@ -8,7 +8,6 @@ import {
   useContext,
   useState
 } from 'react'
-import { useInView } from 'react-intersection-observer'
 
 const sectionIds = ['about', 'publications', 'certifications', 'contact']
 
@@ -26,15 +25,10 @@ export const useSectionContext = () => useContext(sectionContext)
 
 const SectionProvider = ({ children }: { children: ReactNode }) => {
   const [visibleSection, setVisibleSection] = useState<Sections>(sectionIds[0])
-  const { ref } = useInView({
-    threshold: 0.2
-  })
 
   return (
     <sectionContext.Provider value={{ visibleSection, setVisibleSection }}>
-      <div ref={ref} id="section-wrapper">
-        {children}
-      </div>
+      {children}
     </sectionContext.Provider>
   )
 }

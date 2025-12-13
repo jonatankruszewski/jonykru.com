@@ -1,6 +1,6 @@
 'use client'
 import { motion, useInView as useMotionInView } from 'framer-motion'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import ProjectCard from '@/components/ProjectCard'
 import { MediumFlatData } from '@/types/medium.types'
@@ -12,7 +12,16 @@ const PublicationsSection = ({
   mediumData: MediumFlatData[]
 }) => {
   const cardRef = useRef(null)
-  const isCardInView = useMotionInView(cardRef, { once: true })
+  const [enableAnimations, setEnableAnimations] = useState(false)
+  const isCardInView = useMotionInView(cardRef, { once: true, amount: 0.2 })
+
+  // Defer animations until after hydration and initial render
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setEnableAnimations(true)
+    }, 150)
+    return () => clearTimeout(timer)
+  }, [])
 
   const cardVariants = {
     initial: { y: 50, opacity: 0 },
@@ -39,7 +48,7 @@ const PublicationsSection = ({
               key={article.guid}
               variants={cardVariants}
               initial="initial"
-              animate={isCardInView ? 'animate' : 'initial'}
+              animate={enableAnimations && isCardInView ? 'animate' : 'initial'}
               transition={{ duration: 0.2, delay: index * 0.15 }}
             >
               <ProjectCard

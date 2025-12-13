@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AnimatedNumbers from 'react-animated-numbers'
 
 interface Achievement {
@@ -32,6 +32,16 @@ const achievementsList: Achievement[] = [
 ]
 
 const Achievements = () => {
+  const [enableAnimations, setEnableAnimations] = useState(false)
+
+  // Defer animations until after hydration and initial render
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setEnableAnimations(true)
+    }, 200)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <div
       className="grid mb-20 sm:grid-cols-2 md:grid-cols-4 gap-4 gap-y-6 py-7
@@ -46,16 +56,22 @@ const Achievements = () => {
             className="flex-1 w-full flex flex-col sm:gap-2 md:gap-3 align-top items-center text-center justify-center"
           >
             <h2 className="text-white text-4xl font-bold flex flex-row">
-              <AnimatedNumbers
-                key={achievement.metric}
-                transitions={(index) => ({
-                  type: 'spring',
-                  duration: index + 0.3
-                })}
-                animateToNumber={Number(achievement.value)}
-                locale="en-US"
-                className="text-white text-4xl font-semibold"
-              />
+              {enableAnimations ? (
+                <AnimatedNumbers
+                  key={achievement.metric}
+                  transitions={(index) => ({
+                    type: 'spring',
+                    duration: index + 0.3
+                  })}
+                  animateToNumber={Number(achievement.value)}
+                  locale="en-US"
+                  className="text-white text-4xl font-semibold"
+                />
+              ) : (
+                <span className="text-white text-4xl font-semibold">
+                  {achievement.value}
+                </span>
+              )}
             </h2>
             <p className="text-gray-400 text-base font-light leading-tight">
               {achievement.metric}
