@@ -1,0 +1,113 @@
+{
+  "nav": {
+    "about": "sobre mí",
+    "publications": "publicaciones",
+    "certifications": "certificaciones",
+    "contact": "contacto",
+    "menu": "Menú",
+    "close": "Cerrar"
+  },
+  "presentation": {
+    "greeting": "¡Hola! 👋,",
+    "name": "Soy Jonatan Kruszewski",
+    "roles": {
+      "webDeveloper": "Desarrollador Web",
+      "mediumWriter": "Escritor Técnico en Medium",
+      "jsReactExpert": "Experto en Javascript & React",
+      "mongoDbDeveloper": "Desarrollador MongoDB Certificado"
+    },
+    "description": "Me especializo en construir soluciones front-end escalables y mantenibles que funcionan perfectamente, sin convertirse en deuda técnica.",
+    "getInTouch": "Contáctame"
+  },
+  "achievements": {
+    "stackOverflowReputation": "Reputación en StackOverflow",
+    "certifications": "Certificaciones",
+    "publications": "Publicaciones",
+    "yearsOfExperience": "Años de Experiencia"
+  },
+  "aboutCards": {
+    "aboutMe": {
+      "title": "Sobre Mí 👋",
+      "content": "¡Hola! Soy Jonatan—un desarrollador front-end senior que ama construir cosas que realmente funcionan y no se rompen apenas dejas de mirar."
+    },
+    "expertise": {
+      "title": "Mi Expertise ⚛️",
+      "content": "Me especializo en React, Redux, TypeScript y arquitecturas escalables, asegurando que todo funcione sin problemas y sea mantenible."
+    },
+    "experience": {
+      "title": "Experiencia 🏗️",
+      "content": "He trabajado en aplicaciones a gran escala, mentoreado desarrolladores y ayudado a equipos a limpiar código desordenado. Escribo código limpio y eficiente que mantiene los proyectos escalables."
+    },
+    "community": {
+      "title": "Comunidad & Escritura ✍️",
+      "content": "Contribuyo en Stack Overflow, escribo sobre desarrollo y me mantengo actualizado con lo último en tecnología."
+    },
+    "communication": {
+      "title": "La comunicación es clave 🤝",
+      "content": "Si necesitas a alguien que pueda hacer las cosas, resolver problemas reales y mejorar tu código, ¡conectemos!"
+    }
+  },
+  "carousel": {
+    "previous": "Anterior",
+    "next": "Siguiente"
+  },
+  "publications": {
+    "title": "Últimas Publicaciones",
+    "subtitle": "Compartiendo conocimiento a través de artículos técnicos en Medium",
+    "readOnMedium": "Leer en Medium"
+  },
+  "certifications": {
+    "title": "Certificaciones",
+    "subtitle": "Experiencia validada en múltiples plataformas y tecnologías",
+    "whyHire": {
+      "title": "¿Por qué contratar a un desarrollador certificado?",
+      "p1": "Cualquiera puede escribir código, pero no todos escriben código escalable, mantenible y de alta calidad.",
+      "p2": "Las certificaciones van más allá de las insignias; son prueba de que una autoridad externa ha revisado, probado y validado tanto el conocimiento como las habilidades.",
+      "p3": "Cuando contratas a un desarrollador certificado, no solo confías en lo que dice — confías en lo que ha demostrado."
+    },
+    "filterAll": "Todos"
+  },
+  "contact": {
+    "title": "Conectemos",
+    "subtitle": "¿Tienes un proyecto en mente? Hablemos de cómo puedo ayudarte.",
+    "getInTouch": "Ponte en contacto",
+    "description": "Estoy abierto a nuevos proyectos y colaboraciones. Si buscas un desarrollador o tienes una oportunidad relevante, no dudes en contactarme. Te responderé lo antes posible.",
+    "form": {
+      "email": "Tu Email",
+      "emailPlaceholder": "jacob@google.com",
+      "subject": "Asunto",
+      "subjectPlaceholder": "Solo saludando",
+      "message": "Mensaje",
+      "messagePlaceholder": "Tu mensaje aquí",
+      "sendMessage": "Enviar Mensaje",
+      "sending": "Enviando..."
+    },
+    "validation": {
+      "emailRequired": "El email es requerido",
+      "emailMaxLength": "El email debe tener máximo 128 caracteres",
+      "emailAtSign": "Por favor incluye '@' en tu dirección de email",
+      "emailInvalid": "Por favor ingresa un email válido",
+      "subjectRequired": "El asunto es requerido",
+      "subjectMaxLength": "El asunto debe tener máximo 128 caracteres",
+      "subjectMinLength": "El asunto debe tener al menos 4 caracteres",
+      "messageRequired": "El mensaje es requerido",
+      "messageMaxLength": "El mensaje debe tener máximo 256 caracteres"
+    },
+    "toast": {
+      "success": "Mensaje enviado exitosamente"
+    }
+  },
+  "footer": {
+    "copyright": "Todos los derechos reservados.",
+    "builtWith": "Construido con Next.js, TypeScript & Tailwind CSS"
+  },
+  "theme": {
+    "switchToLight": "Cambiar a modo claro",
+    "switchToDark": "Cambiar a modo oscuro"
+  },
+  "language": {
+    "title": "Idioma",
+    "english": "English",
+    "spanish": "Español"
+  }
+}

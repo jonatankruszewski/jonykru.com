@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import CertificationCard from '@/components/CertificationCard'
 import ProjectTag from '@/components/ProjectTag'
+import { useI18n } from '@/context/i18nContext'
 import { CredlyData } from '@/types/credly.types'
 import Section from '@/utils/Section'
 
@@ -10,6 +11,7 @@ type CertificationsSectionProps = {
 }
 
 const CertificationsSection = ({ credlyData }: CertificationsSectionProps) => {
+  const { t } = useI18n()
   const { data } = credlyData
   const uniqueSkills = [
     ...new Set(
@@ -87,36 +89,30 @@ const CertificationsSection = ({ credlyData }: CertificationsSectionProps) => {
     <Section id="certifications">
       <div className="text-center mb-8 mt-20">
         <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-          Certifications
+          {t('certifications.title')}
         </h2>
         <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Validated expertise across multiple platforms and technologies
+          {t('certifications.subtitle')}
         </p>
       </div>
 
       <div className="bg-gradient-to-br from-violet-50 to-indigo-50 dark:from-violet-950/20 dark:to-indigo-950/20 rounded-2xl p-6 md:p-8 mb-8 border border-violet-100 dark:border-violet-900/30">
         <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-          Why Hire a Certified Developer?
+          {t('certifications.whyHire.title')}
         </h3>
         <div className="space-y-3 text-gray-600 dark:text-gray-300">
-          <p>
-            Anyone can write code, but not everyone writes scalable,
-            maintainable, and high-quality code.
-          </p>
-          <p>
-            Certifications go beyond badges; they&apos;re proof that an external
-            authority has reviewed, tested, and validated both knowledge and
-            skills.
-          </p>
-          <p>
-            When you hire a certified developer, you&apos;re not just trusting
-            what they say — you&apos;re trusting what they&apos;ve proven.
-          </p>
+          <p>{t('certifications.whyHire.p1')}</p>
+          <p>{t('certifications.whyHire.p2')}</p>
+          <p>{t('certifications.whyHire.p3')}</p>
         </div>
       </div>
 
       <div className="flex flex-row flex-wrap justify-center items-center gap-2 py-6 max-w-[900px] mx-auto">
-        <ProjectTag label="All" isSelected={all} onClick={handleToggleAll} />
+        <ProjectTag
+          label={t('certifications.filterAll')}
+          isSelected={all}
+          onClick={handleToggleAll}
+        />
         {Object.values(selectedProviders)
           .sort((a, b) => a.label.localeCompare(b.label))
           .map(({ value, label, key }) => (

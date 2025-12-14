@@ -14,6 +14,7 @@ import MediumIcon from '@/assets/medium-icon-white.svg'
 import StackOverflow from '@/assets/stack-overflow-icon.svg'
 import TextAreaInput from '@/components/TextAreaInput'
 import TextInput from '@/components/TextInput'
+import { useI18n } from '@/context/i18nContext'
 import Section from '@/utils/Section'
 
 type FormData = {
@@ -25,6 +26,7 @@ type FormData = {
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
 const EmailSection = () => {
+  const { t } = useI18n()
   const [state, handleSubmit, resetFormSubmission] =
     useFormSpreeForm<FormData>('xwpleawo')
   const methods = useReactHookForm<FormData>({ mode: 'onTouched' })
@@ -74,22 +76,19 @@ const EmailSection = () => {
   return (
     <Section id="contact">
       <h2 className="text-center text-4xl font-bold text-gray-900 dark:text-white mb-4 mt-20">
-        Let&apos;s Connect
+        {t('contact.title')}
       </h2>
       <p className="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-lg mx-auto">
-        Have a project in mind? Let&apos;s talk about how I can help.
+        {t('contact.subtitle')}
       </p>
       <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-start">
         <div className="order-2 md:order-1">
           <div className="bg-gradient-to-br from-violet-50 to-indigo-50 dark:from-violet-950/30 dark:to-indigo-950/30 rounded-2xl p-6 md:p-8 border border-violet-100 dark:border-violet-900/50">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              Get in touch
+              {t('contact.getInTouch')}
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              I&apos;m open to new projects and collaborations. If you&apos;re
-              looking for a developer or have a relevant opportunity, please
-              feel free to reach out. I&apos;ll get back to you as soon as
-              possible.
+              {t('contact.description')}
             </p>
             <div className="flex flex-row gap-4 items-center">
               <Link
@@ -150,69 +149,72 @@ const EmailSection = () => {
               onSubmit={useFormSubmit(onSubmit)}
             >
               <TextInput<FormData, 'email'>
-                label="Your Email"
+                label={t('contact.form.email')}
                 control={control}
-                placeholder="jacob@google.com"
+                placeholder={t('contact.form.emailPlaceholder')}
                 name={'email'}
                 rules={{
-                  required: 'Email is required',
+                  required: t('contact.validation.emailRequired'),
                   maxLength: {
                     value: 128,
-                    message: 'Email must be at most 128 characters long'
+                    message: t('contact.validation.emailMaxLength')
                   },
                   validate: (value) => {
                     if (!value.includes('@')) {
-                      return "Please include '@' in your email address"
+                      return t('contact.validation.emailAtSign')
                     }
                     return true
                   },
                   pattern: {
                     value: emailRegex,
-                    message: 'Please enter a valid email address'
+                    message: t('contact.validation.emailInvalid')
                   }
                 }}
                 id="email"
                 autoComplete="email"
               />
               <TextInput<FormData, 'subject'>
-                label="Subject"
+                label={t('contact.form.subject')}
                 control={control}
                 name="subject"
                 type="text"
                 id="subject"
                 autoComplete="off"
-                placeholder="Just saying hi"
+                placeholder={t('contact.form.subjectPlaceholder')}
                 rules={{
-                  required: 'Subject is required',
+                  required: t('contact.validation.subjectRequired'),
                   maxLength: {
                     value: 128,
-                    message: 'Subject must be at most 128 characters long'
+                    message: t('contact.validation.subjectMaxLength')
                   },
                   minLength: {
                     value: 4,
-                    message: 'Subject must be at least 4 characters long'
+                    message: t('contact.validation.subjectMinLength')
                   }
                 }}
               />
               <TextAreaInput<FormData, 'message'>
                 name="message"
-                label="Message"
+                label={t('contact.form.message')}
+                placeholder={t('contact.form.messagePlaceholder')}
                 control={control}
                 rules={{
-                  required: 'Message is required',
+                  required: t('contact.validation.messageRequired'),
                   maxLength: {
                     value: 256,
-                    message: 'Subject must be at most 256 characters long'
+                    message: t('contact.validation.messageMaxLength')
                   }
                 }}
               />
               <Button
-                name="Send Message"
+                name={t('contact.form.sendMessage')}
                 type="submit"
                 disabled={state.submitting}
-                className="mt-4 w-full sm:w-auto sm:self-center bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg shadow-violet-500/25 hover:shadow-xl hover:shadow-violet-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="mt-4 w-full sm:w-auto sm:self-center bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg shadow-violet-500/25 hover:shadow-xl hover:shadow-violet-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 cursor-pointer"
               >
-                {state.submitting ? 'Sending...' : 'Send Message'}
+                {state.submitting
+                  ? t('contact.form.sending')
+                  : t('contact.form.sendMessage')}
               </Button>
             </form>
           </FormProvider>
@@ -237,7 +239,7 @@ const EmailSection = () => {
               >
                 <Toast.Title className="flex gap-3 items-center text-[15px] font-medium text-gray-900 dark:text-[#e0e0e0]">
                   <Check className="text-green-500" size={28} />
-                  Message successfully sent
+                  {t('contact.toast.success')}
                 </Toast.Title>
                 <Toast.Action asChild altText="Close">
                   <Button

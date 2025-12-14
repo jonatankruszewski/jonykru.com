@@ -3,6 +3,7 @@ import { motion, useInView as useMotionInView } from 'framer-motion'
 import React, { useEffect, useRef, useState } from 'react'
 
 import ProjectCard from '@/components/ProjectCard'
+import { useI18n } from '@/context/i18nContext'
 import { MediumFlatData } from '@/types/medium.types'
 import Section from '@/utils/Section'
 
@@ -11,6 +12,7 @@ const PublicationsSection = ({
 }: {
   mediumData: MediumFlatData[]
 }) => {
+  const { t } = useI18n()
   const cardRef = useRef(null)
   const [enableAnimations, setEnableAnimations] = useState(false)
   const [skipAnimations, setSkipAnimations] = useState(false)
@@ -63,10 +65,10 @@ const PublicationsSection = ({
     <Section id="publications">
       <div className="text-center mb-12 mt-20">
         <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-          Latest Publications
+          {t('publications.title')}
         </h2>
         <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Sharing knowledge through technical articles on Medium
+          {t('publications.subtitle')}
         </p>
       </div>
       <ul

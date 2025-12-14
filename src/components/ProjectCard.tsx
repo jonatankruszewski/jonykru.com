@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
+'use client'
 import Link from 'next/link'
 import React from 'react'
+import { useI18n } from '@/context/i18nContext'
 
 type ProjectCardProps = {
   imgUrl?: string
@@ -13,6 +15,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   title,
   previewUrl
 }) => {
+  const { t } = useI18n()
+
   if (!imgUrl) {
     return null
   }
@@ -31,7 +35,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       {isValidUrl && (
         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-end p-4">
           <span className="bg-white text-gray-900 font-semibold px-4 py-2 rounded-full text-sm shadow-lg">
-            Read on Medium
+            {t('publications.readOnMedium')}
           </span>
         </div>
       )}

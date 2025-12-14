@@ -1,0 +1,113 @@
+{
+  "nav": {
+    "about": "about",
+    "publications": "publications",
+    "certifications": "certifications",
+    "contact": "contact",
+    "menu": "Menu",
+    "close": "Close"
+  },
+  "presentation": {
+    "greeting": "Hi! 👋,",
+    "name": "I'm Jonatan Kruszewski",
+    "roles": {
+      "webDeveloper": "Web Developer",
+      "mediumWriter": "Medium Tech Writer",
+      "jsReactExpert": "Javascript & React Expert",
+      "mongoDbDeveloper": "MongoDB Licensed Developer"
+    },
+    "description": "I specialize in building scalable, maintainable front-end solutions that work seamlessly—without the tech debt nightmare.",
+    "getInTouch": "Get In Touch"
+  },
+  "achievements": {
+    "stackOverflowReputation": "StackOverflow reputation",
+    "certifications": "Certifications",
+    "publications": "Publications",
+    "yearsOfExperience": "Years of Experience"
+  },
+  "aboutCards": {
+    "aboutMe": {
+      "title": "About Me 👋",
+      "content": "Hi! I'm Jonatan—a senior front-end developer who loves building things that actually work and don't break the moment you look away."
+    },
+    "expertise": {
+      "title": "My Expertise ⚛️",
+      "content": "I specialize in React, Redux, TypeScript, and scalable architectures, making sure everything runs smoothly and stays maintainable."
+    },
+    "experience": {
+      "title": "Experience 🏗️",
+      "content": "I've worked on large-scale applications, mentored developers, and helped teams clean up messy codebases. I write clean, efficient code that keeps projects scalable instead of turning into tech debt."
+    },
+    "community": {
+      "title": "Community & Writing ✍️",
+      "content": "I contribute to Stack Overflow, write about development, and stay updated with the latest in tech."
+    },
+    "communication": {
+      "title": "Communication is key 🤝",
+      "content": "If you need someone who can get things done, solve real problems, and improve your codebase, let's connect!"
+    }
+  },
+  "carousel": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "publications": {
+    "title": "Latest Publications",
+    "subtitle": "Sharing knowledge through technical articles on Medium",
+    "readOnMedium": "Read on Medium"
+  },
+  "certifications": {
+    "title": "Certifications",
+    "subtitle": "Validated expertise across multiple platforms and technologies",
+    "whyHire": {
+      "title": "Why Hire a Certified Developer?",
+      "p1": "Anyone can write code, but not everyone writes scalable, maintainable, and high-quality code.",
+      "p2": "Certifications go beyond badges; they're proof that an external authority has reviewed, tested, and validated both knowledge and skills.",
+      "p3": "When you hire a certified developer, you're not just trusting what they say — you're trusting what they've proven."
+    },
+    "filterAll": "All"
+  },
+  "contact": {
+    "title": "Let's Connect",
+    "subtitle": "Have a project in mind? Let's talk about how I can help.",
+    "getInTouch": "Get in touch",
+    "description": "I'm open to new projects and collaborations. If you're looking for a developer or have a relevant opportunity, please feel free to reach out. I'll get back to you as soon as possible.",
+    "form": {
+      "email": "Your Email",
+      "emailPlaceholder": "jacob@google.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "Just saying hi",
+      "message": "Message",
+      "messagePlaceholder": "Your message here",
+      "sendMessage": "Send Message",
+      "sending": "Sending..."
+    },
+    "validation": {
+      "emailRequired": "Email is required",
+      "emailMaxLength": "Email must be at most 128 characters long",
+      "emailAtSign": "Please include '@' in your email address",
+      "emailInvalid": "Please enter a valid email address",
+      "subjectRequired": "Subject is required",
+      "subjectMaxLength": "Subject must be at most 128 characters long",
+      "subjectMinLength": "Subject must be at least 4 characters long",
+      "messageRequired": "Message is required",
+      "messageMaxLength": "Message must be at most 256 characters long"
+    },
+    "toast": {
+      "success": "Message successfully sent"
+    }
+  },
+  "footer": {
+    "copyright": "All rights reserved.",
+    "builtWith": "Built with Next.js, TypeScript & Tailwind CSS"
+  },
+  "theme": {
+    "switchToLight": "Switch to light mode",
+    "switchToDark": "Switch to dark mode"
+  },
+  "language": {
+    "title": "Language",
+    "english": "English",
+    "spanish": "Español"
+  }
+}

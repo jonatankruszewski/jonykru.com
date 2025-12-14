@@ -3,6 +3,7 @@ import './globals.css'
 import '@/styles/animations.css'
 import { ReactNode } from 'react'
 import { FontInter } from '@/app/fonts'
+import { I18nProvider } from '@/context/i18nContext'
 import { ThemeProvider } from '@/context/themeContext'
 
 export const viewport: Viewport = {
@@ -24,7 +25,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={FontInter.className}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <I18nProvider>{children}</I18nProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

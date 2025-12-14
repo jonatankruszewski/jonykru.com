@@ -8,8 +8,10 @@ import React, { Fragment, useRef } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
 import { FontJetBrainsMono } from '@/app/fonts'
 
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 import NavbarLinks from '@/components/NavbarLinks'
 import ThemeToggle from '@/components/ThemeToggle'
+import { useI18n } from '@/context/i18nContext'
 import { useEscapeKey } from '@/utils/useEscape'
 
 const DisclosureMenu = ({
@@ -20,6 +22,7 @@ const DisclosureMenu = ({
   close: () => void
 }) => {
   const ref = useRef<HTMLDivElement>(null)
+  const { t } = useI18n()
   useOnClickOutside(ref as React.RefObject<HTMLElement>, () => close())
   useEscapeKey(() => close(), { dependencies: [open] })
   const focusTrapRef = useFocusTrap(open)
@@ -28,32 +31,34 @@ const DisclosureMenu = ({
     <>
       <div className="flex w-full flex-wrap items-center justify-between px-4 py-4">
         <p
-          className={`${FontJetBrainsMono.className} py-2 pl-3 pr-4 text-xl md:p-0 select-none bg-gradient-to-br from-indigo-500  to-purple-400 bg-clip-text text-transparent`}
+          className={`${FontJetBrainsMono.className} py-2 pl-3 pr-4 text-xl lg:p-0 select-none bg-gradient-to-br from-indigo-500  to-purple-400 bg-clip-text text-transparent`}
         >
           jonykru<span className="text-gray-900 dark:text-white">.</span>com
         </p>
         <div
-          className="menu hidden md:flex md:items-center md:gap-4"
+          className="menu hidden lg:flex lg:items-center lg:gap-4"
           id="navbar"
         >
-          <ul className="flex p-4 md:p-0 md:flex-row md:space-x-8 mt-0">
+          <ul className="flex p-4 lg:p-0 lg:flex-row lg:space-x-8 mt-0">
             <NavbarLinks />
           </ul>
+          <LanguageSwitcher />
           <ThemeToggle />
         </div>
-        <div className="flex items-center gap-2 md:hidden ml-auto">
+        <div className="flex items-center gap-2 lg:hidden ml-auto">
+          <LanguageSwitcher />
           <ThemeToggle />
           <DisclosureButton
-            name={open ? 'Close' : 'Menu'}
-            aria-label={open ? 'Close' : 'Menu'}
-            className="cursor-pointer px-2 py-2 text-slate-200 hover:text-white hover:border-white"
+            name={open ? t('nav.close') : t('nav.menu')}
+            aria-label={open ? t('nav.close') : t('nav.menu')}
+            className="cursor-pointer px-2 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
           >
             {open ? <X /> : <Menu />}
           </DisclosureButton>
         </div>
       </div>
 
-      <div className="overflow-hidden md:hidden" ref={ref}>
+      <div className="overflow-hidden lg:hidden" ref={ref}>
         <div ref={focusTrapRef}>
           <AnimatePresence>
             {open && (

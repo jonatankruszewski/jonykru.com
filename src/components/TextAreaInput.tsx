@@ -88,7 +88,7 @@ const TextAreaInput = <
             ? 'border-red-400 dark:border-red-500 focus:ring-2 focus:ring-red-500/30'
             : 'border-gray-200 dark:border-gray-700 focus:border-violet-500 dark:focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20'
         } ${className}`}
-        placeholder="Your message here"
+        placeholder={props.placeholder}
         {...textAreaProps}
         value={typeof field.value === 'string' ? field.value : ''}
       />

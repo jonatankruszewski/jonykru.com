@@ -1,6 +1,10 @@
+'use client'
+
+import { useI18n } from '@/context/i18nContext'
+
 interface Achievement {
   suffix?: string
-  metric: string
+  metricKey: string
   value: number
   animateClass: string
   icon: string
@@ -8,27 +12,27 @@ interface Achievement {
 
 const achievementsList: Achievement[] = [
   {
-    metric: 'StackOverflow reputation',
+    metricKey: 'achievements.stackOverflowReputation',
     value: 1316,
     animateClass: 'animate-1316',
     icon: '🏆'
   },
   {
-    metric: 'Certifications',
+    metricKey: 'achievements.certifications',
     value: 36,
     animateClass: 'animate-36',
     icon: '📜'
   },
   {
     suffix: '+',
-    metric: 'Publications',
+    metricKey: 'achievements.publications',
     value: 24,
     animateClass: 'animate-24',
     icon: '✍️'
   },
   {
     suffix: '+',
-    metric: 'Years of Experience',
+    metricKey: 'achievements.yearsOfExperience',
     value: 6,
     animateClass: 'animate-6',
     icon: '💼'
@@ -36,11 +40,13 @@ const achievementsList: Achievement[] = [
 ]
 
 const Achievements = () => {
+  const { t } = useI18n()
+
   return (
     <div className="grid mt-8 mb-16 grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
       {achievementsList.map((achievement) => (
         <div
-          key={achievement.metric}
+          key={achievement.metricKey}
           className="group relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-[#1a1a2e] dark:to-[#16162a] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50"
         >
           <div className="absolute top-3 right-3 text-2xl opacity-60 group-hover:opacity-100 transition-opacity">
@@ -54,7 +60,7 @@ const Achievements = () => {
               {achievement.suffix && <span>{achievement.suffix}</span>}
             </h2>
             <p className="text-gray-600 dark:text-gray-400 text-sm font-medium leading-snug">
-              {achievement.metric}
+              {t(achievement.metricKey)}
             </p>
           </div>
         </div>
