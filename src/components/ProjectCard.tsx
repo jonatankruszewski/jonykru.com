@@ -58,18 +58,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           {ImageContent}
         </div>
       )}
-      <div className="text-gray-900 dark:text-white rounded-b-xl p-6">
+      {/* Force LTR for English article titles */}
+      <div className="text-gray-900 dark:text-white rounded-b-xl p-6" dir="ltr">
         {isValidUrl ? (
           <Link
             href={previewUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-bold text-xl mb-2 text-center cursor-pointer text-gray-900 dark:text-white transition-opacity duration-200 hover:opacity-80 hover:underline"
+            className="font-bold text-xl mb-2 text-left block cursor-pointer text-gray-900 dark:text-white transition-opacity duration-200 hover:opacity-80 hover:underline"
           >
             {title}
           </Link>
         ) : (
-          <span className="font-bold text-xl mb-2 text-center text-gray-900 dark:text-white">
+          <span className="font-bold text-xl mb-2 text-left block text-gray-900 dark:text-white">
             {title}
           </span>
         )}

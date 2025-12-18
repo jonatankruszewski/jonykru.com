@@ -7,11 +7,12 @@ import { Language, useI18n } from '@/context/i18nContext'
 
 const languages: { code: Language; label: string; flag: string }[] = [
   { code: 'en', label: 'English', flag: '🇺🇸' },
-  { code: 'es', label: 'Español', flag: '🇪🇸' }
+  { code: 'es', label: 'Español', flag: '🇪🇸' },
+  { code: 'he', label: 'עברית', flag: '🇮🇱' }
 ]
 
 const LanguageSwitcher = () => {
-  const { language, setLanguage, t } = useI18n()
+  const { language, setLanguage, t, isRTL } = useI18n()
 
   return (
     <Menu as="div" className="relative">
@@ -24,9 +25,9 @@ const LanguageSwitcher = () => {
       </MenuButton>
 
       <MenuItems
-        anchor="bottom end"
+        anchor={isRTL ? 'bottom start' : 'bottom end'}
         transition
-        className="absolute right-0 mt-2 w-40 origin-top-right rounded-xl bg-white dark:bg-[#1E1E2E] border border-gray-200 dark:border-gray-700 shadow-lg ring-1 ring-black/5 focus:outline-none z-50 transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
+        className={`absolute ${isRTL ? 'left-0 origin-top-left' : 'right-0 origin-top-right'} mt-2 w-40 rounded-xl bg-white dark:bg-[#1E1E2E] border border-gray-200 dark:border-gray-700 shadow-lg ring-1 ring-black/5 focus:outline-none z-50 transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0`}
       >
         <div className="p-1">
           {languages.map((lang) => (
@@ -42,7 +43,7 @@ const LanguageSwitcher = () => {
                 <span className="text-lg">{lang.flag}</span>
                 <span className="font-medium">{lang.label}</span>
                 {language === lang.code && (
-                  <span className="ml-auto text-violet-600 dark:text-violet-400">
+                  <span className="ms-auto text-violet-600 dark:text-violet-400">
                     ✓
                   </span>
                 )}

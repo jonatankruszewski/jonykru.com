@@ -1,4 +1,4 @@
-import { Inter, JetBrains_Mono } from 'next/font/google'
+import { JetBrains_Mono, Rubik } from 'next/font/google'
 
 export const FontJetBrainsMono = JetBrains_Mono({
   subsets: ['latin'],
@@ -6,8 +6,12 @@ export const FontJetBrainsMono = JetBrains_Mono({
   preload: true
 })
 
-export const FontInter = Inter({
-  subsets: ['latin'],
+// Rubik: Geometric, brutalist font with native Hebrew support
+export const FontRubik = Rubik({
+  subsets: ['latin', 'hebrew'],
   display: 'swap',
   preload: true
 })
+
+// Alias for backward compatibility
+export const FontInter = FontRubik

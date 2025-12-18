@@ -49,7 +49,7 @@ const Achievements = () => {
           key={achievement.metricKey}
           className="group relative bg-gradient-to-br from-gray-50 to-gray-100 dark:from-[#1a1a2e] dark:to-[#16162a] rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50"
         >
-          <div className="absolute top-3 right-3 text-2xl opacity-60 group-hover:opacity-100 transition-opacity">
+          <div className="absolute top-3 end-3 text-2xl opacity-60 group-hover:opacity-100 transition-opacity">
             {achievement.icon}
           </div>
           <div className="flex flex-col gap-1">

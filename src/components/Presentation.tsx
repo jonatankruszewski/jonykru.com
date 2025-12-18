@@ -5,7 +5,7 @@ import { TypeAnimation } from 'react-type-animation'
 import { useI18n } from '@/context/i18nContext'
 
 const Presentation = () => {
-  const { t, language } = useI18n()
+  const { t, language, isRTL } = useI18n()
   const [enableAnimation, setEnableAnimation] = useState(false)
 
   const sequence = [
@@ -75,7 +75,11 @@ const Presentation = () => {
         >
           <span>{t('presentation.getInTouch')}</span>
           <svg
-            className="w-5 h-4 sm:w-6 sm:h-5 md:w-7 md:h-6 lg:w-8 lg:h-7 transition-transform duration-300 group-hover:translate-x-1"
+            className={`w-5 h-4 sm:w-6 sm:h-5 md:w-7 md:h-6 lg:w-8 lg:h-7 transition-transform duration-300 ${
+              isRTL
+                ? 'rotate-180 group-hover:-translate-x-1'
+                : 'group-hover:translate-x-1'
+            }`}
             viewBox="0 0 20 14"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

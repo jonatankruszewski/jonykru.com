@@ -80,3 +80,23 @@ html {
 .animate-1316 {
   animation: counter-1316 2s ease-out forwards;
 }
+
+/* RTL Support */
+[dir='rtl'] {
+  /* Flip directional transforms for RTL */
+  --direction-multiplier: -1;
+}
+
+[dir='ltr'] {
+  --direction-multiplier: 1;
+}
+
+/* Flip arrow icons in RTL */
+[dir='rtl'] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+/* Adjust spacing for RTL using logical properties */
+[dir='rtl'] .rtl-space-flip {
+  direction: rtl;
+}

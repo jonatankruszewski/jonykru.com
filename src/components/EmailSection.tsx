@@ -26,7 +26,7 @@ type FormData = {
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
 const EmailSection = () => {
-  const { t } = useI18n()
+  const { t, isRTL } = useI18n()
   const [state, handleSubmit, resetFormSubmission] =
     useFormSpreeForm<FormData>('xwpleawo')
   const methods = useReactHookForm<FormData>({ mode: 'onTouched' })
@@ -222,7 +222,7 @@ const EmailSection = () => {
       </div>
 
       {/*TODO: move this out to its own*/}
-      <Toast.Provider swipeDirection="right">
+      <Toast.Provider swipeDirection={isRTL ? 'left' : 'right'}>
         <AnimatePresence>
           {open && (
             <Toast.Root
@@ -233,9 +233,9 @@ const EmailSection = () => {
             >
               <motion.div
                 layoutId={crypto.randomUUID()}
-                initial={{ opacity: 0, x: 100 }}
+                initial={{ opacity: 0, x: isRTL ? -100 : 100 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 100 }}
+                exit={{ opacity: 0, x: isRTL ? -100 : 100 }}
               >
                 <Toast.Title className="flex gap-3 items-center text-[15px] font-medium text-gray-900 dark:text-[#e0e0e0]">
                   <Check className="text-green-500" size={28} />
@@ -243,7 +243,7 @@ const EmailSection = () => {
                 </Toast.Title>
                 <Toast.Action asChild altText="Close">
                   <Button
-                    className="cursor-pointer ml-auto"
+                    className="cursor-pointer ms-auto"
                     onClick={() => setOpen(false)}
                   >
                     <X
@@ -256,7 +256,9 @@ const EmailSection = () => {
             </Toast.Root>
           )}
         </AnimatePresence>
-        <Toast.Viewport className="fixed bottom-0 right-0 z-[2147483647] m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2.5 p-[var(--viewport-padding)] outline-none [--viewport-padding:_25px]" />
+        <Toast.Viewport
+          className={`fixed bottom-0 ${isRTL ? 'left-0' : 'right-0'} z-[2147483647] m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2.5 p-[var(--viewport-padding)] outline-none [--viewport-padding:_25px]`}
+        />
       </Toast.Provider>
     </Section>
   )

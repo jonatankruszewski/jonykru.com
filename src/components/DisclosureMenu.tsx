@@ -22,7 +22,7 @@ const DisclosureMenu = ({
   close: () => void
 }) => {
   const ref = useRef<HTMLDivElement>(null)
-  const { t } = useI18n()
+  const { t, isRTL } = useI18n()
   useOnClickOutside(ref as React.RefObject<HTMLElement>, () => close())
   useEscapeKey(() => close(), { dependencies: [open] })
   const focusTrapRef = useFocusTrap(open)
@@ -31,7 +31,7 @@ const DisclosureMenu = ({
     <>
       <div className="flex w-full flex-wrap items-center justify-between px-4 py-4">
         <p
-          className={`${FontJetBrainsMono.className} py-2 pl-3 pr-4 text-xl lg:p-0 select-none bg-gradient-to-br from-indigo-500  to-purple-400 bg-clip-text text-transparent`}
+          className={`${FontJetBrainsMono.className} py-2 ps-3 pe-4 text-xl lg:p-0 select-none bg-gradient-to-br from-indigo-500  to-purple-400 bg-clip-text text-transparent`}
         >
           jonykru<span className="text-gray-900 dark:text-white">.</span>com
         </p>
@@ -39,13 +39,13 @@ const DisclosureMenu = ({
           className="menu hidden lg:flex lg:items-center lg:gap-4"
           id="navbar"
         >
-          <ul className="flex p-4 lg:p-0 lg:flex-row lg:space-x-8 mt-0">
+          <ul className="flex p-4 lg:p-0 lg:flex-row lg:gap-x-8 mt-0">
             <NavbarLinks />
           </ul>
           <LanguageSwitcher />
           <ThemeToggle />
         </div>
-        <div className="flex items-center gap-2 lg:hidden ml-auto">
+        <div className="flex items-center gap-2 lg:hidden ms-auto">
           <LanguageSwitcher />
           <ThemeToggle />
           <DisclosureButton
@@ -71,7 +71,7 @@ const DisclosureMenu = ({
                   className="origin-top"
                 >
                   <ul
-                    className={`flex-1 px-4 pb-4 flex flex-col bg-white dark:bg-[#121212]`}
+                    className={`flex-1 px-4 pb-4 flex flex-col bg-white dark:bg-[#121212] ${isRTL ? 'items-end' : 'items-start'}`}
                   >
                     <NavbarLinks onClick={close} />
                   </ul>

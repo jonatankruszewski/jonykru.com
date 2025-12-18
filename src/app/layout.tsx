@@ -3,6 +3,7 @@ import './globals.css'
 import '@/styles/animations.css'
 import { ReactNode } from 'react'
 import { FontInter } from '@/app/fonts'
+import RTLHandler from '@/components/RTLHandler'
 import { I18nProvider } from '@/context/i18nContext'
 import { ThemeProvider } from '@/context/themeContext'
 
@@ -23,10 +24,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" dir="ltr" suppressHydrationWarning>
       <body className={FontInter.className}>
         <ThemeProvider>
-          <I18nProvider>{children}</I18nProvider>
+          <I18nProvider>
+            <RTLHandler />
+            {children}
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>

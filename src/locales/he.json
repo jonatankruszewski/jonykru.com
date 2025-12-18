@@ -1,0 +1,114 @@
+{
+  "nav": {
+    "about": "אודות",
+    "publications": "פרסומים",
+    "certifications": "הסמכות",
+    "contact": "צור קשר",
+    "menu": "תפריט",
+    "close": "סגור"
+  },
+  "presentation": {
+    "greeting": "שלום! 👋",
+    "name": "אני יונתן קרושבסקי",
+    "roles": {
+      "webDeveloper": "מפתח אתרים",
+      "mediumWriter": "כותב טכני ב-Medium",
+      "jsReactExpert": "מומחה Javascript & React",
+      "mongoDbDeveloper": "מפתח MongoDB מוסמך"
+    },
+    "description": "אני מתמחה בבניית פתרונות צד-לקוח סקיילביליים וניתנים לתחזוקה שעובדים בצורה חלקה - בלי סיוט של חוב טכני.",
+    "getInTouch": "צור קשר"
+  },
+  "achievements": {
+    "stackOverflowReputation": "מוניטין ב-StackOverflow",
+    "certifications": "הסמכות",
+    "publications": "פרסומים",
+    "yearsOfExperience": "שנות ניסיון"
+  },
+  "aboutCards": {
+    "aboutMe": {
+      "title": "קצת עליי 👋",
+      "content": "שלום! אני יונתן - מפתח צד-לקוח בכיר שאוהב לבנות דברים שבאמת עובדים ולא נשברים ברגע שמפסיקים להסתכל."
+    },
+    "expertise": {
+      "title": "התמחות ⚛️",
+      "content": "אני מתמחה ב-React, Redux, TypeScript וארכיטקטורות סקיילביליות, מוודא שהכל רץ בצורה חלקה ונשאר ניתן לתחזוקה."
+    },
+    "experience": {
+      "title": "ניסיון 🏗️",
+      "content": "עבדתי על אפליקציות בקנה מידה גדול, הנחיתי מפתחים ועזרתי לצוותים לנקות קוד מבולגן. אני כותב קוד נקי ויעיל ששומר על פרויקטים סקיילביליים במקום להפוך לחוב טכני."
+    },
+    "community": {
+      "title": "קהילה וכתיבה ✍️",
+      "content": "אני תורם ל-Stack Overflow, כותב על פיתוח ונשאר מעודכן עם החדש ביותר בטכנולוגיה."
+    },
+    "communication": {
+      "title": "תקשורת היא המפתח 🤝",
+      "content": "אם אתה צריך מישהו שיכול לבצע, לפתור בעיות אמיתיות ולשפר את הקוד שלך, בואו נתחבר!"
+    }
+  },
+  "carousel": {
+    "previous": "הקודם",
+    "next": "הבא"
+  },
+  "publications": {
+    "title": "פרסומים אחרונים",
+    "subtitle": "שיתוף ידע דרך מאמרים טכניים ב-Medium",
+    "readOnMedium": "קרא ב-Medium"
+  },
+  "certifications": {
+    "title": "הסמכות",
+    "subtitle": "מומחיות מאומתת במגוון פלטפורמות וטכנולוגיות",
+    "whyHire": {
+      "title": "למה לשכור מפתח מוסמך?",
+      "p1": "כל אחד יכול לכתוב קוד, אבל לא כולם כותבים קוד סקיילבילי, ניתן לתחזוקה ואיכותי.",
+      "p2": "הסמכות הן מעבר לתגים; הן הוכחה שגורם חיצוני בדק, בחן ואימת גם ידע וגם כישורים.",
+      "p3": "כשאתה שוכר מפתח מוסמך, אתה לא רק סומך על מה שהוא אומר - אתה סומך על מה שהוא הוכיח."
+    },
+    "filterAll": "הכל"
+  },
+  "contact": {
+    "title": "בואו נתחבר",
+    "subtitle": "יש לך פרויקט בראש? בואו נדבר על איך אני יכול לעזור.",
+    "getInTouch": "צור קשר",
+    "description": "אני פתוח לפרויקטים ושיתופי פעולה חדשים. אם אתה מחפש מפתח או שיש לך הזדמנות רלוונטית, אל תהסס לפנות. אחזור אליך בהקדם האפשרי.",
+    "form": {
+      "email": "האימייל שלך",
+      "emailPlaceholder": "jacob@google.com",
+      "subject": "נושא",
+      "subjectPlaceholder": "רק אומר שלום",
+      "message": "הודעה",
+      "messagePlaceholder": "ההודעה שלך כאן",
+      "sendMessage": "שלח הודעה",
+      "sending": "שולח..."
+    },
+    "validation": {
+      "emailRequired": "אימייל נדרש",
+      "emailMaxLength": "האימייל חייב להיות עד 128 תווים",
+      "emailAtSign": "אנא הכלל '@' בכתובת האימייל שלך",
+      "emailInvalid": "אנא הזן כתובת אימייל תקינה",
+      "subjectRequired": "נושא נדרש",
+      "subjectMaxLength": "הנושא חייב להיות עד 128 תווים",
+      "subjectMinLength": "הנושא חייב להיות לפחות 4 תווים",
+      "messageRequired": "הודעה נדרשת",
+      "messageMaxLength": "ההודעה חייבת להיות עד 256 תווים"
+    },
+    "toast": {
+      "success": "ההודעה נשלחה בהצלחה"
+    }
+  },
+  "footer": {
+    "copyright": "כל הזכויות שמורות.",
+    "builtWith": "נבנה עם Next.js, TypeScript & Tailwind CSS"
+  },
+  "theme": {
+    "switchToLight": "עבור למצב בהיר",
+    "switchToDark": "עבור למצב כהה"
+  },
+  "language": {
+    "title": "שפה",
+    "english": "English",
+    "spanish": "Español",
+    "hebrew": "עברית"
+  }
+}
