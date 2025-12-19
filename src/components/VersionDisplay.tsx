@@ -1,36 +1,19 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { FontJetBrainsMono } from '@/app/fonts'
+import versionData from '../../public/version.json'
 
 interface VersionInfo {
   version: string
   timestamp: string
 }
 
+const versionInfo = versionData as VersionInfo
+
 const VersionDisplay = () => {
-  const [versionInfo, setVersionInfo] = useState<VersionInfo | null>(null)
-
-  useEffect(() => {
-    // Fetch version info from public directory
-    fetch('/version.json')
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Failed to fetch version.json: ${res.status}`)
-        }
-        return res.json()
-      })
-      .then((data: VersionInfo) => setVersionInfo(data))
-      .catch(() => {
-        // Fallback if version.json doesn't exist or fetch fails
-        setVersionInfo({
-          version: '0.0.0',
-          timestamp: new Date().toISOString(),
-        })
-      })
-  }, [])
-
-  if (!versionInfo) return null
+  if (!versionInfo || !versionInfo.version) {
+    return null
+  }
 
   return (
     <span
