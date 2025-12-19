@@ -21,6 +21,7 @@ runs:
         VERSION="${{ inputs.version }}"
         DIST_ID="${{ inputs.distribution-id }}"
         POLICY_NAME="${{ inputs.policy-name }}"
+        POLICY_ID=""
 
         # Check if policy exists
         set +e
@@ -62,62 +63,116 @@ runs:
           set -e
 
           if [ $CREATE_EXIT_CODE -ne 0 ]; then
-            echo "⚠ Failed to create policy (missing permissions)"
-            echo "Error: $POLICY_OUTPUT"
-            echo "Required IAM permissions: cloudfront:CreateResponseHeadersPolicy"
+            # Check if policy already exists (race condition or created outside script)
+            if echo "$POLICY_OUTPUT" | grep -q "ResponseHeadersPolicyAlreadyExists"; then
+              echo "Policy already exists, finding it..."
+              set +e
+              EXISTING_POLICY=$(aws cloudfront list-response-headers-policies \
+                --query "ResponseHeadersPolicyList.Items[?Name=='$POLICY_NAME'].Id" \
+                --output text 2>&1)
+              LIST_EXIT_CODE=$?
+              set -e
+
+              if [ $LIST_EXIT_CODE -eq 0 ]; then
+                EXISTING_POLICY=$(echo "$EXISTING_POLICY" | grep -E '^[A-Z0-9]+$' || echo "")
+                if [ -n "$EXISTING_POLICY" ]; then
+                  echo "Found existing policy: $EXISTING_POLICY, will update it"
+                  # Fall through to update logic below
+                else
+                  echo "⚠ Policy exists but could not retrieve ID"
+                  echo "Error: $POLICY_OUTPUT"
+                  echo "Skipping CloudFront header update. Deployment will continue."
+                  exit 0
+                fi
+              else
+                echo "⚠ Failed to list policies after create error"
+                echo "Error: $POLICY_OUTPUT"
+                echo "Skipping CloudFront header update. Deployment will continue."
+                exit 0
+              fi
+            else
+              echo "⚠ Failed to create policy (missing permissions)"
+              echo "Error: $POLICY_OUTPUT"
+              echo "Required IAM permissions: cloudfront:CreateResponseHeadersPolicy"
+              echo "Skipping CloudFront header update. Deployment will continue."
+              exit 0
+            fi
+          else
+            POLICY_ID="$POLICY_OUTPUT"
+            echo "✓ Created policy: $POLICY_ID"
+          fi
+        fi
+
+        # Update existing policy if we found one or if create failed due to existing policy
+        if [ -z "$POLICY_ID" ]; then
+          # We need to update an existing policy
+          if [ -z "$EXISTING_POLICY" ]; then
+            # Re-fetch if we don't have it yet
+            set +e
+            EXISTING_POLICY=$(aws cloudfront list-response-headers-policies \
+              --query "ResponseHeadersPolicyList.Items[?Name=='$POLICY_NAME'].Id" \
+              --output text 2>&1)
+            LIST_EXIT_CODE=$?
+            set -e
+
+            if [ $LIST_EXIT_CODE -eq 0 ]; then
+              EXISTING_POLICY=$(echo "$EXISTING_POLICY" | grep -E '^[A-Z0-9]+$' || echo "")
+            fi
+          fi
+
+          if [ -n "$EXISTING_POLICY" ]; then
+            echo "Updating existing policy: $EXISTING_POLICY"
+            set +e
+            POLICY_ETAG_OUTPUT=$(aws cloudfront get-response-headers-policy \
+              --id "$EXISTING_POLICY" \
+              --query 'ETag' \
+              --output text 2>&1)
+            GET_EXIT_CODE=$?
+            set -e
+
+            if [ $GET_EXIT_CODE -ne 0 ]; then
+              echo "⚠ Failed to read policy (missing permissions)"
+              echo "Error: $POLICY_ETAG_OUTPUT"
+              echo "Required IAM permissions: cloudfront:GetResponseHeadersPolicy"
+              echo "Skipping CloudFront header update. Deployment will continue."
+              exit 0
+            fi
+
+            POLICY_ETAG="$POLICY_ETAG_OUTPUT"
+
+            set +e
+            UPDATE_OUTPUT=$(aws cloudfront update-response-headers-policy \
+              --id "$EXISTING_POLICY" \
+              --if-match "$POLICY_ETAG" \
+              --response-headers-policy-config "{
+                \"Name\": \"$POLICY_NAME\",
+                \"CustomHeadersConfig\": {
+                  \"Items\": [{
+                    \"Header\": \"X-Version\",
+                    \"Value\": \"$VERSION\",
+                    \"Override\": true
+                  }],
+                  \"Quantity\": 1
+                }
+              }" 2>&1)
+            UPDATE_EXIT_CODE=$?
+            set -e
+
+            if [ $UPDATE_EXIT_CODE -ne 0 ]; then
+              echo "⚠ Failed to update policy (missing permissions)"
+              echo "Error: $UPDATE_OUTPUT"
+              echo "Required IAM permissions: cloudfront:UpdateResponseHeadersPolicy"
+              echo "Skipping CloudFront header update. Deployment will continue."
+              exit 0
+            fi
+
+            POLICY_ID="$EXISTING_POLICY"
+            echo "✓ Updated policy: $POLICY_ID"
+          else
+            echo "⚠ Could not find existing policy to update"
             echo "Skipping CloudFront header update. Deployment will continue."
             exit 0
           fi
-          POLICY_ID="$POLICY_OUTPUT"
-          echo "✓ Created policy: $POLICY_ID"
-        else
-          echo "Updating existing policy: $EXISTING_POLICY"
-          set +e
-          POLICY_ETAG_OUTPUT=$(aws cloudfront get-response-headers-policy \
-            --id "$EXISTING_POLICY" \
-            --query 'ETag' \
-            --output text 2>&1)
-          GET_EXIT_CODE=$?
-          set -e
-
-          if [ $GET_EXIT_CODE -ne 0 ]; then
-            echo "⚠ Failed to read policy (missing permissions)"
-            echo "Error: $POLICY_ETAG_OUTPUT"
-            echo "Required IAM permissions: cloudfront:GetResponseHeadersPolicy"
-            echo "Skipping CloudFront header update. Deployment will continue."
-            exit 0
-          fi
-
-          POLICY_ETAG="$POLICY_ETAG_OUTPUT"
-
-          set +e
-          UPDATE_OUTPUT=$(aws cloudfront update-response-headers-policy \
-            --id "$EXISTING_POLICY" \
-            --if-match "$POLICY_ETAG" \
-            --response-headers-policy-config "{
-              \"Name\": \"$POLICY_NAME\",
-              \"CustomHeadersConfig\": {
-                \"Items\": [{
-                  \"Header\": \"X-Version\",
-                  \"Value\": \"$VERSION\",
-                  \"Override\": true
-                }],
-                \"Quantity\": 1
-              }
-            }" 2>&1)
-          UPDATE_EXIT_CODE=$?
-          set -e
-
-          if [ $UPDATE_EXIT_CODE -ne 0 ]; then
-            echo "⚠ Failed to update policy (missing permissions)"
-            echo "Error: $UPDATE_OUTPUT"
-            echo "Required IAM permissions: cloudfront:UpdateResponseHeadersPolicy"
-            echo "Skipping CloudFront header update. Deployment will continue."
-            exit 0
-          fi
-
-          POLICY_ID="$EXISTING_POLICY"
-          echo "✓ Updated policy: $POLICY_ID"
         fi
 
         # Attach policy to distribution
