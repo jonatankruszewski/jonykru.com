@@ -88,19 +88,27 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const t = useCallback(
     (key: string): string => {
       const keys = key.split('.')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let value: any = translations[language]
+      let value: unknown = translations[language]
 
       for (const k of keys) {
-        if (value && typeof value === 'object' && k in value) {
-          value = value[k]
+        if (
+          value &&
+          typeof value === 'object' &&
+          k in value &&
+          value !== null
+        ) {
+          value = (value as Record<string, unknown>)[k]
         } else {
           // Fallback to English if key not found
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          let fallback: any = translations.en
+          let fallback: unknown = translations.en
           for (const fk of keys) {
-            if (fallback && typeof fallback === 'object' && fk in fallback) {
-              fallback = fallback[fk]
+            if (
+              fallback &&
+              typeof fallback === 'object' &&
+              fk in fallback &&
+              fallback !== null
+            ) {
+              fallback = (fallback as Record<string, unknown>)[fk]
             } else {
               return key // Return key if not found in fallback either
             }

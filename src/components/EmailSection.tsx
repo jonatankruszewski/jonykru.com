@@ -1,12 +1,9 @@
 'use client'
 import { useForm as useFormSpreeForm } from '@formspree/react'
 import { Button } from '@headlessui/react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Check, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Toast } from 'radix-ui'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { FormProvider, useForm as useReactHookForm } from 'react-hook-form'
 import GithubIcon from '@/assets/github-icon.svg'
 import LinkedinIcon from '@/assets/linkedin-icon.svg'
@@ -14,6 +11,7 @@ import MediumIcon from '@/assets/medium-icon-white.svg'
 import StackOverflow from '@/assets/stack-overflow-icon.svg'
 import TextAreaInput from '@/components/TextAreaInput'
 import TextInput from '@/components/TextInput'
+import SuccessToast from '@/components/Toast/SuccessToast'
 import { useI18n } from '@/context/i18nContext'
 import Section from '@/utils/Section'
 
@@ -26,13 +24,13 @@ type FormData = {
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
 const EmailSection = () => {
-  const { t, isRTL } = useI18n()
+  const { t } = useI18n()
   const [state, handleSubmit, resetFormSubmission] =
     useFormSpreeForm<FormData>('xwpleawo')
   const methods = useReactHookForm<FormData>({ mode: 'onTouched' })
   const { handleSubmit: useFormSubmit, control } = methods
+  const [toastOpen, setToastOpen] = React.useState(false)
   const timerRef = useRef<NodeJS.Timeout | undefined>(undefined)
-  const [open, setOpen] = useState(false)
 
   const onSubmit = async (data: FormData) => {
     await handleSubmit(data)
@@ -45,33 +43,35 @@ const EmailSection = () => {
         subject: '',
         message: ''
       })
-      resetFormSubmission()
+      setToastOpen(true)
+      if (timerRef.current) {
+        clearTimeout(timerRef.current)
+      }
+      timerRef.current = setTimeout(() => {
+        setToastOpen(false)
+        resetFormSubmission()
+      }, 5000)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.succeeded])
 
-  // TODO: make this imperative
-  React.useEffect(() => {
-    if (!state.succeeded) {
-      return
+  const handleToastOpenChange = (open: boolean) => {
+    setToastOpen(open)
+    if (!open) {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current)
+      }
+      resetFormSubmission()
     }
+  }
 
-    const currentTimerRef = timerRef.current
-    if (currentTimerRef) {
-      clearTimeout(timerRef.current)
-    }
-
-    setOpen(true)
-    timerRef.current = setTimeout(() => {
-      setOpen(false)
-    }, 500000)
-
+  useEffect(() => {
     return () => {
-      if (currentTimerRef) {
+      if (timerRef.current) {
         clearTimeout(timerRef.current)
       }
     }
-  }, [state.succeeded])
+  }, [])
 
   return (
     <Section id="contact">
@@ -221,45 +221,7 @@ const EmailSection = () => {
         </div>
       </div>
 
-      {/*TODO: move this out to its own*/}
-      <Toast.Provider swipeDirection={isRTL ? 'left' : 'right'}>
-        <AnimatePresence>
-          {open && (
-            <Toast.Root
-              key={crypto.randomUUID()}
-              asChild
-              forceMount
-              className="border-2  flex justify-between items-center gap-x-[15px] rounded-xl p-[15px] border-gray-400 dark:border-gray-200 bg-gray-100 dark:bg-[#1e1e1e] "
-            >
-              <motion.div
-                layoutId={crypto.randomUUID()}
-                initial={{ opacity: 0, x: isRTL ? -100 : 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: isRTL ? -100 : 100 }}
-              >
-                <Toast.Title className="flex gap-3 items-center text-[15px] font-medium text-gray-900 dark:text-[#e0e0e0]">
-                  <Check className="text-green-500" size={28} />
-                  {t('contact.toast.success')}
-                </Toast.Title>
-                <Toast.Action asChild altText="Close">
-                  <Button
-                    className="cursor-pointer ms-auto"
-                    onClick={() => setOpen(false)}
-                  >
-                    <X
-                      className="cursor-pointer hover:text-[#fff] text-[#aaa]"
-                      size={28}
-                    />
-                  </Button>
-                </Toast.Action>
-              </motion.div>
-            </Toast.Root>
-          )}
-        </AnimatePresence>
-        <Toast.Viewport
-          className={`fixed bottom-0 ${isRTL ? 'left-0' : 'right-0'} z-[2147483647] m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2.5 p-[var(--viewport-padding)] outline-none [--viewport-padding:_25px]`}
-        />
-      </Toast.Provider>
+      <SuccessToast open={toastOpen} onOpenChange={handleToastOpenChange} />
     </Section>
   )
 }

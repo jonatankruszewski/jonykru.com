@@ -69,9 +69,8 @@ const Section = ({
         // DISABLED: Router updates cause Lighthouse Navigation crashes
         // The active navigation highlighting works fine without URL hash changes
         // Users can still use navigation links which update the hash directly
-      } catch (error) {
-        // Silently fail during performance tests
-        console.debug('Section update skipped:', error)
+      } catch {
+        // Silently fail during performance tests or if section update fails
       }
     }, 100)
   }

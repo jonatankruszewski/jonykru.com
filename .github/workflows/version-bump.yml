@@ -25,7 +25,7 @@ jobs:
       pull-requests: write
 
     # Skip if this is a tag push (to avoid infinite loops)
-    if: "!startsWith(github.ref, 'refs/tags/')"
+    if: ${{ !startsWith(github.ref, 'refs/tags/') }}
 
     steps:
       - name: Checkout code
