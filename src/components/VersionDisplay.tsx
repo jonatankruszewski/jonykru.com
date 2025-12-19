@@ -34,7 +34,7 @@ const VersionDisplay = () => {
 
   return (
     <span
-      className={`${FontJetBrainsMono.className} text-xs text-gray-500 dark:text-gray-500`}
+      className={`${FontJetBrainsMono.className} text-xs text-gray-800 dark:text-gray-300`}
       title={`Version: ${versionInfo.version}`}
     >
       v{versionInfo.version}
