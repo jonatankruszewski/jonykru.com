@@ -1,0 +1,94 @@
+name: 'Update CloudFront Version Header'
+description: 'Creates or updates CloudFront response headers policy with X-Version header'
+
+inputs:
+  version:
+    description: 'Version to set in X-Version header'
+    required: true
+  distribution-id:
+    description: 'CloudFront distribution ID'
+    required: true
+  policy-name:
+    description: 'Name of the response headers policy'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Update CloudFront response headers policy
+      shell: bash
+      run: |
+        VERSION="${{ inputs.version }}"
+        DIST_ID="${{ inputs.distribution-id }}"
+        POLICY_NAME="${{ inputs.policy-name }}"
+
+        # Check if policy exists
+        EXISTING_POLICY=$(aws cloudfront list-response-headers-policies \
+          --query "ResponseHeadersPolicyList.Items[?Name=='$POLICY_NAME'].Id" \
+          --output text 2>/dev/null || echo "")
+
+        # Create or update policy
+        if [ -z "$EXISTING_POLICY" ]; then
+          echo "Creating response headers policy..."
+          POLICY_ID=$(aws cloudfront create-response-headers-policy \
+            --response-headers-policy-config "{
+              \"Name\": \"$POLICY_NAME\",
+              \"CustomHeadersConfig\": {
+                \"Items\": [{
+                  \"Header\": \"X-Version\",
+                  \"Value\": \"$VERSION\",
+                  \"Override\": true
+                }],
+                \"Quantity\": 1
+              }
+            }" \
+            --query 'ResponseHeadersPolicy.Id' \
+            --output text)
+          echo "✓ Created policy: $POLICY_ID"
+        else
+          echo "Updating existing policy: $EXISTING_POLICY"
+          POLICY_ETAG=$(aws cloudfront get-response-headers-policy \
+            --id "$EXISTING_POLICY" \
+            --query 'ETag' \
+            --output text)
+
+          aws cloudfront update-response-headers-policy \
+            --id "$EXISTING_POLICY" \
+            --if-match "$POLICY_ETAG" \
+            --response-headers-policy-config "{
+              \"Name\": \"$POLICY_NAME\",
+              \"CustomHeadersConfig\": {
+                \"Items\": [{
+                  \"Header\": \"X-Version\",
+                  \"Value\": \"$VERSION\",
+                  \"Override\": true
+                }],
+                \"Quantity\": 1
+              }
+            }" > /dev/null
+
+          POLICY_ID="$EXISTING_POLICY"
+          echo "✓ Updated policy: $POLICY_ID"
+        fi
+
+        # Attach policy to distribution
+        echo "Attaching policy to distribution..."
+        DIST_CONFIG=$(aws cloudfront get-distribution-config --id "$DIST_ID")
+        ETAG=$(echo "$DIST_CONFIG" | jq -r '.ETag')
+        CURRENT_POLICY=$(echo "$DIST_CONFIG" | jq -r '.DistributionConfig.DefaultCacheBehavior.ResponseHeadersPolicyId // empty')
+
+        if [ "$CURRENT_POLICY" != "$POLICY_ID" ]; then
+          UPDATED_CONFIG=$(echo "$DIST_CONFIG" | jq --arg policy_id "$POLICY_ID" '.DistributionConfig.DefaultCacheBehavior.ResponseHeadersPolicyId = $policy_id')
+
+          aws cloudfront update-distribution \
+            --id "$DIST_ID" \
+            --if-match "$ETAG" \
+            --distribution-config "$UPDATED_CONFIG" > /dev/null
+
+          echo "✓ Policy attached to distribution"
+        else
+          echo "✓ Policy already attached"
+        fi
+
+        echo "✓ X-Version header will be: $VERSION"
+

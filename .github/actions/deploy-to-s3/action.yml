@@ -1,0 +1,61 @@
+name: 'Deploy to S3 with Cache Headers'
+description: 'Deploys static files to S3 with appropriate cache headers and version metadata'
+
+inputs:
+  s3-bucket:
+    description: 'S3 bucket name (without s3:// prefix)'
+    required: true
+  version:
+    description: 'Version to add as metadata'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Deploy to S3 with cache headers and version metadata
+      shell: bash
+      run: |
+        S3_BUCKET="s3://${{ inputs.s3-bucket }}"
+        VERSION="${{ inputs.version }}"
+
+        # First, sync all files without cache headers (to handle deletions)
+        aws s3 sync out/ $S3_BUCKET --delete \
+          --metadata "x-amz-meta-version=$VERSION"
+
+        # HTML files - no cache (always fetch fresh) + version header
+        aws s3 cp out/ $S3_BUCKET --recursive \
+          --exclude "*" \
+          --include "*.html" \
+          --cache-control "no-cache, no-store, must-revalidate" \
+          --content-type "text/html" \
+          --metadata "x-amz-meta-version=$VERSION" \
+          --metadata-directive "REPLACE"
+
+        # Next.js immutable assets (hashed filenames) - 1 year cache + version header
+        aws s3 cp out/_next/static/ $S3_BUCKET/_next/static/ --recursive \
+          --cache-control "public, max-age=31536000, immutable" \
+          --metadata "x-amz-meta-version=$VERSION" \
+          --metadata-directive "REPLACE"
+
+        # Images - 1 year cache + version header
+        aws s3 cp out/images/ $S3_BUCKET/images/ --recursive \
+          --cache-control "public, max-age=31536000, immutable" \
+          --metadata "x-amz-meta-version=$VERSION" \
+          --metadata-directive "REPLACE"
+
+        # Fonts - 1 year cache + version header
+        aws s3 cp out/fonts/ $S3_BUCKET/fonts/ --recursive \
+          --cache-control "public, max-age=31536000, immutable" \
+          --metadata "x-amz-meta-version=$VERSION" \
+          --metadata-directive "REPLACE"
+
+        # Other static files (robots.txt, sitemap.xml) - 1 day cache + version header
+        aws s3 cp out/robots.txt $S3_BUCKET/robots.txt \
+          --cache-control "public, max-age=86400" \
+          --metadata "x-amz-meta-version=$VERSION" \
+          --metadata-directive "REPLACE" || true
+        aws s3 cp out/sitemap.xml $S3_BUCKET/sitemap.xml \
+          --cache-control "public, max-age=86400" \
+          --metadata "x-amz-meta-version=$VERSION" \
+          --metadata-directive "REPLACE" || true
+

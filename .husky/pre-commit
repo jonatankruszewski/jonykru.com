@@ -1,1 +1,14 @@
-pnpm exec lint-staged
+#!/bin/sh
+# Note: Version bumping is now handled by GitHub Actions on merge to main
+# This hook is kept for manual version bumps if needed
+# To manually bump version, use: VERSION_BUMP=true git commit
+
+if [ "$VERSION_BUMP" = "true" ]; then
+  # Check if package.json is already staged (avoid double bump)
+  if git diff --cached --name-only | grep -q "package.json"; then
+    echo "package.json already staged, skipping version bump"
+  else
+    echo "Bumping version..."
+    pnpm tsx scripts/bump-version.ts patch
+  fi
+fi

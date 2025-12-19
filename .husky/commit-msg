@@ -1,1 +1,7 @@
+# Skip commitlint for version bump commits and conventional commits format
+COMMIT_MSG=$(cat "$1")
+if [[ "$COMMIT_MSG" == *"[skip bump]"* ]] || [[ "$COMMIT_MSG" == *"[skip ci]"* ]] || [[ "$COMMIT_MSG" == "chore:"* ]]; then
+  exit 0
+fi
+
 pnpm exec commitlint --edit $1

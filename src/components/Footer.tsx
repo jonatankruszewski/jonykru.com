@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import VersionDisplay from '@/components/VersionDisplay'
 import { useI18n } from '@/context/i18nContext'
 
 const Footer = () => {
@@ -15,9 +16,11 @@ const Footer = () => {
             © {new Date().getFullYear()} Jonatan Kruszewski.{' '}
             {t('footer.copyright')}
           </p>
-          <p className="text-gray-500 dark:text-gray-500 text-sm">
-            {t('footer.builtWith')}
-          </p>
+          <div className="flex items-center gap-2 text-gray-500 dark:text-gray-500 text-sm">
+            <p>{t('footer.builtWith')}</p>
+            <span className="text-gray-400 dark:text-gray-600">•</span>
+            <VersionDisplay />
+          </div>
         </div>
       </div>
     </footer>

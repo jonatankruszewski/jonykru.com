@@ -1,11 +1,16 @@
 {
   "name": "jonykru.com",
-  "version": "0.1.0",
+  "version": "2.16.3",
   "private": true,
   "scripts": {
+    "predev": "tsx scripts/generate-version.ts",
     "dev": "next dev",
+    "prebuild": "tsx scripts/generate-version.ts",
     "build": "NODE_ENV=production next build",
     "build-analyze": "ANALYZE=true NODE_ENV=development next build",
+    "version:patch": "pnpm version patch --no-git-tag-version",
+    "version:minor": "pnpm version minor --no-git-tag-version",
+    "version:major": "pnpm version major --no-git-tag-version",
     "start": "npx serve out",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
