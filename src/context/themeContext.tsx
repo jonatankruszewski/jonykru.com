@@ -12,44 +12,31 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark')
+  // Initialize from localStorage synchronously (SSR-safe)
+  const getInitialTheme = (): Theme => {
+    if (typeof window === 'undefined') {
+      return 'dark'
+    }
+
+    try {
+      const savedTheme = localStorage.getItem('theme') as Theme | null
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        return savedTheme
+      }
+    } catch {
+      // localStorage not available
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light'
+  }
+
+  const [theme, setTheme] = useState<Theme>(getInitialTheme)
   const [mounted, setMounted] = useState(false)
 
-  // Initialize theme on mount
+  // Apply theme to DOM and save to localStorage
   useEffect(() => {
     setMounted(true)
-
-    // Get saved theme or system preference
-    const savedTheme = localStorage.getItem('theme') as Theme | null
-    if (savedTheme) {
-      setTheme(savedTheme)
-      if (savedTheme === 'dark') {
-        document.documentElement.classList.add('dark')
-        document.body.style.backgroundColor = '#121212'
-      } else {
-        document.documentElement.classList.remove('dark')
-        document.body.style.backgroundColor = '#ffffff'
-      }
-    } else {
-      const prefersDark = window.matchMedia(
-        '(prefers-color-scheme: dark)'
-      ).matches
-      const initialTheme = prefersDark ? 'dark' : 'light'
-      setTheme(initialTheme)
-      if (initialTheme === 'dark') {
-        document.documentElement.classList.add('dark')
-        document.body.style.backgroundColor = '#121212'
-      } else {
-        document.documentElement.classList.remove('dark')
-        document.body.style.backgroundColor = '#ffffff'
-      }
-    }
-  }, [])
-
-  // Update DOM when theme changes
-  useEffect(() => {
-    if (!mounted) return
-
     const root = document.documentElement
 
     if (theme === 'dark') {
@@ -60,7 +47,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       document.body.style.backgroundColor = '#ffffff'
     }
 
-    localStorage.setItem('theme', theme)
+    if (mounted) {
+      localStorage.setItem('theme', theme)
+    }
   }, [theme, mounted])
 
   const toggleTheme = () => {

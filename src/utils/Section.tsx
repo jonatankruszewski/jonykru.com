@@ -13,6 +13,7 @@ const Section = ({
   const [isMounted, setIsMounted] = useState(false)
   const [isLighthouse, setIsLighthouse] = useState(false)
   const updateTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
+  const intersectionRatioRef = useRef<number>(0)
 
   useEffect(() => {
     // Detect Lighthouse/performance testing
@@ -39,18 +40,35 @@ const Section = ({
   }, [])
 
   const setInView = (inView: boolean, entry: IntersectionObserverEntry) => {
-    if (!isMounted || !inView) return
+    if (!isMounted) return
+
+    // Update the intersection ratio for this section
+    intersectionRatioRef.current = entry.intersectionRatio
 
     // Clear any pending updates
     if (updateTimeoutRef.current) {
       clearTimeout(updateTimeoutRef.current)
     }
 
+    // Only update if section is in view and has meaningful visibility
+    // Use a lower threshold to catch sections that are partially visible
+    if (!inView || entry.intersectionRatio < 0.05) {
+      // If this section was previously visible but is now out of view,
+      // we still want to update if it had significant visibility
+      return
+    }
+
     // Debounce the update to prevent rapid-fire changes during scrolling
     updateTimeoutRef.current = setTimeout(() => {
       try {
         const sectionId = entry.target.id as Sections
-        setVisibleSection(sectionId)
+
+        // Always update if this section has meaningful visibility
+        // The intersection observer will handle multiple sections being visible
+        // by calling this for each section, and the last one with good visibility wins
+        if (entry.intersectionRatio >= 0.05) {
+          setVisibleSection(sectionId)
+        }
 
         // DISABLED: Router updates cause Lighthouse Navigation crashes
         // The active navigation highlighting works fine without URL hash changes
@@ -59,7 +77,7 @@ const Section = ({
         // Silently fail during performance tests
         console.debug('Section update skipped:', error)
       }
-    }, 150)
+    }, 100)
   }
 
   // If Lighthouse detected, render without IntersectionObserver
@@ -74,10 +92,10 @@ const Section = ({
   return (
     <InView
       onChange={setInView}
-      threshold={0.3}
+      threshold={0.1}
       triggerOnce={false}
       skip={!isMounted}
-      key={id}
+      rootMargin="0px 0px 0px 0px"
     >
       {({ ref }) => {
         return (

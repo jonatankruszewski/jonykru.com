@@ -44,21 +44,35 @@ interface I18nContextType {
 const I18nContext = createContext<I18nContextType | undefined>(undefined)
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('en')
+  // Initialize from localStorage synchronously (SSR-safe)
+  const getInitialLanguage = (): Language => {
+    if (typeof window === 'undefined') {
+      return 'en'
+    }
+
+    try {
+      const savedLanguage = localStorage.getItem('language') as Language | null
+      if (savedLanguage && savedLanguage in LANGUAGE_CONFIG) {
+        return savedLanguage
+      }
+    } catch {
+      // localStorage not available
+    }
+    // Try to detect browser language
+    const browserLang = navigator.language.slice(0, 2) as Language
+
+    if (browserLang in LANGUAGE_CONFIG && browserLang !== 'en') {
+      return browserLang
+    }
+
+    return 'en'
+  }
+
+  const [language, setLanguageState] = useState<Language>(getInitialLanguage)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    const savedLanguage = localStorage.getItem('language') as Language | null
-    if (savedLanguage && savedLanguage in LANGUAGE_CONFIG) {
-      setLanguageState(savedLanguage)
-    } else {
-      // Try to detect browser language
-      const browserLang = navigator.language.slice(0, 2) as Language
-      if (browserLang in LANGUAGE_CONFIG && browserLang !== 'en') {
-        setLanguageState(browserLang)
-      }
-    }
   }, [])
 
   const setLanguage = useCallback(
