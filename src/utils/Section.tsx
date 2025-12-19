@@ -13,7 +13,6 @@ const Section = ({
   const [isMounted, setIsMounted] = useState(false)
   const [isLighthouse, setIsLighthouse] = useState(false)
   const updateTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
-  const intersectionRatioRef = useRef<number>(0)
 
   useEffect(() => {
     // Detect Lighthouse/performance testing
@@ -41,9 +40,6 @@ const Section = ({
 
   const setInView = (inView: boolean, entry: IntersectionObserverEntry) => {
     if (!isMounted) return
-
-    // Update the intersection ratio for this section
-    intersectionRatioRef.current = entry.intersectionRatio
 
     // Clear any pending updates
     if (updateTimeoutRef.current) {

@@ -15,12 +15,14 @@ type NavLinkProps = {
 const NavLink = ({ href, title, icon, onClick }: NavLinkProps) => {
   const { visibleSection, setVisibleSection } = useSectionContext()
   const { isRTL } = useI18n()
-  const selected = visibleSection === title
+  // Extract section ID from href (e.g., "#about" -> "about")
+  const sectionId = href.replace('#', '') as typeof visibleSection
+  const selected = visibleSection === sectionId
 
   return (
     <Link
       onClick={() => {
-        setVisibleSection(title)
+        setVisibleSection(sectionId)
         if (onClick) {
           onClick()
         }
