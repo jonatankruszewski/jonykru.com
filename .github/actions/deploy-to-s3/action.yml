@@ -20,7 +20,7 @@ runs:
 
         # First, sync all files without cache headers (to handle deletions)
         aws s3 sync out/ $S3_BUCKET --delete \
-          --metadata "x-amz-meta-version=$VERSION"
+          --metadata "version=$VERSION"
 
         # HTML files - no cache (always fetch fresh) + version header
         aws s3 cp out/ $S3_BUCKET --recursive \
@@ -28,34 +28,33 @@ runs:
           --include "*.html" \
           --cache-control "no-cache, no-store, must-revalidate" \
           --content-type "text/html" \
-          --metadata "x-amz-meta-version=$VERSION" \
+          --metadata "version=$VERSION" \
           --metadata-directive "REPLACE"
 
         # Next.js immutable assets (hashed filenames) - 1 year cache + version header
         aws s3 cp out/_next/static/ $S3_BUCKET/_next/static/ --recursive \
           --cache-control "public, max-age=31536000, immutable" \
-          --metadata "x-amz-meta-version=$VERSION" \
+          --metadata "version=$VERSION" \
           --metadata-directive "REPLACE"
 
         # Images - 1 year cache + version header
         aws s3 cp out/images/ $S3_BUCKET/images/ --recursive \
           --cache-control "public, max-age=31536000, immutable" \
-          --metadata "x-amz-meta-version=$VERSION" \
+          --metadata "version=$VERSION" \
           --metadata-directive "REPLACE"
 
         # Fonts - 1 year cache + version header
         aws s3 cp out/fonts/ $S3_BUCKET/fonts/ --recursive \
           --cache-control "public, max-age=31536000, immutable" \
-          --metadata "x-amz-meta-version=$VERSION" \
+          --metadata "version=$VERSION" \
           --metadata-directive "REPLACE"
 
         # Other static files (robots.txt, sitemap.xml) - 1 day cache + version header
         aws s3 cp out/robots.txt $S3_BUCKET/robots.txt \
           --cache-control "public, max-age=86400" \
-          --metadata "x-amz-meta-version=$VERSION" \
+          --metadata "version=$VERSION" \
           --metadata-directive "REPLACE" || true
         aws s3 cp out/sitemap.xml $S3_BUCKET/sitemap.xml \
           --cache-control "public, max-age=86400" \
-          --metadata "x-amz-meta-version=$VERSION" \
+          --metadata "version=$VERSION" \
           --metadata-directive "REPLACE" || true
-
