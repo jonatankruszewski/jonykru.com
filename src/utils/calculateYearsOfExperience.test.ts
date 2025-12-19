@@ -88,5 +88,33 @@ describe('calculateYearsOfExperience', () => {
     const afterLeapYear = new Date(2024, 3, 1) // April 1, 2024
     expect(calculateYearsOfExperience(afterLeapYear)).toBe(5)
   })
+
+  it('should throw error for invalid date', () => {
+    const invalidDate = new Date('invalid')
+    expect(() => calculateYearsOfExperience(invalidDate)).toThrow(
+      'Invalid date provided'
+    )
+  })
+
+  it('should throw error for non-Date input', () => {
+    expect(() =>
+      calculateYearsOfExperience('2025-01-01' as unknown as Date)
+    ).toThrow('Invalid date provided')
+  })
+
+  it('should handle far future dates gracefully', () => {
+    const farFuture = new Date(2100, 5, 15) // June 15, 2100
+    const result = calculateYearsOfExperience(farFuture)
+    expect(result).toBe(81) // 2100 - 2019 = 81, but we subtract 1 if before April
+    expect(result).toBeGreaterThan(0)
+  })
+
+  it('should handle dates very close to start date', () => {
+    const justBefore = new Date(2019, 3, 0, 23, 59, 59) // March 31, 2019 23:59:59
+    expect(calculateYearsOfExperience(justBefore)).toBe(0)
+
+    const exactlyStart = new Date(2019, 3, 1, 0, 0, 0) // April 1, 2019 00:00:00
+    expect(calculateYearsOfExperience(exactlyStart)).toBe(0)
+  })
 })
 

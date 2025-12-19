@@ -1,0 +1,71 @@
+name: 'Get Version'
+description: 'Extracts version from git tag or package.json with semver validation'
+
+outputs:
+  version:
+    description: 'The extracted version (semver format)'
+    value: ${{ steps.get-version.outputs.version }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Get version
+      id: get-version
+      shell: bash
+      run: |
+        set -e  # Exit on error
+
+        # Function to validate semver format
+        validate_semver() {
+          local version=$1
+          # Semver regex: major.minor.patch (with optional pre-release and build)
+          if [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$ ]]; then
+            return 0
+          else
+            return 1
+          fi
+        }
+
+        # Try to get version from the latest tag first (most reliable)
+        LATEST_TAG=""
+        if git describe --tags --abbrev=0 >/dev/null 2>&1; then
+          LATEST_TAG=$(git describe --tags --abbrev=0)
+        fi
+
+        if [ -n "$LATEST_TAG" ] && [[ "$LATEST_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+          # Extract version from tag (remove 'v' prefix)
+          VERSION="${LATEST_TAG#v}"
+          if validate_semver "$VERSION"; then
+            echo "✓ Using version from latest tag: $VERSION"
+          else
+            echo "⚠ Tag version '$VERSION' is not valid semver, falling back to package.json"
+            VERSION=""
+          fi
+        else
+          VERSION=""
+        fi
+
+        # Fall back to package.json if tag method failed
+        if [ -z "$VERSION" ]; then
+          if [ ! -f "package.json" ]; then
+            echo "❌ Error: package.json not found"
+            exit 1
+          fi
+
+          VERSION=$(node -p "require('./package.json').version" 2>/dev/null || echo "")
+
+          if [ -z "$VERSION" ]; then
+            echo "❌ Error: Could not read version from package.json"
+            exit 1
+          fi
+
+          if ! validate_semver "$VERSION"; then
+            echo "❌ Error: Version '$VERSION' from package.json is not valid semver"
+            exit 1
+          fi
+
+          echo "✓ Using version from package.json: $VERSION"
+        fi
+
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Deploying version: $VERSION"
