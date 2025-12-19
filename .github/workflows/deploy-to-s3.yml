@@ -78,6 +78,7 @@ jobs:
           version: ${{ steps.version.outputs.version }}
 
       - name: Update CloudFront version header
+        continue-on-error: true
         uses: ./.github/actions/update-cloudfront-version-header
         with:
           version: ${{ steps.version.outputs.version }}

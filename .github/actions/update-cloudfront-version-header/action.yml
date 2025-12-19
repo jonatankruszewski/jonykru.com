@@ -133,7 +133,7 @@ runs:
           echo "Required IAM permissions: cloudfront:GetDistribution"
           echo "Skipping CloudFront header update. Deployment will continue."
           exit 0
-        }
+        fi
 
         ETAG=$(echo "$DIST_CONFIG" | jq -r '.ETag')
         CURRENT_POLICY=$(echo "$DIST_CONFIG" | jq -r '.DistributionConfig.DefaultCacheBehavior.ResponseHeadersPolicyId // empty')
