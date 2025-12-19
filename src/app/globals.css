@@ -46,6 +46,30 @@ html {
   }
 }
 
+@keyframes counter-7 {
+  to {
+    --num: 7;
+  }
+}
+
+@keyframes counter-8 {
+  to {
+    --num: 8;
+  }
+}
+
+@keyframes counter-9 {
+  to {
+    --num: 9;
+  }
+}
+
+@keyframes counter-10 {
+  to {
+    --num: 10;
+  }
+}
+
 @keyframes counter-24 {
   to {
     --num: 24;
@@ -67,6 +91,22 @@ html {
 /* Animation classes */
 .animate-6 {
   animation: counter-6 1s ease-out forwards;
+}
+
+.animate-7 {
+  animation: counter-7 1s ease-out forwards;
+}
+
+.animate-8 {
+  animation: counter-8 1s ease-out forwards;
+}
+
+.animate-9 {
+  animation: counter-9 1s ease-out forwards;
+}
+
+.animate-10 {
+  animation: counter-10 1s ease-out forwards;
 }
 
 .animate-24 {

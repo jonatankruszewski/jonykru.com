@@ -1,6 +1,7 @@
 'use client'
 
 import { useI18n } from '@/context/i18nContext'
+import { calculateYearsOfExperience } from '@/utils/calculateYearsOfExperience'
 
 interface Achievement {
   suffix?: string
@@ -10,37 +11,38 @@ interface Achievement {
   icon: string
 }
 
-const achievementsList: Achievement[] = [
-  {
-    metricKey: 'achievements.stackOverflowReputation',
-    value: 1316,
-    animateClass: 'animate-1316',
-    icon: '🏆'
-  },
-  {
-    metricKey: 'achievements.certifications',
-    value: 36,
-    animateClass: 'animate-36',
-    icon: '📜'
-  },
-  {
-    suffix: '+',
-    metricKey: 'achievements.publications',
-    value: 24,
-    animateClass: 'animate-24',
-    icon: '✍️'
-  },
-  {
-    suffix: '+',
-    metricKey: 'achievements.yearsOfExperience',
-    value: 6,
-    animateClass: 'animate-6',
-    icon: '💼'
-  }
-]
-
 const Achievements = () => {
   const { t } = useI18n()
+  const yearsOfExperience = calculateYearsOfExperience()
+
+  const achievementsList: Achievement[] = [
+    {
+      metricKey: 'achievements.stackOverflowReputation',
+      value: 1316,
+      animateClass: 'animate-1316',
+      icon: '🏆'
+    },
+    {
+      metricKey: 'achievements.certifications',
+      value: 36,
+      animateClass: 'animate-36',
+      icon: '📜'
+    },
+    {
+      suffix: '+',
+      metricKey: 'achievements.publications',
+      value: 24,
+      animateClass: 'animate-24',
+      icon: '✍️'
+    },
+    {
+      suffix: '+',
+      metricKey: 'achievements.yearsOfExperience',
+      value: yearsOfExperience,
+      animateClass: `animate-${yearsOfExperience}`,
+      icon: '💼'
+    }
+  ]
 
   return (
     <div className="grid mt-8 mb-16 grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
