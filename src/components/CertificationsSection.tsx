@@ -1,10 +1,11 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import CertificationCard from '@/components/CertificationCard'
 import ProjectTag from '@/components/ProjectTag'
 import { useI18n } from '@/context/i18nContext'
 import { CredlyData } from '@/types/credly.types'
 import Section from '@/utils/Section'
+import { useCertificationFilters } from '@/utils/useCertificationFilters'
 
 type CertificationsSectionProps = {
   credlyData: CredlyData
@@ -29,45 +30,8 @@ const CertificationsSection = ({ credlyData }: CertificationsSectionProps) => {
     ])
   )
 
-  const [selectedProviders, setSelectedProviders] = useState(providersMap)
-  const [all, setAll] = useState(true)
-
-  const handleToggleAll = () => {
-    if (all) {
-      return
-    }
-
-    setSelectedProviders(providersMap)
-    setAll(true)
-  }
-
-  const handleToggleProvider = (providerKey: string) => {
-    const content = { ...selectedProviders[providerKey] }
-    content.value = !content.value
-    const newProviders = { ...selectedProviders, [providerKey]: content }
-
-    const isAllSelected = Object.values(newProviders).every(
-      (providerObj) => providerObj.value
-    )
-    const isNoneSelected = Object.values(newProviders).every(
-      (providerObj) => !providerObj.value
-    )
-
-    if (isAllSelected) {
-      setAll(true)
-      setSelectedProviders(providersMap)
-      return
-    }
-
-    if (isNoneSelected) {
-      setAll(true)
-      setSelectedProviders(providersMap)
-      return
-    }
-
-    setAll(false)
-    setSelectedProviders(newProviders)
-  }
+  const { selectedProviders, all, handleToggleAll, handleToggleProvider } =
+    useCertificationFilters(providersMap)
 
   const filteredBadges = data
     .filter((badge) => {
@@ -77,9 +41,9 @@ const CertificationsSection = ({ credlyData }: CertificationsSectionProps) => {
           (provider) =>
             provider.value &&
             provider.key ===
-              badge.issuer.entities[0].entity.name
-                .toLowerCase()
-                .replaceAll(' ', '_')
+            badge.issuer.entities[0].entity.name
+              .toLowerCase()
+              .replaceAll(' ', '_')
         ) || all
       )
     })
