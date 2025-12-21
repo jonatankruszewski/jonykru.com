@@ -1,0 +1,11 @@
+/* Reserve space for bold text to prevent CLS */
+.linkText::before {
+  content: attr(data-text);
+  font-weight: 500; /* font-medium */
+  height: 0;
+  visibility: hidden;
+  overflow: hidden;
+  user-select: none;
+  pointer-events: none;
+  display: block;
+}

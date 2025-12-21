@@ -4,6 +4,7 @@ import { ReactNode } from 'react'
 import { FontRubik } from '@/app/fonts'
 import { useI18n } from '@/context/i18nContext'
 import { useSectionContext } from '@/context/sectionContext'
+import styles from './NavLink.module.css'
 
 type NavLinkProps = {
   href: string
@@ -31,7 +32,9 @@ const NavLink = ({ href, title, icon, onClick }: NavLinkProps) => {
       className={`${FontRubik.className} py-2 ps-3 pe-4 text-gray-700 dark:text-[#ADB7BE] sm:text-xl md:p-0 hover:text-black dark:hover:text-white flex gap-2 font-light ${selected ? 'text-black dark:text-white font-medium' : ''} ${isRTL ? 'justify-end' : 'justify-start'}`}
     >
       {icon && icon}
-      {title}
+      <span className={styles.linkText} data-text={title}>
+        {title}
+      </span>
     </Link>
   )
 }
