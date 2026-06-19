@@ -1,8 +1,15 @@
 'use client'
 
-import { HTMLAttributes, ReactNode, useEffect, useRef, useState } from 'react'
+import { HTMLAttributes, ReactNode, useEffect, useState } from 'react'
 import { InView } from 'react-intersection-observer'
 import { Sections, useSectionContext } from '@/context/sectionContext'
+
+// Collapse the observer root to a single horizontal "active line" ~45% down the
+// viewport. The two insets below are the top and bottom boundaries: because they
+// sum to 100% the root has zero height, so exactly one section crosses the line
+// at a time and the active section switches deterministically as the user
+// scrolls (no ratios, no debounce, no "last one wins" race between sections).
+const ACTIVE_LINE_ROOT_MARGIN = '-45% 0px -55% 0px'
 
 const Section = ({
   children,
@@ -10,72 +17,25 @@ const Section = ({
   ...props
 }: { children: ReactNode; id: Sections } & HTMLAttributes<HTMLElement>) => {
   const { setVisibleSection } = useSectionContext()
-  const [isMounted, setIsMounted] = useState(false)
   const [isLighthouse, setIsLighthouse] = useState(false)
-  const updateTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
   useEffect(() => {
-    // Detect Lighthouse/performance testing
+    // Detect Lighthouse/performance testing so we can skip the observer there.
     const userAgent = navigator.userAgent || ''
-    const isPerformanceTest =
-      userAgent.includes('Chrome-Lighthouse') ||
-      userAgent.includes('HeadlessChrome') ||
-      /Chrome-Lighthouse|PageSpeed|Lighthouse/.test(userAgent)
-
-    setIsLighthouse(isPerformanceTest)
-
-    // Wait for hydration to complete before enabling intersection observer
-    // Delay to ensure all critical rendering is done first
-    const mountTimer = setTimeout(() => {
-      setIsMounted(true)
-    }, 250)
-
-    return () => {
-      clearTimeout(mountTimer)
-      if (updateTimeoutRef.current) {
-        clearTimeout(updateTimeoutRef.current)
-      }
-    }
+    setIsLighthouse(
+      /Chrome-Lighthouse|HeadlessChrome|PageSpeed|Lighthouse/.test(userAgent)
+    )
   }, [])
 
-  const setInView = (inView: boolean, entry: IntersectionObserverEntry) => {
-    if (!isMounted) return
-
-    // Clear any pending updates
-    if (updateTimeoutRef.current) {
-      clearTimeout(updateTimeoutRef.current)
-    }
-
-    // Only update if section is in view and has meaningful visibility
-    // Use a lower threshold to catch sections that are partially visible
-    if (!inView || entry.intersectionRatio < 0.05) {
-      // If this section was previously visible but is now out of view,
-      // we still want to update if it had significant visibility
-      return
-    }
-
-    // Debounce the update to prevent rapid-fire changes during scrolling
-    updateTimeoutRef.current = setTimeout(() => {
-      try {
-        const sectionId = entry.target.id as Sections
-
-        // Always update if this section has meaningful visibility
-        // The intersection observer will handle multiple sections being visible
-        // by calling this for each section, and the last one with good visibility wins
-        if (entry.intersectionRatio >= 0.05) {
-          setVisibleSection(sectionId)
-        }
-
-        // DISABLED: Router updates cause Lighthouse Navigation crashes
-        // The active navigation highlighting works fine without URL hash changes
-        // Users can still use navigation links which update the hash directly
-      } catch {
-        // Silently fail during performance tests or if section update fails
-      }
-    }, 100)
+  const handleChange = (inView: boolean, entry: IntersectionObserverEntry) => {
+    // Only the section currently crossing the active line reports inView=true.
+    // The section being left fires inView=false, which we ignore so we keep
+    // highlighting the one the reader is on.
+    if (!inView) return
+    setVisibleSection(entry.target.id as Sections)
   }
 
-  // If Lighthouse detected, render without IntersectionObserver
+  // Under Lighthouse, render a plain section without the observer.
   if (isLighthouse) {
     return (
       <section id={id} {...props}>
@@ -85,20 +45,12 @@ const Section = ({
   }
 
   return (
-    <InView
-      onChange={setInView}
-      threshold={0.1}
-      triggerOnce={false}
-      skip={!isMounted}
-      rootMargin="0px 0px 0px 0px"
-    >
-      {({ ref }) => {
-        return (
-          <section ref={ref} id={id} {...props}>
-            {children}
-          </section>
-        )
-      }}
+    <InView onChange={handleChange} rootMargin={ACTIVE_LINE_ROOT_MARGIN}>
+      {({ ref }) => (
+        <section ref={ref} id={id} {...props}>
+          {children}
+        </section>
+      )}
     </InView>
   )
 }
