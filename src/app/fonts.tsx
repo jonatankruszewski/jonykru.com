@@ -12,6 +12,3 @@ export const FontRubik = Rubik({
   display: 'swap',
   preload: true
 })
-
-// Alias for backward compatibility
-export const FontInter = FontRubik

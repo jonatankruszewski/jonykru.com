@@ -7,6 +7,7 @@ import * as fs from "fs"
 const eslintIgnore = [
     ".git/",
     ".next/",
+    "out/",
     "node_modules/",
     "dist/",
     "build/",
