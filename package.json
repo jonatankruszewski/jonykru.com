@@ -87,7 +87,19 @@
     "overrides": {
       "react": "^19.2.3",
       "react-dom": "^19.2.3"
-    }
+    },
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "eslint-plugin-import>eslint": "10",
+        "eslint-plugin-jsx-a11y>eslint": "10",
+        "eslint-plugin-react>eslint": "10"
+      }
+    },
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
   },
   "engines": {
     "node": "24.x"
