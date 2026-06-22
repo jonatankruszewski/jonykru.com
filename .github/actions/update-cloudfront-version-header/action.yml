@@ -39,7 +39,7 @@ runs:
         fi
 
         # Extract policy ID if found (remove any error messages)
-        EXISTING_POLICY=$(echo "$EXISTING_POLICY" | grep -E '^[A-Z0-9]+$' || echo "")
+        EXISTING_POLICY=$(echo "$EXISTING_POLICY" | grep -E '^[a-zA-Z0-9-]+$' || echo "")
 
         # Create or update policy
         if [ -z "$EXISTING_POLICY" ]; then
@@ -74,7 +74,7 @@ runs:
               set -e
 
               if [ $LIST_EXIT_CODE -eq 0 ]; then
-                EXISTING_POLICY=$(echo "$EXISTING_POLICY" | grep -E '^[A-Z0-9]+$' || echo "")
+                EXISTING_POLICY=$(echo "$EXISTING_POLICY" | grep -E '^[a-zA-Z0-9-]+$' || echo "")
                 if [ -n "$EXISTING_POLICY" ]; then
                   echo "Found existing policy: $EXISTING_POLICY, will update it"
                   # Fall through to update logic below
@@ -116,7 +116,7 @@ runs:
             set -e
 
             if [ $LIST_EXIT_CODE -eq 0 ]; then
-              EXISTING_POLICY=$(echo "$EXISTING_POLICY" | grep -E '^[A-Z0-9]+$' || echo "")
+              EXISTING_POLICY=$(echo "$EXISTING_POLICY" | grep -E '^[a-zA-Z0-9-]+$' || echo "")
             fi
           fi
 
