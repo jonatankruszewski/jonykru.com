@@ -26,7 +26,14 @@ export const metadata: Metadata = {
   },
   description:
     'AI developer who ships across the whole stack — frontend, backend, CI and automation. Contributor to Pane, typedash and immer; author of the rxova libraries.',
-  alternates: { canonical: '/' }
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    siteName: 'Jonatan Kruszewski',
+    url: '/',
+    images: ['/og/home.png']
+  },
+  twitter: { card: 'summary_large_image', images: ['/og/home.png'] }
 }
 
 // Runs before paint so the theme class is on <html> for the first frame.

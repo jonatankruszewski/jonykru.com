@@ -49,6 +49,15 @@ runs:
           --metadata "version=$VERSION" \
           --metadata-directive "REPLACE"
 
+        # OG cards - 1 day cache. Filenames are stable rather than hashed, so an
+        # immutable year would keep serving a stale card to scrapers after the
+        # copy changes; CloudFront is invalidated on deploy, browsers are not.
+        aws s3 cp out/og/ $S3_BUCKET/og/ --recursive \
+          --cache-control "public, max-age=86400" \
+          --content-type "image/png" \
+          --metadata "version=$VERSION" \
+          --metadata-directive "REPLACE" || true
+
         # Other static files (robots.txt, sitemap.xml) - 1 day cache + version header
         aws s3 cp out/robots.txt $S3_BUCKET/robots.txt \
           --cache-control "public, max-age=86400" \

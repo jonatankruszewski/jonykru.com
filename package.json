@@ -3,9 +3,9 @@
   "version": "2.22.3",
   "private": true,
   "scripts": {
-    "predev": "tsx scripts/generate-version.ts",
+    "predev": "tsx scripts/generate-version.ts && tsx scripts/generate-og.tsx",
     "dev": "next dev",
-    "prebuild": "tsx scripts/generate-version.ts",
+    "prebuild": "tsx scripts/generate-version.ts && tsx scripts/generate-og.tsx",
     "build": "NODE_ENV=production next build",
     "build-analyze": "ANALYZE=true NODE_ENV=development next build",
     "version:patch": "pnpm version patch --no-git-tag-version",
@@ -23,7 +23,8 @@
     "update-oss": "tsx scripts/update-oss.ts",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "generate-og": "tsx scripts/generate-og.tsx"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.4.0",

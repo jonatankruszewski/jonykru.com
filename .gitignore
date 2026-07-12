@@ -50,3 +50,6 @@ analyze
 # Credly curl command (contains auth cookies)
 .credly-curl
 coverage
+
+# Generated at build time by scripts/generate-og.tsx
+public/og/
