@@ -8,7 +8,18 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
+      // Gate the pure-logic layer only. Without an explicit include, coverage
+      // instruments whatever a test happens to import, so adding one component
+      // test would silently drag its entire TSX import graph into the
+      // denominator and fail the thresholds below for no real reason.
+      include: [
+        'scripts/**/*.ts',
+        'src/lib/**/*.ts',
+        'src/utils/**/*.ts',
+        'src/data/**/*.ts'
+      ],
       exclude: [
+        '**/*.tsx',
         'node_modules/**',
         '**/*.config.*',
         '**/dist/**',
