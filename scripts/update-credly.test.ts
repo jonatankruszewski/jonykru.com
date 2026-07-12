@@ -593,6 +593,7 @@ describe('update-credly', () => {
     it('should show helpful message when file not found', async () => {
       const { main } = await import('./update-credly')
       const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
+      vi.spyOn(console, 'error').mockImplementation(() => {})
 
       vi.mocked(fs.existsSync).mockReturnValue(false)
 
@@ -611,6 +612,7 @@ describe('update-credly', () => {
     it('should show helpful message when file is empty', async () => {
       const { main } = await import('./update-credly')
       const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
+      vi.spyOn(console, 'error').mockImplementation(() => {})
 
       vi.mocked(fs.existsSync).mockReturnValue(true)
       vi.mocked(fs.readFileSync).mockReturnValue('   ')

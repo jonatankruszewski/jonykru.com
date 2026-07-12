@@ -50,3 +50,16 @@ analyze
 # Credly curl command (contains auth cookies)
 .credly-curl
 coverage
+
+# Generated at build time by scripts/generate-og.tsx
+public/og/
+
+# Medium data export (personal archive, not site source)
+medium-export/
+medium-export-*.zip
+
+# Palette / design reference screenshots — scratch input, never site source
+colorreference.png
+reference*.png
+reference*.jpg
+reference*.jpeg

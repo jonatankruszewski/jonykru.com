@@ -1,35 +1,60 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
-import '@/styles/animations.css'
 import { ReactNode } from 'react'
-import { FontRubik } from '@/app/fonts'
+import { FontPlexHebrew, FontPlexMono, FontPlexSans } from '@/app/fonts'
 import RTLHandler from '@/components/RTLHandler'
+import SiteFooter from '@/components/SiteFooter'
+import SiteNav from '@/components/SiteNav'
 import { I18nProvider } from '@/context/i18nContext'
 import { ThemeProvider } from '@/context/themeContext'
+import { SITE_URL } from '@/data/site'
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#121212' }
+    { media: '(prefers-color-scheme: light)', color: '#fffbeb' },
+    { media: '(prefers-color-scheme: dark)', color: '#282a36' }
   ]
 }
 
 export const metadata: Metadata = {
-  title: 'Jonatan Kruszewski - Web Developer | Software Engineer',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Jonatan Kruszewski — AI Dev',
+    template: '%s — Jonatan Kruszewski'
+  },
   description:
-    'Experienced web developer, tech instructor, and Scrum consultant. Offering private lessons, tech guidance, and Agile consulting. Showcasing 24 published articles and nearly 40 certifications. Explore my work and expertise in React, TypeScript, and modern web development.'
+    'AI developer who ships across the whole stack — frontend, backend, CI and automation. Contributor to Pane, typedash and immer; author of the rxova libraries.',
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    siteName: 'Jonatan Kruszewski',
+    url: '/',
+    images: ['/og/home.png']
+  },
+  twitter: { card: 'summary_large_image', images: ['/og/home.png'] }
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
-      <body className={FontRubik.className}>
+    // No theme class here, and no theme script anywhere: globals.css defaults to
+    // Dracula and switches to Solarized Light on prefers-color-scheme, so the
+    // first frame is already correct with zero JavaScript. ThemeProvider only
+    // adds a .light/.dark override when someone uses the toggle.
+    <html
+      lang="en"
+      dir="ltr"
+      className={`${FontPlexMono.variable} ${FontPlexSans.variable} ${FontPlexHebrew.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="bg-canvas text-ink font-sans">
         <ThemeProvider>
           <I18nProvider>
             <RTLHandler />
-            {children}
+            <SiteNav />
+            <main id="content">{children}</main>
+            <SiteFooter />
           </I18nProvider>
         </ThemeProvider>
       </body>

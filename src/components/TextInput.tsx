@@ -72,14 +72,17 @@ const TextInput = <
     <div className="mb-1">
       <label
         htmlFor={name}
-        className="text-gray-700 dark:text-gray-300 block text-sm mb-2 font-medium"
+        className="block font-mono text-label uppercase tracking-label text-ink-muted mb-2"
       >
         {label}
-        {required && <span className="text-violet-500 ml-1">*</span>}
+        {required && <span className="text-error ms-1">*</span>}
       </label>
 
       <input
         {...field}
+        // Always a string: an undefined value would make this input flip from
+        // uncontrolled to controlled on the first keystroke.
+        value={typeof field.value === 'string' ? field.value : ''}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -89,19 +92,17 @@ const TextInput = <
         }}
         type={type}
         name={name}
-        className={`bg-gray-50 dark:bg-gray-800/50 border placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100 text-sm rounded-xl block w-full px-4 py-3 transition-all focus:outline-none ${
-          hasError
-            ? 'border-red-400 dark:border-red-500 focus:ring-2 focus:ring-red-500/30'
-            : 'border-gray-200 dark:border-gray-700 focus:border-violet-500 dark:focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20'
+        className={`block w-full border bg-canvas px-4 py-3 text-ink placeholder:text-ink-muted transition-colors ${
+          hasError ? 'border-error' : 'border-rule focus:border-ink'
         } ${className}`}
         {...rest}
         required={false}
       />
       <div className="min-h-[24px] mt-1">
         {hasError && fieldState.error && (
-          <div className="flex gap-1.5 text-red-500 items-center">
-            <Info size={14} />
-            <p className="text-xs">{fieldState.error.message}</p>
+          <div className="flex gap-1.5 text-error items-center" role="alert">
+            <Info size={14} aria-hidden />
+            <p className="font-mono text-label">{fieldState.error.message}</p>
           </div>
         )}
       </div>

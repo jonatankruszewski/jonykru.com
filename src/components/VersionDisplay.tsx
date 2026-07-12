@@ -1,6 +1,5 @@
 'use client'
 
-import { FontJetBrainsMono } from '@/app/fonts'
 import versionData from '../../public/version.json'
 
 interface VersionInfo {
@@ -17,7 +16,7 @@ const VersionDisplay = () => {
 
   return (
     <span
-      className={`${FontJetBrainsMono.className} text-xs text-gray-800 dark:text-gray-300`}
+      className="font-mono text-label text-syn-comment tabular-nums"
       title={`Version: ${versionInfo.version}`}
     >
       v{versionInfo.version}
@@ -26,4 +25,3 @@ const VersionDisplay = () => {
 }
 
 export default VersionDisplay
-

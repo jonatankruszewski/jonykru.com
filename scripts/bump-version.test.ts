@@ -51,9 +51,7 @@ describe('bump-version', () => {
   describe('getCurrentVersion', () => {
     it('should read version from package.json', () => {
       const mockPackageJson = { version: '2.16.3', name: 'test' }
-      vi.mocked(readFileSync).mockReturnValue(
-        JSON.stringify(mockPackageJson)
-      )
+      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(mockPackageJson))
 
       const version = getCurrentVersion()
 
@@ -66,9 +64,7 @@ describe('bump-version', () => {
 
     it('should handle different version formats', () => {
       const mockPackageJson = { version: '1.0.0', name: 'test' }
-      vi.mocked(readFileSync).mockReturnValue(
-        JSON.stringify(mockPackageJson)
-      )
+      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(mockPackageJson))
 
       const version = getCurrentVersion()
       expect(version).toBe('1.0.0')
@@ -78,9 +74,7 @@ describe('bump-version', () => {
   describe('bumpVersion', () => {
     it('should call pnpm version patch', () => {
       const mockPackageJson = { version: '2.16.4', name: 'test' }
-      vi.mocked(readFileSync).mockReturnValue(
-        JSON.stringify(mockPackageJson)
-      )
+      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(mockPackageJson))
       vi.mocked(execSync).mockReturnValue(Buffer.from(''))
 
       const newVersion = bumpVersion('patch')
@@ -97,9 +91,7 @@ describe('bump-version', () => {
 
     it('should call pnpm version minor', () => {
       const mockPackageJson = { version: '2.17.0', name: 'test' }
-      vi.mocked(readFileSync).mockReturnValue(
-        JSON.stringify(mockPackageJson)
-      )
+      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(mockPackageJson))
       vi.mocked(execSync).mockReturnValue(Buffer.from(''))
 
       const newVersion = bumpVersion('minor')
@@ -113,9 +105,7 @@ describe('bump-version', () => {
 
     it('should call pnpm version major', () => {
       const mockPackageJson = { version: '3.0.0', name: 'test' }
-      vi.mocked(readFileSync).mockReturnValue(
-        JSON.stringify(mockPackageJson)
-      )
+      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(mockPackageJson))
       vi.mocked(execSync).mockReturnValue(Buffer.from(''))
 
       const newVersion = bumpVersion('major')
@@ -175,8 +165,8 @@ describe('bump-version', () => {
     let originalArgv: string[]
 
     beforeEach(() => {
-      consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => { })
-      consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
+      consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
+      consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
       exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
         throw new Error('exit')
       })
@@ -207,12 +197,8 @@ describe('bump-version', () => {
         'git add package.json',
         expect.any(Object)
       )
-      expect(consoleLogSpy).toHaveBeenCalledWith(
-        'Current version: 2.16.3'
-      )
-      expect(consoleLogSpy).toHaveBeenCalledWith(
-        'Bumped version to: 2.16.4'
-      )
+      expect(consoleLogSpy).toHaveBeenCalledWith('Current version: 2.16.3')
+      expect(consoleLogSpy).toHaveBeenCalledWith('Bumped version to: 2.16.4')
     })
 
     it('should bump version with provided type', () => {
@@ -270,9 +256,7 @@ describe('bump-version', () => {
     it('should handle error in bumpVersion during main execution', () => {
       process.argv = ['node', 'bump-version.ts', 'patch']
       const mockPackageJson = { version: '2.16.3', name: 'test' }
-      vi.mocked(readFileSync).mockReturnValue(
-        JSON.stringify(mockPackageJson)
-      )
+      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(mockPackageJson))
       vi.mocked(execSync).mockImplementation((command: string) => {
         if (command.includes('pnpm version')) {
           throw new Error('pnpm failed')
@@ -285,4 +269,3 @@ describe('bump-version', () => {
     })
   })
 })
-

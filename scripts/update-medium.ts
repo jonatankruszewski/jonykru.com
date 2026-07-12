@@ -322,10 +322,84 @@ export async function downloadImages(
 }
 
 /**
- * Save the filtered data to JSON file
+ * Merge freshly-fetched articles into the ones already on disk, keyed by guid.
+ *
+ * Medium's RSS only ever returns the latest 10 posts. Overwriting the file with
+ * the feed therefore caps the archive at 10 forever and silently drops older
+ * posts as new ones push them out — which is why the site could only ever show
+ * 10 despite ~24 existing. Merging makes the file cumulative: the feed tops it
+ * up, and entries added by hand or from a Medium export survive.
+ *
+ * Fresh data wins on conflict, except for `image`: a re-fetch that has not
+ * downloaded the image yet must not blank an existing local path.
+ */
+/**
+ * Every Medium URL for a post ends in the same 12-hex post id, but the prefix
+ * differs by source:
+ *
+ *   RSS       guid: https://medium.com/p/ed7faec2a8b6
+ *   export    canonical: https://medium.com/@jonakrusze/some-slug-ed7faec2a8b6
+ *   published link: https://levelup.gitconnected.com/some-slug-ed7faec2a8b6
+ *
+ * Keying on the raw guid therefore treats the same article from two sources as
+ * two articles. Key on the id.
+ */
+export function mediumPostId(article: MediumFlatData): string {
+  const id = [article.guid, article.link]
+    .map((url) => url?.match(/([0-9a-f]{8,16})(?:\?|#|$)/i)?.[1])
+    .find(Boolean)
+
+  return id ?? article.guid ?? article.link
+}
+
+export function mergeArticles(
+  existing: MediumFlatData[],
+  incoming: MediumFlatData[]
+): MediumFlatData[] {
+  const byId = new Map<string, MediumFlatData>()
+
+  for (const article of existing) {
+    byId.set(mediumPostId(article), article)
+  }
+
+  for (const article of incoming) {
+    const id = mediumPostId(article)
+    const previous = byId.get(id)
+
+    byId.set(id, {
+      ...previous,
+      ...article,
+      // A re-fetch that has not downloaded the image yet must not blank the
+      // local path an earlier run already produced.
+      image: article.image || previous?.image || '',
+      // The RSS/publication link (levelup.gitconnected.com) is the URL readers
+      // actually see; don't downgrade it to the bare profile canonical.
+      link: previous?.link || article.link
+    })
+  }
+
+  return [...byId.values()].sort(
+    (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
+  )
+}
+
+export function readExistingJson(dataPath: string): MediumFlatData[] {
+  if (!fs.existsSync(dataPath)) return []
+
+  try {
+    const parsed = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
+    return Array.isArray(parsed) ? (parsed as MediumFlatData[]) : []
+  } catch {
+    return []
+  }
+}
+
+/**
+ * Save the filtered data to JSON file, merging with whatever is already there.
  */
 export function saveDataJson(data: MediumFlatData[], dataPath: string): void {
-  fs.writeFileSync(dataPath, JSON.stringify(data, null, 2), 'utf8')
+  const merged = mergeArticles(readExistingJson(dataPath), data)
+  fs.writeFileSync(dataPath, JSON.stringify(merged, null, 2), 'utf8')
 }
 
 /**

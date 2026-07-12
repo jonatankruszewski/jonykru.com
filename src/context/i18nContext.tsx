@@ -37,6 +37,7 @@ interface I18nContextType {
   language: Language
   setLanguage: (lang: Language) => void
   t: (key: string) => string
+  tList: (key: string) => string[]
   direction: Direction
   isRTL: boolean
 }
@@ -122,12 +123,33 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     [language]
   )
 
+  // t() flattens everything to a string. Some copy is a list (the rotating hero
+  // phrases), so it needs its own accessor rather than a stringified array.
+  const tList = useCallback(
+    (key: string): string[] => {
+      const lookup = (dict: unknown): unknown =>
+        key.split('.').reduce<unknown>((value, k) => {
+          if (value && typeof value === 'object' && k in value) {
+            return (value as Record<string, unknown>)[k]
+          }
+          return undefined
+        }, dict)
+
+      const value = lookup(translations[language]) ?? lookup(translations.en)
+
+      return Array.isArray(value)
+        ? value.filter((item): item is string => typeof item === 'string')
+        : []
+    },
+    [language]
+  )
+
   const direction = getDirection(language)
   const rtl = isRTL(language)
 
   const value = useMemo(
-    () => ({ language, setLanguage, t, direction, isRTL: rtl }),
-    [language, setLanguage, t, direction, rtl]
+    () => ({ language, setLanguage, t, tList, direction, isRTL: rtl }),
+    [language, setLanguage, t, tList, direction, rtl]
   )
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>

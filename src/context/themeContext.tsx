@@ -26,26 +26,27 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     } catch {
       // localStorage not available
     }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light'
+
+    // Dark-first: the design is an IDE, and an IDE is dark unless you say
+    // otherwise. Only an explicit OS light preference opts out.
+    return window.matchMedia('(prefers-color-scheme: light)').matches
+      ? 'light'
+      : 'dark'
   }
 
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
   const [mounted, setMounted] = useState(false)
 
-  // Apply theme to DOM and save to localStorage
+  // globals.css already renders the right theme from prefers-color-scheme with
+  // no JavaScript, so this only writes an *override* class. For anyone who has
+  // not touched the toggle, the class we add matches what CSS already painted,
+  // which is why there is no flash despite there being no blocking script.
   useEffect(() => {
     setMounted(true)
-    const root = document.documentElement
 
-    if (theme === 'dark') {
-      root.classList.add('dark')
-      document.body.style.backgroundColor = '#121212'
-    } else {
-      root.classList.remove('dark')
-      document.body.style.backgroundColor = '#ffffff'
-    }
+    const root = document.documentElement
+    root.classList.toggle('dark', theme === 'dark')
+    root.classList.toggle('light', theme === 'light')
 
     if (mounted) {
       localStorage.setItem('theme', theme)

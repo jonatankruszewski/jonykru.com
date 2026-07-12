@@ -1,19 +1,19 @@
-import Link from 'next/link'
+'use client'
+
+import CtaButton from '@/components/ui/CtaButton'
+import { useI18n } from '@/context/i18nContext'
 
 export default function NotFound() {
+  const { t } = useI18n()
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center container mx-auto px-4">
-      <h1 className="text-white text-6xl font-bold mb-4">404</h1>
-      <h2 className="text-gray-300 text-2xl mb-8">Page Not Found</h2>
-      <p className="text-gray-400 mb-8 text-center max-w-md">
-        Sorry, the page you&apos;re looking for doesn&apos;t exist.
-      </p>
-      <Link
-        href="/"
-        className="bg-gradient-to-br from-purple-400 to-indigo-500 text-white px-6 py-3 rounded-lg hover:opacity-90 transition-opacity"
-      >
-        Go Home
-      </Link>
-    </div>
+    <section className="mx-auto max-w-6xl px-6 py-32 md:py-48">
+      <p className="font-mono text-display text-ink tabular-nums">404</p>
+      <h1 className="text-h1 text-ink mt-8">{t('notFound.title')}</h1>
+      <p className="mt-4 max-w-md text-ink-muted">{t('notFound.body')}</p>
+      <div className="mt-10">
+        <CtaButton href="/">{t('notFound.cta')}</CtaButton>
+      </div>
+    </section>
   )
 }

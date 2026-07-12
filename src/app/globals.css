@@ -1,142 +1,253 @@
 @import 'tailwindcss';
-@import '../styles/imageLoading.css';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/*
+ * Theming is pure CSS — there is no blocking script and no dangerouslySetInnerHTML.
+ *
+ * Dracula is the default. `prefers-color-scheme: light` switches to Solarized
+ * Light, so anyone who has never touched the toggle gets the right theme in the
+ * very first frame with no JavaScript at all.
+ *
+ * The .dark / .light classes are only an *override*, written by the theme
+ * toggle for someone who wants the opposite of their OS. Because the CSS default
+ * already matches the OS, applying that class after hydration is a no-op for
+ * everyone else — so the common path still never flashes.
+ */
+
+/*
+ * Flat, high-contrast, IDE-native. Dracula for dark (the default), Solarized
+ * Light for light.
+ *
+ * Two rules this file enforces mechanically rather than by convention:
+ *
+ * 1. Tailwind's default palette is deleted (`--color-*: initial`). A stray
+ *    `text-gray-400` from the old design no longer compiles to anything, so a
+ *    rebrand cannot be left 80% done.
+ * 2. Shadows, blurs and gradients are deleted. Depth comes from hairline rules
+ *    and whitespace. `scripts/check-flat.ts` guards the rest.
+ *
+ * The syntax colours are semantic, not decorative: `syn-number` is for numbers,
+ * `syn-string` for package names and quoted values, `syn-const` for refs, and
+ * `syn-comment` for metadata. Used that way the page reads like a source file.
+ * Every one clears WCAG AA on its own canvas.
+ */
+@theme {
+  --color-*: initial;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial;
+  --blur-*: initial;
+  --radius-*: initial;
+
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-error: var(--error);
+
+  --color-syn-keyword: var(--syn-keyword);
+  --color-syn-string: var(--syn-string);
+  --color-syn-number: var(--syn-number);
+  --color-syn-function: var(--syn-function);
+  --color-syn-const: var(--syn-const);
+  --color-syn-comment: var(--syn-comment);
+
+  --radius-none: 0;
+  --radius-sm: 2px;
+
+  --font-mono:
+    var(--font-plex-mono), var(--font-plex-hebrew), ui-monospace, monospace;
+  --font-sans:
+    var(--font-plex-sans), var(--font-plex-hebrew), ui-sans-serif, system-ui,
+    sans-serif;
+
+  --text-display: clamp(2.75rem, 6.5vw, 5rem);
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--font-weight: 600;
+
+  --text-h1: clamp(2.125rem, 4.25vw, 3.25rem);
+  --text-h1--line-height: 1.15;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h1--font-weight: 600;
+
+  --text-h2: clamp(1.625rem, 2.75vw, 2.25rem);
+  --text-h2--line-height: 1.25;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h2--font-weight: 600;
+
+  --text-h3: 1.3125rem;
+  --text-h3--line-height: 1.4;
+  --text-h3--font-weight: 600;
+
+  --text-body: 1.1875rem;
+  --text-body--line-height: 1.7;
+
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.45;
+  --text-label--letter-spacing: 0.06em;
+  --text-label--font-weight: 500;
+}
+
+/*
+ * Dracula. Two deliberate deviations, both for contrast:
+ *
+ * 1. The comment colour (#6272A4) is only 3.03:1 here — large-text only — and
+ *    it carries all the muted copy and metadata. Lifted along its own hue to
+ *    #C5CCE8 (8.94:1) so grey text reads clearly rather than washed out.
+ *
+ * 2. Numbers use Dracula's cyan (10.29:1) rather than its purple (5.90:1) —
+ *    the stat strip is the loudest thing on the home page and purple was the
+ *    weakest colour on it. Purple keeps a role, demoted to PR refs, where it is
+ *    small text and 5.90:1 still clears AA comfortably.
+ */
+/*
+ * `html.dark` (0,1,1) outranks the media query's `:root` (0,1,0), so an explicit
+ * dark choice beats a light OS regardless of source order. That lets each palette
+ * be declared exactly once instead of being duplicated into a separate override
+ * block, where the two copies would inevitably drift.
+ */
+:root,
+html.dark {
+  --canvas: #282a36;
+  --surface: #343746;
+  --ink: #f8f8f2;
+  --ink-muted: #c5cce8;
+  --rule: #44475a;
+  --accent: #ff79c6;
+  --accent-ink: #282a36;
+  --error: #ff5555;
+
+  --syn-keyword: #ff79c6;
+  --syn-string: #f1fa8c;
+  --syn-number: #8be9fd;
+  --syn-function: #50fa7b;
+  --syn-const: #bd93f9;
+  --syn-comment: #c5cce8;
+}
+
+/*
+ * Solarized Light.
+ *
+ * Its canonical accents are famously low-contrast — cyan, green and yellow all
+ * land under 3:1 on base3 and fail AA outright, which is exactly the washed-out
+ * look. Each is darkened along its own hue until it clears 4.5:1; the hue
+ * relationships are untouched, only the lightness. Body text is base02 (12:1),
+ * not base00 (4.1:1), for the same reason.
+ */
+@media (prefers-color-scheme: light) {
+  :root {
+    --canvas: #fdf6e3; /* base3 */
+    --surface: #eee8d5; /* base2 */
+    --ink: #073642; /* base02 — 12.05:1 */
+    --ink-muted: #4d6168; /* base01, darkened — 6.06:1 */
+    --rule: #ded7c1;
+    --accent: #cc2d7a; /* magenta, AA */
+    --accent-ink: #fdf6e3;
+    --error: #d72724;
+
+    --syn-keyword: #cc2d7a; /* magenta */
+    --syn-string: #8a6800; /* yellow */
+    --syn-number: #1f72ac; /* blue */
+    --syn-function: #687700; /* green */
+    --syn-const: #5f64bf; /* violet */
+    --syn-comment: #4d6168;
+  }
+}
+
+/* The light half of the same trick: html.light outranks the :root above. */
+html.light {
+  --canvas: #fdf6e3;
+  --surface: #eee8d5;
+  --ink: #073642;
+  --ink-muted: #4d6168;
+  --rule: #ded7c1;
+  --accent: #cc2d7a;
+  --accent-ink: #fdf6e3;
+  --error: #d72724;
+
+  --syn-keyword: #cc2d7a;
+  --syn-string: #8a6800;
+  --syn-number: #1f72ac;
+  --syn-function: #687700;
+  --syn-const: #5f64bf;
+  --syn-comment: #4d6168;
 }
 
 body {
-  background-color: #ffffff;
-  transition: background-color 0.2s ease;
+  background-color: var(--canvas);
+  color: var(--ink);
+  font-size: var(--text-body);
+  line-height: 1.7;
 }
 
-.dark body {
-  background-color: #121212;
+/* Headings are mono; prose is sans. That split is what makes it read as an
+   editor rather than a terminal cosplay. */
+:where(h1, h2, h3) {
+  font-family: var(--font-mono);
 }
 
-html {
-  scroll-behavior: smooth;
+.link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition:
+    text-decoration-thickness 100ms ease,
+    color 100ms ease;
 }
 
-/* Animated numbers using CSS @property and keyframes */
-@property --num {
-  syntax: '<integer>';
-  initial-value: 0;
-  inherits: false;
+.link:hover {
+  color: var(--accent);
+  text-decoration-thickness: 3px;
 }
 
-.number-animation {
-  --num: 0;
-  counter-reset: num var(--num);
-  font-variant-numeric: tabular-nums;
+:where(a, button, input, textarea, summary):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-.number-animation::after {
-  content: counter(num);
-}
-
-/* Keyframe animations for each target value */
-@keyframes counter-6 {
-  to {
-    --num: 6;
+/* Blinking caret for the hero typewriter. */
+@keyframes caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
   }
 }
 
-@keyframes counter-7 {
-  to {
-    --num: 7;
+.animate-caret {
+  animation: caret 1s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-caret {
+    animation: none;
+    opacity: 0;
   }
 }
 
-@keyframes counter-8 {
-  to {
-    --num: 8;
-  }
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
-@keyframes counter-9 {
-  to {
-    --num: 9;
-  }
-}
-
-@keyframes counter-10 {
-  to {
-    --num: 10;
-  }
-}
-
-@keyframes counter-24 {
-  to {
-    --num: 24;
-  }
-}
-
-@keyframes counter-36 {
-  to {
-    --num: 36;
-  }
-}
-
-@keyframes counter-1316 {
-  to {
-    --num: 1316;
-  }
-}
-
-/* Animation classes */
-.animate-6 {
-  animation: counter-6 1s ease-out forwards;
-}
-
-.animate-7 {
-  animation: counter-7 1s ease-out forwards;
-}
-
-.animate-8 {
-  animation: counter-8 1s ease-out forwards;
-}
-
-.animate-9 {
-  animation: counter-9 1s ease-out forwards;
-}
-
-.animate-10 {
-  animation: counter-10 1s ease-out forwards;
-}
-
-.animate-24 {
-  animation: counter-24 1.2s ease-out forwards;
-}
-
-.animate-36 {
-  animation: counter-36 1.4s ease-out forwards;
-}
-
-.animate-1316 {
-  animation: counter-1316 2s ease-out forwards;
-}
-
-/* RTL Support */
-[dir='rtl'] {
-  /* Flip directional transforms for RTL */
-  --direction-multiplier: -1;
-}
-
-[dir='ltr'] {
-  --direction-multiplier: 1;
-}
-
-/* Flip arrow icons in RTL */
-[dir='rtl'] .rtl-flip {
-  transform: scaleX(-1);
-}
-
-/* Adjust spacing for RTL using logical properties */
-[dir='rtl'] .rtl-space-flip {
-  direction: rtl;
+/* On an accent-filled surface the default selection would paint accent on
+   accent and vanish. Invert it there. */
+.bg-accent ::selection,
+.bg-accent::selection {
+  background: var(--accent-ink);
+  color: var(--accent);
 }

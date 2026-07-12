@@ -1,124 +1,194 @@
 [
   {
     "title": "Migrating a Large SCSS Codebase in a Monorepo To SASS ^1.80.0",
-    "pubDate": "2024-12-31 21:37:40",
-    "guid": "https://medium.com/p/ed7faec2a8b6",
+    "pubDate": "2024-12-31T21:37:40.633Z",
+    "guid": "https://medium.com/@jonakrusze/migrating-a-large-scss-codebase-in-a-monorepo-to-sass-1-80-0-ed7faec2a8b6",
     "link": "https://levelup.gitconnected.com/migrating-a-large-scss-codebase-in-a-monorepo-to-sass-1-80-0-ed7faec2a8b6?source=rss-9d104c42e755------2",
-    "categories": ["scss", "javascript", "sass", "monorepo", "react"],
+    "categories": [],
     "image": "/images/medium/ed7faec2a8b6.webp"
   },
   {
     "title": "Learn TypeScript One Snippet at a Time: 150+ Code Samples Across 11 Key Topics",
-    "pubDate": "2024-12-17 21:08:18",
-    "guid": "https://medium.com/p/ce6844f008ad",
+    "pubDate": "2024-12-17T21:08:18.530Z",
+    "guid": "https://medium.com/@jonakrusze/learn-typescript-one-snippet-at-a-time-150-code-samples-across-11-key-topics-ce6844f008ad",
     "link": "https://levelup.gitconnected.com/learn-typescript-one-snippet-at-a-time-150-code-samples-across-11-key-topics-ce6844f008ad?source=rss-9d104c42e755------2",
-    "categories": [
-      "react",
-      "typescript",
-      "web-development",
-      "programming",
-      "javascript"
-    ],
+    "categories": [],
     "image": "/images/medium/ce6844f008ad.webp"
   },
   {
     "title": "Building Features in React the Right Way: A Scalable Solution Case Study",
-    "pubDate": "2024-12-03 18:44:28",
-    "guid": "https://medium.com/p/b95a77853701",
+    "pubDate": "2024-12-03T18:44:28.420Z",
+    "guid": "https://medium.com/@jonakrusze/building-features-in-react-the-right-way-a-scalable-solution-case-study-b95a77853701",
     "link": "https://levelup.gitconnected.com/building-features-in-react-the-right-way-a-scalable-solution-case-study-b95a77853701?source=rss-9d104c42e755------2",
-    "categories": [
-      "user-experience",
-      "data-structures",
-      "software-development",
-      "javascript",
-      "react"
-    ],
+    "categories": [],
     "image": "/images/medium/b95a77853701.webp"
   },
   {
     "title": "Why Years of Experience Don’t Matter — How to Keep Your Skills Relevant in Tech",
-    "pubDate": "2024-11-14 21:23:29",
-    "guid": "https://medium.com/p/9dbb2dc4e86e",
+    "pubDate": "2024-11-14T21:23:29.333Z",
+    "guid": "https://medium.com/@jonakrusze/why-years-of-experience-dont-matter-how-to-keep-your-skills-relevant-in-tech-9dbb2dc4e86e",
     "link": "https://levelup.gitconnected.com/why-years-of-experience-dont-matter-how-to-keep-your-skills-relevant-in-tech-9dbb2dc4e86e?source=rss-9d104c42e755------2",
-    "categories": [
-      "tech",
-      "software-engineering",
-      "personal-growth",
-      "career-development",
-      "self-improvement"
-    ],
+    "categories": [],
     "image": "/images/medium/9dbb2dc4e86e.webp"
   },
   {
     "title": "Why Zero Tech Debt is a Myth (and Maybe a Red Flag)",
-    "pubDate": "2024-10-21 23:40:04",
-    "guid": "https://medium.com/p/4a83ebc66e60",
+    "pubDate": "2024-10-21T23:40:04.158Z",
+    "guid": "https://medium.com/@jonakrusze/why-zero-tech-debt-is-a-myth-and-maybe-a-red-flag-4a83ebc66e60",
     "link": "https://levelup.gitconnected.com/why-zero-tech-debt-is-a-myth-and-maybe-a-red-flag-4a83ebc66e60?source=rss-9d104c42e755------2",
-    "categories": [
-      "agile",
-      "software-development",
-      "productivity",
-      "tech-debt",
-      "coding"
-    ],
+    "categories": [],
     "image": "/images/medium/4a83ebc66e60.webp"
   },
   {
     "title": "Mastering TypeScript Migration in a Create React App Monorepo: A Practical Guide with CRACO",
-    "pubDate": "2024-10-08 16:38:48",
-    "guid": "https://medium.com/p/cad3de4acfa0",
+    "pubDate": "2024-10-08T16:38:48.400Z",
+    "guid": "https://medium.com/@jonakrusze/mastering-typescript-migration-in-a-create-react-app-monorepo-a-practical-guide-with-craco-cad3de4acfa0",
     "link": "https://levelup.gitconnected.com/mastering-typescript-migration-in-a-create-react-app-monorepo-a-practical-guide-with-craco-cad3de4acfa0?source=rss-9d104c42e755------2",
-    "categories": ["monorepo", "typescript", "babel", "react", "eslint"],
+    "categories": [],
     "image": "/images/medium/cad3de4acfa0.webp"
   },
   {
     "title": "React Tabs: Prevent Flickering When Highlighting with Bold Text",
-    "pubDate": "2024-09-23 01:08:16",
-    "guid": "https://medium.com/p/fa12d319cb18",
+    "pubDate": "2024-09-23T01:08:16.280Z",
+    "guid": "https://medium.com/@jonakrusze/react-tabs-prevent-flickering-when-highlighting-with-bold-text-fa12d319cb18",
     "link": "https://levelup.gitconnected.com/react-tabs-prevent-flickering-when-highlighting-with-bold-text-fa12d319cb18?source=rss-9d104c42e755------2",
-    "categories": ["reactjs", "ui-ux-design", "react", "radix", "tabs"],
+    "categories": [],
     "image": "/images/medium/fa12d319cb18.webp"
   },
   {
     "title": "My GitHub Administration Exam Certification Experience",
-    "pubDate": "2024-09-12 14:49:07",
-    "guid": "https://medium.com/p/65a999a008da",
+    "pubDate": "2024-09-12T14:49:07.093Z",
+    "guid": "https://medium.com/@jonakrusze/my-github-administration-exam-certification-experience-65a999a008da",
     "link": "https://levelup.gitconnected.com/my-github-administration-exam-certification-experience-65a999a008da?source=rss-9d104c42e755------2",
-    "categories": [
-      "administration",
-      "github-administration",
-      "github",
-      "certification",
-      "github-certification"
-    ],
+    "categories": [],
     "image": "/images/medium/65a999a008da.webp"
   },
   {
     "title": "5 Ways I Use AI in Front-End Development",
-    "pubDate": "2024-09-02 12:17:34",
-    "guid": "https://medium.com/p/ee3490516dd4",
+    "pubDate": "2024-09-02T12:17:34.226Z",
+    "guid": "https://medium.com/@jonakrusze/5-ways-i-use-ai-in-front-end-development-ee3490516dd4",
     "link": "https://javascript.plainenglish.io/5-ways-i-use-ai-in-front-end-development-ee3490516dd4?source=rss-9d104c42e755------2",
-    "categories": [
-      "ai",
-      "web-development",
-      "artificial-intelligence",
-      "javascript",
-      "front-end-development"
-    ],
+    "categories": [],
     "image": "/images/medium/ee3490516dd4.webp"
   },
   {
     "title": "Rebase Multiple GIT Branches Like a Pro: Creating Continuous PR Chains",
-    "pubDate": "2024-08-27 16:36:02",
-    "guid": "https://medium.com/p/22df25b5fe50",
+    "pubDate": "2024-08-27T16:36:02.663Z",
+    "guid": "https://medium.com/@jonakrusze/rebase-multiple-git-branches-like-a-pro-master-continuous-pr-chains-22df25b5fe50",
     "link": "https://levelup.gitconnected.com/rebase-multiple-git-branches-like-a-pro-master-continuous-pr-chains-22df25b5fe50?source=rss-9d104c42e755------2",
-    "categories": [
-      "pull-request",
-      "git",
-      "version-control",
-      "gitlab",
-      "github"
-    ],
+    "categories": [],
     "image": "/images/medium/22df25b5fe50.webp"
+  },
+  {
+    "title": "My GitHub Foundations Exam Certification Experience",
+    "pubDate": "2024-08-14T11:19:06.206Z",
+    "guid": "https://medium.com/@jonakrusze/my-github-foundations-exam-certification-experience-db23153d4d06",
+    "link": "https://medium.com/@jonakrusze/my-github-foundations-exam-certification-experience-db23153d4d06",
+    "categories": [],
+    "image": ""
+  },
+  {
+    "title": "My GitHub Advanced Security Exam Certification Experience",
+    "pubDate": "2024-08-14T11:19:01.071Z",
+    "guid": "https://medium.com/@jonakrusze/my-github-advanced-security-exam-certification-experience-94d93b79cd87",
+    "link": "https://medium.com/@jonakrusze/my-github-advanced-security-exam-certification-experience-94d93b79cd87",
+    "categories": [],
+    "image": ""
+  },
+  {
+    "title": "My GitHub Actions Exam Certification Experience",
+    "pubDate": "2024-08-14T11:18:57.417Z",
+    "guid": "https://medium.com/@jonakrusze/my-github-actions-exam-certification-experience-f7a977b43ced",
+    "link": "https://medium.com/@jonakrusze/my-github-actions-exam-certification-experience-f7a977b43ced",
+    "categories": [],
+    "image": ""
+  },
+  {
+    "title": "JavaScript Tricks to Write Cleaner, More Maintainable Code",
+    "pubDate": "2024-07-30T15:01:07.890Z",
+    "guid": "https://medium.com/@jonakrusze/javascript-tricks-to-write-cleaner-more-maintainable-code-02b148c71c10",
+    "link": "https://medium.com/@jonakrusze/javascript-tricks-to-write-cleaner-more-maintainable-code-02b148c71c10",
+    "categories": [],
+    "image": ""
+  },
+  {
+    "title": "Deploying a Vite React TypeScript app to Github Pages using GitHub Actions, Jest, and pnpm— As a…",
+    "pubDate": "2024-07-14T17:24:02.568Z",
+    "guid": "https://medium.com/@jonakrusze/deploying-a-vite-react-typescript-app-to-github-pages-using-github-actions-jest-and-pnpm-as-a-a3461ef9c4ad",
+    "link": "https://medium.com/@jonakrusze/deploying-a-vite-react-typescript-app-to-github-pages-using-github-actions-jest-and-pnpm-as-a-a3461ef9c4ad",
+    "categories": [],
+    "image": ""
+  },
+  {
+    "title": "How to Add the Ticket Number to Each Commit with a Git Prepare-Commit Hook in Azure",
+    "pubDate": "2024-06-18T20:01:15.411Z",
+    "guid": "https://medium.com/@jonakrusze/how-to-add-the-ticket-number-to-each-commit-with-a-git-prepare-commit-hook-in-azure-ff33b56f759b",
+    "link": "https://medium.com/@jonakrusze/how-to-add-the-ticket-number-to-each-commit-with-a-git-prepare-commit-hook-in-azure-ff33b56f759b",
+    "categories": [],
+    "image": ""
+  },
+  {
+    "title": "Creating a Performant React Form Wizard with Dynamic Steps: A Comprehensive Guide",
+    "pubDate": "2024-05-26T17:29:31.944Z",
+    "guid": "https://medium.com/@jonakrusze/creating-a-performant-react-form-wizard-with-stepped-navigation-a-comprehensive-guide-22c0981d2a34",
+    "link": "https://medium.com/@jonakrusze/creating-a-performant-react-form-wizard-with-stepped-navigation-a-comprehensive-guide-22c0981d2a34",
+    "categories": [],
+    "image": ""
+  },
+  {
+    "title": "Testing useContext() with React Testing Library",
+    "pubDate": "2024-05-26T17:28:58.082Z",
+    "guid": "https://medium.com/@jonakrusze/testing-usecontext-with-react-testing-library-8b959f35257b",
+    "link": "https://medium.com/@jonakrusze/testing-usecontext-with-react-testing-library-8b959f35257b",
+    "categories": [],
+    "image": ""
+  },
+  {
+    "title": "Creating a Localized Currency Input in React without Libraries (or bugs)",
+    "pubDate": "2024-05-11T19:44:45.509Z",
+    "guid": "https://medium.com/@jonakrusze/creating-a-localized-currency-input-in-react-without-libraries-or-bugs-2f186124aedc",
+    "link": "https://medium.com/@jonakrusze/creating-a-localized-currency-input-in-react-without-libraries-or-bugs-2f186124aedc",
+    "categories": [],
+    "image": ""
+  },
+  {
+    "title": "Mastering MongoDB Associate Data Modeler Exam: The Ultimate Guide",
+    "pubDate": "2024-04-23T08:13:00.190Z",
+    "guid": "https://medium.com/@jonakrusze/mastering-mongodb-associate-data-modeling-exam-the-ultimate-guide-cbbe23501eff",
+    "link": "https://medium.com/@jonakrusze/mastering-mongodb-associate-data-modeling-exam-the-ultimate-guide-cbbe23501eff",
+    "categories": [],
+    "image": ""
+  },
+  {
+    "title": "Interview Insights for Entry-level Developers — Part IV: The Moon Grabbers manifesto and how to…",
+    "pubDate": "2024-04-14T15:08:48.363Z",
+    "guid": "https://medium.com/@jonakrusze/interview-insights-for-entry-level-developers-part-iv-the-moon-grabbers-manifesto-and-how-to-cf70a267bf80",
+    "link": "https://medium.com/@jonakrusze/interview-insights-for-entry-level-developers-part-iv-the-moon-grabbers-manifesto-and-how-to-cf70a267bf80",
+    "categories": [],
+    "image": ""
+  },
+  {
+    "title": "Interview Insights for Entry-level Developers — Part III: Communication Strategies",
+    "pubDate": "2024-03-26T20:32:53.373Z",
+    "guid": "https://medium.com/@jonakrusze/interview-insights-for-entry-level-developers-part-iii-communication-strategies-b42eee28fad2",
+    "link": "https://medium.com/@jonakrusze/interview-insights-for-entry-level-developers-part-iii-communication-strategies-b42eee28fad2",
+    "categories": [],
+    "image": ""
+  },
+  {
+    "title": "Interview Insights for Entry-level Developers — Part II: Four Hacks for Acing a Good First…",
+    "pubDate": "2024-03-07T06:59:53.044Z",
+    "guid": "https://medium.com/@jonakrusze/interview-insights-for-entry-level-developers-part-ii-four-hacks-for-acing-a-good-first-35240b5ac927",
+    "link": "https://medium.com/@jonakrusze/interview-insights-for-entry-level-developers-part-ii-four-hacks-for-acing-a-good-first-35240b5ac927",
+    "categories": [],
+    "image": ""
+  },
+  {
+    "title": "Interview Insights for Entry-level Developers — Part I",
+    "pubDate": "2024-02-15T15:13:33.817Z",
+    "guid": "https://medium.com/@jonakrusze/interview-insights-for-entry-level-developers-part-i-27a1acb77a68",
+    "link": "https://medium.com/@jonakrusze/interview-insights-for-entry-level-developers-part-i-27a1acb77a68",
+    "categories": [],
+    "image": ""
   }
 ]

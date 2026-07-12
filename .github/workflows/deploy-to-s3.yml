@@ -83,6 +83,16 @@ jobs:
           distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
           policy-name: jonykru-version-header
 
+      # No continue-on-error: without this, every sub-route (/blog,
+      # /open-source, /certifications, /contact) returns 403/404 in production
+      # while working perfectly in next dev. A silent skip here ships a broken
+      # site, so a failure must fail the deploy.
+      - name: Deploy CloudFront rewrite function
+        uses: ./.github/actions/deploy-cloudfront-function
+        with:
+          distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          function-name: jonykru-rewrite
+
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"

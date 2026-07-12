@@ -8,6 +8,9 @@ const eslintIgnore = [
     ".git/",
     ".next/",
     "out/",
+    // CloudFront Functions run on a restricted JS runtime at the edge, not in
+    // the app bundle — the handler is invoked by CloudFront, never imported.
+    "infra/",
     "node_modules/",
     "dist/",
     "build/",

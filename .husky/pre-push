@@ -1,0 +1,22 @@
+#!/bin/sh
+# Run the same checks as the CI deploy pipeline (.github/workflows/deploy-to-s3.yml)
+# locally before pushing, so a branch can't pass here but fail in CI.
+# Set SKIP_CHECKS=true to bypass (e.g. WIP pushes): SKIP_CHECKS=true git push
+if [ "$SKIP_CHECKS" = "true" ]; then
+  echo "⏭️  SKIP_CHECKS=true — skipping pipeline checks"
+  exit 0
+fi
+
+echo "🧪 Running tests with coverage (pnpm test:coverage)..."
+if ! pnpm test:coverage; then
+  echo "❌ Tests failed — push aborted. Use SKIP_CHECKS=true git push to bypass."
+  exit 1
+fi
+
+echo "🏗️  Building app (pnpm build)..."
+if ! pnpm build; then
+  echo "❌ Build failed — push aborted. Use SKIP_CHECKS=true git push to bypass."
+  exit 1
+fi
+
+echo "✅ Pipeline checks passed."
