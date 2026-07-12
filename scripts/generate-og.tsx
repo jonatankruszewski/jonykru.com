@@ -29,23 +29,31 @@ export type OgCard = {
 }
 
 export const OG_CARDS: OgCard[] = [
-  { slug: 'home', eyebrow: 'AI Dev', title: 'I build AI systems that ship.' },
+  {
+    slug: 'home',
+    eyebrow: 'Software Engineer · AI',
+    title: 'I build AI systems that ship.'
+  },
   {
     slug: 'open-source',
     eyebrow: 'Open Source',
-    title: "I ship code in other people's repos."
+    title: "Good code doesn't mind an audience."
   },
   {
     slug: 'certifications',
     eyebrow: 'Certifications',
-    title: 'Externally validated across cloud, data and AI.'
+    title: '33 exams. Someone else did the grading.'
   },
   {
     slug: 'blog',
-    eyebrow: 'Writing',
-    title: 'Architecture, migrations, and the cost of tech debt.'
+    eyebrow: 'Blog Posts',
+    title: 'I learn it twice — building, then explaining.'
   },
-  { slug: 'contact', eyebrow: 'Contact', title: "Tell me what's stuck." }
+  {
+    slug: 'contact',
+    eyebrow: 'Contact',
+    title: "Tell me what you're building."
+  }
 ]
 
 const card = ({ eyebrow, title }: OgCard) => (

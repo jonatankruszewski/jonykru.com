@@ -4,7 +4,7 @@ import CertificationsView from '@/views/CertificationsView'
 export const metadata: Metadata = {
   title: 'Certifications',
   description:
-    'Externally validated across AWS, Microsoft Azure, Google Cloud, GitHub, MongoDB, the Python Institute and Scrum.org.',
+    '33 exams graded by someone other than me — thirteen from Scrum.org, plus AWS, Microsoft Azure, Google Cloud, GitHub, GitLab, MongoDB and the Python Institute.',
   alternates: { canonical: '/certifications' },
   openGraph: { url: '/certifications', images: ['/og/certifications.png'] },
   twitter: { card: 'summary_large_image', images: ['/og/certifications.png'] }
