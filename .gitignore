@@ -57,3 +57,6 @@ public/og/
 # Medium data export (personal archive, not site source)
 medium-export/
 medium-export-*.zip
+
+# Palette reference screenshot
+colorreference.png

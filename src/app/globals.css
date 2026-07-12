@@ -4,8 +4,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Flat, high-contrast, IDE-native. The palette is JetBrains' New UI — Darcula
- * for dark (the default), IntelliJ Light for light.
+ * Flat, high-contrast, IDE-native. The palette is Dracula for dark (the
+ * default) and Alucard — Dracula's official light theme — for light.
  *
  * Two rules this file enforces mechanically rather than by convention:
  *
@@ -85,45 +85,48 @@
   --text-label--font-weight: 500;
 }
 
-/* IntelliJ Light */
+/* Alucard — Dracula's official light theme. */
 :root {
-  --canvas: #ffffff;
-  --surface: #f7f8fa;
-  --ink: #000000;
-  --ink-muted: #6c707e;
-  --rule: #ebecf0;
-  --accent: #0033b3;
-  --accent-ink: #ffffff;
-  --error: #e01b24;
+  --canvas: #fffbeb;
+  --surface: #f5f1df;
+  --ink: #1f1f1f;
+  --ink-muted: #6c664b;
+  --rule: #e5e1cd;
+  --accent: #a3144d;
+  --accent-ink: #fffbeb;
+  --error: #cb3a2a;
 
-  --syn-keyword: #0033b3;
-  --syn-string: #067d17;
-  --syn-number: #1750eb;
-  --syn-function: #00627a;
-  --syn-const: #871094;
-  --syn-comment: #8c8c8c;
+  --syn-keyword: #a3144d;
+  --syn-string: #846e15;
+  --syn-number: #644ac9;
+  --syn-function: #14710a;
+  --syn-const: #036a96;
+  --syn-comment: #6c664b;
 }
 
-/* Darcula / JetBrains New UI Dark — the default (see themeContext). */
+/* Dracula — the default (see themeContext). */
 .dark {
-  --canvas: #1e1f22;
-  --surface: #2b2d30;
-  --ink: #dfe1e5;
-  --ink-muted: #9da0a8;
-  --rule: #393b40;
-  /* The brighter blue, with dark text on it: JetBrains' action blue (#3574F0)
-     only reaches 4.28:1 behind white, which fails AA for the small mono
-     button labels. This clears 6.53:1. */
-  --accent: #56a8f5;
-  --accent-ink: #1e1f22;
-  --error: #f75464;
+  --canvas: #282a36;
+  --surface: #343746;
+  --ink: #f8f8f2;
+  /*
+   * Dracula's comment colour (#6272A4) is only 3.03:1 on this background —
+   * large-text only. It carries the small metadata here (dates, eyebrows,
+   * issuers), so it is lightened 25% along its own hue to reach 4.80:1.
+   * The one deviation from the palette, and it is an accessibility one.
+   */
+  --ink-muted: #8995bb;
+  --rule: #44475a;
+  --accent: #ff79c6;
+  --accent-ink: #282a36;
+  --error: #ff5555;
 
-  --syn-keyword: #cf8e6d;
-  --syn-string: #6aab73;
-  --syn-number: #2aacb8;
-  --syn-function: #56a8f5;
-  --syn-const: #c77dbb;
-  --syn-comment: #7a7e85;
+  --syn-keyword: #ff79c6;
+  --syn-string: #f1fa8c;
+  --syn-number: #bd93f9;
+  --syn-function: #50fa7b;
+  --syn-const: #8be9fd;
+  --syn-comment: #8995bb;
 }
 
 body {

@@ -17,10 +17,10 @@ import path from 'node:path'
 
 const OUT_DIR = path.join(process.cwd(), 'public/og')
 
-const CANVAS = '#1E1F22'
-const INK = '#DFE1E5'
-const MUTED = '#7A7E85'
-const ACCENT = '#56A8F5'
+const CANVAS = '#282A36'
+const INK = '#F8F8F2'
+const MUTED = '#8995BB'
+const ACCENT = '#FF79C6'
 
 export type OgCard = {
   slug: string
