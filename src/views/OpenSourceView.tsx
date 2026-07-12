@@ -53,7 +53,7 @@ const OpenSourceView = () => {
           title={t('oss.contributedTitle')}
           lede={t('oss.contributedBody')}
         />
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           {contributed().map((project) => (
             <RepoCard key={project.slug} project={project} />
           ))}
