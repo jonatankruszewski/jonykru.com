@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import '../styles/imageLoading.css';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -110,7 +109,14 @@
  *    weakest colour on it. Purple keeps a role, demoted to PR refs, where it is
  *    small text and 5.90:1 still clears AA comfortably.
  */
-:root {
+/*
+ * `html.dark` (0,1,1) outranks the media query's `:root` (0,1,0), so an explicit
+ * dark choice beats a light OS regardless of source order. That lets each palette
+ * be declared exactly once instead of being duplicated into a separate override
+ * block, where the two copies would inevitably drift.
+ */
+:root,
+html.dark {
   --canvas: #282a36;
   --surface: #343746;
   --ink: #f8f8f2;
@@ -157,13 +163,8 @@
   }
 }
 
-/*
- * Explicit overrides written by the theme toggle. These MUST come after the
- * media query above: `.dark` and `:root` have the same specificity, so if the
- * media query's `:root` were declared later it would beat an explicit `.dark`
- * for a user on a light OS.
- */
-.light {
+/* The light half of the same trick: html.light outranks the :root above. */
+html.light {
   --canvas: #fdf6e3;
   --surface: #eee8d5;
   --ink: #073642;
@@ -179,24 +180,6 @@
   --syn-function: #687700;
   --syn-const: #5f64bf;
   --syn-comment: #4d6168;
-}
-
-.dark {
-  --canvas: #282a36;
-  --surface: #343746;
-  --ink: #f8f8f2;
-  --ink-muted: #c5cce8;
-  --rule: #44475a;
-  --accent: #ff79c6;
-  --accent-ink: #282a36;
-  --error: #ff5555;
-
-  --syn-keyword: #ff79c6;
-  --syn-string: #f1fa8c;
-  --syn-number: #8be9fd;
-  --syn-function: #50fa7b;
-  --syn-const: #bd93f9;
-  --syn-comment: #c5cce8;
 }
 
 body {

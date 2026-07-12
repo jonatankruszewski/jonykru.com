@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import WritingView from '@/views/WritingView'
+import BlogView from '@/views/BlogView'
 
 export const metadata: Metadata = {
   title: 'Writing',
@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 }
 
 export default function WritingPage() {
-  return <WritingView />
+  return <BlogView />
 }

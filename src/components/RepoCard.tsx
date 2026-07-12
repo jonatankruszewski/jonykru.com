@@ -2,7 +2,8 @@
 
 import { ArrowUpRight, Star } from 'lucide-react'
 import { useI18n } from '@/context/i18nContext'
-import { OssProject, starsFor } from '@/data/openSource'
+import { starsFor } from '@/lib/openSource'
+import type { OssProject } from '@/types/openSource.types'
 
 type RepoCardProps = {
   project: OssProject

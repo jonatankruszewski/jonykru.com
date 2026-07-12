@@ -1,11 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import {
-  authored,
-  contributed,
-  featured,
-  OSS_PROJECTS,
-  starsFor
-} from '@/data/openSource'
+import { OSS_PROJECTS } from '@/data/openSource'
+import { authored, contributed, featured, starsFor } from '@/lib/openSource'
 
 describe('OSS_PROJECTS', () => {
   it('has no duplicate slugs', () => {

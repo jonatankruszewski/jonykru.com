@@ -1,42 +1,13 @@
 import starCounts from '@/data/starCounts.json'
-
-export type OssRole = 'author' | 'contributor'
+import type { OssProject } from '@/types/openSource.types'
 
 /**
- * 'merged' — landed in the upstream repo.
- * 'open'   — proposed but not accepted. Anyone can click through and see this,
- *            so it must never be rendered as though it shipped.
+ * The open-source record. Data only — the functions that query it live in
+ * src/lib/openSource.ts.
+ *
+ * Every entry is verified against GitHub and npm. Contribution status is
+ * modelled explicitly so an open PR can never be rendered as merged.
  */
-export type ContributionStatus = 'merged' | 'open'
-
-export type Contribution = {
-  ref: string
-  url: string
-  titleKey: string
-  status: ContributionStatus
-}
-
-/** A published npm package. Private workspace tooling is deliberately excluded. */
-export type OssPackage = {
-  name: string
-  url: string
-}
-
-export type OssProject = {
-  slug: string
-  name: string
-  repo: string
-  url: string
-  role: OssRole
-  language?: string
-  npm?: string
-  blurbKey: string
-  featured?: boolean
-  /** Authored projects are monorepos; these are the packages they ship. */
-  packages?: OssPackage[]
-  contributions?: Contribution[]
-}
-
 const npmUrl = (name: string) => `https://www.npmjs.com/package/${name}`
 
 export const OSS_PROJECTS: OssProject[] = [
@@ -139,20 +110,5 @@ export const OSS_PROJECTS: OssProject[] = [
   }
 ]
 
-const STARS: Record<string, number> = starCounts
-
-/** Star count for a repo, refreshed by `pnpm update-oss`. Undefined if unknown. */
-export const starsFor = (repo: string): number | undefined => STARS[repo]
-
-export const authored = (projects = OSS_PROJECTS): OssProject[] =>
-  projects.filter((p) => p.role === 'author')
-
-export const contributed = (projects = OSS_PROJECTS): OssProject[] =>
-  projects.filter((p) => p.role === 'contributor')
-
-export const featured = (projects = OSS_PROJECTS): OssProject[] =>
-  projects.filter((p) => p.featured)
-
-/** Published packages across the authored monorepos. Private tooling excluded. */
-export const publishedPackages = (projects = OSS_PROJECTS): OssPackage[] =>
-  projects.flatMap((p) => p.packages ?? [])
+/** Refreshed by `pnpm update-oss` rather than hand-typed into a component. */
+export const STAR_COUNTS: Record<string, number> = starCounts

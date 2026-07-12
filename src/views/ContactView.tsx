@@ -3,6 +3,7 @@
 import { ArrowUpRight } from 'lucide-react'
 import ContactForm from '@/components/ContactForm'
 import CtaButton from '@/components/ui/CtaButton'
+import PageHero from '@/components/ui/PageHero'
 import { useI18n } from '@/context/i18nContext'
 import { BOOK_A_CALL_URL, SOCIALS } from '@/data/site'
 
@@ -17,15 +18,11 @@ const ContactView = () => {
   const { t } = useI18n()
 
   return (
-    <section className="mx-auto max-w-6xl px-6 pt-24 pb-32 md:pt-32">
-      <p className="font-mono text-label uppercase tracking-label text-ink-muted">
-        {t('contact.title')}
-      </p>
-      <h1 className="text-h1 text-ink mt-6 max-w-3xl text-balance">
-        {t('contact.title')}
-      </h1>
-      <p className="mt-6 max-w-xl text-ink-muted">{t('contact.lede')}</p>
-
+    <PageHero
+      eyebrow={t('contact.title')}
+      title={t('contact.title')}
+      lede={t('contact.lede')}
+    >
       {/* The call is the primary path; the form is the fallback under it. */}
       <div className="mt-10">
         <CtaButton href={BOOK_A_CALL_URL} external>
@@ -61,7 +58,7 @@ const ContactView = () => {
           </ul>
         </div>
       </div>
-    </section>
+    </PageHero>
   )
 }
 

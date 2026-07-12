@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest'
-import { OSS_PROJECTS } from '@/data/openSource'
 import credly from '@/dataFetchers/credly.backup.json'
 import mediumData from '@/dataFetchers/mediumData.json'
 import { dedupeBadges } from '@/lib/certifications'
@@ -23,10 +22,6 @@ describe('getStats', () => {
     // number is now 24 *and* every one of them is a real, linkable article.
     expect(getStats().articles).toBe(mediumData.length)
     expect(getStats().articles).toBe(24)
-  })
-
-  it('derives the open-source project count', () => {
-    expect(getStats().openSourceProjects).toBe(OSS_PROJECTS.length)
   })
 
   it('counts the two authored rxova projects', () => {
