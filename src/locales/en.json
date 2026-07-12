@@ -2,7 +2,7 @@
   "nav": {
     "home": "Home",
     "openSource": "Open Source",
-    "writing": "Writing",
+    "writing": "Blog Posts",
     "certifications": "Certifications",
     "contact": "Contact",
     "menu": "Menu",
@@ -22,11 +22,18 @@
     "ossTeaserTitle": "Open source is the receipt.",
     "ossTeaserBody": "Two projects of my own across five published packages, plus merged fixes in other people's codebases — including Pane, a manager for running AI coding agents in parallel.",
     "ossTeaserCta": "All open source",
-    "writingTitle": "Writing",
+    "writingTitle": "Blog Posts",
     "writingBody": "Long-form on architecture, migrations and the cost of tech debt.",
-    "writingCta": "All writing",
+    "writingCta": "All blog posts",
     "closingTitle": "Got something that needs shipping?",
-    "closingBody": "Tell me what's stuck. 20 minutes, no pitch."
+    "closingBody": "Tell me what's stuck. 20 minutes, no pitch.",
+    "headlinePhrases": [
+      "I build AI systems that ship.",
+      "I take demos to production.",
+      "I make agents do real work.",
+      "I own it end to end: frontend, backend, CI.",
+      "I automate the parts nobody wants to."
+    ]
   },
   "capabilities": {
     "ai": {
@@ -48,7 +55,7 @@
   },
   "stats": {
     "certifications": "certifications",
-    "articles": "published articles",
+    "articles": "blog posts",
     "openSourceProjects": "open-source projects",
     "yearsOfExperience": "years shipping",
     "publishedPackages": "packages published",
@@ -92,7 +99,7 @@
     "packagesLabel": "Packages"
   },
   "writing": {
-    "title": "Writing",
+    "title": "Blog Posts",
     "lede": "Technical essays on Medium — architecture, migrations, TypeScript and why zero tech debt is a myth.",
     "feedNote": "The 10 most recent, straight from the feed.",
     "readArticle": "Read",

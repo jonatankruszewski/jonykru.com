@@ -57,51 +57,57 @@
     var(--font-plex-sans), var(--font-plex-hebrew), ui-sans-serif, system-ui,
     sans-serif;
 
-  --text-display: clamp(2.25rem, 5.5vw, 4.25rem);
-  --text-display--line-height: 1.05;
+  --text-display: clamp(2.75rem, 6.5vw, 5rem);
+  --text-display--line-height: 1.08;
   --text-display--letter-spacing: -0.03em;
   --text-display--font-weight: 600;
 
-  --text-h1: clamp(1.75rem, 3.5vw, 2.75rem);
-  --text-h1--line-height: 1.1;
+  --text-h1: clamp(2.125rem, 4.25vw, 3.25rem);
+  --text-h1--line-height: 1.15;
   --text-h1--letter-spacing: -0.02em;
   --text-h1--font-weight: 600;
 
-  --text-h2: clamp(1.375rem, 2.25vw, 1.875rem);
-  --text-h2--line-height: 1.2;
+  --text-h2: clamp(1.625rem, 2.75vw, 2.25rem);
+  --text-h2--line-height: 1.25;
   --text-h2--letter-spacing: -0.01em;
   --text-h2--font-weight: 600;
 
-  --text-h3: 1.125rem;
-  --text-h3--line-height: 1.35;
+  --text-h3: 1.3125rem;
+  --text-h3--line-height: 1.4;
   --text-h3--font-weight: 600;
 
-  --text-body: 1.0625rem;
-  --text-body--line-height: 1.65;
+  --text-body: 1.1875rem;
+  --text-body--line-height: 1.7;
 
-  --text-label: 0.75rem;
-  --text-label--line-height: 1.4;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.45;
   --text-label--letter-spacing: 0.06em;
   --text-label--font-weight: 500;
 }
 
-/* Alucard — Dracula's official light theme. */
+/*
+ * Solarized Light. Its canonical accents are famously low-contrast — cyan,
+ * green and yellow all land under 3:1 on base3 and fail AA outright, which is
+ * exactly the "washed out" look. Each is darkened along its own hue until it
+ * clears 4.5:1; the hue relationships are untouched, only the lightness.
+ * Body text is base02 (12:1), not base00 (4.1:1), for the same reason.
+ */
 :root {
-  --canvas: #fffbeb;
-  --surface: #f5f1df;
-  --ink: #1f1f1f;
-  --ink-muted: #6c664b;
-  --rule: #e5e1cd;
-  --accent: #a3144d;
-  --accent-ink: #fffbeb;
-  --error: #cb3a2a;
+  --canvas: #fdf6e3; /* base3 */
+  --surface: #eee8d5; /* base2 */
+  --ink: #073642; /* base02 — 12.05:1 */
+  --ink-muted: #4d6168; /* base01, darkened — 6.06:1 */
+  --rule: #ded7c1;
+  --accent: #cc2d7a; /* magenta, AA */
+  --accent-ink: #fdf6e3;
+  --error: #d72724;
 
-  --syn-keyword: #a3144d;
-  --syn-string: #846e15;
-  --syn-number: #644ac9;
-  --syn-function: #14710a;
-  --syn-const: #036a96;
-  --syn-comment: #6c664b;
+  --syn-keyword: #cc2d7a; /* magenta */
+  --syn-string: #8a6800; /* yellow */
+  --syn-number: #5f64bf; /* violet */
+  --syn-function: #687700; /* green */
+  --syn-const: #1f72ac; /* blue */
+  --syn-comment: #4d6168;
 }
 
 /* Dracula — the default (see themeContext). */
@@ -110,12 +116,11 @@
   --surface: #343746;
   --ink: #f8f8f2;
   /*
-   * Dracula's comment colour (#6272A4) is only 3.03:1 on this background —
-   * large-text only. It carries the small metadata here (dates, eyebrows,
-   * issuers), so it is lightened 25% along its own hue to reach 4.80:1.
-   * The one deviation from the palette, and it is an accessibility one.
+   * Dracula's comment colour (#6272A4) is only 3.03:1 here — large-text only,
+   * and it carries the small metadata (dates, eyebrows, issuers). Lifted along
+   * its own hue to 6.87:1 so it reads as muted rather than washed out.
    */
-  --ink-muted: #8995bb;
+  --ink-muted: #a9b3d9;
   --rule: #44475a;
   --accent: #ff79c6;
   --accent-ink: #282a36;
@@ -126,15 +131,14 @@
   --syn-number: #bd93f9;
   --syn-function: #50fa7b;
   --syn-const: #8be9fd;
-  --syn-comment: #8995bb;
+  --syn-comment: #a9b3d9;
 }
 
 body {
   background-color: var(--canvas);
   color: var(--ink);
   font-size: var(--text-body);
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
+  line-height: 1.7;
 }
 
 /* Headings are mono; prose is sans. That split is what makes it read as an
@@ -162,6 +166,29 @@ body {
 :where(a, button, input, textarea, summary):focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* Blinking caret for the hero typewriter. */
+@keyframes caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-caret {
+  animation: caret 1s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-caret {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 ::selection {

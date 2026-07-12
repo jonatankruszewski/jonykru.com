@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
+import Script from 'next/script'
 import { ReactNode } from 'react'
 import { FontPlexHebrew, FontPlexMono, FontPlexSans } from '@/app/fonts'
 import RTLHandler from '@/components/RTLHandler'
@@ -36,28 +37,20 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', images: ['/og/home.png'] }
 }
 
-// Runs before paint so the theme class is on <html> for the first frame.
-// Without it the site flashes the wrong canvas on every load.
-const THEME_SCRIPT = `
-try {
-  var t = localStorage.getItem('theme');
-  if (t !== 'light' && t !== 'dark') {
-    t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-  }
-  document.documentElement.classList.toggle('dark', t === 'dark');
-} catch (e) {}
-`
-
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
       dir="ltr"
-      className={`${FontPlexMono.variable} ${FontPlexSans.variable} ${FontPlexHebrew.variable}`}
+      // Dark-first, so the markup ships with the class already on. public/theme.js
+      // then corrects it before paint for anyone who prefers or saved light.
+      className={`dark ${FontPlexMono.variable} ${FontPlexSans.variable} ${FontPlexHebrew.variable}`}
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        {/* Applies the saved theme before first paint. A real file rather than an
+            inline string, so the app carries no dangerouslySetInnerHTML. */}
+        <Script src="/theme.js" strategy="beforeInteractive" />
       </head>
       <body className="bg-canvas text-ink font-sans">
         <ThemeProvider>

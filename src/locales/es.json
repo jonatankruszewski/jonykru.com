@@ -2,7 +2,7 @@
   "nav": {
     "home": "Inicio",
     "openSource": "Open Source",
-    "writing": "Artículos",
+    "writing": "Blog",
     "certifications": "Certificaciones",
     "contact": "Contacto",
     "menu": "Menú",
@@ -22,11 +22,18 @@
     "ossTeaserTitle": "El open source es la prueba.",
     "ossTeaserBody": "Dos proyectos propios en cinco paquetes publicados, más arreglos mergeados en código ajeno — incluido Pane, un gestor para correr agentes de código de IA en paralelo.",
     "ossTeaserCta": "Todo el open source",
-    "writingTitle": "Artículos",
+    "writingTitle": "Blog",
     "writingBody": "Ensayos sobre arquitectura, migraciones y el costo real de la deuda técnica.",
-    "writingCta": "Todos los artículos",
+    "writingCta": "Todas las entradas",
     "closingTitle": "¿Tenés algo que necesita salir a producción?",
-    "closingBody": "Contame qué está trabado. 20 minutos, sin venta."
+    "closingBody": "Contame qué está trabado. 20 minutos, sin venta.",
+    "headlinePhrases": [
+      "Construyo sistemas de IA que llegan a producción.",
+      "Llevo las demos hasta producción.",
+      "Hago que los agentes hagan trabajo real.",
+      "Me hago cargo de punta a punta: frontend, backend, CI.",
+      "Automatizo lo que nadie quiere hacer."
+    ]
   },
   "capabilities": {
     "ai": {
@@ -48,7 +55,7 @@
   },
   "stats": {
     "certifications": "certificaciones",
-    "articles": "artículos publicados",
+    "articles": "entradas de blog",
     "openSourceProjects": "proyectos open source",
     "yearsOfExperience": "años en producción",
     "publishedPackages": "paquetes publicados",
@@ -92,7 +99,7 @@
     "packagesLabel": "Paquetes"
   },
   "writing": {
-    "title": "Artículos",
+    "title": "Blog",
     "lede": "Ensayos técnicos en Medium: arquitectura, migraciones, TypeScript y por qué la deuda técnica cero es un mito.",
     "feedNote": "Los 10 más recientes, directo del feed.",
     "readArticle": "Leer",

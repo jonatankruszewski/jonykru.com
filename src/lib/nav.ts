@@ -19,7 +19,7 @@ export const ROUTES: Route[] = [
     priority: 0.9
   },
   {
-    href: '/writing',
+    href: '/blog',
     labelKey: 'nav.writing',
     indexable: true,
     priority: 0.8
@@ -42,8 +42,8 @@ const normalize = (pathname: string): string => {
 }
 
 /**
- * `trailingSlash: true` means usePathname() reports "/writing/", while hrefs are
- * authored as "/writing" — compare both ends normalized or nothing ever matches.
+ * `trailingSlash: true` means usePathname() reports "/blog/", while hrefs are
+ * authored as "/blog" — compare both ends normalized or nothing ever matches.
  */
 export const isActiveRoute = (pathname: string, href: string): boolean =>
   normalize(pathname) === normalize(href)

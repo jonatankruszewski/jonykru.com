@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import ArticleRow from '@/components/ArticleRow'
 import RepoCard from '@/components/RepoCard'
+import Typewriter from '@/components/Typewriter'
 import CtaBand from '@/components/ui/CtaBand'
 import CtaButton from '@/components/ui/CtaButton'
 import SectionHeader from '@/components/ui/SectionHeader'
@@ -18,7 +19,7 @@ import type { MediumFlatData } from '@/types/medium.types'
 const CAPABILITIES = ['ai', 'frontend', 'backend', 'automation'] as const
 
 const HomeView = () => {
-  const { t } = useI18n()
+  const { t, tList } = useI18n()
   const stats = getStats()
   const articles = latest(mediumData as MediumFlatData[], 3)
 
@@ -37,11 +38,13 @@ const HomeView = () => {
           {t('home.eyebrow')}
         </p>
 
-        <h1 className="text-display text-ink mt-6 max-w-4xl text-balance">
-          {t('home.headline')}
+        {/* min-height reserves the tallest phrase so the CTAs below don't jump
+            as the line types and erases. */}
+        <h1 className="text-display text-ink mt-6 max-w-4xl min-h-[2.2em]">
+          <Typewriter phrases={tList('home.headlinePhrases')} />
         </h1>
 
-        <p className="mt-8 max-w-xl text-ink-muted">{t('home.lede')}</p>
+        <p className="mt-8 max-w-2xl text-ink-muted">{t('home.lede')}</p>
 
         <div className="mt-10 flex flex-wrap gap-4">
           <CtaButton href={BOOK_A_CALL_URL} external>
@@ -120,7 +123,7 @@ const HomeView = () => {
           lede={t('home.writingBody')}
           action={
             <Link
-              href="/writing"
+              href="/blog"
               className="link font-mono text-label uppercase tracking-label inline-flex items-center gap-1"
             >
               {t('home.writingCta')}

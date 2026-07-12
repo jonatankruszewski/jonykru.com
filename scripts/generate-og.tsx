@@ -41,7 +41,7 @@ export const OG_CARDS: OgCard[] = [
     title: 'Externally validated across cloud, data and AI.'
   },
   {
-    slug: 'writing',
+    slug: 'blog',
     eyebrow: 'Writing',
     title: 'Architecture, migrations, and the cost of tech debt.'
   },

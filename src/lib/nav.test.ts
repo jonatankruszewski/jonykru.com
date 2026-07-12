@@ -15,11 +15,11 @@ describe('ROUTES', () => {
 
 describe('isActiveRoute', () => {
   it('matches despite the trailing slash that trailingSlash: true produces', () => {
-    expect(isActiveRoute('/writing/', '/writing')).toBe(true)
+    expect(isActiveRoute('/blog/', '/blog')).toBe(true)
   })
 
   it('matches when neither side has a trailing slash', () => {
-    expect(isActiveRoute('/writing', '/writing')).toBe(true)
+    expect(isActiveRoute('/blog', '/blog')).toBe(true)
   })
 
   it('matches home', () => {
@@ -27,10 +27,10 @@ describe('isActiveRoute', () => {
   })
 
   it('does not match a different route', () => {
-    expect(isActiveRoute('/writing/', '/certifications')).toBe(false)
+    expect(isActiveRoute('/blog/', '/certifications')).toBe(false)
   })
 
   it('does not treat home as active on every route', () => {
-    expect(isActiveRoute('/writing/', '/')).toBe(false)
+    expect(isActiveRoute('/blog/', '/')).toBe(false)
   })
 })
