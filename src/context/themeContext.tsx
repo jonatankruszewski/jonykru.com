@@ -37,11 +37,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
   const [mounted, setMounted] = useState(false)
 
-  // Only toggle the class — the canvas colour comes from the tokens in
-  // globals.css, so writing background-color here would override the theme.
+  // globals.css already renders the right theme from prefers-color-scheme with
+  // no JavaScript, so this only writes an *override* class. For anyone who has
+  // not touched the toggle, the class we add matches what CSS already painted,
+  // which is why there is no flash despite there being no blocking script.
   useEffect(() => {
     setMounted(true)
-    document.documentElement.classList.toggle('dark', theme === 'dark')
+
+    const root = document.documentElement
+    root.classList.toggle('dark', theme === 'dark')
+    root.classList.toggle('light', theme === 'light')
 
     if (mounted) {
       localStorage.setItem('theme', theme)

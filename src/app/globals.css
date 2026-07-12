@@ -4,6 +4,19 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
+ * Theming is pure CSS — there is no blocking script and no dangerouslySetInnerHTML.
+ *
+ * Dracula is the default. `prefers-color-scheme: light` switches to Solarized
+ * Light, so anyone who has never touched the toggle gets the right theme in the
+ * very first frame with no JavaScript at all.
+ *
+ * The .dark / .light classes are only an *override*, written by the theme
+ * toggle for someone who wants the opposite of their OS. Because the CSS default
+ * already matches the OS, applying that class after hydration is a no-op for
+ * everyone else — so the common path still never flashes.
+ */
+
+/*
  * Flat, high-contrast, IDE-native. The palette is Dracula for dark (the
  * default) and Alucard — Dracula's official light theme — for light.
  *
@@ -86,40 +99,87 @@
 }
 
 /*
- * Solarized Light. Its canonical accents are famously low-contrast — cyan,
- * green and yellow all land under 3:1 on base3 and fail AA outright, which is
- * exactly the "washed out" look. Each is darkened along its own hue until it
- * clears 4.5:1; the hue relationships are untouched, only the lightness.
- * Body text is base02 (12:1), not base00 (4.1:1), for the same reason.
+ * Dracula.
+ *
+ * Its comment colour (#6272A4) is only 3.03:1 on this background — large-text
+ * only — and here it carries the small metadata (dates, eyebrows, issuers). It
+ * is lifted along its own hue to 6.87:1 so it reads as muted, not washed out.
  */
 :root {
-  --canvas: #fdf6e3; /* base3 */
-  --surface: #eee8d5; /* base2 */
-  --ink: #073642; /* base02 — 12.05:1 */
-  --ink-muted: #4d6168; /* base01, darkened — 6.06:1 */
+  --canvas: #282a36;
+  --surface: #343746;
+  --ink: #f8f8f2;
+  --ink-muted: #a9b3d9;
+  --rule: #44475a;
+  --accent: #ff79c6;
+  --accent-ink: #282a36;
+  --error: #ff5555;
+
+  --syn-keyword: #ff79c6;
+  --syn-string: #f1fa8c;
+  --syn-number: #bd93f9;
+  --syn-function: #50fa7b;
+  --syn-const: #8be9fd;
+  --syn-comment: #a9b3d9;
+}
+
+/*
+ * Solarized Light.
+ *
+ * Its canonical accents are famously low-contrast — cyan, green and yellow all
+ * land under 3:1 on base3 and fail AA outright, which is exactly the washed-out
+ * look. Each is darkened along its own hue until it clears 4.5:1; the hue
+ * relationships are untouched, only the lightness. Body text is base02 (12:1),
+ * not base00 (4.1:1), for the same reason.
+ */
+@media (prefers-color-scheme: light) {
+  :root {
+    --canvas: #fdf6e3; /* base3 */
+    --surface: #eee8d5; /* base2 */
+    --ink: #073642; /* base02 — 12.05:1 */
+    --ink-muted: #4d6168; /* base01, darkened — 6.06:1 */
+    --rule: #ded7c1;
+    --accent: #cc2d7a; /* magenta, AA */
+    --accent-ink: #fdf6e3;
+    --error: #d72724;
+
+    --syn-keyword: #cc2d7a; /* magenta */
+    --syn-string: #8a6800; /* yellow */
+    --syn-number: #5f64bf; /* violet */
+    --syn-function: #687700; /* green */
+    --syn-const: #1f72ac; /* blue */
+    --syn-comment: #4d6168;
+  }
+}
+
+/*
+ * Explicit overrides written by the theme toggle. These MUST come after the
+ * media query above: `.dark` and `:root` have the same specificity, so if the
+ * media query's `:root` were declared later it would beat an explicit `.dark`
+ * for a user on a light OS.
+ */
+.light {
+  --canvas: #fdf6e3;
+  --surface: #eee8d5;
+  --ink: #073642;
+  --ink-muted: #4d6168;
   --rule: #ded7c1;
-  --accent: #cc2d7a; /* magenta, AA */
+  --accent: #cc2d7a;
   --accent-ink: #fdf6e3;
   --error: #d72724;
 
-  --syn-keyword: #cc2d7a; /* magenta */
-  --syn-string: #8a6800; /* yellow */
-  --syn-number: #5f64bf; /* violet */
-  --syn-function: #687700; /* green */
-  --syn-const: #1f72ac; /* blue */
+  --syn-keyword: #cc2d7a;
+  --syn-string: #8a6800;
+  --syn-number: #5f64bf;
+  --syn-function: #687700;
+  --syn-const: #1f72ac;
   --syn-comment: #4d6168;
 }
 
-/* Dracula — the default (see themeContext). */
 .dark {
   --canvas: #282a36;
   --surface: #343746;
   --ink: #f8f8f2;
-  /*
-   * Dracula's comment colour (#6272A4) is only 3.03:1 here — large-text only,
-   * and it carries the small metadata (dates, eyebrows, issuers). Lifted along
-   * its own hue to 6.87:1 so it reads as muted rather than washed out.
-   */
   --ink-muted: #a9b3d9;
   --rule: #44475a;
   --accent: #ff79c6;

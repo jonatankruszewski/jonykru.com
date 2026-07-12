@@ -12,7 +12,7 @@
   },
   "home": {
     "eyebrow": "AI Dev",
-    "headline": "Construyo sistemas de IA que llegan a producción.",
+    "headline": "Construyo IA que va a producción.",
     "lede": "La mayoría de los proyectos de IA se quedan en la demo. Yo los llevo hasta el final: el frontend, el backend, el pipeline y todas las partes aburridas que nadie muestra.",
     "primaryCta": "Agendar una llamada",
     "secondaryCta": "Ver el código",
@@ -28,11 +28,11 @@
     "closingTitle": "¿Tenés algo que necesita salir a producción?",
     "closingBody": "Contame qué está trabado. 20 minutos, sin venta.",
     "headlinePhrases": [
-      "Construyo sistemas de IA que llegan a producción.",
-      "Llevo las demos hasta producción.",
-      "Hago que los agentes hagan trabajo real.",
-      "Me hago cargo de punta a punta: frontend, backend, CI.",
-      "Automatizo lo que nadie quiere hacer."
+      "Construyo IA que va a producción.",
+      "Llevo las demos a producción.",
+      "Hago que los agentes trabajen.",
+      "Me hago cargo: FE, BE, CI.",
+      "Automatizo lo que nadie quiere."
     ]
   },
   "capabilities": {

@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
-import Script from 'next/script'
 import { ReactNode } from 'react'
 import { FontPlexHebrew, FontPlexMono, FontPlexSans } from '@/app/fonts'
 import RTLHandler from '@/components/RTLHandler'
@@ -39,19 +38,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
+    // No theme class here, and no theme script anywhere: globals.css defaults to
+    // Dracula and switches to Solarized Light on prefers-color-scheme, so the
+    // first frame is already correct with zero JavaScript. ThemeProvider only
+    // adds a .light/.dark override when someone uses the toggle.
     <html
       lang="en"
       dir="ltr"
-      // Dark-first, so the markup ships with the class already on. public/theme.js
-      // then corrects it before paint for anyone who prefers or saved light.
-      className={`dark ${FontPlexMono.variable} ${FontPlexSans.variable} ${FontPlexHebrew.variable}`}
+      className={`${FontPlexMono.variable} ${FontPlexSans.variable} ${FontPlexHebrew.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        {/* Applies the saved theme before first paint. A real file rather than an
-            inline string, so the app carries no dangerouslySetInnerHTML. */}
-        <Script src="/theme.js" strategy="beforeInteractive" />
-      </head>
       <body className="bg-canvas text-ink font-sans">
         <ThemeProvider>
           <I18nProvider>
