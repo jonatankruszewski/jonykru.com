@@ -27,10 +27,11 @@ describe('OSS_PROJECTS', () => {
   })
 
   it('credits the rxova org projects as authored', () => {
-    expect(authored().map((p) => p.slug).sort()).toEqual([
-      'journey',
-      'use-everywhere'
-    ])
+    expect(
+      authored()
+        .map((p) => p.slug)
+        .sort()
+    ).toEqual(['journey', 'use-everywhere'])
   })
 
   it('marks the immer work as open, never as merged', () => {

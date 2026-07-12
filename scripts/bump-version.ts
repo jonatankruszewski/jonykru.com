@@ -106,4 +106,3 @@ export {
   validateVersionType
 }
 export type { VersionType }
-

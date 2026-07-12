@@ -17,7 +17,7 @@ const VersionDisplay = () => {
 
   return (
     <span
-      className={`${FontJetBrainsMono.className} text-xs text-gray-800 dark:text-gray-300`}
+      className={`${FontJetBrainsMono.className} text-label text-ink-muted tabular-nums`}
       title={`Version: ${versionInfo.version}`}
     >
       v{versionInfo.version}
@@ -26,4 +26,3 @@ const VersionDisplay = () => {
 }
 
 export default VersionDisplay
-

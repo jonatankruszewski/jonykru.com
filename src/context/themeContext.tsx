@@ -34,18 +34,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
   const [mounted, setMounted] = useState(false)
 
-  // Apply theme to DOM and save to localStorage
+  // Only toggle the class — the canvas colour comes from the tokens in
+  // globals.css, so writing background-color here would override the theme.
   useEffect(() => {
     setMounted(true)
-    const root = document.documentElement
-
-    if (theme === 'dark') {
-      root.classList.add('dark')
-      document.body.style.backgroundColor = '#121212'
-    } else {
-      root.classList.remove('dark')
-      document.body.style.backgroundColor = '#ffffff'
-    }
+    document.documentElement.classList.toggle('dark', theme === 'dark')
 
     if (mounted) {
       localStorage.setItem('theme', theme)

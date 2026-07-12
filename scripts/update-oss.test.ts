@@ -4,8 +4,7 @@ import { collectStars, fetchStars } from './update-oss'
 const okResponse = (stars: number) =>
   ({ ok: true, json: async () => ({ stargazers_count: stars }) }) as Response
 
-const errorResponse = (status: number) =>
-  ({ ok: false, status }) as Response
+const errorResponse = (status: number) => ({ ok: false, status }) as Response
 
 describe('fetchStars', () => {
   it('returns the star count for a repo', async () => {

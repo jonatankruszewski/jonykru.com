@@ -2,209 +2,222 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import {
-    ensureOutputDirectory,
-    generateVersion,
-    readPackageJson,
-    validateVersion,
-    writeVersionFile
+  ensureOutputDirectory,
+  generateVersion,
+  readPackageJson,
+  validateVersion,
+  writeVersionFile
 } from './generate-version'
 
 // Mock fs
 vi.mock('fs', async () => {
-    const actual = await vi.importActual<typeof import('fs')>('fs')
-    return {
-        ...actual,
-        existsSync: vi.fn(),
-        readFileSync: vi.fn(),
-        writeFileSync: vi.fn(),
-        mkdirSync: vi.fn()
-    }
+  const actual = await vi.importActual<typeof import('fs')>('fs')
+  return {
+    ...actual,
+    existsSync: vi.fn(),
+    readFileSync: vi.fn(),
+    writeFileSync: vi.fn(),
+    mkdirSync: vi.fn()
+  }
 })
 
 describe('generate-version', () => {
-    beforeEach(() => {
-        vi.clearAllMocks()
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  describe('readPackageJson', () => {
+    it('should exit if package.json does not exist', () => {
+      vi.mocked(existsSync).mockReturnValue(false)
+      const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
+        throw new Error('exit')
+      })
+
+      expect(() => {
+        readPackageJson(join(process.cwd(), 'package.json'))
+      }).toThrow('exit')
+
+      expect(exitSpy).toHaveBeenCalledWith(1)
     })
 
-    afterEach(() => {
-        vi.restoreAllMocks()
+    it('should exit on invalid JSON', () => {
+      vi.mocked(existsSync).mockReturnValue(true)
+      vi.mocked(readFileSync).mockImplementation(() => {
+        throw new Error('Invalid JSON')
+      })
+      const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
+        throw new Error('exit')
+      })
+
+      expect(() => {
+        readPackageJson(join(process.cwd(), 'package.json'))
+      }).toThrow('exit')
+
+      expect(exitSpy).toHaveBeenCalledWith(1)
     })
 
-    describe('readPackageJson', () => {
-        it('should exit if package.json does not exist', () => {
-            vi.mocked(existsSync).mockReturnValue(false)
-            const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
-                throw new Error('exit')
-            })
+    it('should return parsed package.json', () => {
+      const mockPackageJson = { version: '1.0.0', name: 'test' }
+      vi.mocked(existsSync).mockReturnValue(true)
+      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(mockPackageJson))
 
-            expect(() => {
-                readPackageJson(join(process.cwd(), 'package.json'))
-            }).toThrow('exit')
+      const result = readPackageJson(join(process.cwd(), 'package.json'))
 
-            expect(exitSpy).toHaveBeenCalledWith(1)
-        })
+      expect(result).toEqual(mockPackageJson)
+    })
+  })
 
-        it('should exit on invalid JSON', () => {
-            vi.mocked(existsSync).mockReturnValue(true)
-            vi.mocked(readFileSync).mockImplementation(() => {
-                throw new Error('Invalid JSON')
-            })
-            const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
-                throw new Error('exit')
-            })
+  describe('validateVersion', () => {
+    it('should exit if version field is missing', () => {
+      const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
+        throw new Error('exit')
+      })
 
-            expect(() => {
-                readPackageJson(join(process.cwd(), 'package.json'))
-            }).toThrow('exit')
+      expect(() => {
+        validateVersion({ name: 'test' })
+      }).toThrow('exit')
 
-            expect(exitSpy).toHaveBeenCalledWith(1)
-        })
-
-        it('should return parsed package.json', () => {
-            const mockPackageJson = { version: '1.0.0', name: 'test' }
-            vi.mocked(existsSync).mockReturnValue(true)
-            vi.mocked(readFileSync).mockReturnValue(JSON.stringify(mockPackageJson))
-
-            const result = readPackageJson(join(process.cwd(), 'package.json'))
-
-            expect(result).toEqual(mockPackageJson)
-        })
+      expect(exitSpy).toHaveBeenCalledWith(1)
     })
 
-    describe('validateVersion', () => {
-        it('should exit if version field is missing', () => {
-            const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
-                throw new Error('exit')
-            })
+    it('should return version if present', () => {
+      const version = validateVersion({ version: '2.16.3' })
+      expect(version).toBe('2.16.3')
+    })
+  })
 
-            expect(() => {
-                validateVersion({ name: 'test' })
-            }).toThrow('exit')
+  describe('ensureOutputDirectory', () => {
+    it('should create directory if it does not exist', () => {
+      const outputPath = join(process.cwd(), 'public', 'version.json')
+      vi.mocked(existsSync).mockReturnValue(false)
 
-            expect(exitSpy).toHaveBeenCalledWith(1)
-        })
+      ensureOutputDirectory(outputPath)
 
-        it('should return version if present', () => {
-            const version = validateVersion({ version: '2.16.3' })
-            expect(version).toBe('2.16.3')
-        })
+      expect(mkdirSync).toHaveBeenCalledWith(join(process.cwd(), 'public'), {
+        recursive: true
+      })
     })
 
-    describe('ensureOutputDirectory', () => {
-        it('should create directory if it does not exist', () => {
-            const outputPath = join(process.cwd(), 'public', 'version.json')
-            vi.mocked(existsSync).mockReturnValue(false)
+    it('should not create directory if it exists', () => {
+      const outputPath = join(process.cwd(), 'public', 'version.json')
+      vi.mocked(existsSync).mockReturnValue(true)
 
-            ensureOutputDirectory(outputPath)
+      ensureOutputDirectory(outputPath)
 
-            expect(mkdirSync).toHaveBeenCalledWith(join(process.cwd(), 'public'), {
-                recursive: true
-            })
-        })
+      expect(mkdirSync).not.toHaveBeenCalled()
+    })
+  })
 
-        it('should not create directory if it exists', () => {
-            const outputPath = join(process.cwd(), 'public', 'version.json')
-            vi.mocked(existsSync).mockReturnValue(true)
+  describe('writeVersionFile', () => {
+    it('should write version.json successfully', () => {
+      const outputPath = join(process.cwd(), 'public', 'version.json')
+      const versionInfo = {
+        version: '2.16.3',
+        timestamp: '2024-01-01T00:00:00Z'
+      }
+      const consoleLogSpy = vi
+        .spyOn(console, 'log')
+        .mockImplementation(() => {})
 
-            ensureOutputDirectory(outputPath)
+      writeVersionFile(outputPath, versionInfo)
 
-            expect(mkdirSync).not.toHaveBeenCalled()
-        })
+      expect(writeFileSync).toHaveBeenCalledWith(
+        outputPath,
+        JSON.stringify(versionInfo, null, 2),
+        'utf-8'
+      )
+      expect(consoleLogSpy).toHaveBeenCalledWith(
+        expect.stringContaining('✓ Generated version info: 2.16.3')
+      )
     })
 
-    describe('writeVersionFile', () => {
-        it('should write version.json successfully', () => {
-            const outputPath = join(process.cwd(), 'public', 'version.json')
-            const versionInfo = { version: '2.16.3', timestamp: '2024-01-01T00:00:00Z' }
-            const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => { })
+    it('should exit on write error', () => {
+      const outputPath = join(process.cwd(), 'public', 'version.json')
+      const versionInfo = {
+        version: '2.16.3',
+        timestamp: '2024-01-01T00:00:00Z'
+      }
+      vi.mocked(writeFileSync).mockImplementation(() => {
+        throw new Error('Write failed')
+      })
+      const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
+        throw new Error('exit')
+      })
 
-            writeVersionFile(outputPath, versionInfo)
+      expect(() => {
+        writeVersionFile(outputPath, versionInfo)
+      }).toThrow('exit')
 
-            expect(writeFileSync).toHaveBeenCalledWith(
-                outputPath,
-                JSON.stringify(versionInfo, null, 2),
-                'utf-8'
-            )
-            expect(consoleLogSpy).toHaveBeenCalledWith(
-                expect.stringContaining('✓ Generated version info: 2.16.3')
-            )
-        })
+      expect(exitSpy).toHaveBeenCalledWith(1)
+    })
+  })
 
-        it('should exit on write error', () => {
-            const outputPath = join(process.cwd(), 'public', 'version.json')
-            const versionInfo = { version: '2.16.3', timestamp: '2024-01-01T00:00:00Z' }
-            vi.mocked(writeFileSync).mockImplementation(() => {
-                throw new Error('Write failed')
-            })
-            const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
-                throw new Error('exit')
-            })
+  describe('generateVersion', () => {
+    it('should generate version.json successfully', () => {
+      const mockPackageJson = { version: '2.16.3', name: 'test' }
+      const packageJsonPath = join(process.cwd(), 'package.json')
+      const publicDir = join(process.cwd(), 'public')
 
-            expect(() => {
-                writeVersionFile(outputPath, versionInfo)
-            }).toThrow('exit')
+      vi.mocked(existsSync).mockImplementation((path) => {
+        const pathStr = String(path)
+        if (pathStr === packageJsonPath || pathStr.includes('package.json'))
+          return true
+        if (pathStr === publicDir || pathStr.includes('public')) return true
+        return false
+      })
+      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(mockPackageJson))
+      vi.mocked(writeFileSync).mockReturnValue(undefined) // Don't throw
+      const consoleLogSpy = vi
+        .spyOn(console, 'log')
+        .mockImplementation(() => {})
+      const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
+        throw new Error('exit')
+      })
 
-            expect(exitSpy).toHaveBeenCalledWith(1)
-        })
+      expect(() => {
+        generateVersion()
+      }).not.toThrow()
+
+      expect(writeFileSync).toHaveBeenCalled()
+      expect(consoleLogSpy).toHaveBeenCalledWith(
+        expect.stringContaining('✓ Generated version info: 2.16.3')
+      )
+      expect(exitSpy).not.toHaveBeenCalled()
     })
 
-    describe('generateVersion', () => {
-        it('should generate version.json successfully', () => {
-            const mockPackageJson = { version: '2.16.3', name: 'test' }
-            const packageJsonPath = join(process.cwd(), 'package.json')
-            const publicDir = join(process.cwd(), 'public')
+    it('should create public directory if missing', () => {
+      const mockPackageJson = { version: '2.16.3', name: 'test' }
+      const packageJsonPath = join(process.cwd(), 'package.json')
+      const publicDir = join(process.cwd(), 'public')
 
-            vi.mocked(existsSync).mockImplementation((path) => {
-                const pathStr = String(path)
-                if (pathStr === packageJsonPath || pathStr.includes('package.json')) return true
-                if (pathStr === publicDir || pathStr.includes('public')) return true
-                return false
-            })
-            vi.mocked(readFileSync).mockReturnValue(JSON.stringify(mockPackageJson))
-            vi.mocked(writeFileSync).mockReturnValue(undefined) // Don't throw
-            const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => { })
-            const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
-                throw new Error('exit')
-            })
+      vi.mocked(existsSync).mockImplementation((path) => {
+        const pathStr = String(path)
+        if (pathStr === packageJsonPath || pathStr.includes('package.json'))
+          return true
+        if (pathStr === publicDir || pathStr.includes('public')) return false
+        return false
+      })
+      vi.mocked(readFileSync).mockReturnValue(JSON.stringify(mockPackageJson))
+      vi.mocked(writeFileSync).mockReturnValue(undefined) // Don't throw
+      const consoleLogSpy = vi
+        .spyOn(console, 'log')
+        .mockImplementation(() => {})
+      const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
+        throw new Error('exit')
+      })
 
-            expect(() => {
-                generateVersion()
-            }).not.toThrow()
+      expect(() => {
+        generateVersion()
+      }).not.toThrow()
 
-            expect(writeFileSync).toHaveBeenCalled()
-            expect(consoleLogSpy).toHaveBeenCalledWith(
-                expect.stringContaining('✓ Generated version info: 2.16.3')
-            )
-            expect(exitSpy).not.toHaveBeenCalled()
-        })
-
-        it('should create public directory if missing', () => {
-            const mockPackageJson = { version: '2.16.3', name: 'test' }
-            const packageJsonPath = join(process.cwd(), 'package.json')
-            const publicDir = join(process.cwd(), 'public')
-
-            vi.mocked(existsSync).mockImplementation((path) => {
-                const pathStr = String(path)
-                if (pathStr === packageJsonPath || pathStr.includes('package.json')) return true
-                if (pathStr === publicDir || pathStr.includes('public')) return false
-                return false
-            })
-            vi.mocked(readFileSync).mockReturnValue(JSON.stringify(mockPackageJson))
-            vi.mocked(writeFileSync).mockReturnValue(undefined) // Don't throw
-            const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => { })
-            const exitSpy = vi.spyOn(process, 'exit').mockImplementation(() => {
-                throw new Error('exit')
-            })
-
-            expect(() => {
-                generateVersion()
-            }).not.toThrow()
-
-            expect(mkdirSync).toHaveBeenCalledWith(publicDir, { recursive: true })
-            expect(writeFileSync).toHaveBeenCalled()
-            expect(consoleLogSpy).toHaveBeenCalled()
-            expect(exitSpy).not.toHaveBeenCalled()
-        })
+      expect(mkdirSync).toHaveBeenCalledWith(publicDir, { recursive: true })
+      expect(writeFileSync).toHaveBeenCalled()
+      expect(consoleLogSpy).toHaveBeenCalled()
+      expect(exitSpy).not.toHaveBeenCalled()
     })
+  })
 })
-

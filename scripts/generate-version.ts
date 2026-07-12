@@ -54,11 +54,7 @@ function ensureOutputDirectory(outputPath: string): void {
  */
 function writeVersionFile(outputPath: string, versionInfo: VersionInfo): void {
   try {
-    writeFileSync(
-      outputPath,
-      JSON.stringify(versionInfo, null, 2),
-      'utf-8'
-    )
+    writeFileSync(outputPath, JSON.stringify(versionInfo, null, 2), 'utf-8')
     console.log(
       `✓ Generated version info: ${versionInfo.version} at ${versionInfo.timestamp}`
     )
@@ -105,4 +101,3 @@ export {
   writeVersionFile
 }
 export type { PackageJson, VersionInfo }
-

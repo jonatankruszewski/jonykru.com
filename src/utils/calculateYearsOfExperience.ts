@@ -25,9 +25,5 @@ export const calculateYearsOfExperience = (
     monthDiff > 0 || (monthDiff === 0 && dayDiff >= 0)
 
   // Return 0 for dates before the start date (no negative years)
-  return Math.max(
-    0,
-    hasReachedAnniversary ? yearDiff : yearDiff - 1
-  )
+  return Math.max(0, hasReachedAnniversary ? yearDiff : yearDiff - 1)
 }
-

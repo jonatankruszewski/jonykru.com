@@ -117,4 +117,3 @@ describe('calculateYearsOfExperience', () => {
     expect(calculateYearsOfExperience(exactlyStart)).toBe(0)
   })
 })
-

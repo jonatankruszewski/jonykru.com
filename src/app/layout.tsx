@@ -1,35 +1,64 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
-import '@/styles/animations.css'
 import { ReactNode } from 'react'
-import { FontRubik } from '@/app/fonts'
+import { FontJetBrainsMono, FontRubik } from '@/app/fonts'
 import RTLHandler from '@/components/RTLHandler'
+import SiteFooter from '@/components/SiteFooter'
+import SiteNav from '@/components/SiteNav'
 import { I18nProvider } from '@/context/i18nContext'
 import { ThemeProvider } from '@/context/themeContext'
+import { SITE_URL } from '@/data/site'
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#121212' }
+    { media: '(prefers-color-scheme: light)', color: '#faf9f6' },
+    { media: '(prefers-color-scheme: dark)', color: '#0e0e12' }
   ]
 }
 
 export const metadata: Metadata = {
-  title: 'Jonatan Kruszewski - Web Developer | Software Engineer',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Jonatan Kruszewski — AI Dev',
+    template: '%s — Jonatan Kruszewski'
+  },
   description:
-    'Experienced web developer, tech instructor, and Scrum consultant. Offering private lessons, tech guidance, and Agile consulting. Showcasing 24 published articles and nearly 40 certifications. Explore my work and expertise in React, TypeScript, and modern web development.'
+    'AI developer who ships across the whole stack — frontend, backend, CI and automation. Contributor to Pane, typedash and immer; author of the rxova libraries.',
+  alternates: { canonical: '/' }
 }
+
+// Runs before paint so the theme class is on <html> for the first frame.
+// Without it the site flashes the wrong canvas on every load.
+const THEME_SCRIPT = `
+try {
+  var t = localStorage.getItem('theme');
+  if (t !== 'light' && t !== 'dark') {
+    t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.documentElement.classList.toggle('dark', t === 'dark');
+} catch (e) {}
+`
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
-      <body className={FontRubik.className}>
+    <html
+      lang="en"
+      dir="ltr"
+      className={`${FontRubik.variable} ${FontJetBrainsMono.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
+      <body className="bg-canvas text-ink font-sans">
         <ThemeProvider>
           <I18nProvider>
             <RTLHandler />
-            {children}
+            <SiteNav />
+            <main id="content">{children}</main>
+            <SiteFooter />
           </I18nProvider>
         </ThemeProvider>
       </body>

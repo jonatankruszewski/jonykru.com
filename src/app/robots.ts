@@ -11,4 +11,3 @@ export default function robots(): MetadataRoute.Robots {
     sitemap: 'https://www.jonykru.com/sitemap.xml'
   }
 }
-

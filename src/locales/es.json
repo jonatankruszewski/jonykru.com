@@ -1,105 +1,149 @@
 {
   "nav": {
-    "about": "sobre mí",
-    "publications": "publicaciones",
-    "certifications": "certificaciones",
-    "contact": "contacto",
-    "menu": "Menú",
-    "close": "Cerrar"
-  },
-  "presentation": {
-    "greeting": "¡Hola! 👋,",
-    "name": "Soy Jonatan Kruszewski",
-    "roles": {
-      "webDeveloper": "Desarrollador Web",
-      "mediumWriter": "Escritor Técnico en Medium",
-      "jsReactExpert": "Experto en Javascript & React",
-      "mongoDbDeveloper": "Desarrollador MongoDB Certificado"
-    },
-    "description": "Me especializo en construir soluciones front-end escalables y mantenibles que funcionan perfectamente, sin convertirse en deuda técnica.",
-    "getInTouch": "Contáctame"
-  },
-  "achievements": {
-    "stackOverflowReputation": "Reputación en StackOverflow",
+    "home": "Inicio",
+    "openSource": "Open Source",
+    "writing": "Artículos",
     "certifications": "Certificaciones",
-    "publications": "Publicaciones",
-    "yearsOfExperience": "Años de Experiencia"
+    "contact": "Contacto",
+    "menu": "Menú",
+    "close": "Cerrar",
+    "skipToContent": "Ir al contenido",
+    "bookACall": "Agendar una llamada"
   },
-  "aboutCards": {
-    "aboutMe": {
-      "title": "Sobre Mí 👋",
-      "content": "¡Hola! Soy Jonatan—un desarrollador front-end senior que ama construir cosas que realmente funcionan y no se rompen apenas dejas de mirar."
+  "home": {
+    "eyebrow": "AI Dev",
+    "headline": "Construyo sistemas de IA que llegan a producción.",
+    "lede": "La mayoría de los proyectos de IA se quedan en la demo. Yo los llevo hasta el final: el frontend, el backend, el pipeline y todas las partes aburridas que nadie muestra.",
+    "primaryCta": "Agendar una llamada",
+    "secondaryCta": "Ver el código",
+    "capabilitiesLabel": "Qué hago",
+    "capabilitiesTitle": "Cuatro disciplinas, una sola persona a quien explicarle.",
+    "proofLabel": "Pruebas",
+    "ossTeaserTitle": "Escribo código en los repos de otros.",
+    "ossTeaserBody": "Incluido Pane, un gestor open source para correr varios agentes de código en paralelo.",
+    "ossTeaserCta": "Todo el open source",
+    "writingTitle": "Artículos",
+    "writingBody": "Ensayos sobre arquitectura, migraciones y el costo real de la deuda técnica.",
+    "writingCta": "Todos los artículos",
+    "closingTitle": "¿Tenés algo que necesita salir a producción?",
+    "closingBody": "Contame qué está trabado. Treinta minutos, sin venta."
+  },
+  "capabilities": {
+    "ai": {
+      "title": "IA",
+      "body": "Agentes, uso de herramientas, evals y todo lo que hace que un modelo sea útil en producción y no solo vistoso en un notebook."
     },
-    "expertise": {
-      "title": "Mi Expertise ⚛️",
-      "content": "Me especializo en React, Redux, TypeScript y arquitecturas escalables, asegurando que todo funcione sin problemas y sea mantenible."
+    "frontend": {
+      "title": "Frontend",
+      "body": "React y TypeScript a escala: la arquitectura que mantiene un código ágil de tocar dentro de tres años."
     },
-    "experience": {
-      "title": "Experiencia 🏗️",
-      "content": "He trabajado en aplicaciones a gran escala, mentoreado desarrolladores y ayudado a equipos a limpiar código desordenado. Escribo código limpio y eficiente que mantiene los proyectos escalables."
+    "backend": {
+      "title": "Backend",
+      "body": "APIs, modelado de datos y los servicios de abajo. Certificado en AWS, Azure, GCP y MongoDB."
     },
-    "community": {
-      "title": "Comunidad & Escritura ✍️",
-      "content": "Contribuyo en Stack Overflow, escribo sobre desarrollo y me mantengo actualizado con lo último en tecnología."
-    },
-    "communication": {
-      "title": "La comunicación es clave 🤝",
-      "content": "Si necesitas a alguien que pueda hacer las cosas, resolver problemas reales y mejorar tu código, ¡conectemos!"
+    "automation": {
+      "title": "CI y Automatización",
+      "body": "Pipelines, releases y todo ese trabajo tedioso que debería haber sido un script. GitHub Actions, de punta a punta."
     }
   },
-  "carousel": {
-    "previous": "Anterior",
-    "next": "Siguiente"
+  "stats": {
+    "certifications": "certificaciones",
+    "articles": "artículos publicados",
+    "openSourceProjects": "proyectos open source",
+    "yearsOfExperience": "años en producción"
   },
-  "publications": {
-    "title": "Últimas Publicaciones",
-    "subtitle": "Compartiendo conocimiento a través de artículos técnicos en Medium",
-    "readOnMedium": "Leer en Medium"
+  "oss": {
+    "title": "Open Source",
+    "lede": "Librerías que escribí, y repos donde metí mano de verdad.",
+    "authoredTitle": "Propios",
+    "authoredBody": "Creados y mantenidos bajo la organización rxova.",
+    "contributedTitle": "Contribuciones",
+    "contributedBody": "Mergeadas en proyectos de otros, más una que sigue en revisión.",
+    "starsLabel": "estrellas",
+    "merged": "Mergeado",
+    "open": "Propuesto",
+    "openNote": "Abierto, todavía sin mergear.",
+    "viewRepo": "Ver repo",
+    "viewNpm": "npm",
+    "projects": {
+      "pane": {
+        "blurb": "Gestor terminal-first, agnóstico de agente, para correr varios agentes de código de IA en paralelo: local o self-hosted.",
+        "pr320": "Navegación por teclado en los menús desplegables",
+        "pr301": "Arreglo de un crash de node-pty en Macs Intel en el build universal"
+      },
+      "journey": {
+        "blurb": "Un stepper, wizard y sequencer diminuto, sin dependencias en runtime."
+      },
+      "useEverywhere": {
+        "blurb": "Hooks de React para compartir estado y mensajes entre pestañas, ventanas y workers."
+      },
+      "typedash": {
+        "blurb": "Una alternativa moderna y type-safe a lodash.",
+        "pr174": "Protección de chunk() ante un tamaño menor a uno"
+      },
+      "immer": {
+        "blurb": "La librería de estado inmutable detrás de Redux Toolkit.",
+        "pr1269": "Devolver el constructor real en los drafts, arreglando un crash de lodash.isEmpty",
+        "issue1268": "Reporte de la regresión, con reproducción mínima"
+      }
+    }
+  },
+  "writing": {
+    "title": "Artículos",
+    "lede": "Ensayos técnicos en Medium: arquitectura, migraciones, TypeScript y por qué la deuda técnica cero es un mito.",
+    "feedNote": "Los 10 más recientes, directo del feed.",
+    "readArticle": "Leer",
+    "readOnMedium": "Leer en Medium",
+    "allOnMedium": "Todo en Medium"
   },
   "certifications": {
     "title": "Certificaciones",
-    "subtitle": "Experiencia validada en múltiples plataformas y tecnologías",
-    "whyHire": {
-      "title": "¿Por qué contratar a un desarrollador certificado?",
-      "p1": "Cualquiera puede escribir código, pero no todos escriben código escalable, mantenible y de alta calidad.",
-      "p2": "Las certificaciones van más allá de las insignias; son prueba de que una autoridad externa ha revisado, probado y validado tanto el conocimiento como las habilidades.",
-      "p3": "Cuando contratas a un desarrollador certificado, no solo confías en lo que dice — confías en lo que ha demostrado."
-    },
-    "filterAll": "Todos"
+    "lede": "Validadas externamente en cloud, datos, IA y entrega. Las de IA y cloud son las que realmente pesan.",
+    "filterAll": "Todas",
+    "filterLabel": "Filtrar por emisor",
+    "empty": "No hay certificaciones de este emisor.",
+    "viewCredential": "Ver credencial"
   },
   "contact": {
-    "title": "Conectemos",
-    "subtitle": "¿Tienes un proyecto en mente? Hablemos de cómo puedo ayudarte.",
-    "getInTouch": "Ponte en contacto",
-    "description": "Estoy abierto a nuevos proyectos y colaboraciones. Si buscas un desarrollador o tienes una oportunidad relevante, no dudes en contactarme. Te responderé lo antes posible.",
+    "title": "Hablemos",
+    "lede": "La vía más rápida es una llamada. Treinta minutos, sin venta: contame qué está trabado y te digo si puedo ayudar.",
+    "bookACall": "Agendar una llamada",
+    "orWrite": "O mandame un mensaje",
+    "formNote": "Leo todo y respondo en un par de días.",
+    "elsewhere": "En otros lados",
     "form": {
       "email": "Tu Email",
-      "emailPlaceholder": "jacob@google.com",
+      "emailPlaceholder": "vos@empresa.com",
       "subject": "Asunto",
-      "subjectPlaceholder": "Solo saludando",
+      "subjectPlaceholder": "¿De qué se trata?",
       "message": "Mensaje",
-      "messagePlaceholder": "Tu mensaje aquí",
-      "sendMessage": "Enviar Mensaje",
+      "messagePlaceholder": "Contame qué estás construyendo",
+      "sendMessage": "Enviar mensaje",
       "sending": "Enviando..."
     },
     "validation": {
-      "emailRequired": "El email es requerido",
-      "emailMaxLength": "El email debe tener máximo 128 caracteres",
-      "emailAtSign": "Por favor incluye '@' en tu dirección de email",
-      "emailInvalid": "Por favor ingresa un email válido",
-      "subjectRequired": "El asunto es requerido",
-      "subjectMaxLength": "El asunto debe tener máximo 128 caracteres",
+      "emailRequired": "El email es obligatorio",
+      "emailMaxLength": "El email debe tener como máximo 128 caracteres",
+      "emailAtSign": "Por favor incluí '@' en tu dirección de email",
+      "emailInvalid": "Por favor ingresá un email válido",
+      "subjectRequired": "El asunto es obligatorio",
+      "subjectMaxLength": "El asunto debe tener como máximo 128 caracteres",
       "subjectMinLength": "El asunto debe tener al menos 4 caracteres",
-      "messageRequired": "El mensaje es requerido",
-      "messageMaxLength": "El mensaje debe tener máximo 256 caracteres"
+      "messageRequired": "El mensaje es obligatorio",
+      "messageMaxLength": "El mensaje debe tener como máximo 256 caracteres"
     },
     "toast": {
-      "success": "Mensaje enviado exitosamente"
+      "success": "Mensaje enviado con éxito"
     }
+  },
+  "notFound": {
+    "title": "Acá no hay nada.",
+    "body": "Esa página no existe, o existía y se la comió el rediseño.",
+    "cta": "Volver al inicio"
   },
   "footer": {
     "copyright": "Todos los derechos reservados.",
-    "builtWith": "Construido con Next.js, TypeScript & Tailwind CSS"
+    "builtWith": "Next.js, TypeScript, Tailwind."
   },
   "theme": {
     "switchToLight": "Cambiar a modo claro",
@@ -112,4 +156,3 @@
     "hebrew": "עברית"
   }
 }
-

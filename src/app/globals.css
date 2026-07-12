@@ -3,140 +3,131 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * Flat, high-contrast, minimal.
+ *
+ * Two rules this file enforces mechanically rather than by convention:
+ *
+ * 1. Tailwind's default palette is deleted (`--color-*: initial`). A stray
+ *    `text-gray-400` from the old design no longer compiles to anything, so the
+ *    rebrand cannot be left 80% done.
+ * 2. Shadows, blurs and gradients are deleted. Depth comes from hairline rules
+ *    and whitespace. `scripts/check-flat.ts` guards the rest.
+ */
+@theme {
+  --color-*: initial;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial;
+  --blur-*: initial;
+  --radius-*: initial;
+
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* Values are re-bound per theme below; utilities resolve through the vars. */
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  /* The only non-brand hue. Error is a semantic state, not decoration —
+     lime cannot carry "something is wrong". */
+  --color-error: var(--error);
+
+  --radius-none: 0;
+  --radius-sm: 2px;
+
+  --font-sans: var(--font-rubik), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --text-display: clamp(2.75rem, 7vw, 5.5rem);
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.035em;
+  --text-display--font-weight: 800;
+
+  --text-h1: clamp(2rem, 4.5vw, 3.25rem);
+  --text-h1--line-height: 1.05;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h1--font-weight: 800;
+
+  --text-h2: clamp(1.5rem, 2.5vw, 2rem);
+  --text-h2--line-height: 1.15;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h2--font-weight: 700;
+
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.3;
+  --text-h3--font-weight: 700;
+
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.65;
+
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.09em;
+  --text-label--font-weight: 500;
+}
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --canvas: #faf9f6;
+  --surface: #f2f0ea;
+  --ink: #14141a;
+  --ink-muted: #5a5751;
+  --rule: #e2dfd7;
+  --accent: #c8ff00;
+  --accent-ink: #14141a;
+  --error: #b3261e;
+}
+
+.dark {
+  --canvas: #0e0e12;
+  --surface: #17171c;
+  --ink: #faf9f6;
+  --ink-muted: #a3a09a;
+  --rule: #26262e;
+  --accent: #c8ff00;
+  --accent-ink: #14141a;
+  --error: #f2b8b5;
 }
 
 body {
-  background-color: #ffffff;
-  transition: background-color 0.2s ease;
+  background-color: var(--canvas);
+  color: var(--ink);
+  font-size: var(--text-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
 }
 
-.dark body {
-  background-color: #121212;
+/*
+ * Acid lime measures 1.12:1 against cream — as text on a light background it is
+ * effectively invisible. It is a FILL colour: ink-on-lime is 15.5:1. So links in
+ * light mode are ink with a lime underline, and only in dark mode (16.3:1) may
+ * lime carry text itself.
+ */
+.link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: text-decoration-thickness 100ms ease;
 }
 
-html {
-  scroll-behavior: smooth;
+.link:hover {
+  text-decoration-thickness: 4px;
 }
 
-/* Animated numbers using CSS @property and keyframes */
-@property --num {
-  syntax: '<integer>';
-  initial-value: 0;
-  inherits: false;
+/* Focus is always the lime block — visible on both canvases. */
+:where(a, button, input, textarea, summary):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-.number-animation {
-  --num: 0;
-  counter-reset: num var(--num);
-  font-variant-numeric: tabular-nums;
-}
-
-.number-animation::after {
-  content: counter(num);
-}
-
-/* Keyframe animations for each target value */
-@keyframes counter-6 {
-  to {
-    --num: 6;
-  }
-}
-
-@keyframes counter-7 {
-  to {
-    --num: 7;
-  }
-}
-
-@keyframes counter-8 {
-  to {
-    --num: 8;
-  }
-}
-
-@keyframes counter-9 {
-  to {
-    --num: 9;
-  }
-}
-
-@keyframes counter-10 {
-  to {
-    --num: 10;
-  }
-}
-
-@keyframes counter-24 {
-  to {
-    --num: 24;
-  }
-}
-
-@keyframes counter-36 {
-  to {
-    --num: 36;
-  }
-}
-
-@keyframes counter-1316 {
-  to {
-    --num: 1316;
-  }
-}
-
-/* Animation classes */
-.animate-6 {
-  animation: counter-6 1s ease-out forwards;
-}
-
-.animate-7 {
-  animation: counter-7 1s ease-out forwards;
-}
-
-.animate-8 {
-  animation: counter-8 1s ease-out forwards;
-}
-
-.animate-9 {
-  animation: counter-9 1s ease-out forwards;
-}
-
-.animate-10 {
-  animation: counter-10 1s ease-out forwards;
-}
-
-.animate-24 {
-  animation: counter-24 1.2s ease-out forwards;
-}
-
-.animate-36 {
-  animation: counter-36 1.4s ease-out forwards;
-}
-
-.animate-1316 {
-  animation: counter-1316 2s ease-out forwards;
-}
-
-/* RTL Support */
-[dir='rtl'] {
-  /* Flip directional transforms for RTL */
-  --direction-multiplier: -1;
-}
-
-[dir='ltr'] {
-  --direction-multiplier: 1;
-}
-
-/* Flip arrow icons in RTL */
-[dir='rtl'] .rtl-flip {
-  transform: scaleX(-1);
-}
-
-/* Adjust spacing for RTL using logical properties */
-[dir='rtl'] .rtl-space-flip {
-  direction: rtl;
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
 }

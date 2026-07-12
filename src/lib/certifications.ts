@@ -35,7 +35,9 @@ export const filterByIssuer = (
   badges: CredlyBadge[],
   issuer: string | null
 ): CredlyBadge[] =>
-  issuer === null ? badges : badges.filter((badge) => issuerOf(badge) === issuer)
+  issuer === null
+    ? badges
+    : badges.filter((badge) => issuerOf(badge) === issuer)
 
 /**
  * Badges that back the AI positioning. Surfaced on the home page; the full set

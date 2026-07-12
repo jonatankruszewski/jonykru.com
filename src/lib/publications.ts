@@ -5,9 +5,7 @@ import type { MediumFlatData } from '@/types/medium.types'
  * "the latest 10", not a lifetime total. The old site claimed "24+", which the
  * data cannot support — don't reintroduce a total here.
  */
-export const sortByDateDesc = (
-  articles: MediumFlatData[]
-): MediumFlatData[] =>
+export const sortByDateDesc = (articles: MediumFlatData[]): MediumFlatData[] =>
   [...articles].sort(
     (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
   )

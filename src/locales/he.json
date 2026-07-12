@@ -1,109 +1,153 @@
 {
   "nav": {
-    "about": "אודות",
-    "publications": "פרסומים",
+    "home": "בית",
+    "openSource": "קוד פתוח",
+    "writing": "כתיבה",
     "certifications": "הסמכות",
-    "contact": "צור קשר",
+    "contact": "יצירת קשר",
     "menu": "תפריט",
-    "close": "סגור"
+    "close": "סגירה",
+    "skipToContent": "דילוג לתוכן",
+    "bookACall": "לקביעת שיחה"
   },
-  "presentation": {
-    "greeting": "שלום! 👋",
-    "name": "אני יונתן קרושבסקי",
-    "roles": {
-      "webDeveloper": "מפתח אתרים",
-      "mediumWriter": "כותב טכני ב-Medium",
-      "jsReactExpert": "מומחה Javascript & React",
-      "mongoDbDeveloper": "מפתח MongoDB מוסמך"
-    },
-    "description": "אני מתמחה בבניית פתרונות צד-לקוח סקיילביליים וניתנים לתחזוקה שעובדים בצורה חלקה - בלי סיוט של חוב טכני.",
-    "getInTouch": "צור קשר"
+  "home": {
+    "eyebrow": "AI Dev",
+    "headline": "אני בונה מערכות AI שמגיעות לפרודקשן.",
+    "lede": "רוב פרויקטי ה-AI נעצרים בדמו. אני לוקח אותם עד הסוף — הפרונטאנד, הבקאנד, הפייפליין, וכל החלקים המשעממים שאף אחד לא מדגים.",
+    "primaryCta": "לקביעת שיחה",
+    "secondaryCta": "לצפייה בקוד",
+    "capabilitiesLabel": "מה אני עושה",
+    "capabilitiesTitle": "ארבעה תחומים, אדם אחד לתדרך.",
+    "proofLabel": "הוכחות",
+    "ossTeaserTitle": "אני כותב קוד ברפוזיטוריז של אחרים.",
+    "ossTeaserBody": "כולל Pane — מנהל קוד פתוח להרצת כמה סוכני קוד במקביל.",
+    "ossTeaserCta": "כל הקוד הפתוח",
+    "writingTitle": "כתיבה",
+    "writingBody": "מאמרים על ארכיטקטורה, מיגרציות והמחיר האמיתי של חוב טכני.",
+    "writingCta": "כל המאמרים",
+    "closingTitle": "יש לך משהו שצריך להגיע לפרודקשן?",
+    "closingBody": "ספר לי מה תקוע. שלושים דקות, בלי מכירות."
   },
-  "achievements": {
-    "stackOverflowReputation": "מוניטין ב-StackOverflow",
-    "certifications": "הסמכות",
-    "publications": "פרסומים",
-    "yearsOfExperience": "שנות ניסיון"
-  },
-  "aboutCards": {
-    "aboutMe": {
-      "title": "קצת עליי 👋",
-      "content": "שלום! אני יונתן - מפתח צד-לקוח בכיר שאוהב לבנות דברים שבאמת עובדים ולא נשברים ברגע שמפסיקים להסתכל."
+  "capabilities": {
+    "ai": {
+      "title": "AI",
+      "body": "סוכנים, שימוש בכלים, evals וכל מה שהופך מודל לשימושי בפרודקשן ולא רק מרשים במחברת."
     },
-    "expertise": {
-      "title": "התמחות ⚛️",
-      "content": "אני מתמחה ב-React, Redux, TypeScript וארכיטקטורות סקיילביליות, מוודא שהכל רץ בצורה חלקה ונשאר ניתן לתחזוקה."
+    "frontend": {
+      "title": "פרונטאנד",
+      "body": "React ו-TypeScript בקנה מידה גדול — הארכיטקטורה ששומרת על קוד שנוח לעבוד בו גם בעוד שלוש שנים."
     },
-    "experience": {
-      "title": "ניסיון 🏗️",
-      "content": "עבדתי על אפליקציות בקנה מידה גדול, הנחיתי מפתחים ועזרתי לצוותים לנקות קוד מבולגן. אני כותב קוד נקי ויעיל ששומר על פרויקטים סקיילביליים במקום להפוך לחוב טכני."
+    "backend": {
+      "title": "בקאנד",
+      "body": "APIs, מידול נתונים והשירותים שמתחת. מוסמך ב-AWS, Azure, GCP ו-MongoDB."
     },
-    "community": {
-      "title": "קהילה וכתיבה ✍️",
-      "content": "אני תורם ל-Stack Overflow, כותב על פיתוח ונשאר מעודכן עם החדש ביותר בטכנולוגיה."
-    },
-    "communication": {
-      "title": "תקשורת היא המפתח 🤝",
-      "content": "אם אתה צריך מישהו שיכול לבצע, לפתור בעיות אמיתיות ולשפר את הקוד שלך, בואו נתחבר!"
+    "automation": {
+      "title": "CI ואוטומציה",
+      "body": "פייפליינים, ריליסים וכל העבודה המייגעת שהייתה צריכה להיות סקריפט. GitHub Actions מקצה לקצה."
     }
   },
-  "carousel": {
-    "previous": "הקודם",
-    "next": "הבא"
+  "stats": {
+    "certifications": "הסמכות",
+    "articles": "מאמרים שפורסמו",
+    "openSourceProjects": "פרויקטי קוד פתוח",
+    "yearsOfExperience": "שנות ניסיון"
   },
-  "publications": {
-    "title": "פרסומים אחרונים",
-    "subtitle": "שיתוף ידע דרך מאמרים טכניים ב-Medium",
-    "readOnMedium": "קרא ב-Medium"
+  "oss": {
+    "title": "קוד פתוח",
+    "lede": "ספריות שכתבתי, ורפוזיטוריז שדחפתי אליהם תיקונים אמיתיים.",
+    "authoredTitle": "בכתיבתי",
+    "authoredBody": "נבנו ומתוחזקים תחת ארגון rxova.",
+    "contributedTitle": "תרומות",
+    "contributedBody": "מוזגו לפרויקטים של אחרים — ועוד אחת שעדיין בבדיקה.",
+    "starsLabel": "כוכבים",
+    "merged": "מוזג",
+    "open": "הוצע",
+    "openNote": "פתוח, טרם מוזג.",
+    "viewRepo": "לרפוזיטורי",
+    "viewNpm": "npm",
+    "projects": {
+      "pane": {
+        "blurb": "מנהל terminal-first, אגנוסטי לסוכן, להרצת כמה סוכני קוד של AI במקביל — מקומית או בשרת עצמי.",
+        "pr320": "הוספת ניווט במקלדת לתפריטים נפתחים",
+        "pr301": "תיקון קריסת node-pty במחשבי Mac עם Intel בבילד האוניברסלי"
+      },
+      "journey": {
+        "blurb": "stepper, wizard ו-sequencer זעירים, ללא תלויות בזמן ריצה."
+      },
+      "useEverywhere": {
+        "blurb": "הוקים של React לשיתוף state והודעות בין טאבים, חלונות ו-workers."
+      },
+      "typedash": {
+        "blurb": "חלופה מודרנית ובטוחת-טיפוסים ל-lodash.",
+        "pr174": "הגנה על chunk() מפני גודל קטן מאחד"
+      },
+      "immer": {
+        "blurb": "ספריית ה-state הבלתי-משתנה שמאחורי Redux Toolkit.",
+        "pr1269": "החזרת ה-constructor האמיתי ב-drafts, ותיקון קריסה של lodash.isEmpty",
+        "issue1268": "דיווח על הרגרסיה, עם שחזור מינימלי"
+      }
+    }
+  },
+  "writing": {
+    "title": "כתיבה",
+    "lede": "מאמרים טכניים ב-Medium — ארכיטקטורה, מיגרציות, TypeScript ולמה חוב טכני אפס הוא מיתוס.",
+    "feedNote": "עשרת האחרונים, ישירות מהפיד.",
+    "readArticle": "לקריאה",
+    "readOnMedium": "לקריאה ב-Medium",
+    "allOnMedium": "הכל ב-Medium"
   },
   "certifications": {
     "title": "הסמכות",
-    "subtitle": "מומחיות מאומתת במגוון פלטפורמות וטכנולוגיות",
-    "whyHire": {
-      "title": "למה לשכור מפתח מוסמך?",
-      "p1": "כל אחד יכול לכתוב קוד, אבל לא כולם כותבים קוד סקיילבילי, ניתן לתחזוקה ואיכותי.",
-      "p2": "הסמכות הן מעבר לתגים; הן הוכחה שגורם חיצוני בדק, בחן ואימת גם ידע וגם כישורים.",
-      "p3": "כשאתה שוכר מפתח מוסמך, אתה לא רק סומך על מה שהוא אומר - אתה סומך על מה שהוא הוכיח."
-    },
-    "filterAll": "הכל"
+    "lede": "מאומתות חיצונית בענן, נתונים, AI ותהליכי פיתוח. אלה של ה-AI והענן הן המשמעותיות.",
+    "filterAll": "הכל",
+    "filterLabel": "סינון לפי מנפיק",
+    "empty": "אין הסמכות מהמנפיק הזה.",
+    "viewCredential": "צפייה בתעודה"
   },
   "contact": {
-    "title": "בואו נתחבר",
-    "subtitle": "יש לך פרויקט בראש? בואו נדבר על איך אני יכול לעזור.",
-    "getInTouch": "צור קשר",
-    "description": "אני פתוח לפרויקטים ושיתופי פעולה חדשים. אם אתה מחפש מפתח או שיש לך הזדמנות רלוונטית, אל תהסס לפנות. אחזור אליך בהקדם האפשרי.",
+    "title": "בוא נדבר",
+    "lede": "הדרך המהירה ביותר היא שיחה. שלושים דקות, בלי מכירות — ספר לי מה תקוע ואומר לך אם אני יכול לעזור.",
+    "bookACall": "לקביעת שיחה",
+    "orWrite": "או שלח הודעה",
+    "formNote": "אני קורא הכל ומשיב תוך יומיים.",
+    "elsewhere": "במקומות אחרים",
     "form": {
       "email": "האימייל שלך",
-      "emailPlaceholder": "jacob@google.com",
+      "emailPlaceholder": "you@company.com",
       "subject": "נושא",
-      "subjectPlaceholder": "רק אומר שלום",
+      "subjectPlaceholder": "במה מדובר?",
       "message": "הודעה",
-      "messagePlaceholder": "ההודעה שלך כאן",
-      "sendMessage": "שלח הודעה",
+      "messagePlaceholder": "ספר לי מה אתה בונה",
+      "sendMessage": "שליחת הודעה",
       "sending": "שולח..."
     },
     "validation": {
-      "emailRequired": "אימייל נדרש",
-      "emailMaxLength": "האימייל חייב להיות עד 128 תווים",
-      "emailAtSign": "אנא הכלל '@' בכתובת האימייל שלך",
-      "emailInvalid": "אנא הזן כתובת אימייל תקינה",
-      "subjectRequired": "נושא נדרש",
-      "subjectMaxLength": "הנושא חייב להיות עד 128 תווים",
-      "subjectMinLength": "הנושא חייב להיות לפחות 4 תווים",
-      "messageRequired": "הודעה נדרשת",
-      "messageMaxLength": "ההודעה חייבת להיות עד 256 תווים"
+      "emailRequired": "נדרש אימייל",
+      "emailMaxLength": "האימייל יכול להכיל עד 128 תווים",
+      "emailAtSign": "נא לכלול '@' בכתובת האימייל",
+      "emailInvalid": "נא להזין כתובת אימייל תקינה",
+      "subjectRequired": "נדרש נושא",
+      "subjectMaxLength": "הנושא יכול להכיל עד 128 תווים",
+      "subjectMinLength": "הנושא חייב להכיל לפחות 4 תווים",
+      "messageRequired": "נדרשת הודעה",
+      "messageMaxLength": "ההודעה יכולה להכיל עד 256 תווים"
     },
     "toast": {
       "success": "ההודעה נשלחה בהצלחה"
     }
   },
+  "notFound": {
+    "title": "אין כאן כלום.",
+    "body": "הדף הזה לא קיים — או שהיה קיים, והעיצוב מחדש בלע אותו.",
+    "cta": "חזרה לבית"
+  },
   "footer": {
     "copyright": "כל הזכויות שמורות.",
-    "builtWith": "נבנה עם Next.js, TypeScript & Tailwind CSS"
+    "builtWith": "Next.js, TypeScript, Tailwind."
   },
   "theme": {
-    "switchToLight": "עבור למצב בהיר",
-    "switchToDark": "עבור למצב כהה"
+    "switchToLight": "מעבר למצב בהיר",
+    "switchToDark": "מעבר למצב כהה"
   },
   "language": {
     "title": "שפה",

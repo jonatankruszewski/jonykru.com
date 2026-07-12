@@ -21,7 +21,9 @@ export const fetchStars = async (
   })
 
   if (!response.ok) {
-    console.warn(`⚠️  ${repo}: HTTP ${response.status} — keeping previous count`)
+    console.warn(
+      `⚠️  ${repo}: HTTP ${response.status} — keeping previous count`
+    )
     return null
   }
 

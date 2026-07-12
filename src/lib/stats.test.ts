@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
+import { OSS_PROJECTS } from '@/data/openSource'
 import credly from '@/dataFetchers/credly.backup.json'
 import mediumData from '@/dataFetchers/mediumData.json'
-import { OSS_PROJECTS } from '@/data/openSource'
 import { dedupeBadges } from '@/lib/certifications'
 import { getStats, yearsOfExperience } from '@/lib/stats'
 import type { CredlyBadge } from '@/types/credly.types'
