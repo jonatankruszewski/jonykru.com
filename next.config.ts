@@ -25,6 +25,10 @@ const nextConfig: NextConfig = {
   compress: true,
   reactStrictMode: true,
   output: 'export',
+  // Emits out/<route>/index.html instead of out/<route>.html, so S3 can resolve
+  // sub-routes. Bare /certifications is handled by the CloudFront viewer-request
+  // function in infra/cloudfront-rewrite.js.
+  trailingSlash: true,
   experimental: {
     webpackBuildWorker: true
   }
