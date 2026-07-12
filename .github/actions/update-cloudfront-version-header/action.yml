@@ -23,10 +23,19 @@ runs:
         POLICY_NAME="${{ inputs.policy-name }}"
         POLICY_ID=""
 
-        # Check if policy exists
+        # Check if policy exists.
+        #
+        # The name is NOT at Items[].Name. A list item is
+        #   { Type, ResponseHeadersPolicy: { Id, ResponseHeadersPolicyConfig: { Name } } }
+        # so a query on Items[?Name==...] silently matches nothing. That made this
+        # step conclude the policy did not exist, try to create it, and fail with
+        # ResponseHeadersPolicyAlreadyExists on every deploy since it was written.
+        # Being continue-on-error, it failed quietly — so the policy was never
+        # attached and the site served no X-Version header at all.
         set +e
         EXISTING_POLICY=$(aws cloudfront list-response-headers-policies \
-          --query "ResponseHeadersPolicyList.Items[?Name=='$POLICY_NAME'].Id" \
+          --type custom \
+          --query "ResponseHeadersPolicyList.Items[?ResponseHeadersPolicy.ResponseHeadersPolicyConfig.Name=='$POLICY_NAME'].ResponseHeadersPolicy.Id" \
           --output text 2>&1)
         LIST_EXIT_CODE=$?
         set -e
@@ -68,7 +77,8 @@ runs:
               echo "Policy already exists, finding it..."
               set +e
               EXISTING_POLICY=$(aws cloudfront list-response-headers-policies \
-                --query "ResponseHeadersPolicyList.Items[?Name=='$POLICY_NAME'].Id" \
+                --type custom \
+          --query "ResponseHeadersPolicyList.Items[?ResponseHeadersPolicy.ResponseHeadersPolicyConfig.Name=='$POLICY_NAME'].ResponseHeadersPolicy.Id" \
                 --output text 2>&1)
               LIST_EXIT_CODE=$?
               set -e
@@ -110,7 +120,8 @@ runs:
             # Re-fetch if we don't have it yet
             set +e
             EXISTING_POLICY=$(aws cloudfront list-response-headers-policies \
-              --query "ResponseHeadersPolicyList.Items[?Name=='$POLICY_NAME'].Id" \
+              --type custom \
+          --query "ResponseHeadersPolicyList.Items[?ResponseHeadersPolicy.ResponseHeadersPolicyConfig.Name=='$POLICY_NAME'].ResponseHeadersPolicy.Id" \
               --output text 2>&1)
             LIST_EXIT_CODE=$?
             set -e
