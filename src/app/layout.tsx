@@ -21,11 +21,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Jonatan Kruszewski — AI Dev',
+    default: 'Jonatan Kruszewski — Software Engineer',
     template: '%s — Jonatan Kruszewski'
   },
   description:
-    'AI developer who ships across the whole stack — frontend, backend, CI and automation. Contributor to Pane, typedash and immer; author of the rxova libraries.',
+    'Software engineer who takes AI systems past the demo — frontend, backend, CI and automation. Author of the rxova libraries; contributor to immer, typedash and Pane.',
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
