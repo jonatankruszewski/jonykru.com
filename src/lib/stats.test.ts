@@ -33,7 +33,7 @@ describe('getStats', () => {
   })
 
   it('counts the repos contributed to', () => {
-    expect(getStats().contributedRepos).toBe(3)
+    expect(getStats().contributedRepos).toBe(4)
   })
 })
 

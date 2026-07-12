@@ -86,6 +86,23 @@ export const OSS_PROJECTS: OssProject[] = [
     ]
   },
   {
+    slug: 'pie',
+    name: 'PIE',
+    repo: 'justeattakeaway/pie',
+    url: 'https://github.com/justeattakeaway/pie',
+    role: 'contributor',
+    language: 'TypeScript',
+    blurbKey: 'oss.projects.pie.blurb',
+    contributions: [
+      {
+        ref: 'PR #2458',
+        url: 'https://github.com/justeattakeaway/pie/pull/2458',
+        titleKey: 'oss.projects.pie.pr2458',
+        status: 'merged'
+      }
+    ]
+  },
+  {
     slug: 'immer',
     name: 'immer',
     repo: 'immerjs/immer',

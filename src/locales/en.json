@@ -90,6 +90,10 @@
         "blurb": "A modern, type-safe alternative to lodash.",
         "pr174": "Guarded chunk() against a size below one"
       },
+      "pie": {
+        "blurb": "Just Eat Takeaway's design system — the web components behind their apps.",
+        "pr2458": "Stopped the checkbox tick animating on mount, so a pre-checked box no longer flickers"
+      },
       "immer": {
         "blurb": "The immutable state library behind Redux Toolkit.",
         "pr1269": "Return the real constructor on drafts, fixing a lodash.isEmpty crash",
