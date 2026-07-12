@@ -93,16 +93,37 @@ curl -sI https://www.jonykru.com/blog/       # expect 200
 curl -s  https://www.jonykru.com/nonsense | head -1   # expect the 404 page, not XML
 ```
 
-## Is the function even necessary?
+## Deployed state (as of v3.0.0)
 
-Only if the origin is an S3 REST/OAC endpoint. Check:
+Settled by inspection — no longer speculative:
 
-```bash
-aws cloudfront get-distribution-config --id "$DIST_ID" \
-  --query 'DistributionConfig.Origins.Items[].DomainName'
-```
+|               |                                                                             |
+| ------------- | --------------------------------------------------------------------------- |
+| Distribution  | `E3RD99J8G8HCBA` (`jonykru.com`, `www.jonykru.com`)                         |
+| Bucket        | `jonykru-porfolio` (`il-central-1`)                                         |
+| Origin type   | **S3 REST** (`...s3.il-central-1.amazonaws.com`) — _not_ a website endpoint |
+| Function      | `jonykru-rewrite`, LIVE, on viewer-request                                  |
+| Origin access | **OAC** `jonykru-s3-oac` (SigV4, always)                                    |
+| Bucket        | **private**; Block Public Access on                                         |
 
-- contains `s3-website` → website endpoint; S3 resolves index documents itself
-  and `trailingSlash: true` alone is enough. The function is harmless but
-  redundant.
-- plain `s3.amazonaws.com` (OAC/OAI) → the function is **required**.
+### Why not an S3 website endpoint?
+
+A website endpoint would resolve `index.html` natively and make the function
+unnecessary. It was rejected because it **cannot use OAC or OAI** — that is an
+architectural limitation, not a setting. Choosing it would permanently force the
+bucket to stay public, and force the CloudFront→S3 hop down to plain HTTP.
+
+The function is what lets us keep a REST origin, which is what lets the bucket be
+private. Fifteen lines of edge JS in exchange for a CDN-only origin is a good
+trade.
+
+### What was fixed
+
+- `/blog` used to 403 (S3 REST has no index-document logic).
+- Error responses mapped **403 and 404 → `/index.html` with HTTP 200** — an SPA
+  catch-all. Every unknown URL served the home page with a success status, which
+  search engines read as soft-404s and duplicate content. Now both map to
+  `/404.html` with a real 404.
+- The bucket was **publicly readable and directly fetchable**, bypassing the CDN
+  entirely (no caching, no logs, S3 GET charges, and a second indexable hostname).
+  It is now reachable only by this distribution.
