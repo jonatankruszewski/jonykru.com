@@ -205,7 +205,13 @@ runs:
         CURRENT_POLICY=$(echo "$DIST_CONFIG" | jq -r '.DistributionConfig.DefaultCacheBehavior.ResponseHeadersPolicyId // empty')
 
         if [ "$CURRENT_POLICY" != "$POLICY_ID" ]; then
-          UPDATED_CONFIG=$(echo "$DIST_CONFIG" | jq --arg policy_id "$POLICY_ID" '.DistributionConfig.DefaultCacheBehavior.ResponseHeadersPolicyId = $policy_id')
+          # get-distribution-config returns { ETag, DistributionConfig }, but
+          # --distribution-config wants ONLY the inner object. Passing the whole
+          # response made the CLI reject it with
+          #   ParamValidation: Unknown parameter "ETag" / Missing "CallerReference"
+          # which the handler below then misreported as a permissions problem.
+          UPDATED_CONFIG=$(echo "$DIST_CONFIG" | jq --arg policy_id "$POLICY_ID" \
+            '.DistributionConfig | .DefaultCacheBehavior.ResponseHeadersPolicyId = $policy_id')
 
           set +e
           UPDATE_DIST_OUTPUT=$(aws cloudfront update-distribution \
@@ -216,9 +222,9 @@ runs:
           set -e
 
           if [ $UPDATE_DIST_EXIT_CODE -ne 0 ]; then
-            echo "⚠ Failed to attach policy to distribution (missing permissions)"
+            echo "⚠ Failed to attach policy to distribution"
             echo "Error: $UPDATE_DIST_OUTPUT"
-            echo "Required IAM permissions: cloudfront:UpdateDistribution"
+            echo "If this is AccessDenied, the deploy user needs cloudfront:UpdateDistribution."
             echo "Policy created/updated but not attached. Attach manually in AWS Console."
             exit 0
           fi
