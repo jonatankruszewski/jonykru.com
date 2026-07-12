@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { mergeArticles } from './update-medium'
+import { mediumPostId, mergeArticles } from './update-medium'
 import type { MediumFlatData } from '../src/types/medium.types'
 
 const article = (
@@ -66,5 +66,53 @@ describe('mergeArticles', () => {
 
   it('handles an empty starting file', () => {
     expect(mergeArticles([], [article('a', '2024-01-01')])).toHaveLength(1)
+  })
+
+  it('treats the RSS guid and the export canonical as the same article', () => {
+    // The two sources spell the same post differently and only share the
+    // trailing post id. Keying on the raw guid double-counted every article.
+    const fromRss: MediumFlatData = {
+      title: 'Why Zero Tech Debt is a Myth',
+      pubDate: '2024-10-21T23:40:04.158Z',
+      guid: 'https://medium.com/p/4a83ebc66e60',
+      link: 'https://levelup.gitconnected.com/why-zero-tech-debt-4a83ebc66e60',
+      categories: [],
+      image: '/images/medium/4a83ebc66e60.webp'
+    }
+    const fromExport: MediumFlatData = {
+      title: 'Why Zero Tech Debt is a Myth',
+      pubDate: '2024-10-21T23:40:04.158Z',
+      guid: 'https://medium.com/@jonakrusze/why-zero-tech-debt-4a83ebc66e60',
+      link: 'https://medium.com/@jonakrusze/why-zero-tech-debt-4a83ebc66e60',
+      categories: [],
+      image: ''
+    }
+
+    const merged = mergeArticles([fromRss], [fromExport])
+    expect(merged).toHaveLength(1)
+    // and it keeps the downloaded image and the reader-facing publication link
+    expect(merged[0].image).toBe('/images/medium/4a83ebc66e60.webp')
+    expect(merged[0].link).toContain('levelup.gitconnected.com')
+  })
+})
+
+describe('mediumPostId', () => {
+  it('extracts the post id from an RSS guid', () => {
+    expect(
+      mediumPostId({
+        ...article('x', '2024-01-01'),
+        guid: 'https://medium.com/p/4a83ebc66e60'
+      })
+    ).toBe('4a83ebc66e60')
+  })
+
+  it('extracts the same id from a slugged publication URL', () => {
+    expect(
+      mediumPostId({
+        ...article('x', '2024-01-01'),
+        guid: 'https://medium.com/@jonakrusze/why-zero-tech-debt-4a83ebc66e60',
+        link: 'https://levelup.gitconnected.com/why-zero-tech-debt-4a83ebc66e60'
+      })
+    ).toBe('4a83ebc66e60')
   })
 })

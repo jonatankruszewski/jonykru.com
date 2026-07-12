@@ -333,26 +333,52 @@ export async function downloadImages(
  * Fresh data wins on conflict, except for `image`: a re-fetch that has not
  * downloaded the image yet must not blank an existing local path.
  */
+/**
+ * Every Medium URL for a post ends in the same 12-hex post id, but the prefix
+ * differs by source:
+ *
+ *   RSS       guid: https://medium.com/p/ed7faec2a8b6
+ *   export    canonical: https://medium.com/@jonakrusze/some-slug-ed7faec2a8b6
+ *   published link: https://levelup.gitconnected.com/some-slug-ed7faec2a8b6
+ *
+ * Keying on the raw guid therefore treats the same article from two sources as
+ * two articles. Key on the id.
+ */
+export function mediumPostId(article: MediumFlatData): string {
+  const id = [article.guid, article.link]
+    .map((url) => url?.match(/([0-9a-f]{8,16})(?:\?|#|$)/i)?.[1])
+    .find(Boolean)
+
+  return id ?? article.guid ?? article.link
+}
+
 export function mergeArticles(
   existing: MediumFlatData[],
   incoming: MediumFlatData[]
 ): MediumFlatData[] {
-  const byGuid = new Map<string, MediumFlatData>()
+  const byId = new Map<string, MediumFlatData>()
 
   for (const article of existing) {
-    byGuid.set(article.guid, article)
+    byId.set(mediumPostId(article), article)
   }
 
   for (const article of incoming) {
-    const previous = byGuid.get(article.guid)
-    byGuid.set(article.guid, {
+    const id = mediumPostId(article)
+    const previous = byId.get(id)
+
+    byId.set(id, {
       ...previous,
       ...article,
-      image: article.image || previous?.image || ''
+      // A re-fetch that has not downloaded the image yet must not blank the
+      // local path an earlier run already produced.
+      image: article.image || previous?.image || '',
+      // The RSS/publication link (levelup.gitconnected.com) is the URL readers
+      // actually see; don't downgrade it to the bare profile canonical.
+      link: previous?.link || article.link
     })
   }
 
-  return [...byGuid.values()].sort(
+  return [...byId.values()].sort(
     (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
   )
 }

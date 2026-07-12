@@ -21,6 +21,7 @@
     "update-credly": "tsx scripts/update-credly.ts",
     "update-medium": "tsx scripts/update-medium.ts",
     "update-oss": "tsx scripts/update-oss.ts",
+    "import-medium": "tsx scripts/import-medium-export.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",

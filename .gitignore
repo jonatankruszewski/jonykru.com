@@ -53,3 +53,7 @@ coverage
 
 # Generated at build time by scripts/generate-og.tsx
 public/og/
+
+# Medium data export (personal archive, not site source)
+medium-export/
+medium-export-*.zip

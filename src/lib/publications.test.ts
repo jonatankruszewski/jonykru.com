@@ -30,8 +30,15 @@ describe('sortByDateDesc', () => {
     expect(input.map((a) => a.title)).toEqual(['a', 'b'])
   })
 
-  it('sorts the real feed without losing articles', () => {
-    expect(sortByDateDesc(articles)).toHaveLength(10)
+  it('sorts the real archive without losing articles', () => {
+    expect(sortByDateDesc(articles)).toHaveLength(articles.length)
+    expect(articles.length).toBe(24)
+  })
+
+  it('returns the real archive newest-first', () => {
+    const sorted = sortByDateDesc(articles)
+    const dates = sorted.map((a) => new Date(a.pubDate).getTime())
+    expect(dates).toEqual([...dates].sort((a, b) => b - a))
   })
 })
 
@@ -45,6 +52,6 @@ describe('latest', () => {
   })
 
   it('returns everything when asked for more than exist', () => {
-    expect(latest(articles, 100)).toHaveLength(10)
+    expect(latest(articles, 100)).toHaveLength(articles.length)
   })
 })
