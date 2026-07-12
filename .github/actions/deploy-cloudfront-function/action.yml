@@ -1,0 +1,126 @@
+name: 'Deploy CloudFront rewrite function'
+description: 'Publishes infra/cloudfront-rewrite.js and attaches it to the distribution, idempotently'
+
+inputs:
+  distribution-id:
+    description: 'CloudFront distribution ID'
+    required: true
+  function-name:
+    description: 'Name of the CloudFront Function'
+    required: false
+    default: 'jonykru-rewrite'
+  function-file:
+    description: 'Path to the function source'
+    required: false
+    default: 'infra/cloudfront-rewrite.js'
+
+runs:
+  using: 'composite'
+  steps:
+    # This step is load-bearing, not cosmetic: without the function a static
+    # export on an S3 REST/OAC origin returns 403/404 for every sub-route, and
+    # the failure is invisible locally because `next dev` resolves bare paths.
+    # So unlike update-cloudfront-version-header, it must fail the deploy rather
+    # than warn and continue.
+    - name: Publish and attach the rewrite function
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        DIST_ID="${{ inputs.distribution-id }}"
+        FN_NAME="${{ inputs.function-name }}"
+        FN_FILE="${{ inputs.function-file }}"
+
+        echo "::group::Resolve function state"
+
+        # describe-function exits non-zero when the function does not exist.
+        if aws cloudfront describe-function --name "$FN_NAME" > /tmp/fn.json 2>/dev/null; then
+          FN_EXISTS=true
+          FN_ETAG=$(jq -r '.ETag' /tmp/fn.json)
+          FN_ARN=$(jq -r '.FunctionSummary.FunctionMetadata.FunctionARN' /tmp/fn.json)
+          echo "Function exists: $FN_ARN"
+        else
+          FN_EXISTS=false
+          echo "Function does not exist yet"
+        fi
+
+        # Only republish when the code actually changed — publishing on every
+        # deploy churns function versions for nothing.
+        NEEDS_PUBLISH=true
+        if [ "$FN_EXISTS" = true ]; then
+          # A function can exist but never have been published, in which case
+          # there is no LIVE stage — treat that as "needs publish".
+          rm -f /tmp/live.js
+          aws cloudfront get-function --name "$FN_NAME" --stage LIVE /tmp/live.js >/dev/null 2>&1 || true
+          if [ -f /tmp/live.js ] && diff -q <(tr -d '[:space:]' < /tmp/live.js) <(tr -d '[:space:]' < "$FN_FILE") >/dev/null 2>&1; then
+            NEEDS_PUBLISH=false
+            echo "Live code already matches $FN_FILE"
+          fi
+        fi
+        echo "::endgroup::"
+
+        if [ "$FN_EXISTS" = false ]; then
+          echo "::group::Create function"
+          aws cloudfront create-function \
+            --name "$FN_NAME" \
+            --function-config "Comment=Resolve directory URIs to index.html for the static export,Runtime=cloudfront-js-2.0" \
+            --function-code "fileb://$FN_FILE" > /tmp/created.json
+          FN_ETAG=$(jq -r '.ETag' /tmp/created.json)
+          FN_ARN=$(jq -r '.FunctionSummary.FunctionMetadata.FunctionARN' /tmp/created.json)
+          NEEDS_PUBLISH=true
+          echo "::endgroup::"
+        elif [ "$NEEDS_PUBLISH" = true ]; then
+          echo "::group::Update function"
+          aws cloudfront update-function \
+            --name "$FN_NAME" \
+            --if-match "$FN_ETAG" \
+            --function-config "Comment=Resolve directory URIs to index.html for the static export,Runtime=cloudfront-js-2.0" \
+            --function-code "fileb://$FN_FILE" > /tmp/updated.json
+          FN_ETAG=$(jq -r '.ETag' /tmp/updated.json)
+          echo "::endgroup::"
+        fi
+
+        if [ "$NEEDS_PUBLISH" = true ]; then
+          echo "::group::Publish function"
+          aws cloudfront publish-function --name "$FN_NAME" --if-match "$FN_ETAG" > /dev/null
+          FN_ARN=$(aws cloudfront describe-function --name "$FN_NAME" \
+            --query 'FunctionSummary.FunctionMetadata.FunctionARN' --output text)
+          echo "Published $FN_ARN"
+          echo "::endgroup::"
+        fi
+
+        echo "::group::Reconcile distribution"
+        aws cloudfront get-distribution-config --id "$DIST_ID" > /tmp/dist.json
+        DIST_ETAG=$(jq -r '.ETag' /tmp/dist.json)
+        jq '.DistributionConfig' /tmp/dist.json > /tmp/config.json
+
+        # Desired state: our function on viewer-request, and 403/404 both served
+        # as the exported 404 page. S3 answers 403 (not 404) for a missing key
+        # under OAC, so both must be mapped or a bad URL shows an XML AccessDenied.
+        jq --arg arn "$FN_ARN" '
+          .DefaultCacheBehavior.FunctionAssociations = {
+            Quantity: 1,
+            Items: [{ FunctionARN: $arn, EventType: "viewer-request" }]
+          }
+          | .CustomErrorResponses = {
+              Quantity: 2,
+              Items: [
+                { ErrorCode: 403, ResponsePagePath: "/404.html", ResponseCode: "404", ErrorCachingMinTTL: 10 },
+                { ErrorCode: 404, ResponsePagePath: "/404.html", ResponseCode: "404", ErrorCachingMinTTL: 10 }
+              ]
+            }
+          | .DefaultRootObject = "index.html"
+        ' /tmp/config.json > /tmp/desired.json
+
+        # A distribution update takes minutes to propagate, so only submit one
+        # when the config would actually change.
+        if diff -q <(jq -S . /tmp/config.json) <(jq -S . /tmp/desired.json) >/dev/null; then
+          echo "✅ Distribution already correct — nothing to do"
+        else
+          aws cloudfront update-distribution \
+            --id "$DIST_ID" \
+            --if-match "$DIST_ETAG" \
+            --distribution-config file:///tmp/desired.json > /dev/null
+          echo "✅ Distribution updated: function attached, 403/404 -> /404.html"
+        fi
+        echo "::endgroup::"
