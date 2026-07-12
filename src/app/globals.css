@@ -17,8 +17,8 @@
  */
 
 /*
- * Flat, high-contrast, IDE-native. The palette is Dracula for dark (the
- * default) and Alucard — Dracula's official light theme — for light.
+ * Flat, high-contrast, IDE-native. Dracula for dark (the default), Solarized
+ * Light for light.
  *
  * Two rules this file enforces mechanically rather than by convention:
  *
@@ -99,17 +99,22 @@
 }
 
 /*
- * Dracula.
+ * Dracula. Two deliberate deviations, both for contrast:
  *
- * Its comment colour (#6272A4) is only 3.03:1 on this background — large-text
- * only — and here it carries the small metadata (dates, eyebrows, issuers). It
- * is lifted along its own hue to 6.87:1 so it reads as muted, not washed out.
+ * 1. The comment colour (#6272A4) is only 3.03:1 here — large-text only — and
+ *    it carries all the muted copy and metadata. Lifted along its own hue to
+ *    #C5CCE8 (8.94:1) so grey text reads clearly rather than washed out.
+ *
+ * 2. Numbers use Dracula's cyan (10.29:1) rather than its purple (5.90:1) —
+ *    the stat strip is the loudest thing on the home page and purple was the
+ *    weakest colour on it. Purple keeps a role, demoted to PR refs, where it is
+ *    small text and 5.90:1 still clears AA comfortably.
  */
 :root {
   --canvas: #282a36;
   --surface: #343746;
   --ink: #f8f8f2;
-  --ink-muted: #a9b3d9;
+  --ink-muted: #c5cce8;
   --rule: #44475a;
   --accent: #ff79c6;
   --accent-ink: #282a36;
@@ -117,10 +122,10 @@
 
   --syn-keyword: #ff79c6;
   --syn-string: #f1fa8c;
-  --syn-number: #bd93f9;
+  --syn-number: #8be9fd;
   --syn-function: #50fa7b;
-  --syn-const: #8be9fd;
-  --syn-comment: #a9b3d9;
+  --syn-const: #bd93f9;
+  --syn-comment: #c5cce8;
 }
 
 /*
@@ -145,9 +150,9 @@
 
     --syn-keyword: #cc2d7a; /* magenta */
     --syn-string: #8a6800; /* yellow */
-    --syn-number: #5f64bf; /* violet */
+    --syn-number: #1f72ac; /* blue */
     --syn-function: #687700; /* green */
-    --syn-const: #1f72ac; /* blue */
+    --syn-const: #5f64bf; /* violet */
     --syn-comment: #4d6168;
   }
 }
@@ -170,9 +175,9 @@
 
   --syn-keyword: #cc2d7a;
   --syn-string: #8a6800;
-  --syn-number: #5f64bf;
+  --syn-number: #1f72ac;
   --syn-function: #687700;
-  --syn-const: #1f72ac;
+  --syn-const: #5f64bf;
   --syn-comment: #4d6168;
 }
 
@@ -180,7 +185,7 @@
   --canvas: #282a36;
   --surface: #343746;
   --ink: #f8f8f2;
-  --ink-muted: #a9b3d9;
+  --ink-muted: #c5cce8;
   --rule: #44475a;
   --accent: #ff79c6;
   --accent-ink: #282a36;
@@ -188,10 +193,10 @@
 
   --syn-keyword: #ff79c6;
   --syn-string: #f1fa8c;
-  --syn-number: #bd93f9;
+  --syn-number: #8be9fd;
   --syn-function: #50fa7b;
-  --syn-const: #8be9fd;
-  --syn-comment: #a9b3d9;
+  --syn-const: #bd93f9;
+  --syn-comment: #c5cce8;
 }
 
 body {

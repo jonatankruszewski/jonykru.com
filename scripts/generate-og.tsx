@@ -19,7 +19,7 @@ const OUT_DIR = path.join(process.cwd(), 'public/og')
 
 const CANVAS = '#282A36'
 const INK = '#F8F8F2'
-const MUTED = '#8995BB'
+const MUTED = '#C5CCE8'
 const ACCENT = '#FF79C6'
 
 export type OgCard = {

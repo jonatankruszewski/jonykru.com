@@ -58,5 +58,8 @@ public/og/
 medium-export/
 medium-export-*.zip
 
-# Palette reference screenshot
+# Palette / design reference screenshots — scratch input, never site source
 colorreference.png
+reference*.png
+reference*.jpg
+reference*.jpeg
