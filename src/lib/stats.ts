@@ -1,4 +1,9 @@
-import { OSS_PROJECTS } from '@/data/openSource'
+import {
+  authored,
+  contributed,
+  OSS_PROJECTS,
+  publishedPackages
+} from '@/data/openSource'
 import { CAREER_START } from '@/data/site'
 import credly from '@/dataFetchers/credly.backup.json'
 import mediumData from '@/dataFetchers/mediumData.json'
@@ -10,6 +15,9 @@ export type SiteStats = {
   certifications: number
   articles: number
   openSourceProjects: number
+  authoredProjects: number
+  publishedPackages: number
+  contributedRepos: number
   yearsOfExperience: number
 }
 
@@ -34,5 +42,8 @@ export const getStats = (now: Date = new Date()): SiteStats => ({
   certifications: dedupeBadges(credly.data as CredlyBadge[]).length,
   articles: (mediumData as MediumFlatData[]).length,
   openSourceProjects: OSS_PROJECTS.length,
+  authoredProjects: authored().length,
+  publishedPackages: publishedPackages().length,
+  contributedRepos: contributed().length,
   yearsOfExperience: yearsOfExperience(now)
 })

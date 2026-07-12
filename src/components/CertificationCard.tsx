@@ -27,7 +27,7 @@ const CertificationCard = ({ badge }: CertificationCardProps) => {
       />
       <div className="min-w-0">
         <h3 className="text-ink font-semibold leading-snug">{title}</h3>
-        <p className="font-mono text-label uppercase tracking-label text-ink-muted mt-2">
+        <p className="font-mono text-label uppercase tracking-label text-syn-comment mt-2">
           {badge.issuer_linked_in_name}
         </p>
       </div>

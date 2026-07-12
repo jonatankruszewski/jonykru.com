@@ -26,9 +26,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     } catch {
       // localStorage not available
     }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light'
+
+    // Dark-first: the design is an IDE, and an IDE is dark unless you say
+    // otherwise. Only an explicit OS light preference opts out.
+    return window.matchMedia('(prefers-color-scheme: light)').matches
+      ? 'light'
+      : 'dark'
   }
 
   const [theme, setTheme] = useState<Theme>(getInitialTheme)

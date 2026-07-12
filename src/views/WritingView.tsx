@@ -25,13 +25,16 @@ const WritingView = () => {
         <p className="mt-6 max-w-xl text-ink-muted">{t('writing.lede')}</p>
 
         {/*
-          The Medium RSS feed only ever returns the latest 10, so this is a
-          window, not an archive. Say so rather than implying a lifetime total —
-          the old site claimed "24+" and could not back it.
+          Medium's RSS only returns the latest 10, so while the archive is still
+          feed-capped this list is a window, not a lifetime total — say so. Once
+          the file holds more than the feed can return (via mergeArticles or a
+          Medium export) the caveat stops being true, so it stops being shown.
         */}
-        <p className="mt-6 font-mono text-label text-ink-muted">
-          {t('writing.feedNote')}
-        </p>
+        {articles.length <= 10 && (
+          <p className="mt-6 font-mono text-label text-syn-comment">
+            {t('writing.feedNote')}
+          </p>
+        )}
       </section>
 
       <section className="mx-auto max-w-6xl px-6">

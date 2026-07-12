@@ -4,15 +4,21 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Flat, high-contrast, minimal.
+ * Flat, high-contrast, IDE-native. The palette is JetBrains' New UI — Darcula
+ * for dark (the default), IntelliJ Light for light.
  *
  * Two rules this file enforces mechanically rather than by convention:
  *
  * 1. Tailwind's default palette is deleted (`--color-*: initial`). A stray
- *    `text-gray-400` from the old design no longer compiles to anything, so the
+ *    `text-gray-400` from the old design no longer compiles to anything, so a
  *    rebrand cannot be left 80% done.
  * 2. Shadows, blurs and gradients are deleted. Depth comes from hairline rules
  *    and whitespace. `scripts/check-flat.ts` guards the rest.
+ *
+ * The syntax colours are semantic, not decorative: `syn-number` is for numbers,
+ * `syn-string` for package names and quoted values, `syn-const` for refs, and
+ * `syn-comment` for metadata. Used that way the page reads like a source file.
+ * Every one clears WCAG AA on its own canvas.
  */
 @theme {
   --color-*: initial;
@@ -26,7 +32,6 @@
   --color-transparent: transparent;
   --color-current: currentColor;
 
-  /* Values are re-bound per theme below; utilities resolve through the vars. */
   --color-canvas: var(--canvas);
   --color-surface: var(--surface);
   --color-ink: var(--ink);
@@ -34,64 +39,91 @@
   --color-rule: var(--rule);
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
-  /* The only non-brand hue. Error is a semantic state, not decoration —
-     lime cannot carry "something is wrong". */
   --color-error: var(--error);
+
+  --color-syn-keyword: var(--syn-keyword);
+  --color-syn-string: var(--syn-string);
+  --color-syn-number: var(--syn-number);
+  --color-syn-function: var(--syn-function);
+  --color-syn-const: var(--syn-const);
+  --color-syn-comment: var(--syn-comment);
 
   --radius-none: 0;
   --radius-sm: 2px;
 
-  --font-sans: var(--font-rubik), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-mono:
+    var(--font-plex-mono), var(--font-plex-hebrew), ui-monospace, monospace;
+  --font-sans:
+    var(--font-plex-sans), var(--font-plex-hebrew), ui-sans-serif, system-ui,
+    sans-serif;
 
-  --text-display: clamp(2.75rem, 7vw, 5.5rem);
-  --text-display--line-height: 0.95;
-  --text-display--letter-spacing: -0.035em;
-  --text-display--font-weight: 800;
+  --text-display: clamp(2.25rem, 5.5vw, 4.25rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--font-weight: 600;
 
-  --text-h1: clamp(2rem, 4.5vw, 3.25rem);
-  --text-h1--line-height: 1.05;
-  --text-h1--letter-spacing: -0.03em;
-  --text-h1--font-weight: 800;
+  --text-h1: clamp(1.75rem, 3.5vw, 2.75rem);
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h1--font-weight: 600;
 
-  --text-h2: clamp(1.5rem, 2.5vw, 2rem);
-  --text-h2--line-height: 1.15;
-  --text-h2--letter-spacing: -0.02em;
-  --text-h2--font-weight: 700;
+  --text-h2: clamp(1.375rem, 2.25vw, 1.875rem);
+  --text-h2--line-height: 1.2;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h2--font-weight: 600;
 
-  --text-h3: 1.25rem;
-  --text-h3--line-height: 1.3;
-  --text-h3--font-weight: 700;
+  --text-h3: 1.125rem;
+  --text-h3--line-height: 1.35;
+  --text-h3--font-weight: 600;
 
   --text-body: 1.0625rem;
   --text-body--line-height: 1.65;
 
   --text-label: 0.75rem;
   --text-label--line-height: 1.4;
-  --text-label--letter-spacing: 0.09em;
+  --text-label--letter-spacing: 0.06em;
   --text-label--font-weight: 500;
 }
 
+/* IntelliJ Light */
 :root {
-  --canvas: #faf9f6;
-  --surface: #f2f0ea;
-  --ink: #14141a;
-  --ink-muted: #5a5751;
-  --rule: #e2dfd7;
-  --accent: #c8ff00;
-  --accent-ink: #14141a;
-  --error: #b3261e;
+  --canvas: #ffffff;
+  --surface: #f7f8fa;
+  --ink: #000000;
+  --ink-muted: #6c707e;
+  --rule: #ebecf0;
+  --accent: #0033b3;
+  --accent-ink: #ffffff;
+  --error: #e01b24;
+
+  --syn-keyword: #0033b3;
+  --syn-string: #067d17;
+  --syn-number: #1750eb;
+  --syn-function: #00627a;
+  --syn-const: #871094;
+  --syn-comment: #8c8c8c;
 }
 
+/* Darcula / JetBrains New UI Dark — the default (see themeContext). */
 .dark {
-  --canvas: #0e0e12;
-  --surface: #17171c;
-  --ink: #faf9f6;
-  --ink-muted: #a3a09a;
-  --rule: #26262e;
-  --accent: #c8ff00;
-  --accent-ink: #14141a;
-  --error: #f2b8b5;
+  --canvas: #1e1f22;
+  --surface: #2b2d30;
+  --ink: #dfe1e5;
+  --ink-muted: #9da0a8;
+  --rule: #393b40;
+  /* The brighter blue, with dark text on it: JetBrains' action blue (#3574F0)
+     only reaches 4.28:1 behind white, which fails AA for the small mono
+     button labels. This clears 6.53:1. */
+  --accent: #56a8f5;
+  --accent-ink: #1e1f22;
+  --error: #f75464;
+
+  --syn-keyword: #cf8e6d;
+  --syn-string: #6aab73;
+  --syn-number: #2aacb8;
+  --syn-function: #56a8f5;
+  --syn-const: #c77dbb;
+  --syn-comment: #7a7e85;
 }
 
 body {
@@ -102,26 +134,28 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/*
- * Acid lime measures 1.12:1 against cream — as text on a light background it is
- * effectively invisible. It is a FILL colour: ink-on-lime is 15.5:1. So links in
- * light mode are ink with a lime underline, and only in dark mode (16.3:1) may
- * lime carry text itself.
- */
+/* Headings are mono; prose is sans. That split is what makes it read as an
+   editor rather than a terminal cosplay. */
+:where(h1, h2, h3) {
+  font-family: var(--font-mono);
+}
+
 .link {
   color: var(--ink);
   text-decoration: underline;
   text-decoration-color: var(--accent);
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
-  transition: text-decoration-thickness 100ms ease;
+  transition:
+    text-decoration-thickness 100ms ease,
+    color 100ms ease;
 }
 
 .link:hover {
-  text-decoration-thickness: 4px;
+  color: var(--accent);
+  text-decoration-thickness: 3px;
 }
 
-/* Focus is always the lime block — visible on both canvases. */
 :where(a, button, input, textarea, summary):focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -130,4 +164,12 @@ body {
 ::selection {
   background: var(--accent);
   color: var(--accent-ink);
+}
+
+/* On an accent-filled surface the default selection would paint accent on
+   accent and vanish. Invert it there. */
+.bg-accent ::selection,
+.bg-accent::selection {
+  background: var(--accent-ink);
+  color: var(--accent);
 }

@@ -14,7 +14,7 @@ const CtaBand = () => {
       <div className="mx-auto max-w-6xl px-6 py-24 flex flex-wrap items-end justify-between gap-10">
         <div className="max-w-xl">
           <h2 className="text-h1">{t('home.closingTitle')}</h2>
-          <p className="mt-4 text-accent-ink/80">{t('home.closingBody')}</p>
+          <p className="mt-4 text-accent-ink">{t('home.closingBody')}</p>
         </div>
 
         <CtaButton

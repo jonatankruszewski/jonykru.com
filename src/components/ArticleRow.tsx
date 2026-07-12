@@ -24,7 +24,7 @@ const ArticleRow = ({ article }: ArticleRowProps) => {
       >
         <time
           dateTime={article.pubDate}
-          className="font-mono text-label text-ink-muted tabular-nums"
+          className="font-mono text-label text-syn-comment tabular-nums"
         >
           {formatDate(article.pubDate)}
         </time>

@@ -20,7 +20,12 @@ const ContactForm = () => {
   const { t } = useI18n()
   const [state, handleSubmit, resetFormSubmission] =
     useFormSpreeForm<FormData>('xwpleawo')
-  const methods = useReactHookForm<FormData>({ mode: 'onTouched' })
+  // Without defaultValues, field.value starts undefined and React logs
+  // "changing an uncontrolled input to be controlled" on the first keystroke.
+  const methods = useReactHookForm<FormData>({
+    mode: 'onTouched',
+    defaultValues: { email: '', subject: '', message: '' }
+  })
   const { handleSubmit: submit, control } = methods
   const [toastOpen, setToastOpen] = React.useState(false)
   const timerRef = useRef<NodeJS.Timeout | undefined>(undefined)

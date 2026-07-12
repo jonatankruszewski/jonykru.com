@@ -19,14 +19,14 @@
     "capabilitiesLabel": "What I do",
     "capabilitiesTitle": "Four disciplines, one person to brief.",
     "proofLabel": "Receipts",
-    "ossTeaserTitle": "I ship code in other people's repos.",
-    "ossTeaserBody": "Including Pane — an open-source manager for running multiple coding agents in parallel.",
+    "ossTeaserTitle": "Open source is the receipt.",
+    "ossTeaserBody": "Two projects of my own across five published packages, plus merged fixes in other people's codebases — including Pane, a manager for running AI coding agents in parallel.",
     "ossTeaserCta": "All open source",
     "writingTitle": "Writing",
     "writingBody": "Long-form on architecture, migrations and the cost of tech debt.",
     "writingCta": "All writing",
     "closingTitle": "Got something that needs shipping?",
-    "closingBody": "Tell me what's stuck. Thirty minutes, no pitch."
+    "closingBody": "Tell me what's stuck. 20 minutes, no pitch."
   },
   "capabilities": {
     "ai": {
@@ -50,15 +50,17 @@
     "certifications": "certifications",
     "articles": "published articles",
     "openSourceProjects": "open-source projects",
-    "yearsOfExperience": "years shipping"
+    "yearsOfExperience": "years shipping",
+    "publishedPackages": "packages published",
+    "authoredProjects": "projects authored"
   },
   "oss": {
     "title": "Open Source",
-    "lede": "Libraries I wrote, and repos I've pushed real fixes into.",
+    "lede": "Open source is the closest thing we have to a public audit. The code is there, the tests are there, the review threads are there — anyone can check the work instead of taking my word for it.",
     "authoredTitle": "Authored",
-    "authoredBody": "Built and maintained under the rxova org.",
+    "authoredBody": "Two projects I built and maintain under the rxova org, shipping five published packages.",
     "contributedTitle": "Contributed",
-    "contributedBody": "Merged into other people's projects — plus one still in review.",
+    "contributedBody": "Fixes merged into codebases I don't own — where the bar is someone else's, and the review is public.",
     "starsLabel": "stars",
     "merged": "Merged",
     "open": "Proposed",
@@ -86,7 +88,8 @@
         "pr1269": "Return the real constructor on drafts, fixing a lodash.isEmpty crash",
         "issue1268": "Reported the regression, with a minimal reproduction"
       }
-    }
+    },
+    "packagesLabel": "Packages"
   },
   "writing": {
     "title": "Writing",
@@ -106,7 +109,7 @@
   },
   "contact": {
     "title": "Let's talk",
-    "lede": "The fastest way in is a call. Thirty minutes, no pitch — tell me what's stuck and I'll tell you if I can help.",
+    "lede": "The fastest way in is a call. 20 minutes, no pitch — tell me what's stuck and I'll tell you if I can help.",
     "bookACall": "Book a call",
     "orWrite": "Or send a message",
     "formNote": "I read everything and reply within a couple of days.",

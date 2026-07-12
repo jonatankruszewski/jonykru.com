@@ -23,7 +23,7 @@ const HomeView = () => {
   const articles = latest(mediumData as MediumFlatData[], 3)
 
   const proof = [
-    { value: stats.openSourceProjects, label: t('stats.openSourceProjects') },
+    { value: stats.publishedPackages, label: t('stats.publishedPackages') },
     { value: stats.certifications, label: t('stats.certifications') },
     { value: stats.articles, label: t('stats.articles') },
     { value: stats.yearsOfExperience, label: t('stats.yearsOfExperience') }
@@ -33,7 +33,7 @@ const HomeView = () => {
     <>
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-6 pt-24 pb-20 md:pt-32 md:pb-28">
-        <p className="font-mono text-label uppercase tracking-label text-ink-muted">
+        <p className="font-mono text-label uppercase tracking-label text-syn-comment">
           {t('home.eyebrow')}
         </p>
 
@@ -58,10 +58,10 @@ const HomeView = () => {
         <dl className="mx-auto max-w-6xl px-6 py-10 grid grid-cols-2 gap-8 md:grid-cols-4">
           {proof.map((item) => (
             <div key={item.label} className="flex flex-col-reverse">
-              <dt className="font-mono text-label uppercase tracking-label text-ink-muted mt-2">
+              <dt className="font-mono text-label uppercase tracking-label text-syn-comment mt-2">
                 {item.label}
               </dt>
-              <dd className="font-mono text-h1 text-ink tabular-nums">
+              <dd className="font-mono text-h1 text-syn-number tabular-nums">
                 {item.value}
               </dd>
             </div>

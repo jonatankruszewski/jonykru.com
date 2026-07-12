@@ -16,6 +16,12 @@ export type Contribution = {
   status: ContributionStatus
 }
 
+/** A published npm package. Private workspace tooling is deliberately excluded. */
+export type OssPackage = {
+  name: string
+  url: string
+}
+
 export type OssProject = {
   slug: string
   name: string
@@ -26,8 +32,12 @@ export type OssProject = {
   npm?: string
   blurbKey: string
   featured?: boolean
+  /** Authored projects are monorepos; these are the packages they ship. */
+  packages?: OssPackage[]
   contributions?: Contribution[]
 }
+
+const npmUrl = (name: string) => `https://www.npmjs.com/package/${name}`
 
 export const OSS_PROJECTS: OssProject[] = [
   {
@@ -62,7 +72,15 @@ export const OSS_PROJECTS: OssProject[] = [
     role: 'author',
     language: 'TypeScript',
     blurbKey: 'oss.projects.journey.blurb',
-    featured: true
+    featured: true,
+    packages: [
+      { name: '@rxova/journey-core', url: npmUrl('@rxova/journey-core') },
+      { name: '@rxova/journey-react', url: npmUrl('@rxova/journey-react') },
+      {
+        name: '@rxova/journey-devtools-bridge',
+        url: npmUrl('@rxova/journey-devtools-bridge')
+      }
+    ]
   },
   {
     slug: 'use-everywhere',
@@ -71,9 +89,13 @@ export const OSS_PROJECTS: OssProject[] = [
     url: 'https://github.com/rxova/use-everywhere',
     role: 'author',
     language: 'TypeScript',
-    npm: 'https://www.npmjs.com/package/use-everywhere',
+    npm: npmUrl('use-everywhere'),
     blurbKey: 'oss.projects.useEverywhere.blurb',
-    featured: true
+    featured: true,
+    packages: [
+      { name: 'use-everywhere', url: npmUrl('use-everywhere') },
+      { name: '@use-everywhere/core', url: npmUrl('@use-everywhere/core') }
+    ]
   },
   {
     slug: 'typedash',
@@ -130,3 +152,7 @@ export const contributed = (projects = OSS_PROJECTS): OssProject[] =>
 
 export const featured = (projects = OSS_PROJECTS): OssProject[] =>
   projects.filter((p) => p.featured)
+
+/** Published packages across the authored monorepos. Private tooling excluded. */
+export const publishedPackages = (projects = OSS_PROJECTS): OssPackage[] =>
+  projects.flatMap((p) => p.packages ?? [])

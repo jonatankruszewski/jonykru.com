@@ -25,6 +25,18 @@ describe('getStats', () => {
   it('derives the open-source project count', () => {
     expect(getStats().openSourceProjects).toBe(OSS_PROJECTS.length)
   })
+
+  it('counts the two authored rxova projects', () => {
+    expect(getStats().authoredProjects).toBe(2)
+  })
+
+  it('counts five published packages, excluding the private tooling one', () => {
+    expect(getStats().publishedPackages).toBe(5)
+  })
+
+  it('counts the repos contributed to', () => {
+    expect(getStats().contributedRepos).toBe(3)
+  })
 })
 
 describe('yearsOfExperience', () => {

@@ -19,14 +19,14 @@
     "capabilitiesLabel": "Qué hago",
     "capabilitiesTitle": "Cuatro disciplinas, una sola persona a quien explicarle.",
     "proofLabel": "Pruebas",
-    "ossTeaserTitle": "Escribo código en los repos de otros.",
-    "ossTeaserBody": "Incluido Pane, un gestor open source para correr varios agentes de código en paralelo.",
+    "ossTeaserTitle": "El open source es la prueba.",
+    "ossTeaserBody": "Dos proyectos propios en cinco paquetes publicados, más arreglos mergeados en código ajeno — incluido Pane, un gestor para correr agentes de código de IA en paralelo.",
     "ossTeaserCta": "Todo el open source",
     "writingTitle": "Artículos",
     "writingBody": "Ensayos sobre arquitectura, migraciones y el costo real de la deuda técnica.",
     "writingCta": "Todos los artículos",
     "closingTitle": "¿Tenés algo que necesita salir a producción?",
-    "closingBody": "Contame qué está trabado. Treinta minutos, sin venta."
+    "closingBody": "Contame qué está trabado. 20 minutos, sin venta."
   },
   "capabilities": {
     "ai": {
@@ -50,15 +50,17 @@
     "certifications": "certificaciones",
     "articles": "artículos publicados",
     "openSourceProjects": "proyectos open source",
-    "yearsOfExperience": "años en producción"
+    "yearsOfExperience": "años en producción",
+    "publishedPackages": "paquetes publicados",
+    "authoredProjects": "proyectos propios"
   },
   "oss": {
     "title": "Open Source",
-    "lede": "Librerías que escribí, y repos donde metí mano de verdad.",
+    "lede": "El open source es lo más parecido a una auditoría pública. El código está, los tests están, los reviews están — cualquiera puede revisar el trabajo en vez de creerme.",
     "authoredTitle": "Propios",
-    "authoredBody": "Creados y mantenidos bajo la organización rxova.",
+    "authoredBody": "Dos proyectos que construí y mantengo bajo la organización rxova, con cinco paquetes publicados.",
     "contributedTitle": "Contribuciones",
-    "contributedBody": "Mergeadas en proyectos de otros, más una que sigue en revisión.",
+    "contributedBody": "Arreglos mergeados en código que no es mío — donde la vara la pone otro y el review es público.",
     "starsLabel": "estrellas",
     "merged": "Mergeado",
     "open": "Propuesto",
@@ -86,7 +88,8 @@
         "pr1269": "Devolver el constructor real en los drafts, arreglando un crash de lodash.isEmpty",
         "issue1268": "Reporte de la regresión, con reproducción mínima"
       }
-    }
+    },
+    "packagesLabel": "Paquetes"
   },
   "writing": {
     "title": "Artículos",
@@ -106,7 +109,7 @@
   },
   "contact": {
     "title": "Hablemos",
-    "lede": "La vía más rápida es una llamada. Treinta minutos, sin venta: contame qué está trabado y te digo si puedo ayudar.",
+    "lede": "La vía más rápida es una llamada. 20 minutos, sin venta: contame qué está trabado y te digo si puedo ayudar.",
     "bookACall": "Agendar una llamada",
     "orWrite": "O mandame un mensaje",
     "formNote": "Leo todo y respondo en un par de días.",

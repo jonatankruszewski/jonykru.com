@@ -322,10 +322,58 @@ export async function downloadImages(
 }
 
 /**
- * Save the filtered data to JSON file
+ * Merge freshly-fetched articles into the ones already on disk, keyed by guid.
+ *
+ * Medium's RSS only ever returns the latest 10 posts. Overwriting the file with
+ * the feed therefore caps the archive at 10 forever and silently drops older
+ * posts as new ones push them out — which is why the site could only ever show
+ * 10 despite ~24 existing. Merging makes the file cumulative: the feed tops it
+ * up, and entries added by hand or from a Medium export survive.
+ *
+ * Fresh data wins on conflict, except for `image`: a re-fetch that has not
+ * downloaded the image yet must not blank an existing local path.
+ */
+export function mergeArticles(
+  existing: MediumFlatData[],
+  incoming: MediumFlatData[]
+): MediumFlatData[] {
+  const byGuid = new Map<string, MediumFlatData>()
+
+  for (const article of existing) {
+    byGuid.set(article.guid, article)
+  }
+
+  for (const article of incoming) {
+    const previous = byGuid.get(article.guid)
+    byGuid.set(article.guid, {
+      ...previous,
+      ...article,
+      image: article.image || previous?.image || ''
+    })
+  }
+
+  return [...byGuid.values()].sort(
+    (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
+  )
+}
+
+export function readExistingJson(dataPath: string): MediumFlatData[] {
+  if (!fs.existsSync(dataPath)) return []
+
+  try {
+    const parsed = JSON.parse(fs.readFileSync(dataPath, 'utf8'))
+    return Array.isArray(parsed) ? (parsed as MediumFlatData[]) : []
+  } catch {
+    return []
+  }
+}
+
+/**
+ * Save the filtered data to JSON file, merging with whatever is already there.
  */
 export function saveDataJson(data: MediumFlatData[], dataPath: string): void {
-  fs.writeFileSync(dataPath, JSON.stringify(data, null, 2), 'utf8')
+  const merged = mergeArticles(readExistingJson(dataPath), data)
+  fs.writeFileSync(dataPath, JSON.stringify(merged, null, 2), 'utf8')
 }
 
 /**

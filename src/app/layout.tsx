@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { ReactNode } from 'react'
-import { FontJetBrainsMono, FontRubik } from '@/app/fonts'
+import { FontPlexHebrew, FontPlexMono, FontPlexSans } from '@/app/fonts'
 import RTLHandler from '@/components/RTLHandler'
 import SiteFooter from '@/components/SiteFooter'
 import SiteNav from '@/components/SiteNav'
@@ -13,8 +13,8 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#faf9f6' },
-    { media: '(prefers-color-scheme: dark)', color: '#0e0e12' }
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#1e1f22' }
   ]
 }
 
@@ -42,7 +42,7 @@ const THEME_SCRIPT = `
 try {
   var t = localStorage.getItem('theme');
   if (t !== 'light' && t !== 'dark') {
-    t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   }
   document.documentElement.classList.toggle('dark', t === 'dark');
 } catch (e) {}
@@ -53,7 +53,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       dir="ltr"
-      className={`${FontRubik.variable} ${FontJetBrainsMono.variable}`}
+      className={`${FontPlexMono.variable} ${FontPlexSans.variable} ${FontPlexHebrew.variable}`}
       suppressHydrationWarning
     >
       <head>

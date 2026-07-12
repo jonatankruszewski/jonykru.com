@@ -17,7 +17,7 @@ const SectionHeader = ({
     <div className="flex flex-wrap items-end justify-between gap-6">
       <div className="max-w-2xl">
         {eyebrow && (
-          <p className="font-mono text-label uppercase tracking-label text-ink-muted mb-4">
+          <p className="font-mono text-label uppercase tracking-label text-syn-comment mb-4">
             {eyebrow}
           </p>
         )}

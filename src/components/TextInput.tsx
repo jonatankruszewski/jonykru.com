@@ -80,6 +80,9 @@ const TextInput = <
 
       <input
         {...field}
+        // Always a string: an undefined value would make this input flip from
+        // uncontrolled to controlled on the first keystroke.
+        value={typeof field.value === 'string' ? field.value : ''}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
