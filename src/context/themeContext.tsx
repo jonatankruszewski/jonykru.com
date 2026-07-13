@@ -12,49 +12,52 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Initialize from localStorage synchronously (SSR-safe)
-  const getInitialTheme = (): Theme => {
-    if (typeof window === 'undefined') {
-      return 'dark'
-    }
-
+  // Client-only: a stored choice wins, else the OS preference. Dark-first — the
+  // design is an IDE, and an IDE is dark unless you say otherwise.
+  const detectTheme = (): Theme => {
     try {
       const savedTheme = localStorage.getItem('theme') as Theme | null
-      if (savedTheme === 'dark' || savedTheme === 'light') {
-        return savedTheme
-      }
+      if (savedTheme === 'dark' || savedTheme === 'light') return savedTheme
     } catch {
       // localStorage not available
     }
-
-    // Dark-first: the design is an IDE, and an IDE is dark unless you say
-    // otherwise. Only an explicit OS light preference opts out.
     return window.matchMedia('(prefers-color-scheme: light)').matches
       ? 'light'
       : 'dark'
   }
 
-  const [theme, setTheme] = useState<Theme>(getInitialTheme)
+  // Start 'dark' (the SSR default) so the first client render matches the
+  // server. Reading matchMedia/localStorage during init desyncs them and fails
+  // hydration (the toggle icon differs, React #418); the real theme lands after
+  // mount.
+  const [theme, setTheme] = useState<Theme>('dark')
   const [mounted, setMounted] = useState(false)
 
-  // globals.css already renders the right theme from prefers-color-scheme with
-  // no JavaScript, so this only writes an *override* class. For anyone who has
-  // not touched the toggle, the class we add matches what CSS already painted,
-  // which is why there is no flash despite there being no blocking script.
   useEffect(() => {
     setMounted(true)
+    setTheme(detectTheme())
+  }, [])
 
+  // globals.css already paints the right theme from prefers-color-scheme with no
+  // JavaScript, so this only writes an *override* class — and only after mount,
+  // so it never fights the CSS default before the real theme is known (no flash).
+  useEffect(() => {
+    if (!mounted) return
     const root = document.documentElement
     root.classList.toggle('dark', theme === 'dark')
     root.classList.toggle('light', theme === 'light')
-
-    if (mounted) {
-      localStorage.setItem('theme', theme)
-    }
   }, [theme, mounted])
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'))
+    setTheme((prevTheme) => {
+      const next = prevTheme === 'light' ? 'dark' : 'light'
+      try {
+        localStorage.setItem('theme', next)
+      } catch {
+        // localStorage not available
+      }
+      return next
+    })
   }
 
   return (
