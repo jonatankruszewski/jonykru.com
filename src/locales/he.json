@@ -158,6 +158,26 @@
     "body": "הדף הזה לא קיים — או שהיה קיים, והעיצוב מחדש בלע אותו.",
     "cta": "חזרה לבית"
   },
+  "feedback": {
+    "button": "שליחת משוב",
+    "title": "שליחת משוב",
+    "description": "מצאת באג, שגיאת כתיב או משהו שאפשר לשפר? ספר לי — זה מגיע ישר לתיבת הדואר שלי.",
+    "messageLabel": "המשוב שלך",
+    "messagePlaceholder": "מה עובר לך בראש?",
+    "emailLabel": "אימייל (אופציונלי)",
+    "emailPlaceholder": "you@company.com",
+    "submit": "שליחת משוב",
+    "sending": "שולח...",
+    "close": "סגירה",
+    "successTitle": "תודה על המשוב",
+    "successBody": "אני קורא כל הודעה. אם השארת אימייל, אולי אחזור אליך.",
+    "validation": {
+      "messageRequired": "כתוב משהו, ולו קצר",
+      "messageMaxLength": "המשוב יכול להכיל עד 1000 תווים",
+      "emailMaxLength": "האימייל יכול להכיל עד 128 תווים",
+      "emailInvalid": "נא להזין כתובת אימייל תקינה"
+    }
+  },
   "footer": {
     "copyright": "כל הזכויות שמורות.",
     "builtWith": "Next.js, TypeScript, Tailwind."
