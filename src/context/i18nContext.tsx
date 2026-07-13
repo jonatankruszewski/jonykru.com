@@ -8,6 +8,7 @@ import React, {
   useMemo,
   useState
 } from 'react'
+import { interpolate } from '@/lib/i18n'
 import en from '@/locales/en.json'
 import es from '@/locales/es.json'
 import he from '@/locales/he.json'
@@ -36,7 +37,7 @@ export const isRTL = (lang: Language): boolean =>
 interface I18nContextType {
   language: Language
   setLanguage: (lang: Language) => void
-  t: (key: string) => string
+  t: (key: string, params?: Record<string, string | number>) => string
   tList: (key: string) => string[]
   direction: Direction
   isRTL: boolean
@@ -87,7 +88,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   )
 
   const t = useCallback(
-    (key: string): string => {
+    (key: string, params?: Record<string, string | number>): string => {
       const keys = key.split('.')
       let value: unknown = translations[language]
 
@@ -114,11 +115,13 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
               return key // Return key if not found in fallback either
             }
           }
-          return typeof fallback === 'string' ? fallback : key
+          return typeof fallback === 'string'
+            ? interpolate(fallback, params)
+            : key
         }
       }
 
-      return typeof value === 'string' ? value : key
+      return typeof value === 'string' ? interpolate(value, params) : key
     },
     [language]
   )

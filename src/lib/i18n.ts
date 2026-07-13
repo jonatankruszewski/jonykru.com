@@ -21,3 +21,19 @@ export const missingKeys = (
   const candidateKeys = new Set(flattenKeys(candidate))
   return flattenKeys(reference).filter((key) => !candidateKeys.has(key))
 }
+
+/**
+ * Fills `{token}` placeholders in a copy string from `params`. This is how
+ * headline numbers reach the prose without being typed by hand — the same
+ * derived stats that power the stat blocks. Copy that passes no params, and any
+ * token with no matching key, is left exactly as written.
+ */
+export const interpolate = (
+  template: string,
+  params?: Record<string, string | number>
+): string =>
+  params
+    ? template.replace(/\{(\w+)\}/g, (match, token: string) =>
+        token in params ? String(params[token]) : match
+      )
+    : template

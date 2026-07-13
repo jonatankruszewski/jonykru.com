@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { flattenKeys, missingKeys } from '@/lib/i18n'
+import { flattenKeys, interpolate, missingKeys } from '@/lib/i18n'
 import en from '@/locales/en.json'
 import es from '@/locales/es.json'
 import he from '@/locales/he.json'
@@ -7,6 +7,27 @@ import he from '@/locales/he.json'
 describe('flattenKeys', () => {
   it('flattens nested objects to dot paths', () => {
     expect(flattenKeys({ a: { b: 'x' }, c: 'y' })).toEqual(['a.b', 'c'])
+  })
+})
+
+describe('interpolate', () => {
+  it('substitutes tokens from params, coercing numbers to strings', () => {
+    expect(
+      interpolate('{total} exams, {scrum} from Scrum.org', {
+        total: 33,
+        scrum: 13
+      })
+    ).toBe('33 exams, 13 from Scrum.org')
+  })
+
+  it('leaves the template untouched when no params are given', () => {
+    expect(interpolate('{total} exams')).toBe('{total} exams')
+  })
+
+  it('leaves unknown tokens in place', () => {
+    expect(interpolate('{known} and {unknown}', { known: 'x' })).toBe(
+      'x and {unknown}'
+    )
   })
 })
 
