@@ -14,7 +14,7 @@ const SOCIAL_LINKS = [
 ]
 
 const SiteFooter = () => {
-  const { t } = useI18n()
+  const { t, localePath } = useI18n()
 
   return (
     <footer className="border-t border-rule mt-32">
@@ -24,7 +24,7 @@ const SiteFooter = () => {
             {NAV_ROUTES.map((route) => (
               <Link
                 key={route.href}
-                href={route.href}
+                href={localePath(route.href)}
                 className="font-mono text-label uppercase tracking-label text-ink-muted hover:text-ink transition-colors"
               >
                 {t(route.labelKey)}

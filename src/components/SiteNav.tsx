@@ -9,23 +9,29 @@ import ThemeToggle from '@/components/ThemeToggle'
 import CtaButton from '@/components/ui/CtaButton'
 import { useI18n } from '@/context/i18nContext'
 import { BOOK_A_CALL_URL } from '@/data/site'
+import { stripLocale } from '@/lib/locale'
 import { isActiveRoute, NAV_ROUTES } from '@/lib/nav'
 
 const SiteNav = () => {
   const pathname = usePathname()
-  const { t } = useI18n()
+  const { t, localePath } = useI18n()
   const [open, setOpen] = useState(false)
 
   // A route change should never leave the mobile panel hanging open.
   useEffect(() => setOpen(false), [pathname])
 
+  // The active check and the route table both speak bare paths ("/blog"); the
+  // URL carries a locale prefix ("/es/blog"), so compare against the stripped
+  // path and re-prefix every href with the active locale.
+  const basePath = stripLocale(pathname)
+
   const links = NAV_ROUTES.map((route) => {
-    const active = isActiveRoute(pathname, route.href)
+    const active = isActiveRoute(basePath, route.href)
 
     return (
       <Link
         key={route.href}
-        href={route.href}
+        href={localePath(route.href)}
         aria-current={active ? 'page' : undefined}
         className={`font-mono text-label uppercase tracking-label py-1 border-b-2 transition-colors ${
           active
@@ -49,7 +55,7 @@ const SiteNav = () => {
 
       <nav className="mx-auto max-w-6xl px-6 h-16 flex items-center justify-between gap-6">
         <Link
-          href="/"
+          href={localePath('/')}
           className="font-mono text-h3 font-bold text-ink tracking-tight"
         >
           JK<span className="text-accent-ink bg-accent px-1 ms-0.5">.</span>

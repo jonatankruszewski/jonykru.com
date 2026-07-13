@@ -36,7 +36,7 @@ const SectionLink = ({ href, label }: { href: string; label: string }) => (
 )
 
 const HomeView = () => {
-  const { t, tList } = useI18n()
+  const { t, tList, localePath } = useI18n()
   const stats = getStats()
   const articles = latest(mediumData as MediumFlatData[], TEASER_ARTICLES)
   const badges = aiBadges(dedupeBadges(credly.data as CredlyBadge[]))
@@ -60,7 +60,7 @@ const HomeView = () => {
           <CtaButton href={BOOK_A_CALL_URL} external>
             {t('home.primaryCta')}
           </CtaButton>
-          <CtaButton href="/open-source" variant="outline">
+          <CtaButton href={localePath('/open-source')} variant="outline">
             {t('home.secondaryCta')}
           </CtaButton>
         </div>
@@ -113,7 +113,10 @@ const HomeView = () => {
             packages: stats.publishedPackages
           })}
           action={
-            <SectionLink href="/open-source" label={t('home.ossTeaserCta')} />
+            <SectionLink
+              href={localePath('/open-source')}
+              label={t('home.ossTeaserCta')}
+            />
           }
         />
         <div className="grid gap-6 md:grid-cols-2">
@@ -128,7 +131,12 @@ const HomeView = () => {
           eyebrow={t('home.writingTitle')}
           title={t('home.writingTitle')}
           lede={t('home.writingBody')}
-          action={<SectionLink href="/blog" label={t('home.writingCta')} />}
+          action={
+            <SectionLink
+              href={localePath('/blog')}
+              label={t('home.writingCta')}
+            />
+          }
         />
         <ul className="border-t border-rule">
           {articles.map((article) => (
@@ -144,7 +152,7 @@ const HomeView = () => {
           lede={t('home.certsTeaserBody', { total: stats.certifications })}
           action={
             <SectionLink
-              href="/certifications"
+              href={localePath('/certifications')}
               label={t('home.certsTeaserCta')}
             />
           }
