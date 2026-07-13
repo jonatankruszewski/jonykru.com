@@ -1,7 +1,13 @@
-# Skip commitlint for version bump commits and conventional commits format
+#!/bin/sh
+# Enforce the [TYPE] commit convention (commitlint.config.js) on every commit,
+# skipping the machine-written ones. Uses `case` rather than bash `[[ ]]`: under
+# /bin/sh (dash) `[[` errors with "[[: not found" and the skip never fired, so
+# version-bump / release / [skip ci] commits were being linted anyway.
 COMMIT_MSG=$(cat "$1")
-if [[ "$COMMIT_MSG" == *"[skip bump]"* ]] || [[ "$COMMIT_MSG" == *"[skip ci]"* ]] || [[ "$COMMIT_MSG" == "chore:"* ]]; then
-  exit 0
-fi
+case "$COMMIT_MSG" in
+  *"[skip bump]"* | *"[skip ci]"* | "chore:"*)
+    exit 0
+    ;;
+esac
 
-pnpm exec commitlint --edit $1
+pnpm exec commitlint --edit "$1"

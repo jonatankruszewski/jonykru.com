@@ -13,12 +13,21 @@ if [ "$VERSION_BUMP" = "true" ]; then
   fi
 fi
 
-# Fast quality gate on staged files: eslint --fix, prettier --write, tsc-files
-# (see the "lint-staged" config in package.json).
+# Quality gate before a commit lands:
+#   1. lint-staged — eslint --fix, prettier --write, tsc-files on staged files
+#      (TypeScript lint + typecheck; see the "lint-staged" config in package.json)
+#   2. the vitest suite, so a red test can't be committed
+# The heavier coverage + build gate stays on pre-push (see .husky/pre-push).
 # Set SKIP_CHECKS=true to bypass (e.g. WIP commits): SKIP_CHECKS=true git commit
 if [ "$SKIP_CHECKS" = "true" ]; then
-  echo "⏭️  SKIP_CHECKS=true — skipping lint-staged"
+  echo "⏭️  SKIP_CHECKS=true — skipping pre-commit checks"
   exit 0
 fi
 
 pnpm exec lint-staged
+
+echo "🧪 Running tests (pnpm test)..."
+if ! pnpm test; then
+  echo "❌ Tests failed — commit aborted. Use SKIP_CHECKS=true git commit to bypass."
+  exit 1
+fi
