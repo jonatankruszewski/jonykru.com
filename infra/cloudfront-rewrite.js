@@ -31,6 +31,14 @@ function handler(event) {
   var request = event.request
   var uri = request.uri
 
+  // The site is localized under /[lang]; there is no page at the bare root, so
+  // serve the default locale's homepage from "/" (a rewrite, not a redirect, so
+  // "/" stays a 200 and keeps ranking).
+  if (uri === '/' || uri === '') {
+    request.uri = '/en/index.html'
+    return request
+  }
+
   if (uri.endsWith('/')) {
     request.uri = uri + 'index.html'
     return request
