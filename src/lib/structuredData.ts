@@ -30,11 +30,16 @@ export const websiteSchema = () => ({
 })
 
 /**
- * Serializes a schema for inline injection into a <script> tag. Escapes `<` to
- * its unicode form so the payload can never break out of the closing
- * </script> — defence in depth, since every value here is already static and
- * controlled. This is the only reason the layout needs dangerouslySetInnerHTML:
- * React would HTML-escape a string child and corrupt the JSON.
+ * Serializes a schema for rendering as the text child of a <script> tag.
+ *
+ * `<`, `>` and `&` are escaped to their unicode forms. That does two things at
+ * once: React's own text-escaping becomes a no-op (so the JSON is emitted
+ * byte-for-byte, no dangerouslySetInnerHTML needed), and the payload can never
+ * break out of the closing </script>. Valid JSON either way — the escapes
+ * round-trip through JSON.parse.
  */
 export const serializeJsonLd = (schema: object): string =>
-  JSON.stringify(schema).replace(/</g, '\\u003c')
+  JSON.stringify(schema)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')

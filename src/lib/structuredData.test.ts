@@ -35,15 +35,17 @@ describe('websiteSchema', () => {
 })
 
 describe('serializeJsonLd', () => {
-  it('escapes < so the payload cannot break out of the script tag', () => {
-    const serialized = serializeJsonLd({ x: '</script><script>alert(1)' })
-    expect(serialized).not.toContain('</script>')
+  it('escapes <, > and & so React emits it verbatim and it cannot break the tag', () => {
+    const serialized = serializeJsonLd({ x: '</script> a > b && c < d' })
+    expect(serialized).not.toMatch(/[<>&]/)
     expect(serialized).toContain('\\u003c')
+    expect(serialized).toContain('\\u003e')
+    expect(serialized).toContain('\\u0026')
   })
 
   it('stays valid JSON that round-trips back to the original', () => {
-    const parsed = JSON.parse(serializeJsonLd(personSchema()))
-    expect(parsed['@type']).toBe('Person')
-    expect(parsed.url).toBe(SITE_URL)
+    const parsed = JSON.parse(serializeJsonLd({ x: '</script> & <b>' }))
+    expect(parsed.x).toBe('</script> & <b>')
+    expect(JSON.parse(serializeJsonLd(personSchema()))['@type']).toBe('Person')
   })
 })

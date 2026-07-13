@@ -56,16 +56,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="bg-canvas text-ink font-sans">
         {/* Machine-readable identity for search engines. Static, so it renders
             in the initial HTML with no client cost. */}
-        <script
-          type="application/ld+json"
-          // eslint-disable-next-line no-restricted-syntax -- inline JSON-LD, payload static + escaped by serializeJsonLd
-          dangerouslySetInnerHTML={{ __html: serializeJsonLd(personSchema()) }}
-        />
-        <script
-          type="application/ld+json"
-          // eslint-disable-next-line no-restricted-syntax -- inline JSON-LD, payload static + escaped by serializeJsonLd
-          dangerouslySetInnerHTML={{ __html: serializeJsonLd(websiteSchema()) }}
-        />
+        <script type="application/ld+json">
+          {serializeJsonLd(personSchema())}
+        </script>
+        <script type="application/ld+json">
+          {serializeJsonLd(websiteSchema())}
+        </script>
         <ThemeProvider>
           <I18nProvider>
             <RTLHandler />
