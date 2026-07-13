@@ -1,4 +1,3 @@
-import { execSync } from 'child_process'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { dirname, join } from 'path'
 
@@ -10,20 +9,6 @@ interface PackageJson {
 interface VersionInfo {
   version: string
   timestamp: string
-  /** HEAD sha at build time, so the footer can link to the exact source. */
-  commit?: string
-}
-
-/**
- * The commit the build was cut from. Best-effort: a build outside a git
- * checkout simply omits it, and the footer falls back to the repo root.
- */
-function readCommitSha(): string | undefined {
-  try {
-    return execSync('git rev-parse HEAD', { encoding: 'utf-8' }).trim()
-  } catch {
-    return undefined
-  }
 }
 
 /**
@@ -88,12 +73,10 @@ function generateVersion(): void {
     const packageJson = readPackageJson(packageJsonPath)
     const version = validateVersion(packageJson)
     const timestamp = new Date().toISOString()
-    const commit = readCommitSha()
 
     const versionInfo: VersionInfo = {
       version,
-      timestamp,
-      ...(commit ? { commit } : {})
+      timestamp
     }
 
     const outputPath = join(process.cwd(), 'public', 'version.json')
@@ -113,7 +96,6 @@ if (require.main === module) {
 export {
   ensureOutputDirectory,
   generateVersion,
-  readCommitSha,
   readPackageJson,
   validateVersion,
   writeVersionFile

@@ -56,6 +56,17 @@ const config = typescriptEslint.config(
                     varsIgnorePattern: "^_",
                 },
             ],
+            // dangerouslySetInnerHTML is an XSS footgun. The one sanctioned use
+            // (inline, escaped JSON-LD in the layout) opts out per-line with a
+            // justification; anything new has to do the same, deliberately.
+            "no-restricted-syntax": [
+                "error",
+                {
+                    selector: "JSXAttribute[name.name='dangerouslySetInnerHTML']",
+                    message:
+                        "Avoid dangerouslySetInnerHTML. If it is genuinely required (e.g. inline JSON-LD), disable this rule on the specific line with a justification.",
+                },
+            ],
             "sort-imports": [
                 "error",
                 {

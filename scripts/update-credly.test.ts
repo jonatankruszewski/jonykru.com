@@ -256,6 +256,16 @@ describe('update-credly', () => {
         'utf8'
       )
     })
+
+    it('refuses to write when a badge is malformed, naming the source', () => {
+      const bad = { data: [{ id: '1' }] } as unknown as CredlyData
+      vi.mocked(fs.writeFileSync).mockClear()
+
+      expect(() => saveBackupJson(bad, '/test/backup.json')).toThrow(
+        /credly: malformed/
+      )
+      expect(fs.writeFileSync).not.toHaveBeenCalled()
+    })
   })
 
   describe('readCurlFile', () => {
