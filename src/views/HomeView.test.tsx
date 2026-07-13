@@ -22,7 +22,7 @@ beforeAll(() => {
 
 const renderHome = () =>
   render(
-    <I18nProvider>
+    <I18nProvider locale="en">
       <HomeView />
     </I18nProvider>
   )
