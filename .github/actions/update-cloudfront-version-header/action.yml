@@ -1,5 +1,5 @@
-name: 'Update CloudFront Version Header'
-description: 'Creates or updates CloudFront response headers policy with X-Version header'
+name: 'Update CloudFront Response Headers'
+description: 'Creates or updates the CloudFront response headers policy: X-Version plus baseline security headers (nosniff, frame-options, referrer-policy, HSTS)'
 
 inputs:
   version:
@@ -64,6 +64,12 @@ runs:
                   \"Override\": true
                 }],
                 \"Quantity\": 1
+              },
+              \"SecurityHeadersConfig\": {
+                \"ContentTypeOptions\": { \"Override\": true },
+                \"FrameOptions\": { \"FrameOption\": \"SAMEORIGIN\", \"Override\": true },
+                \"ReferrerPolicy\": { \"ReferrerPolicy\": \"strict-origin-when-cross-origin\", \"Override\": true },
+                \"StrictTransportSecurity\": { \"AccessControlMaxAgeSec\": 63072000, \"IncludeSubdomains\": true, \"Preload\": false, \"Override\": true }
               }
             }" \
             --query 'ResponseHeadersPolicy.Id' \
@@ -164,6 +170,12 @@ runs:
                     \"Override\": true
                   }],
                   \"Quantity\": 1
+                },
+                \"SecurityHeadersConfig\": {
+                  \"ContentTypeOptions\": { \"Override\": true },
+                  \"FrameOptions\": { \"FrameOption\": \"SAMEORIGIN\", \"Override\": true },
+                  \"ReferrerPolicy\": { \"ReferrerPolicy\": \"strict-origin-when-cross-origin\", \"Override\": true },
+                  \"StrictTransportSecurity\": { \"AccessControlMaxAgeSec\": 63072000, \"IncludeSubdomains\": true, \"Preload\": false, \"Override\": true }
                 }
               }" 2>&1)
             UPDATE_EXIT_CODE=$?
