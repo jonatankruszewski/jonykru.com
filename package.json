@@ -1,6 +1,6 @@
 {
   "name": "jonykru.com",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "private": true,
   "scripts": {
     "predev": "tsx scripts/generate-version.ts && tsx scripts/generate-og.tsx",
