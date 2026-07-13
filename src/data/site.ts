@@ -1,6 +1,6 @@
 export const SITE_URL = 'https://www.jonykru.com'
 
-/** This site is open source; the footer links its version to the exact commit. */
+/** This site is open source; the footer version links here. */
 export const REPO_URL = 'https://github.com/jonatankruszewski/jonykru.com'
 
 export const BOOK_A_CALL_URL = 'https://calendly.com/d/d2gb-dzc-y2k'

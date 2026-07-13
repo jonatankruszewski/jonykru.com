@@ -6,7 +6,6 @@ import versionData from '../../public/version.json'
 interface VersionInfo {
   version: string
   timestamp: string
-  commit?: string
 }
 
 const versionInfo = versionData as VersionInfo
@@ -16,24 +15,19 @@ const VersionDisplay = () => {
     return null
   }
 
-  const { version, commit } = versionInfo
-  const href = commit ? `${REPO_URL}/commit/${commit}` : REPO_URL
-  const shortSha = commit?.slice(0, 7)
+  const { version } = versionInfo
 
-  // The version is the footer's quiet "this site is open source" wink: it links
-  // to the exact commit the build was cut from.
+  // The version is the footer's quiet "this site is open source" wink — it links
+  // to the repository. (The build always runs on the version-bump commit, so
+  // linking to that commit would only ever show a one-line diff.)
   return (
     <a
-      href={href}
+      href={REPO_URL}
       target="_blank"
       rel="noopener noreferrer"
       className="font-mono text-label tabular-nums text-accent underline-offset-4 decoration-2 hover:underline transition-all"
-      title={
-        shortSha ? `Source · v${version} (${shortSha})` : `Source · v${version}`
-      }
-      aria-label={`View source code (version ${version}${
-        shortSha ? `, commit ${shortSha}` : ''
-      })`}
+      title={`Source · v${version}`}
+      aria-label={`View source code (version ${version})`}
     >
       v{version}
     </a>
