@@ -58,10 +58,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             in the initial HTML with no client cost. */}
         <script
           type="application/ld+json"
+          // eslint-disable-next-line no-restricted-syntax -- inline JSON-LD, payload static + escaped by serializeJsonLd
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(personSchema()) }}
         />
         <script
           type="application/ld+json"
+          // eslint-disable-next-line no-restricted-syntax -- inline JSON-LD, payload static + escaped by serializeJsonLd
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(websiteSchema()) }}
         />
         <ThemeProvider>
