@@ -158,6 +158,26 @@
     "body": "That page doesn't exist — or it did, and the redesign ate it.",
     "cta": "Back home"
   },
+  "feedback": {
+    "button": "Give feedback",
+    "title": "Give feedback",
+    "description": "Spotted a bug, a typo, or something that could be better? Tell me — it goes straight to my inbox.",
+    "messageLabel": "Your feedback",
+    "messagePlaceholder": "What's on your mind?",
+    "emailLabel": "Email (optional)",
+    "emailPlaceholder": "you@company.com",
+    "submit": "Send feedback",
+    "sending": "Sending...",
+    "close": "Close",
+    "successTitle": "Thanks for the feedback",
+    "successBody": "I read every message. If you left an email, I might follow up.",
+    "validation": {
+      "messageRequired": "Please write a little something",
+      "messageMaxLength": "Feedback must be at most 1000 characters long",
+      "emailMaxLength": "Email must be at most 128 characters long",
+      "emailInvalid": "Please enter a valid email address"
+    }
+  },
   "footer": {
     "copyright": "All rights reserved.",
     "builtWith": "Next.js, TypeScript, Tailwind."

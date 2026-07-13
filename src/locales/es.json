@@ -158,6 +158,26 @@
     "body": "Esa página no existe, o existía y se la comió el rediseño.",
     "cta": "Volver al inicio"
   },
+  "feedback": {
+    "button": "Dejar comentarios",
+    "title": "Dejar comentarios",
+    "description": "¿Encontraste un error, una errata o algo que se podría mejorar? Contame — llega directo a mi correo.",
+    "messageLabel": "Tus comentarios",
+    "messagePlaceholder": "¿Qué tenés en mente?",
+    "emailLabel": "Correo (opcional)",
+    "emailPlaceholder": "vos@empresa.com",
+    "submit": "Enviar comentarios",
+    "sending": "Enviando...",
+    "close": "Cerrar",
+    "successTitle": "Gracias por los comentarios",
+    "successBody": "Leo cada mensaje. Si dejaste un correo, quizás te escriba.",
+    "validation": {
+      "messageRequired": "Escribí algo, aunque sea breve",
+      "messageMaxLength": "Los comentarios deben tener como máximo 1000 caracteres",
+      "emailMaxLength": "El correo debe tener como máximo 128 caracteres",
+      "emailInvalid": "Ingresá un correo electrónico válido"
+    }
+  },
   "footer": {
     "copyright": "Todos los derechos reservados.",
     "builtWith": "Next.js, TypeScript, Tailwind."

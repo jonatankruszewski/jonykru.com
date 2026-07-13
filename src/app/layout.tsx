@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { ReactNode } from 'react'
 import { FontPlexHebrew, FontPlexMono, FontPlexSans } from '@/app/fonts'
+import FeedbackWidget from '@/components/FeedbackWidget'
 import RTLHandler from '@/components/RTLHandler'
 import SiteFooter from '@/components/SiteFooter'
 import SiteNav from '@/components/SiteNav'
@@ -95,6 +96,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <SiteNav />
             <main id="content">{children}</main>
             <SiteFooter />
+            <FeedbackWidget />
           </I18nProvider>
         </ThemeProvider>
       </body>
