@@ -27,7 +27,7 @@ const VersionDisplay = () => {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="font-mono text-label text-syn-comment tabular-nums hover:text-ink transition-colors"
+      className="font-mono text-label tabular-nums text-accent underline-offset-4 decoration-2 hover:underline transition-all"
       title={
         shortSha ? `Source · v${version} (${shortSha})` : `Source · v${version}`
       }
