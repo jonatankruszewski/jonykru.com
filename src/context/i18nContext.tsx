@@ -1,159 +1,88 @@
 'use client'
 
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from 'react'
+import React, { createContext, useContext, useMemo } from 'react'
 import { interpolate } from '@/lib/i18n'
+import {
+  directionOf,
+  isRTLLocale,
+  localePath as buildLocalePath,
+  type Locale
+} from '@/lib/locale'
 import en from '@/locales/en.json'
 import es from '@/locales/es.json'
 import he from '@/locales/he.json'
 
-export type Language = 'en' | 'es' | 'he'
+/** Kept as an alias so existing imports (`Language`) still resolve. */
+export type Language = Locale
 export type Direction = 'ltr' | 'rtl'
-
-interface LanguageConfig {
-  isRTL?: boolean
-}
-
-const LANGUAGE_CONFIG: Record<Language, LanguageConfig> = {
-  en: {},
-  es: {},
-  he: { isRTL: true }
-}
 
 const translations = { en, es, he }
 
-export const getDirection = (lang: Language): Direction =>
-  LANGUAGE_CONFIG[lang]?.isRTL ? 'rtl' : 'ltr'
-
-export const isRTL = (lang: Language): boolean =>
-  LANGUAGE_CONFIG[lang]?.isRTL ?? false
-
 interface I18nContextType {
-  language: Language
-  setLanguage: (lang: Language) => void
+  language: Locale
   t: (key: string, params?: Record<string, string | number>) => string
   tList: (key: string) => string[]
   direction: Direction
   isRTL: boolean
+  /** Prefixes an internal path with the active locale (external URLs pass through). */
+  localePath: (path: string) => string
 }
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined)
 
-export function I18nProvider({ children }: { children: React.ReactNode }) {
-  // Initialize from localStorage synchronously (SSR-safe)
-  const getInitialLanguage = (): Language => {
-    if (typeof window === 'undefined') {
-      return 'en'
+/**
+ * The locale now comes from the route (`/[lang]/…`), not from localStorage, so
+ * every page is server-rendered in its language with the correct `<html lang>`.
+ * Switching languages is navigation (see LanguageSwitcher), not client state.
+ */
+export function I18nProvider({
+  locale,
+  children
+}: {
+  locale: Locale
+  children: React.ReactNode
+}) {
+  const value = useMemo<I18nContextType>(() => {
+    const resolve = (key: string): unknown => {
+      const fromLocale = key
+        .split('.')
+        .reduce<unknown>(
+          (node, k) =>
+            node && typeof node === 'object' && k in node
+              ? (node as Record<string, unknown>)[k]
+              : undefined,
+          translations[locale]
+        )
+      if (fromLocale !== undefined) return fromLocale
+      // Fall back to English for any key missing in a translation.
+      return key
+        .split('.')
+        .reduce<unknown>(
+          (node, k) =>
+            node && typeof node === 'object' && k in node
+              ? (node as Record<string, unknown>)[k]
+              : undefined,
+          translations.en
+        )
     }
 
-    try {
-      const savedLanguage = localStorage.getItem('language') as Language | null
-      if (savedLanguage && savedLanguage in LANGUAGE_CONFIG) {
-        return savedLanguage
+    return {
+      language: locale,
+      direction: directionOf(locale),
+      isRTL: isRTLLocale(locale),
+      localePath: (path: string) => buildLocalePath(locale, path),
+      t: (key, params) => {
+        const value = resolve(key)
+        return typeof value === 'string' ? interpolate(value, params) : key
+      },
+      tList: (key) => {
+        const value = resolve(key)
+        return Array.isArray(value)
+          ? value.filter((item): item is string => typeof item === 'string')
+          : []
       }
-    } catch {
-      // localStorage not available
     }
-    // Try to detect browser language
-    const browserLang = navigator.language.slice(0, 2) as Language
-
-    if (browserLang in LANGUAGE_CONFIG && browserLang !== 'en') {
-      return browserLang
-    }
-
-    return 'en'
-  }
-
-  const [language, setLanguageState] = useState<Language>(getInitialLanguage)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const setLanguage = useCallback(
-    (lang: Language) => {
-      setLanguageState(lang)
-      if (mounted) {
-        localStorage.setItem('language', lang)
-      }
-    },
-    [mounted]
-  )
-
-  const t = useCallback(
-    (key: string, params?: Record<string, string | number>): string => {
-      const keys = key.split('.')
-      let value: unknown = translations[language]
-
-      for (const k of keys) {
-        if (
-          value &&
-          typeof value === 'object' &&
-          k in value &&
-          value !== null
-        ) {
-          value = (value as Record<string, unknown>)[k]
-        } else {
-          // Fallback to English if key not found
-          let fallback: unknown = translations.en
-          for (const fk of keys) {
-            if (
-              fallback &&
-              typeof fallback === 'object' &&
-              fk in fallback &&
-              fallback !== null
-            ) {
-              fallback = (fallback as Record<string, unknown>)[fk]
-            } else {
-              return key // Return key if not found in fallback either
-            }
-          }
-          return typeof fallback === 'string'
-            ? interpolate(fallback, params)
-            : key
-        }
-      }
-
-      return typeof value === 'string' ? interpolate(value, params) : key
-    },
-    [language]
-  )
-
-  // t() flattens everything to a string. Some copy is a list (the rotating hero
-  // phrases), so it needs its own accessor rather than a stringified array.
-  const tList = useCallback(
-    (key: string): string[] => {
-      const lookup = (dict: unknown): unknown =>
-        key.split('.').reduce<unknown>((value, k) => {
-          if (value && typeof value === 'object' && k in value) {
-            return (value as Record<string, unknown>)[k]
-          }
-          return undefined
-        }, dict)
-
-      const value = lookup(translations[language]) ?? lookup(translations.en)
-
-      return Array.isArray(value)
-        ? value.filter((item): item is string => typeof item === 'string')
-        : []
-    },
-    [language]
-  )
-
-  const direction = getDirection(language)
-  const rtl = isRTL(language)
-
-  const value = useMemo(
-    () => ({ language, setLanguage, t, tList, direction, isRTL: rtl }),
-    [language, setLanguage, t, tList, direction, rtl]
-  )
+  }, [locale])
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>
 }
