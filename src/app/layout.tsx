@@ -8,6 +8,7 @@ import SiteNav from '@/components/SiteNav'
 import { I18nProvider } from '@/context/i18nContext'
 import { ThemeProvider } from '@/context/themeContext'
 import { SITE_URL } from '@/data/site'
+import { personSchema, websiteSchema } from '@/lib/structuredData'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -49,6 +50,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       suppressHydrationWarning
     >
       <body className="bg-canvas text-ink font-sans">
+        {/* Machine-readable identity for search engines. Static, so it renders
+            in the initial HTML with no client cost. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema()) }}
+        />
         <ThemeProvider>
           <I18nProvider>
             <RTLHandler />
