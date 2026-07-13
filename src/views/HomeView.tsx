@@ -3,6 +3,7 @@
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import ArticleRow from '@/components/ArticleRow'
+import CertificationCard from '@/components/CertificationCard'
 import RepoCard from '@/components/RepoCard'
 import Typewriter from '@/components/Typewriter'
 import CtaBand from '@/components/ui/CtaBand'
@@ -12,10 +13,13 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import StatList from '@/components/ui/StatList'
 import { useI18n } from '@/context/i18nContext'
 import { BOOK_A_CALL_URL } from '@/data/site'
+import credly from '@/dataFetchers/credly.backup.json'
 import mediumData from '@/dataFetchers/mediumData.json'
+import { aiBadges, dedupeBadges } from '@/lib/certifications'
 import { featured } from '@/lib/openSource'
 import { latest } from '@/lib/publications'
 import { getStats } from '@/lib/stats'
+import type { CredlyBadge } from '@/types/credly.types'
 import type { MediumFlatData } from '@/types/medium.types'
 
 const CAPABILITIES = ['ai', 'frontend', 'backend', 'automation'] as const
@@ -35,6 +39,7 @@ const HomeView = () => {
   const { t, tList } = useI18n()
   const stats = getStats()
   const articles = latest(mediumData as MediumFlatData[], TEASER_ARTICLES)
+  const badges = aiBadges(dedupeBadges(credly.data as CredlyBadge[]))
 
   return (
     <>
@@ -44,7 +49,9 @@ const HomeView = () => {
         title={
           // min-height reserves the tallest phrase so the CTAs below don't jump
           // as the line types and erases.
-          <h1 className="text-display text-ink mt-6 max-w-4xl min-h-[2.2em]">
+          // The Typewriter reserves the tallest phrase's height itself, so the
+          // CTAs below never jump as the line types, erases, or rewraps.
+          <h1 className="text-display text-ink mt-6 max-w-4xl">
             <Typewriter phrases={tList('home.headlinePhrases')} />
           </h1>
         }
@@ -106,7 +113,7 @@ const HomeView = () => {
             <SectionLink href="/open-source" label={t('home.ossTeaserCta')} />
           }
         />
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           {featured().map((project) => (
             <RepoCard key={project.slug} project={project} />
           ))}
@@ -123,6 +130,25 @@ const HomeView = () => {
         <ul className="border-t border-rule">
           {articles.map((article) => (
             <ArticleRow key={article.guid} article={article} />
+          ))}
+        </ul>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pt-32">
+        <SectionHeader
+          eyebrow={t('certifications.title')}
+          title={t('home.certsTeaserTitle')}
+          lede={t('home.certsTeaserBody')}
+          action={
+            <SectionLink
+              href="/certifications"
+              label={t('home.certsTeaserCta')}
+            />
+          }
+        />
+        <ul className="grid gap-4 md:grid-cols-3">
+          {badges.map((badge) => (
+            <CertificationCard key={badge.id} badge={badge} />
           ))}
         </ul>
       </section>

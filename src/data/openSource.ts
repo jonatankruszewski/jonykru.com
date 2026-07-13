@@ -19,7 +19,6 @@ export const OSS_PROJECTS: OssProject[] = [
     role: 'contributor',
     language: 'TypeScript',
     blurbKey: 'oss.projects.pane.blurb',
-    featured: true,
     contributions: [
       {
         ref: 'PR #320',

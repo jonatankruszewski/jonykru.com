@@ -47,8 +47,12 @@ describe('OSS_PROJECTS', () => {
     }
   })
 
-  it('features exactly the three projects shown on the home page', () => {
-    expect(featured()).toHaveLength(3)
+  it('features exactly the two authored projects shown on the home page', () => {
+    expect(
+      featured()
+        .map((p) => p.slug)
+        .sort()
+    ).toEqual(['journey', 'use-everywhere'])
   })
 })
 
