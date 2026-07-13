@@ -1,9 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { execSync } from 'child_process'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import {
   ensureOutputDirectory,
   generateVersion,
+  readCommitSha,
   readPackageJson,
   validateVersion,
   writeVersionFile
@@ -20,6 +22,10 @@ vi.mock('fs', async () => {
     mkdirSync: vi.fn()
   }
 })
+
+vi.mock('child_process', () => ({
+  execSync: vi.fn()
+}))
 
 describe('generate-version', () => {
   beforeEach(() => {
@@ -68,6 +74,20 @@ describe('generate-version', () => {
       const result = readPackageJson(join(process.cwd(), 'package.json'))
 
       expect(result).toEqual(mockPackageJson)
+    })
+  })
+
+  describe('readCommitSha', () => {
+    it('returns the trimmed HEAD sha', () => {
+      vi.mocked(execSync).mockReturnValue('abc1234def\n')
+      expect(readCommitSha()).toBe('abc1234def')
+    })
+
+    it('returns undefined when git is unavailable rather than throwing', () => {
+      vi.mocked(execSync).mockImplementation(() => {
+        throw new Error('not a git repository')
+      })
+      expect(readCommitSha()).toBeUndefined()
     })
   })
 
