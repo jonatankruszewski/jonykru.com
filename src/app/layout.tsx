@@ -8,7 +8,11 @@ import SiteNav from '@/components/SiteNav'
 import { I18nProvider } from '@/context/i18nContext'
 import { ThemeProvider } from '@/context/themeContext'
 import { SITE_URL } from '@/data/site'
-import { personSchema, websiteSchema } from '@/lib/structuredData'
+import {
+  personSchema,
+  serializeJsonLd,
+  websiteSchema
+} from '@/lib/structuredData'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -54,11 +58,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             in the initial HTML with no client cost. */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema()) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(personSchema()) }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema()) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(websiteSchema()) }}
         />
         <ThemeProvider>
           <I18nProvider>

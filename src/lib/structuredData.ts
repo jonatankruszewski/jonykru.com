@@ -28,3 +28,13 @@ export const websiteSchema = () => ({
   name: 'Jonatan Kruszewski',
   url: SITE_URL
 })
+
+/**
+ * Serializes a schema for inline injection into a <script> tag. Escapes `<` to
+ * its unicode form so the payload can never break out of the closing
+ * </script> — defence in depth, since every value here is already static and
+ * controlled. This is the only reason the layout needs dangerouslySetInnerHTML:
+ * React would HTML-escape a string child and corrupt the JSON.
+ */
+export const serializeJsonLd = (schema: object): string =>
+  JSON.stringify(schema).replace(/</g, '\\u003c')

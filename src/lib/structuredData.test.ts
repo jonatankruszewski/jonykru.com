@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { SITE_URL, SOCIALS } from '@/data/site'
-import { personSchema, websiteSchema } from '@/lib/structuredData'
+import {
+  personSchema,
+  serializeJsonLd,
+  websiteSchema
+} from '@/lib/structuredData'
 
 describe('personSchema', () => {
   it('declares a Person under the canonical schema.org context', () => {
@@ -27,5 +31,19 @@ describe('websiteSchema', () => {
     expect(schema['@type']).toBe('WebSite')
     expect(schema.url).toBe(SITE_URL)
     expect(schema.url).toMatch(/^https:\/\//)
+  })
+})
+
+describe('serializeJsonLd', () => {
+  it('escapes < so the payload cannot break out of the script tag', () => {
+    const serialized = serializeJsonLd({ x: '</script><script>alert(1)' })
+    expect(serialized).not.toContain('</script>')
+    expect(serialized).toContain('\\u003c')
+  })
+
+  it('stays valid JSON that round-trips back to the original', () => {
+    const parsed = JSON.parse(serializeJsonLd(personSchema()))
+    expect(parsed['@type']).toBe('Person')
+    expect(parsed.url).toBe(SITE_URL)
   })
 })
