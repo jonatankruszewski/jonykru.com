@@ -3,7 +3,7 @@
 import { useForm as useFormSpreeForm } from '@formspree/react'
 import { Check, MessageSquare, X } from 'lucide-react'
 import { Dialog } from 'radix-ui'
-import { useEffect } from 'react'
+import { CSSProperties, PointerEvent, useEffect, useRef, useState } from 'react'
 import { FormProvider, useForm as useReactHookForm } from 'react-hook-form'
 import TextAreaInput from '@/components/TextAreaInput'
 import TextInput from '@/components/TextInput'
@@ -14,10 +14,19 @@ type FeedbackData = {
   message: string
 }
 
+type Position = { x: number; y: number }
+
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+// Below this many pixels of movement a pointer gesture counts as a tap (opens
+// the dialog); beyond it, it's a drag (moves the button, no dialog).
+const DRAG_THRESHOLD = 6
+const EDGE_GAP = 8
+const STORAGE_KEY = 'feedback-button-position'
 
 const FeedbackWidget = () => {
   const { t } = useI18n()
+  const [open, setOpen] = useState(false)
   // Dedicated Formspree form for feedback, separate from the contact inbox.
   const [state, handleSubmit, resetFormSubmission] =
     useFormSpreeForm<FeedbackData>('maqrypqq')
@@ -27,28 +36,139 @@ const FeedbackWidget = () => {
   })
   const { handleSubmit: submit, control } = methods
 
+  // null → sit at the default bottom-end corner (also the SSR/first-paint state,
+  // so hydration matches). Once dragged, an explicit left/top pins it.
+  const [pos, setPos] = useState<Position | null>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const drag = useRef<{
+    startX: number
+    startY: number
+    originX: number
+    originY: number
+    moved: boolean
+  } | null>(null)
+  // A drag ends with a synthetic click we must swallow so it doesn't open.
+  const suppressClick = useRef(false)
+
+  const clampToViewport = (p: Position): Position => {
+    const el = buttonRef.current
+    const w = el?.offsetWidth ?? 56
+    const h = el?.offsetHeight ?? 56
+    const maxX = Math.max(EDGE_GAP, window.innerWidth - w - EDGE_GAP)
+    const maxY = Math.max(EDGE_GAP, window.innerHeight - h - EDGE_GAP)
+    return {
+      x: Math.min(Math.max(EDGE_GAP, p.x), maxX),
+      y: Math.min(Math.max(EDGE_GAP, p.y), maxY)
+    }
+  }
+
   useEffect(() => {
     if (state.succeeded) methods.reset({ email: '', message: '' })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.succeeded])
 
-  // Closing (or reopening) a submitted dialog should start from a clean form,
-  // not the lingering "thank you" panel.
-  const handleOpenChange = (open: boolean) => {
-    if (!open && state.succeeded) resetFormSubmission()
+  // Restore a previously chosen position, clamped in case the viewport shrank.
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      if (!saved) return
+      const parsed = JSON.parse(saved) as Partial<Position>
+      if (typeof parsed?.x === 'number' && typeof parsed?.y === 'number') {
+        setPos(clampToViewport({ x: parsed.x, y: parsed.y }))
+      }
+    } catch {
+      // localStorage unavailable or malformed — fall back to the default corner.
+    }
+  }, [])
+
+  // Keep the button on-screen through resizes and mobile orientation changes.
+  useEffect(() => {
+    const onResize = () => setPos((p) => (p ? clampToViewport(p) : p))
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  const handlePointerDown = (e: PointerEvent<HTMLButtonElement>) => {
+    const el = buttonRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    drag.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      originX: rect.left,
+      originY: rect.top,
+      moved: false
+    }
+    el.setPointerCapture(e.pointerId)
+  }
+
+  const handlePointerMove = (e: PointerEvent<HTMLButtonElement>) => {
+    const d = drag.current
+    if (!d) return
+    const dx = e.clientX - d.startX
+    const dy = e.clientY - d.startY
+    if (!d.moved && Math.hypot(dx, dy) < DRAG_THRESHOLD) return
+    d.moved = true
+    setPos(clampToViewport({ x: d.originX + dx, y: d.originY + dy }))
+  }
+
+  const handlePointerUp = (e: PointerEvent<HTMLButtonElement>) => {
+    const d = drag.current
+    drag.current = null
+    const el = buttonRef.current
+    if (el?.hasPointerCapture(e.pointerId))
+      el.releasePointerCapture(e.pointerId)
+    if (!d?.moved) return
+    // It was a drag: swallow the click and remember where it landed.
+    suppressClick.current = true
+    const rect = el?.getBoundingClientRect()
+    if (!rect) return
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ x: rect.left, y: rect.top })
+      )
+    } catch {
+      // Persisting is best-effort; the live position still works.
+    }
+  }
+
+  const handleTriggerClick = () => {
+    if (suppressClick.current) {
+      suppressClick.current = false
+      return
+    }
+    setOpen(true)
+  }
+
+  const handleOpenChange = (next: boolean) => {
+    setOpen(next)
+    // Closing (or reopening) a submitted dialog should start from a clean form,
+    // not the lingering "thank you" panel.
+    if (!next && state.succeeded) resetFormSubmission()
+  }
+
+  const buttonStyle: CSSProperties = {
+    touchAction: 'none',
+    ...(pos ? { left: pos.x, top: pos.y } : {})
   }
 
   return (
-    <Dialog.Root onOpenChange={handleOpenChange}>
-      <Dialog.Trigger asChild>
-        <button
-          type="button"
-          className="fixed bottom-6 end-6 z-40 inline-flex items-center gap-2 border border-ink px-5 py-3 font-mono text-label uppercase tracking-label bg-accent text-accent-ink hover:bg-ink hover:text-canvas transition-colors"
-        >
-          <MessageSquare size={16} aria-hidden />
-          <span>{t('feedback.button')}</span>
-        </button>
-      </Dialog.Trigger>
+    <Dialog.Root open={open} onOpenChange={handleOpenChange}>
+      <button
+        ref={buttonRef}
+        type="button"
+        aria-label={t('feedback.button')}
+        title={t('feedback.button')}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onClick={handleTriggerClick}
+        style={buttonStyle}
+        className={`fixed ${pos ? '' : 'bottom-6 end-6'} z-40 inline-flex items-center justify-center border border-ink p-4 bg-accent text-accent-ink hover:bg-ink hover:text-canvas transition-colors cursor-grab touch-none select-none active:cursor-grabbing`}
+      >
+        <MessageSquare size={20} aria-hidden />
+      </button>
 
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-ink/50" />
