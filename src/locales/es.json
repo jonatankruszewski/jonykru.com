@@ -25,6 +25,9 @@
     "writingTitle": "Blog Posts",
     "writingBody": "Lo aprendo dos veces: una construyéndolo, otra explicándolo. Arquitectura, migraciones y el costo real de la deuda técnica.",
     "writingCta": "Todas las entradas",
+    "certsTeaserTitle": "Una segunda opinión, no una autoevaluación.",
+    "certsTeaserBody": "Treinta y tres exámenes corregidos por alguien que no soy yo: las tres nubes principales, MongoDB, Python, Git y GitHub, y una pila de Scrum. Cualquiera puede decir que sabe algo; no cualquiera se ofrece a que lo evalúen.",
+    "certsTeaserCta": "Todas las certificaciones",
     "closingTitle": "¿Qué estás construyendo?",
     "closingBody": "Traeme la parte que está trabada. Veinte minutos, sin venta.",
     "headlinePhrases": [

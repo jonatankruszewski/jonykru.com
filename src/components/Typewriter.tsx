@@ -69,11 +69,26 @@ const Typewriter = ({
   const visible = reducedMotion ? phrase : phrase.slice(0, length)
 
   return (
-    <span className={className}>
+    <span className={`grid ${className}`}>
       {/* The real content for assistive tech: every phrase, no animation. */}
       <span className="sr-only">{phrases.join('. ')}</span>
 
-      <span aria-hidden>
+      {/*
+        Ghosts. Every phrase is rendered invisibly, stacked into the same grid
+        cell, so the box always reserves the height of the tallest phrase — even
+        when a longer line wraps at a given width. The animated line can grow and
+        shrink underneath without nudging the content below it (no layout shift).
+      */}
+      {phrases.map((ghost) => (
+        <span key={ghost} aria-hidden className="invisible [grid-area:1/1]">
+          {ghost}
+          <span className="ms-0.5 inline-block w-[0.6ch] align-baseline">
+            &nbsp;
+          </span>
+        </span>
+      ))}
+
+      <span aria-hidden className="[grid-area:1/1]">
         {visible}
         <span className="ms-0.5 inline-block w-[0.6ch] animate-caret bg-accent align-baseline">
           &nbsp;

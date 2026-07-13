@@ -25,6 +25,9 @@
     "writingTitle": "Blog Posts",
     "writingBody": "I learn it twice — once building it, once explaining it. Architecture, migrations, and the real cost of tech debt.",
     "writingCta": "All blog posts",
+    "certsTeaserTitle": "A second opinion, not a self-assessment.",
+    "certsTeaserBody": "Thirty-three exams graded by someone other than me — the three major clouds, MongoDB, Python, Git and GitHub, and a stack of Scrum. Anyone can claim a skill; not everyone volunteers to be tested on it.",
+    "certsTeaserCta": "All certifications",
     "closingTitle": "What are you building?",
     "closingBody": "Bring the part that's stuck. Twenty minutes, no pitch.",
     "headlinePhrases": [
