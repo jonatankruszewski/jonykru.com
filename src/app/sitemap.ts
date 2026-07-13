@@ -1,18 +1,30 @@
 import type { MetadataRoute } from 'next'
 import { SITE_URL } from '@/data/site'
+import { DEFAULT_LOCALE, LOCALES } from '@/lib/locale'
 import { ROUTES } from '@/lib/nav'
 
 export const dynamic = 'force-static'
 
-// Generated from the same route table the nav reads, so a new page cannot ship
-// in one and be missing from the other.
+// One entry per locale per route (each route is now /[lang]/…), with hreflang
+// alternates so search engines connect the language variants. Generated from the
+// same route table the nav reads, so a page can't ship in one and miss the other.
+const urlFor = (lang: string, href: string): string =>
+  `${SITE_URL}/${lang}${href === '/' ? '' : href}/`
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date()
 
-  return ROUTES.filter((route) => route.indexable).map((route) => ({
-    url: route.href === '/' ? `${SITE_URL}/` : `${SITE_URL}${route.href}/`,
-    lastModified,
-    changeFrequency: 'monthly',
-    priority: route.priority
-  }))
+  return ROUTES.filter((route) => route.indexable).flatMap((route) => {
+    const languages = Object.fromEntries(
+      LOCALES.map((lang) => [lang, urlFor(lang, route.href)])
+    )
+
+    return LOCALES.map((lang) => ({
+      url: urlFor(lang, route.href),
+      lastModified,
+      changeFrequency: 'monthly' as const,
+      priority: lang === DEFAULT_LOCALE ? route.priority : route.priority * 0.9,
+      alternates: { languages }
+    }))
+  })
 }
