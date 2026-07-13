@@ -18,10 +18,9 @@ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
 const FeedbackWidget = () => {
   const { t } = useI18n()
-  // Reuses the contact Formspree endpoint; the source field below lets these
-  // be told apart in the inbox without standing up a second form.
+  // Dedicated Formspree form for feedback, separate from the contact inbox.
   const [state, handleSubmit, resetFormSubmission] =
-    useFormSpreeForm<FeedbackData>('xwpleawo')
+    useFormSpreeForm<FeedbackData>('maqrypqq')
   const methods = useReactHookForm<FeedbackData>({
     mode: 'onTouched',
     defaultValues: { email: '', message: '' }
