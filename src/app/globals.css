@@ -3,6 +3,23 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
+ * Tailwind already gates `hover:` behind `@media (hover: hover)`, but some touch
+ * devices (notably Android Chrome / Samsung Internet) report `hover: hover` and
+ * then leave the last-tapped element stuck in its `:hover` state until you tap
+ * elsewhere. On the accent CTA that hover is `bg-ink` — a near-black fill — so a
+ * "Book a call" tap could leave a dead-looking black button behind after the
+ * booking tab opened. Requiring `pointer: fine` as well restricts every hover
+ * utility to real mouse/trackpad pointers, so a touch tap can never strand one.
+ */
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
+/*
  * Theming is pure CSS — there is no blocking script and no dangerouslySetInnerHTML.
  *
  * Dracula is the default. `prefers-color-scheme: light` switches to Solarized
