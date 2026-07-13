@@ -42,10 +42,13 @@ const CertificationCard = ({ badge }: CertificationCardProps) => {
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`${title} — ${t('certifications.viewCredential')}`}
           className="flex items-center gap-5"
         >
           {content}
+          {/* The accessible name now derives from the visible title + issuer
+              (so it satisfies Label-in-Name), with the action spelled out for
+              screen readers. */}
+          <span className="sr-only">{t('certifications.viewCredential')}</span>
         </a>
       ) : (
         <div className="flex items-center gap-5">{content}</div>

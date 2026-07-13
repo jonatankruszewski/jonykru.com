@@ -46,46 +46,37 @@ interface I18nContextType {
 const I18nContext = createContext<I18nContextType | undefined>(undefined)
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  // Initialize from localStorage synchronously (SSR-safe)
-  const getInitialLanguage = (): Language => {
-    if (typeof window === 'undefined') {
-      return 'en'
-    }
-
+  // Client-only: read the stored/browser preference. Never runs during SSR.
+  const detectLanguage = (): Language => {
     try {
-      const savedLanguage = localStorage.getItem('language') as Language | null
-      if (savedLanguage && savedLanguage in LANGUAGE_CONFIG) {
-        return savedLanguage
-      }
+      const saved = localStorage.getItem('language') as Language | null
+      if (saved && saved in LANGUAGE_CONFIG) return saved
     } catch {
       // localStorage not available
     }
-    // Try to detect browser language
     const browserLang = navigator.language.slice(0, 2) as Language
-
-    if (browserLang in LANGUAGE_CONFIG && browserLang !== 'en') {
-      return browserLang
-    }
-
+    if (browserLang in LANGUAGE_CONFIG && browserLang !== 'en') return browserLang
     return 'en'
   }
 
-  const [language, setLanguageState] = useState<Language>(getInitialLanguage)
-  const [mounted, setMounted] = useState(false)
+  // Start at 'en' so the first client render matches the server-rendered HTML.
+  // Reading localStorage/navigator during init desyncs the two and fails
+  // hydration (React #418); the real preference is applied right after mount.
+  const [language, setLanguageState] = useState<Language>('en')
 
   useEffect(() => {
-    setMounted(true)
+    const detected = detectLanguage()
+    if (detected !== 'en') setLanguageState(detected)
   }, [])
 
-  const setLanguage = useCallback(
-    (lang: Language) => {
-      setLanguageState(lang)
-      if (mounted) {
-        localStorage.setItem('language', lang)
-      }
-    },
-    [mounted]
-  )
+  const setLanguage = useCallback((lang: Language) => {
+    setLanguageState(lang)
+    try {
+      localStorage.setItem('language', lang)
+    } catch {
+      // localStorage not available
+    }
+  }, [])
 
   const t = useCallback(
     (key: string, params?: Record<string, string | number>): string => {

@@ -73,10 +73,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       suppressHydrationWarning
     >
       <body className="bg-canvas text-ink font-sans">
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content={CONTENT_SECURITY_POLICY}
-        />
+        {/* Production only: React's dev mode uses eval(), which this CSP would
+            block. The deployed build (what actually needs the CSP) is production. */}
+        {process.env.NODE_ENV === 'production' && (
+          <meta
+            httpEquiv="Content-Security-Policy"
+            content={CONTENT_SECURITY_POLICY}
+          />
+        )}
         {/* Machine-readable identity for search engines. Static, so it renders
             in the initial HTML with no client cost. */}
         <script type="application/ld+json">
