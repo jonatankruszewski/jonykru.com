@@ -20,6 +20,7 @@ const CertificationCard = ({ badge }: CertificationCardProps) => {
         width={200}
         height={200}
         loading="lazy"
+        decoding="async"
         src={badge.image_url}
         alt=""
         aria-hidden
