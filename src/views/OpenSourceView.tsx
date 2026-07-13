@@ -39,7 +39,10 @@ const OpenSourceView = () => {
       <section className="mx-auto max-w-6xl px-6 pt-16">
         <SectionHeader
           title={t('oss.authoredTitle')}
-          lede={t('oss.authoredBody')}
+          lede={t('oss.authoredBody', {
+            projects: stats.authoredProjects,
+            packages: stats.publishedPackages
+          })}
         />
         <div className="grid gap-6 md:grid-cols-2">
           {authored().map((project) => (

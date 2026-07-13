@@ -108,7 +108,10 @@ const HomeView = () => {
         <SectionHeader
           eyebrow={t('oss.title')}
           title={t('home.ossTeaserTitle')}
-          lede={t('home.ossTeaserBody')}
+          lede={t('home.ossTeaserBody', {
+            projects: stats.authoredProjects,
+            packages: stats.publishedPackages
+          })}
           action={
             <SectionLink href="/open-source" label={t('home.ossTeaserCta')} />
           }
@@ -138,7 +141,7 @@ const HomeView = () => {
         <SectionHeader
           eyebrow={t('certifications.title')}
           title={t('home.certsTeaserTitle')}
-          lede={t('home.certsTeaserBody')}
+          lede={t('home.certsTeaserBody', { total: stats.certifications })}
           action={
             <SectionLink
               href="/certifications"

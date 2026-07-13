@@ -16,6 +16,10 @@ const CertificationsView = () => {
 
   const badges = useMemo(() => dedupeBadges(credly.data as CredlyBadge[]), [])
   const issuers = useMemo(() => issuersOf(badges), [badges])
+  const scrumCount = useMemo(
+    () => filterByIssuer(badges, 'Scrum.org').length,
+    [badges]
+  )
   const visible = useMemo(
     () => filterByIssuer(badges, issuer),
     [badges, issuer]
@@ -25,7 +29,10 @@ const CertificationsView = () => {
     <>
       <PageHero
         eyebrow={t('certifications.title')}
-        lede={t('certifications.lede')}
+        lede={t('certifications.lede', {
+          total: badges.length,
+          scrum: scrumCount
+        })}
         title={
           <h1 className="text-h1 text-ink mt-6 flex items-baseline gap-4">
             <span className="font-mono tabular-nums bg-accent text-accent-ink px-3">
