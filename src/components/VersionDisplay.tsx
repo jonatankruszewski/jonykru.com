@@ -27,7 +27,9 @@ const VersionDisplay = () => {
       rel="noopener noreferrer"
       className="font-mono text-label tabular-nums text-accent underline-offset-4 decoration-2 hover:underline transition-all"
       title={`Source · v${version}`}
-      aria-label={`View source code (version ${version})`}
+      // Accessible name leads with the visible "v{version}" so it satisfies
+      // Label-in-Name (WCAG 2.5.3), then adds context for screen readers.
+      aria-label={`v${version} — view source code`}
     >
       v{version}
     </a>

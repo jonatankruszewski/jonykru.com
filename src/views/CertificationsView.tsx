@@ -64,6 +64,9 @@ const CertificationsView = () => {
           ))}
         </div>
 
+        {/* Names the results list for assistive tech and keeps the heading
+            order h1 -> h2 -> h3 (the cards use h3). */}
+        <h2 className="sr-only">{t('certifications.title')}</h2>
         {visible.length === 0 ? (
           <p className="py-16 text-ink-muted">{t('certifications.empty')}</p>
         ) : (
