@@ -17,6 +17,7 @@ import sharp from 'sharp'
 
 import * as fs from 'fs'
 import * as path from 'path'
+import { assertValid, isMediumArticle } from '../src/lib/dataValidation'
 
 const __dirname = path.resolve()
 
@@ -399,6 +400,8 @@ export function readExistingJson(dataPath: string): MediumFlatData[] {
  */
 export function saveDataJson(data: MediumFlatData[], dataPath: string): void {
   const merged = mergeArticles(readExistingJson(dataPath), data)
+  // Refuse to write a malformed feed: fail loudly before it reaches disk.
+  assertValid(merged, isMediumArticle, 'medium')
   fs.writeFileSync(dataPath, JSON.stringify(merged, null, 2), 'utf8')
 }
 

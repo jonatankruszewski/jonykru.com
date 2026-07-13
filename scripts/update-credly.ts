@@ -20,6 +20,7 @@ import sharp from 'sharp'
 import { execSync } from 'child_process'
 import * as fs from 'fs'
 import * as path from 'path'
+import { assertValid, isCredlyBadge } from '../src/lib/dataValidation'
 
 const __dirname = path.resolve()
 
@@ -322,6 +323,9 @@ export async function downloadImages(
  * Save the filtered data to JSON file
  */
 export function saveBackupJson(data: CredlyData, backupPath: string): void {
+  // Refuse to overwrite the committed data with a malformed fetch: fail loudly,
+  // naming the bad record, before it ever reaches disk.
+  assertValid(data.data, isCredlyBadge, 'credly')
   fs.writeFileSync(backupPath, JSON.stringify(data, null, 2), 'utf8')
 }
 

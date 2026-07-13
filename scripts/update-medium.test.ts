@@ -271,6 +271,19 @@ describe('update-medium', () => {
         'utf8'
       )
     })
+
+    it('refuses to write when an article is malformed, naming the source', () => {
+      vi.mocked(fs.readFileSync).mockReturnValue('[]')
+      vi.mocked(fs.writeFileSync).mockClear()
+      const bad = [
+        { guid: 'https://medium.com/p/x' }
+      ] as unknown as MediumFlatData[]
+
+      expect(() => saveDataJson(bad, '/test/data.json')).toThrow(
+        /medium: malformed/
+      )
+      expect(fs.writeFileSync).not.toHaveBeenCalled()
+    })
   })
 
   describe('fetchMediumData', () => {
