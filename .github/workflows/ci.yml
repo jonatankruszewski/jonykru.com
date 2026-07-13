@@ -33,6 +33,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Generate build metadata
+        # public/version.json is git-ignored and produced by the build's prebuild
+        # step. Lint imports it (VersionDisplay) and test/build read it, so
+        # generate it up front — otherwise eslint's import/no-unresolved fails.
+        run: pnpm exec tsx scripts/generate-version.ts
+
       - name: Lint
         run: pnpm lint
 
