@@ -113,10 +113,21 @@ const FeedbackWidget = () => {
     const el = wrapperRef.current
     if (el?.hasPointerCapture(e.pointerId))
       el.releasePointerCapture(e.pointerId)
-    // A drag just moved the button; swallow the click it would otherwise emit.
-    if (d?.moved) suppressClick.current = true
+    if (!d) return
+    if (d.moved) {
+      // A drag just moved the button; swallow the click it would otherwise emit.
+      suppressClick.current = true
+    } else {
+      // A tap opens. We open here rather than on the click event, because
+      // setPointerCapture retargets that click to this wrapper, so the inner
+      // button's onClick never fires on a desktop mouse tap.
+      setOpen(true)
+    }
   }
 
+  // Kept for keyboard activation (Enter/Space), which emits a click with no
+  // preceding pointer gesture. suppressClick guards the click that a mouse drag
+  // may still emit.
   const handleTriggerClick = () => {
     if (suppressClick.current) {
       suppressClick.current = false
@@ -168,7 +179,7 @@ const FeedbackWidget = () => {
             e.stopPropagation()
             setDismissed(true)
           }}
-          className="absolute -top-2 -end-2 flex h-5 w-5 items-center justify-center border border-ink bg-canvas text-ink-muted hover:text-ink transition-colors"
+          className="absolute -top-2 -end-2 flex h-5 w-5 cursor-pointer items-center justify-center border border-ink bg-canvas text-ink-muted hover:text-ink transition-colors"
         >
           <X size={12} aria-hidden />
         </button>

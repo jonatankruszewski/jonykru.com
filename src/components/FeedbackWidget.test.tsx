@@ -47,6 +47,18 @@ describe('FeedbackWidget', () => {
     expect(screen.getByRole('button', { name: /send feedback/i })).toBeTruthy()
   })
 
+  it('opens on a pointer tap, since capture retargets the click off the button', () => {
+    renderWidget()
+    const wrapper = trigger().parentElement as HTMLElement
+
+    // A tap: pointer down then up with no movement. Opening must happen here,
+    // not via a click event (which pointer capture would send to the wrapper).
+    fireEvent.pointerDown(wrapper, { pointerId: 1, clientX: 100, clientY: 100 })
+    fireEvent.pointerUp(wrapper, { pointerId: 1, clientX: 100, clientY: 100 })
+
+    expect(screen.getByRole('dialog')).toBeTruthy()
+  })
+
   it('treats a drag past the threshold as a move, not an open', () => {
     renderWidget()
     // The draggable surface is the launcher wrapper around the trigger.
