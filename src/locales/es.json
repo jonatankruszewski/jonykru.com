@@ -169,6 +169,7 @@
     "submit": "Enviar comentarios",
     "sending": "Enviando...",
     "close": "Cerrar",
+    "dismiss": "Ocultar el botón de comentarios",
     "successTitle": "Gracias por los comentarios",
     "successBody": "Leo cada mensaje. Si dejaste un correo, quizás te escriba.",
     "validation": {

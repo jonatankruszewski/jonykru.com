@@ -169,6 +169,7 @@
     "submit": "Send feedback",
     "sending": "Sending...",
     "close": "Close",
+    "dismiss": "Hide feedback button",
     "successTitle": "Thanks for the feedback",
     "successBody": "I read every message. If you left an email, I might follow up.",
     "validation": {

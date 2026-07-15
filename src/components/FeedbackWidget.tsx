@@ -22,11 +22,13 @@ const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 // the dialog); beyond it, it's a drag (moves the button, no dialog).
 const DRAG_THRESHOLD = 6
 const EDGE_GAP = 8
-const STORAGE_KEY = 'feedback-button-position'
 
 const FeedbackWidget = () => {
   const { t } = useI18n()
   const [open, setOpen] = useState(false)
+  // Dismissing hides the launcher for the session only; a refresh brings it
+  // back (position is intentionally not persisted either).
+  const [dismissed, setDismissed] = useState(false)
   // Dedicated Formspree form for feedback, separate from the contact inbox.
   const [state, handleSubmit, resetFormSubmission] =
     useFormSpreeForm<FeedbackData>('maqrypqq')
@@ -37,9 +39,10 @@ const FeedbackWidget = () => {
   const { handleSubmit: submit, control } = methods
 
   // null → sit at the default bottom-end corner (also the SSR/first-paint state,
-  // so hydration matches). Once dragged, an explicit left/top pins it.
+  // so hydration matches, and the position each fresh load starts from). Once
+  // dragged, an explicit left/top pins it.
   const [pos, setPos] = useState<Position | null>(null)
-  const buttonRef = useRef<HTMLButtonElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
   const drag = useRef<{
     startX: number
     startY: number
@@ -50,15 +53,20 @@ const FeedbackWidget = () => {
   // A drag ends with a synthetic click we must swallow so it doesn't open.
   const suppressClick = useRef(false)
 
+  // Keep the launcher inside the viewport and out of the sticky navbar's band,
+  // which sits at the top of the page.
   const clampToViewport = (p: Position): Position => {
-    const el = buttonRef.current
+    const el = wrapperRef.current
     const w = el?.offsetWidth ?? 56
     const h = el?.offsetHeight ?? 56
+    const navBottom =
+      document.querySelector('header')?.getBoundingClientRect().bottom ?? 0
+    const minY = navBottom + EDGE_GAP
     const maxX = Math.max(EDGE_GAP, window.innerWidth - w - EDGE_GAP)
-    const maxY = Math.max(EDGE_GAP, window.innerHeight - h - EDGE_GAP)
+    const maxY = Math.max(minY, window.innerHeight - h - EDGE_GAP)
     return {
       x: Math.min(Math.max(EDGE_GAP, p.x), maxX),
-      y: Math.min(Math.max(EDGE_GAP, p.y), maxY)
+      y: Math.min(Math.max(minY, p.y), maxY)
     }
   }
 
@@ -67,20 +75,6 @@ const FeedbackWidget = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.succeeded])
 
-  // Restore a previously chosen position, clamped in case the viewport shrank.
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY)
-      if (!saved) return
-      const parsed = JSON.parse(saved) as Partial<Position>
-      if (typeof parsed?.x === 'number' && typeof parsed?.y === 'number') {
-        setPos(clampToViewport({ x: parsed.x, y: parsed.y }))
-      }
-    } catch {
-      // localStorage unavailable or malformed — fall back to the default corner.
-    }
-  }, [])
-
   // Keep the button on-screen through resizes and mobile orientation changes.
   useEffect(() => {
     const onResize = () => setPos((p) => (p ? clampToViewport(p) : p))
@@ -88,9 +82,10 @@ const FeedbackWidget = () => {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  const handlePointerDown = (e: PointerEvent<HTMLButtonElement>) => {
-    const el = buttonRef.current
+  const handlePointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    const el = wrapperRef.current
     if (!el) return
+    suppressClick.current = false
     const rect = el.getBoundingClientRect()
     drag.current = {
       startX: e.clientX,
@@ -102,7 +97,7 @@ const FeedbackWidget = () => {
     el.setPointerCapture(e.pointerId)
   }
 
-  const handlePointerMove = (e: PointerEvent<HTMLButtonElement>) => {
+  const handlePointerMove = (e: PointerEvent<HTMLDivElement>) => {
     const d = drag.current
     if (!d) return
     const dx = e.clientX - d.startX
@@ -112,25 +107,14 @@ const FeedbackWidget = () => {
     setPos(clampToViewport({ x: d.originX + dx, y: d.originY + dy }))
   }
 
-  const handlePointerUp = (e: PointerEvent<HTMLButtonElement>) => {
+  const handlePointerUp = (e: PointerEvent<HTMLDivElement>) => {
     const d = drag.current
     drag.current = null
-    const el = buttonRef.current
+    const el = wrapperRef.current
     if (el?.hasPointerCapture(e.pointerId))
       el.releasePointerCapture(e.pointerId)
-    if (!d?.moved) return
-    // It was a drag: swallow the click and remember where it landed.
-    suppressClick.current = true
-    const rect = el?.getBoundingClientRect()
-    if (!rect) return
-    try {
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({ x: rect.left, y: rect.top })
-      )
-    } catch {
-      // Persisting is best-effort; the live position still works.
-    }
+    // A drag just moved the button; swallow the click it would otherwise emit.
+    if (d?.moved) suppressClick.current = true
   }
 
   const handleTriggerClick = () => {
@@ -148,27 +132,47 @@ const FeedbackWidget = () => {
     if (!next && state.succeeded) resetFormSubmission()
   }
 
-  const buttonStyle: CSSProperties = {
+  const wrapperStyle: CSSProperties = {
     touchAction: 'none',
     ...(pos ? { left: pos.x, top: pos.y } : {})
   }
 
+  if (dismissed) return null
+
   return (
     <Dialog.Root open={open} onOpenChange={handleOpenChange}>
-      <button
-        ref={buttonRef}
-        type="button"
-        aria-label={t('feedback.button')}
-        title={t('feedback.button')}
+      <div
+        ref={wrapperRef}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        onClick={handleTriggerClick}
-        style={buttonStyle}
-        className={`fixed ${pos ? '' : 'bottom-6 end-6'} z-40 inline-flex items-center justify-center border border-ink p-4 bg-accent text-accent-ink hover:bg-ink hover:text-canvas transition-colors cursor-grab touch-none select-none active:cursor-grabbing`}
+        style={wrapperStyle}
+        className={`fixed ${pos ? '' : 'bottom-6 end-6'} z-40 select-none`}
       >
-        <MessageSquare size={20} aria-hidden />
-      </button>
+        <button
+          type="button"
+          aria-label={t('feedback.button')}
+          title={t('feedback.button')}
+          onClick={handleTriggerClick}
+          className="flex items-center justify-center border border-ink p-4 bg-accent text-accent-ink hover:bg-ink hover:text-canvas transition-colors cursor-grab active:cursor-grabbing"
+        >
+          <MessageSquare size={20} aria-hidden />
+        </button>
+
+        <button
+          type="button"
+          aria-label={t('feedback.dismiss')}
+          title={t('feedback.dismiss')}
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation()
+            setDismissed(true)
+          }}
+          className="absolute -top-2 -end-2 flex h-5 w-5 items-center justify-center border border-ink bg-canvas text-ink-muted hover:text-ink transition-colors"
+        >
+          <X size={12} aria-hidden />
+        </button>
+      </div>
 
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-ink/50" />
