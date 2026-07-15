@@ -49,18 +49,29 @@ describe('FeedbackWidget', () => {
 
   it('treats a drag past the threshold as a move, not an open', () => {
     renderWidget()
-    const button = trigger()
+    // The draggable surface is the launcher wrapper around the trigger.
+    const wrapper = trigger().parentElement as HTMLElement
 
-    fireEvent.pointerDown(button, { pointerId: 1, clientX: 100, clientY: 100 })
-    fireEvent.pointerMove(button, { pointerId: 1, clientX: 160, clientY: 160 })
-    fireEvent.pointerUp(button, { pointerId: 1, clientX: 160, clientY: 160 })
+    fireEvent.pointerDown(wrapper, { pointerId: 1, clientX: 100, clientY: 100 })
+    fireEvent.pointerMove(wrapper, { pointerId: 1, clientX: 160, clientY: 160 })
+    fireEvent.pointerUp(wrapper, { pointerId: 1, clientX: 160, clientY: 160 })
     // The browser fires a click after the drag; the widget must swallow it.
-    fireEvent.click(button)
+    fireEvent.click(trigger())
 
     expect(screen.queryByRole('dialog')).toBeNull()
-    // The dragged button is pinned with explicit coordinates instead of the
+    // The dragged launcher is pinned with explicit coordinates instead of the
     // default corner classes.
-    expect(button.style.left).not.toBe('')
-    expect(button.className).not.toContain('bottom-6')
+    expect(wrapper.style.left).not.toBe('')
+    expect(wrapper.className).not.toContain('bottom-6')
+  })
+
+  it('hides the launcher when the dismiss button is clicked', () => {
+    renderWidget()
+
+    fireEvent.click(
+      screen.getByRole('button', { name: /hide feedback button/i })
+    )
+
+    expect(screen.queryByRole('button', { name: /give feedback/i })).toBeNull()
   })
 })
