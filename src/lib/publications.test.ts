@@ -32,7 +32,7 @@ describe('sortByDateDesc', () => {
 
   it('sorts the real archive without losing articles', () => {
     expect(sortByDateDesc(articles)).toHaveLength(articles.length)
-    expect(articles.length).toBe(24)
+    expect(articles.length).toBe(25)
   })
 
   it('returns the real archive newest-first', () => {

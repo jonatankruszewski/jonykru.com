@@ -19,9 +19,9 @@ describe('getStats', () => {
   it('derives the article count from the data', () => {
     // The old site claimed "24+" with only 10 articles in the file, because
     // Medium's RSS caps at 10. The Medium export filled in the other 14, so the
-    // number is now 24 *and* every one of them is a real, linkable article.
+    // number is now 25 *and* every one of them is a real, linkable article.
     expect(getStats().articles).toBe(mediumData.length)
-    expect(getStats().articles).toBe(24)
+    expect(getStats().articles).toBe(25)
   })
 
   it('counts the two authored rxova projects', () => {
