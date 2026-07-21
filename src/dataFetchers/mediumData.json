@@ -1,5 +1,13 @@
 [
   {
+    "title": "How A Security Fix in Immer Broke Lodash — and the JavaScript Rule That Made It Inevitable",
+    "pubDate": "2026-07-20T12:00:00.000Z",
+    "guid": "https://medium.com/@jonakrusze/how-a-security-fix-in-immer-broke-lodash-and-the-javascript-rule-that-made-it-inevitable-e046a860821c",
+    "link": "https://levelup.gitconnected.com/how-a-security-fix-in-immer-broke-lodash-and-the-javascript-rule-that-made-it-inevitable-e046a860821c",
+    "categories": [],
+    "image": ""
+  },
+  {
     "title": "Migrating a Large SCSS Codebase in a Monorepo To SASS ^1.80.0",
     "pubDate": "2024-12-31T21:37:40.633Z",
     "guid": "https://medium.com/@jonakrusze/migrating-a-large-scss-codebase-in-a-monorepo-to-sass-1-80-0-ed7faec2a8b6",
