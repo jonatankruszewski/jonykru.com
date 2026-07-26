@@ -1,0 +1,39 @@
+# pnpm >= 10.26 no longer reads the "pnpm" field from package.json.
+# These settings live here instead. See https://pnpm.io/settings
+overrides:
+  react: ^19.2.8
+  react-dom: ^19.2.8
+  # next pins postcss 8.4.31 and sharp ^0.34.5, both of which carry advisories.
+  # Our own devDependency ranges already sit on the patched lines; these force
+  # next's nested copies onto them too.
+  postcss: ^8.5.23
+  sharp: ^0.35.3
+  # Several eslint packages still ask for minimatch ^3, which pulls the
+  # vulnerable brace-expansion 1.x. brace-expansion >=5 (the only patched line)
+  # is not a drop-in for minimatch 3, so bump minimatch instead -- but only for
+  # the consumers that use the `Minimatch` class. NOT a blanket override:
+  # eslint-plugin-import calls minimatch as a bare function, which minimatch 10
+  # no longer exports, so it must stay on 3.x (see auditConfig below).
+  '@eslint/eslintrc>minimatch': ^10.2.5
+  'eslint-plugin-jsx-a11y>minimatch': ^10.2.5
+  'eslint-plugin-react>minimatch': ^10.2.5
+
+auditConfig:
+  ignoreGhsas:
+    # brace-expansion DoS, reachable only via eslint-plugin-import's minimatch 3.
+    # Dev-only (lint-time glob expansion over our own config patterns, no
+    # attacker-controlled input) and unfixable without breaking the plugin:
+    # eslint-plugin-import 2.32.0 is latest and still requires minimatch ^3.
+    # Revisit when eslint-plugin-import ships a minimatch 10 compatible release.
+    - GHSA-mh99-v99m-4gvg
+
+peerDependencyRules:
+  allowedVersions:
+    eslint-plugin-import>eslint: '10'
+    eslint-plugin-jsx-a11y>eslint: '10'
+    eslint-plugin-react>eslint: '10'
+
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - unrs-resolver
