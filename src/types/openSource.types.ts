@@ -20,6 +20,22 @@ export type OssPackage = {
   url: string
 }
 
+/**
+ * The org an authored project ships under. The authored work is not a pile of
+ * unrelated repos — it's one org with a name, a site and a shared release
+ * process — so the org is modelled rather than left implied by the repo slug.
+ */
+export type OssOrg = {
+  id: string
+  name: string
+  /** The org's own site. */
+  url: string
+  /** The GitHub org the repos live in. */
+  github: string
+  taglineKey: string
+  blurbKey: string
+}
+
 export type OssProject = {
   slug: string
   name: string
@@ -30,6 +46,8 @@ export type OssProject = {
   npm?: string
   blurbKey: string
   featured?: boolean
+  /** Set on authored work; matches `OssOrg.id`. Absent on other people's repos. */
+  org?: string
   /** Authored projects are monorepos; these are the packages they ship. */
   packages?: OssPackage[]
   contributions?: Contribution[]

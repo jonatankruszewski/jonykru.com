@@ -28,12 +28,13 @@ const renderHome = () =>
   )
 
 describe('HomeView open-source teaser', () => {
-  it('features exactly the two authored projects as cards, not the collaborations', () => {
+  it('features exactly the three authored monorepos as cards, not the collaborations', () => {
     renderHome()
 
     // Repo paths only ever render inside a RepoCard, so they are a reliable
     // proxy for "this project has a card".
     expect(screen.getByText('rxova/journey')).toBeTruthy()
+    expect(screen.getByText('rxova/react-inputs')).toBeTruthy()
     expect(screen.getByText('rxova/use-everywhere')).toBeTruthy()
     expect(screen.queryByText('dcouple/Pane')).toBeNull()
   })
@@ -48,7 +49,7 @@ describe('HomeView derived copy (no hand-typed numbers)', () => {
   it('interpolates the authored/package counts into the open-source lede', () => {
     renderHome()
     expect(
-      screen.getByText(/2 projects of my own across 5 published packages/)
+      screen.getByText(/3 projects of my own across 10 published packages/)
     ).toBeTruthy()
   })
 

@@ -17,7 +17,16 @@ const RepoCard = ({ project }: RepoCardProps) => {
     <article className="border border-rule p-6 flex flex-col gap-5 hover:border-ink transition-colors">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="text-h3 text-ink">{project.name}</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            <h3 className="text-h3 text-ink">{project.name}</h3>
+            {/* The org badge is what makes rxova legible as a brand on a card
+                that would otherwise only show it as a repo-path prefix. */}
+            {project.org && (
+              <span className="font-mono text-label uppercase tracking-label text-syn-const border border-syn-const/40 px-1.5">
+                {project.org}
+              </span>
+            )}
+          </div>
           <p className="font-mono text-label text-syn-comment mt-1">
             {project.repo}
           </p>

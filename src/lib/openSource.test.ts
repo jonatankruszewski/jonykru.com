@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { OSS_PROJECTS } from '@/data/openSource'
-import { authored, contributed, featured, starsFor } from '@/lib/openSource'
+import { OSS_PROJECTS, RXOVA_ORG } from '@/data/openSource'
+import {
+  authored,
+  byOrg,
+  contributed,
+  featured,
+  publishedPackages,
+  starsFor
+} from '@/lib/openSource'
 
 describe('OSS_PROJECTS', () => {
   it('has no duplicate slugs', () => {
@@ -26,7 +33,7 @@ describe('OSS_PROJECTS', () => {
       authored()
         .map((p) => p.slug)
         .sort()
-    ).toEqual(['journey', 'use-everywhere'])
+    ).toEqual(['journey', 'react-inputs', 'use-everywhere'])
   })
 
   it('marks the immer work as open, never as merged', () => {
@@ -47,12 +54,53 @@ describe('OSS_PROJECTS', () => {
     }
   })
 
-  it('features exactly the two authored projects shown on the home page', () => {
+  it('features exactly the authored monorepos shown on the home page', () => {
     expect(
       featured()
         .map((p) => p.slug)
         .sort()
-    ).toEqual(['journey', 'use-everywhere'])
+    ).toEqual(['journey', 'react-inputs', 'use-everywhere'])
+  })
+
+  // The section shipped for months without react-inputs even existing on it.
+  it('lists react-inputs, the third rxova monorepo', () => {
+    const project = OSS_PROJECTS.find((p) => p.slug === 'react-inputs')
+    expect(project?.repo).toBe('rxova/react-inputs')
+    expect(project?.role).toBe('author')
+    expect(project?.packages?.map((pkg) => pkg.name)).toEqual([
+      '@rxova/react-inputs',
+      '@rxova/react-intl-currency-input',
+      '@rxova/react-otp-input',
+      '@rxova/react-rating-input',
+      '@rxova/codemod'
+    ])
+  })
+
+  it('points every listed package at npm', () => {
+    for (const pkg of publishedPackages()) {
+      expect(pkg.url).toBe(`https://www.npmjs.com/package/${pkg.name}`)
+    }
+  })
+})
+
+describe('byOrg', () => {
+  it('collects the rxova monorepos, and only those', () => {
+    expect(byOrg(RXOVA_ORG.id).map((p) => p.slug)).toEqual([
+      'journey',
+      'react-inputs',
+      'use-everywhere'
+    ])
+  })
+
+  // Someone else's repo carries no org badge, however much I contributed to it.
+  it('leaves the contributed repos unbranded', () => {
+    for (const project of contributed()) {
+      expect(project.org).toBeUndefined()
+    }
+  })
+
+  it('is empty for an org that ships nothing here', () => {
+    expect(byOrg('not-an-org')).toEqual([])
   })
 })
 
