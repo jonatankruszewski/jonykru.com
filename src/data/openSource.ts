@@ -1,14 +1,30 @@
 import starCounts from '@/data/starCounts.json'
-import type { OssProject } from '@/types/openSource.types'
+import type { OssOrg, OssProject } from '@/types/openSource.types'
 
 /**
  * The open-source record. Data only — the functions that query it live in
  * src/lib/openSource.ts.
  *
  * Every entry is verified against GitHub and npm. Contribution status is
- * modelled explicitly so an open PR can never be rendered as merged.
+ * modelled explicitly so an open PR can never be rendered as merged, and the
+ * package lists are the published ones only — each of these monorepos also
+ * carries private workspace tooling that nobody can install.
  */
 const npmUrl = (name: string) => `https://www.npmjs.com/package/${name}`
+
+/**
+ * The org the authored work ships under. Naming it lets the page present one
+ * org with a site, a GitHub home and a shared release pipeline, rather than a
+ * list of repos that happen to share a prefix.
+ */
+export const RXOVA_ORG: OssOrg = {
+  id: 'rxova',
+  name: 'rxova',
+  url: 'https://rxova.org',
+  github: 'https://github.com/rxova',
+  taglineKey: 'oss.org.rxova.tagline',
+  blurbKey: 'oss.org.rxova.blurb'
+}
 
 export const OSS_PROJECTS: OssProject[] = [
   {
@@ -36,13 +52,15 @@ export const OSS_PROJECTS: OssProject[] = [
   },
   {
     slug: 'journey',
-    name: 'journey',
+    name: 'Journey',
     repo: 'rxova/journey',
     url: 'https://github.com/rxova/journey',
     role: 'author',
     language: 'TypeScript',
+    npm: npmUrl('@rxova/journey-core'),
     blurbKey: 'oss.projects.journey.blurb',
     featured: true,
+    org: RXOVA_ORG.id,
     packages: [
       { name: '@rxova/journey-core', url: npmUrl('@rxova/journey-core') },
       { name: '@rxova/journey-react', url: npmUrl('@rxova/journey-react') },
@@ -50,6 +68,34 @@ export const OSS_PROJECTS: OssProject[] = [
         name: '@rxova/journey-devtools-bridge',
         url: npmUrl('@rxova/journey-devtools-bridge')
       }
+    ]
+  },
+  {
+    slug: 'react-inputs',
+    name: 'react-inputs',
+    repo: 'rxova/react-inputs',
+    url: 'https://github.com/rxova/react-inputs',
+    role: 'author',
+    language: 'TypeScript',
+    npm: npmUrl('@rxova/react-inputs'),
+    blurbKey: 'oss.projects.reactInputs.blurb',
+    featured: true,
+    org: RXOVA_ORG.id,
+    packages: [
+      { name: '@rxova/react-inputs', url: npmUrl('@rxova/react-inputs') },
+      {
+        name: '@rxova/react-intl-currency-input',
+        url: npmUrl('@rxova/react-intl-currency-input')
+      },
+      {
+        name: '@rxova/react-otp-input',
+        url: npmUrl('@rxova/react-otp-input')
+      },
+      {
+        name: '@rxova/react-rating-input',
+        url: npmUrl('@rxova/react-rating-input')
+      },
+      { name: '@rxova/codemod', url: npmUrl('@rxova/codemod') }
     ]
   },
   {
@@ -62,6 +108,7 @@ export const OSS_PROJECTS: OssProject[] = [
     npm: npmUrl('use-everywhere'),
     blurbKey: 'oss.projects.useEverywhere.blurb',
     featured: true,
+    org: RXOVA_ORG.id,
     packages: [
       { name: 'use-everywhere', url: npmUrl('use-everywhere') },
       { name: '@use-everywhere/core', url: npmUrl('@use-everywhere/core') }

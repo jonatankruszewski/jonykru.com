@@ -24,12 +24,15 @@ describe('getStats', () => {
     expect(getStats().articles).toBe(25)
   })
 
-  it('counts the two authored rxova projects', () => {
-    expect(getStats().authoredProjects).toBe(2)
+  it('counts the three authored rxova monorepos', () => {
+    expect(getStats().authoredProjects).toBe(3)
   })
 
-  it('counts five published packages, excluding the private tooling one', () => {
-    expect(getStats().publishedPackages).toBe(5)
+  // Each monorepo also carries private workspace tooling — @rxova/demo-kit,
+  // @rxova/utils, @use-everywhere/tooling — that nobody can install. Counting
+  // those would inflate the number with packages a reader can't click.
+  it('counts the published packages, excluding the private tooling ones', () => {
+    expect(getStats().publishedPackages).toBe(10)
   })
 
   it('counts the repos contributed to', () => {

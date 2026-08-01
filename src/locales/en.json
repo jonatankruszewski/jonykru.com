@@ -68,7 +68,7 @@
     "title": "Open Source",
     "lede": "The best code I've read was open, free, and maintained by people who owed me nothing. I learned the craft from those repos, so I try to leave them better than I found them — as an author, as a maintainer, and as a guest in codebases that aren't mine. Code read by strangers gets held to a higher bar, and engineers who write good code are rarely afraid to show it.",
     "authoredTitle": "Authored",
-    "authoredBody": "{projects} projects I built and maintain under the rxova org, shipping {packages} published packages.",
+    "authoredBody": "{projects} monorepos I build and maintain under the rxova org, shipping {packages} published packages.",
     "contributedTitle": "Contributed",
     "contributedBody": "Fixes merged into codebases I don't own, where the bar is someone else's and the reviewer owes me nothing. That's the most useful review there is.",
     "starsLabel": "stars",
@@ -84,10 +84,13 @@
         "pr301": "Fixed a node-pty crash on Intel Macs in the universal build"
       },
       "journey": {
-        "blurb": "A tiny stepper, wizard and sequencer with zero runtime dependencies."
+        "blurb": "Declarative journey graphs for non-linear UI flows. A dependency-free core, React bindings, and a devtools bridge that drives the Journey Chrome DevTools extension."
+      },
+      "reactInputs": {
+        "blurb": "The tricky React inputs, done right: localized currency, one-time codes, and ratings. Headless, accessible, zero-dependency, installable one at a time or as one suite — with a codemod for moving off the libraries they replace."
       },
       "useEverywhere": {
-        "blurb": "React hooks for state and messages shared across tabs, windows and workers."
+        "blurb": "State and messages that exist in every tab, window, and worker. A framework-free core plus the React hooks on top of it."
       },
       "typedash": {
         "blurb": "A modern, type-safe alternative to lodash.",
@@ -103,7 +106,17 @@
         "issue1268": "Reported the regression, with a minimal reproduction"
       }
     },
-    "packagesLabel": "Packages"
+    "packagesLabel": "Packages",
+    "org": {
+      "label": "The org",
+      "rxova": {
+        "tagline": "Small, typed, dependency-free libraries for the React ecosystem.",
+        "blurb": "rxova is the org I publish under: {repos} monorepos, one release pipeline, one docs site. Every package is TypeScript-first, ships its own types, and is released from CI with provenance — so what you install is what you can read here."
+      },
+      "viewSite": "rxova.org",
+      "viewGithub": "GitHub org",
+      "reposLabel": "Monorepos"
+    }
   },
   "writing": {
     "title": "Blog Posts",

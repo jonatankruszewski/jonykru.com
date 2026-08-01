@@ -68,7 +68,7 @@
     "title": "Open Source",
     "lede": "El mejor código que leí en mi vida era abierto, gratuito y mantenido por gente que no me debía nada. Aprendí el oficio en esos repos, así que trato de dejarlos mejor de lo que los encontré: como autor, como mantenedor y como invitado en código que no es mío. El código que leen desconocidos se sostiene en una vara más alta, y al que escribe buen código rara vez le incomoda mostrarlo.",
     "authoredTitle": "Propios",
-    "authoredBody": "{projects} proyectos que construí y mantengo bajo la organización rxova, con {packages} paquetes publicados.",
+    "authoredBody": "{projects} monorepos que construyo y mantengo bajo la organización rxova, con {packages} paquetes publicados.",
     "contributedTitle": "Contribuciones",
     "contributedBody": "Arreglos mergeados en código que no es mío, donde la vara la pone otro y el que revisa no me debe nada. No hay review más útil que ése.",
     "starsLabel": "estrellas",
@@ -84,10 +84,13 @@
         "pr301": "Arreglo de un crash de node-pty en Macs Intel en el build universal"
       },
       "journey": {
-        "blurb": "Un stepper, wizard y sequencer diminuto, sin dependencias en runtime."
+        "blurb": "Grafos declarativos de journeys para flujos de UI no lineales. Un core sin dependencias, bindings de React y un puente de devtools que alimenta la extensión de Chrome DevTools de Journey."
+      },
+      "reactInputs": {
+        "blurb": "Los inputs difíciles de React, bien hechos: moneda localizada, códigos de un solo uso y ratings. Headless, accesibles, sin dependencias, instalables de a uno o como suite — con un codemod para migrar desde las librerías que reemplazan."
       },
       "useEverywhere": {
-        "blurb": "Hooks de React para compartir estado y mensajes entre pestañas, ventanas y workers."
+        "blurb": "Estado y mensajes que existen en cada pestaña, ventana y worker. Un core sin framework y los hooks de React encima."
       },
       "typedash": {
         "blurb": "Una alternativa moderna y type-safe a lodash.",
@@ -103,7 +106,17 @@
         "issue1268": "Reporte de la regresión, con reproducción mínima"
       }
     },
-    "packagesLabel": "Paquetes"
+    "packagesLabel": "Paquetes",
+    "org": {
+      "label": "La organización",
+      "rxova": {
+        "tagline": "Librerías chicas, tipadas y sin dependencias para el ecosistema React.",
+        "blurb": "rxova es la organización bajo la que publico: {repos} monorepos, un solo pipeline de release, un solo sitio de docs. Cada paquete es TypeScript-first, trae sus propios tipos y se publica desde CI con provenance — así que lo que instalás es lo que podés leer acá."
+      },
+      "viewSite": "rxova.org",
+      "viewGithub": "Organización en GitHub",
+      "reposLabel": "Monorepos"
+    }
   },
   "writing": {
     "title": "Blog Posts",

@@ -1,11 +1,13 @@
 'use client'
 
+import OrgBand from '@/components/OrgBand'
 import RepoCard from '@/components/RepoCard'
 import CtaBand from '@/components/ui/CtaBand'
 import PageHero from '@/components/ui/PageHero'
 import SectionHeader from '@/components/ui/SectionHeader'
 import StatList from '@/components/ui/StatList'
 import { useI18n } from '@/context/i18nContext'
+import { RXOVA_ORG } from '@/data/openSource'
 import { authored, contributed } from '@/lib/openSource'
 import { getStats } from '@/lib/stats'
 
@@ -35,6 +37,10 @@ const OpenSourceView = () => {
           ]}
         />
       </PageHero>
+
+      <div className="mx-auto max-w-6xl px-6 pt-16">
+        <OrgBand org={RXOVA_ORG} />
+      </div>
 
       <section className="mx-auto max-w-6xl px-6 pt-16">
         <SectionHeader
