@@ -13,19 +13,19 @@ overrides:
   # is not a drop-in for minimatch 3, so bump minimatch instead -- but only for
   # the consumers that use the `Minimatch` class. NOT a blanket override:
   # eslint-plugin-import calls minimatch as a bare function, which minimatch 10
-  # no longer exports, so it must stay on 3.x (see auditConfig below).
+  # no longer exports, so it must stay on 3.x.
   '@eslint/eslintrc>minimatch': ^10.2.5
   'eslint-plugin-jsx-a11y>minimatch': ^10.2.5
   'eslint-plugin-react>minimatch': ^10.2.5
-
-auditConfig:
-  ignoreGhsas:
-    # brace-expansion DoS, reachable only via eslint-plugin-import's minimatch 3.
-    # Dev-only (lint-time glob expansion over our own config patterns, no
-    # attacker-controlled input) and unfixable without breaking the plugin:
-    # eslint-plugin-import 2.32.0 is latest and still requires minimatch ^3.
-    # Revisit when eslint-plugin-import ships a minimatch 10 compatible release.
-    - GHSA-mh99-v99m-4gvg
+  # brace-expansion DoS advisories, one per major line. Range-scoped so each
+  # consumer keeps the major it can actually use: minimatch 10 asks for ^5,
+  # eslint-plugin-import's minimatch 3 asks for ^1. Both lines are patched, so
+  # no blanket override and no audit ignore is needed.
+  brace-expansion@^1: ^1.1.18
+  brace-expansion@^5: ^5.0.9
+  # js-yaml quadratic CPU consumption in !!omap; eslintrc's ^4.3.0 range still
+  # resolves to a vulnerable 4.3.0.
+  '@eslint/eslintrc>js-yaml': ^4.3.1
 
 peerDependencyRules:
   allowedVersions:
