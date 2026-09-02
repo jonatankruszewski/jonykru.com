@@ -20,7 +20,7 @@
     "capabilitiesTitle": "Four disciplines, one person to brief.",
     "proofLabel": "Track record",
     "ossTeaserTitle": "Good code doesn't mind an audience.",
-    "ossTeaserBody": "{projects} projects of my own across {packages} published packages, plus fixes merged into repos I don't own — immer, typedash, and Pane, a manager for running AI coding agents in parallel. Good company to keep.",
+    "ossTeaserBody": "{projects} projects of my own across {packages} published packages, plus code merged into repos I don't own — immer, typedash, and Pane, a manager for running AI coding agents in parallel. Good company to keep.",
     "ossTeaserCta": "All open source",
     "writingTitle": "Blog Posts",
     "writingBody": "I learn it twice — once building it, once explaining it. Architecture, migrations, and the real cost of tech debt.",
@@ -68,13 +68,16 @@
     "title": "Open Source",
     "lede": "The best code I've read was open, free, and maintained by people who owed me nothing. I learned the craft from those repos, so I try to leave them better than I found them — as an author, as a maintainer, and as a guest in codebases that aren't mine. Code read by strangers gets held to a higher bar, and engineers who write good code are rarely afraid to show it.",
     "authoredTitle": "Authored",
-    "authoredBody": "{projects} monorepos I build and maintain under the rxova org, shipping {packages} published packages.",
+    "authoredBody": "{projects} monorepos I build and maintain under rxova, the org I founded, shipping {packages} published packages.",
     "contributedTitle": "Contributed",
-    "contributedBody": "Fixes merged into codebases I don't own, where the bar is someone else's and the reviewer owes me nothing. That's the most useful review there is.",
+    "contributedBody": "Code merged into codebases I don't own, where the bar is someone else's and the reviewer owes me nothing. That's the most useful review there is.",
     "starsLabel": "stars",
     "merged": "Merged",
     "open": "Proposed",
+    "closed": "Closed",
+    "resolved": "Resolved",
     "openNote": "Open, not yet merged.",
+    "viewDocs": "Docs",
     "viewRepo": "View repo",
     "viewNpm": "npm",
     "projects": {
@@ -102,16 +105,18 @@
       },
       "immer": {
         "blurb": "The immutable state library behind Redux Toolkit.",
-        "pr1269": "Return the real constructor on drafts, fixing a lodash.isEmpty crash",
-        "issue1268": "Reported the regression, with a minimal reproduction"
+        "pr1272": "Test coverage pinning how drafts report their prototype, so the regression cannot return",
+        "issue1268": "Reported the regression, with a minimal reproduction",
+        "pr1269": "Proposed a fix for the crash; the maintainers reverted the offending guard instead"
       }
     },
     "packagesLabel": "Packages",
     "org": {
       "label": "The org",
       "rxova": {
+        "role": "Founder",
         "tagline": "Small, typed, dependency-free libraries for the React ecosystem.",
-        "blurb": "rxova is the org I publish under: {repos} monorepos, one release pipeline, one docs site. Every package is TypeScript-first, ships its own types, and is released from CI with provenance — so what you install is what you can read here."
+        "blurb": "I founded rxova and run it end to end: {repos} monorepos, {packages} published packages, one release pipeline, one docs site. Every package is TypeScript-first, ships its own types, and is released from CI with provenance — so what you install is what you can read here."
       },
       "viewSite": "rxova.org",
       "viewGithub": "GitHub org",

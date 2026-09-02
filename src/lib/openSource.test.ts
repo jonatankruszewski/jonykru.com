@@ -36,12 +36,32 @@ describe('OSS_PROJECTS', () => {
     ).toEqual(['journey', 'react-inputs', 'use-everywhere'])
   })
 
-  it('marks the immer work as open, never as merged', () => {
+  // Only #1272 landed. #1269 was closed unmerged — the maintainers reverted the
+  // guard instead — and must never be dressed up as merged or as still open.
+  it('marks each immer contribution with its real upstream outcome', () => {
     const immer = OSS_PROJECTS.find((p) => p.slug === 'immer')
     expect(immer).toBeDefined()
-    expect(immer?.contributions?.length).toBeGreaterThan(0)
-    for (const contribution of immer?.contributions ?? []) {
-      expect(contribution.status).toBe('open')
+    const byRef = Object.fromEntries(
+      (immer?.contributions ?? []).map((c) => [c.ref, c.status])
+    )
+    expect(byRef).toEqual({
+      'PR #1272': 'merged',
+      'Issue #1268': 'resolved',
+      'PR #1269': 'closed'
+    })
+  })
+
+  // Verified against the live site: /packages/<slug>/ resolves, and the npm
+  // package name does not — /packages/journey-core/ is a 404.
+  it('points every authored project at its docs page, keyed by slug', () => {
+    for (const project of authored()) {
+      expect(project.docs).toBe(`https://rxova.org/packages/${project.slug}/`)
+    }
+  })
+
+  it("leaves docs off other people's repos", () => {
+    for (const project of contributed()) {
+      expect(project.docs).toBeUndefined()
     }
   })
 
@@ -67,11 +87,20 @@ describe('OSS_PROJECTS', () => {
     const project = OSS_PROJECTS.find((p) => p.slug === 'react-inputs')
     expect(project?.repo).toBe('rxova/react-inputs')
     expect(project?.role).toBe('author')
+    // The suite, the nine inputs it bundles, and the codemod — all verified
+    // published on npm. The list sat at five for three releases' worth of
+    // inputs, so the card advertised less than the repo actually ships.
     expect(project?.packages?.map((pkg) => pkg.name)).toEqual([
       '@rxova/react-inputs',
+      '@rxova/react-date-input',
+      '@rxova/react-file-input',
       '@rxova/react-intl-currency-input',
       '@rxova/react-otp-input',
+      '@rxova/react-password-input',
+      '@rxova/react-phone-input',
       '@rxova/react-rating-input',
+      '@rxova/react-tags-input',
+      '@rxova/react-time-input',
       '@rxova/codemod'
     ])
   })

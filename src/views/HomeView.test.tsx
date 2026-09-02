@@ -2,6 +2,7 @@
 import { render, screen } from '@testing-library/react'
 import { beforeAll, describe, expect, it } from 'vitest'
 import { I18nProvider } from '@/context/i18nContext'
+import { getStats } from '@/lib/stats'
 import HomeView from '@/views/HomeView'
 
 // jsdom has no matchMedia. Report reduced motion so the Typewriter renders its
@@ -46,10 +47,18 @@ describe('HomeView open-source teaser', () => {
 })
 
 describe('HomeView derived copy (no hand-typed numbers)', () => {
+  // Derived from the record, not restated here: the point of the test is that
+  // publishing a package updates the copy, and a hand-typed 10 defeated it.
   it('interpolates the authored/package counts into the open-source lede', () => {
     renderHome()
+    const { authoredProjects, publishedPackages } = getStats()
+
     expect(
-      screen.getByText(/3 projects of my own across 10 published packages/)
+      screen.getByText(
+        new RegExp(
+          `${authoredProjects} projects of my own across ${publishedPackages} published packages`
+        )
+      )
     ).toBeTruthy()
   })
 

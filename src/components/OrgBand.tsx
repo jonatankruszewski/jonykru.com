@@ -2,7 +2,7 @@
 
 import { ArrowUpRight } from 'lucide-react'
 import { useI18n } from '@/context/i18nContext'
-import { byOrg } from '@/lib/openSource'
+import { byOrg, publishedPackages } from '@/lib/openSource'
 import type { OssOrg } from '@/types/openSource.types'
 
 type OrgBandProps = {
@@ -29,9 +29,16 @@ const OrgBand = ({ org }: OrgBandProps) => {
           <p className="font-mono text-label uppercase tracking-label text-syn-comment mb-4">
             {t('oss.org.label')}
           </p>
-          <h2 id="oss-org" className="text-h2 text-ink font-mono">
-            {org.name}
-          </h2>
+          <div className="flex flex-wrap items-center gap-3">
+            <h2 id="oss-org" className="text-h2 text-ink font-mono">
+              {org.name}
+            </h2>
+            {/* The repos were already credited as authored; the org itself was
+                not credited to anyone. This is the line that says I built it. */}
+            <span className="font-mono text-label uppercase tracking-label text-syn-const border border-syn-const/40 px-1.5">
+              {t(org.roleKey)}
+            </span>
+          </div>
           <p className="mt-2 text-ink-muted">{t(org.taglineKey)}</p>
         </div>
 
@@ -44,7 +51,10 @@ const OrgBand = ({ org }: OrgBandProps) => {
       </div>
 
       <p className="max-w-3xl text-ink-muted">
-        {t(org.blurbKey, { repos: repos.length })}
+        {t(org.blurbKey, {
+          repos: repos.length,
+          packages: publishedPackages(repos).length
+        })}
       </p>
 
       <div className="flex flex-wrap items-center gap-5 border-t border-rule pt-6">

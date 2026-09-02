@@ -3,7 +3,25 @@
 import { ArrowUpRight, Star } from 'lucide-react'
 import { useI18n } from '@/context/i18nContext'
 import { starsFor } from '@/lib/openSource'
-import type { OssProject } from '@/types/openSource.types'
+import type { ContributionStatus, OssProject } from '@/types/openSource.types'
+
+/**
+ * Landed work reads green; everything else stays muted, so a proposal can never
+ * borrow the colour of something that shipped.
+ */
+const STATUS_STYLE: Record<ContributionStatus, string> = {
+  merged: 'text-syn-string border-syn-string',
+  resolved: 'text-syn-string border-syn-string',
+  open: 'text-syn-comment border-rule',
+  closed: 'text-syn-comment border-rule'
+}
+
+const STATUS_LABEL_KEY: Record<ContributionStatus, string> = {
+  merged: 'oss.merged',
+  resolved: 'oss.resolved',
+  open: 'oss.open',
+  closed: 'oss.closed'
+}
 
 type RepoCardProps = {
   project: OssProject
@@ -83,26 +101,33 @@ const RepoCard = ({ project }: RepoCardProps) => {
                 {t(contribution.titleKey)}
               </span>
               {/*
-                An open PR is not a merged one, and anyone can click through and
-                see that. Never render it as though it shipped.
+                A proposed PR is not a merged one, and anyone can click through
+                and see that. Never render it as though it shipped.
               */}
               <span
-                className={`font-mono text-label uppercase tracking-label w-fit px-1.5 border ${
-                  contribution.status === 'merged'
-                    ? 'text-syn-string border-syn-string'
-                    : 'text-syn-comment border-rule'
-                }`}
+                className={`font-mono text-label uppercase tracking-label w-fit px-1.5 border ${STATUS_STYLE[contribution.status]}`}
               >
-                {contribution.status === 'merged'
-                  ? t('oss.merged')
-                  : t('oss.open')}
+                {t(STATUS_LABEL_KEY[contribution.status])}
               </span>
             </li>
           ))}
         </ul>
       )}
 
-      <div className="flex items-center gap-5 mt-auto pt-2">
+      <div className="flex flex-wrap items-center gap-5 mt-auto pt-2">
+        {/* Docs first: for the authored work it's the link a reader actually
+            wants, and it's the org's own site rather than someone else's. */}
+        {project.docs && (
+          <a
+            href={project.docs}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link font-mono text-label uppercase tracking-label inline-flex items-center gap-1"
+          >
+            {t('oss.viewDocs')}
+            <ArrowUpRight size={14} aria-hidden />
+          </a>
+        )}
         <a
           href={project.url}
           target="_blank"

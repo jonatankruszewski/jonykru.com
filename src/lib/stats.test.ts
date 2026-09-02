@@ -29,10 +29,11 @@ describe('getStats', () => {
   })
 
   // Each monorepo also carries private workspace tooling — @rxova/demo-kit,
-  // @rxova/utils, @use-everywhere/tooling — that nobody can install. Counting
-  // those would inflate the number with packages a reader can't click.
+  // @rxova/utils, @use-everywhere/tooling, @use-everywhere/benchmarks — that
+  // nobody can install. Counting those would inflate the number with packages
+  // a reader can't click.
   it('counts the published packages, excluding the private tooling ones', () => {
-    expect(getStats().publishedPackages).toBe(10)
+    expect(getStats().publishedPackages).toBe(18)
   })
 
   it('counts the repos contributed to', () => {

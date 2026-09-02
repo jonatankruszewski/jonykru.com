@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import OrgBand from '@/components/OrgBand'
 import { I18nProvider } from '@/context/i18nContext'
 import { RXOVA_ORG } from '@/data/openSource'
-import { byOrg } from '@/lib/openSource'
+import { byOrg, publishedPackages } from '@/lib/openSource'
 
 const renderBand = () =>
   render(
@@ -28,13 +28,27 @@ describe('OrgBand', () => {
 
   // The blurb used to say "three monorepos" in prose. Adding a fourth repo
   // would have made it a lie, the same way the hand-typed stats did.
-  it('derives the repo count instead of hard-coding it into the copy', () => {
+  it('derives the repo and package counts instead of hard-coding them', () => {
     renderBand()
-    const count = byOrg(RXOVA_ORG.id).length
+    const repos = byOrg(RXOVA_ORG.id)
+    const packages = publishedPackages(repos).length
 
-    expect(screen.getByText(String(count))).toBeTruthy()
+    expect(screen.getByText(String(repos.length))).toBeTruthy()
     expect(
-      screen.getByText(new RegExp(`${count} monorepos, one release pipeline`))
+      screen.getByText(
+        new RegExp(`${repos.length} monorepos, ${packages} published packages`)
+      )
+    ).toBeTruthy()
+  })
+
+  // The repos were credited as authored long before the org itself was
+  // credited to anyone. Founding rxova is the claim this band has to carry.
+  it('credits the org to its founder, not just the repos to their author', () => {
+    renderBand()
+
+    expect(screen.getByText('Founder')).toBeTruthy()
+    expect(
+      screen.getByText(/I founded rxova and run it end to end/)
     ).toBeTruthy()
   })
 })

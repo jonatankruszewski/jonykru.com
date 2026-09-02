@@ -20,7 +20,7 @@
     "capabilitiesTitle": "Cuatro disciplinas, una sola persona a quien explicarle.",
     "proofLabel": "Antecedentes",
     "ossTeaserTitle": "Al buen código no le molesta que lo miren.",
-    "ossTeaserBody": "{projects} proyectos propios en {packages} paquetes publicados, más arreglos mergeados en repos que no son míos — immer, typedash y Pane, un gestor para correr agentes de código de IA en paralelo. Buena compañía.",
+    "ossTeaserBody": "{projects} proyectos propios en {packages} paquetes publicados, más código mergeado en repos que no son míos — immer, typedash y Pane, un gestor para correr agentes de código de IA en paralelo. Buena compañía.",
     "ossTeaserCta": "Todo el open source",
     "writingTitle": "Blog Posts",
     "writingBody": "Lo aprendo dos veces: una construyéndolo, otra explicándolo. Arquitectura, migraciones y el costo real de la deuda técnica.",
@@ -68,13 +68,16 @@
     "title": "Open Source",
     "lede": "El mejor código que leí en mi vida era abierto, gratuito y mantenido por gente que no me debía nada. Aprendí el oficio en esos repos, así que trato de dejarlos mejor de lo que los encontré: como autor, como mantenedor y como invitado en código que no es mío. El código que leen desconocidos se sostiene en una vara más alta, y al que escribe buen código rara vez le incomoda mostrarlo.",
     "authoredTitle": "Propios",
-    "authoredBody": "{projects} monorepos que construyo y mantengo bajo la organización rxova, con {packages} paquetes publicados.",
+    "authoredBody": "{projects} monorepos que construyo y mantengo bajo rxova, la organización que fundé, con {packages} paquetes publicados.",
     "contributedTitle": "Contribuciones",
-    "contributedBody": "Arreglos mergeados en código que no es mío, donde la vara la pone otro y el que revisa no me debe nada. No hay review más útil que ése.",
+    "contributedBody": "Código mergeado en repos que no son míos, donde la vara la pone otro y el que revisa no me debe nada. No hay review más útil que ése.",
     "starsLabel": "estrellas",
     "merged": "Mergeado",
     "open": "Propuesto",
+    "closed": "Cerrado",
+    "resolved": "Resuelto",
     "openNote": "Abierto, todavía sin mergear.",
+    "viewDocs": "Docs",
     "viewRepo": "Ver repo",
     "viewNpm": "npm",
     "projects": {
@@ -102,16 +105,18 @@
       },
       "immer": {
         "blurb": "La librería de estado inmutable detrás de Redux Toolkit.",
-        "pr1269": "Devolver el constructor real en los drafts, arreglando un crash de lodash.isEmpty",
-        "issue1268": "Reporte de la regresión, con reproducción mínima"
+        "pr1272": "Tests que fijan cómo los drafts reportan su prototipo, para que la regresión no vuelva",
+        "issue1268": "Reporte de la regresión, con reproducción mínima",
+        "pr1269": "Propuse un arreglo para el crash; los mantenedores prefirieron revertir el guard que lo causaba"
       }
     },
     "packagesLabel": "Paquetes",
     "org": {
       "label": "La organización",
       "rxova": {
+        "role": "Fundador",
         "tagline": "Librerías chicas, tipadas y sin dependencias para el ecosistema React.",
-        "blurb": "rxova es la organización bajo la que publico: {repos} monorepos, un solo pipeline de release, un solo sitio de docs. Cada paquete es TypeScript-first, trae sus propios tipos y se publica desde CI con provenance — así que lo que instalás es lo que podés leer acá."
+        "blurb": "Fundé rxova y la llevo de punta a punta: {repos} monorepos, {packages} paquetes publicados, un solo pipeline de release, un solo sitio de docs. Cada paquete es TypeScript-first, trae sus propios tipos y se publica desde CI con provenance — así que lo que instalás es lo que podés leer acá."
       },
       "viewSite": "rxova.org",
       "viewGithub": "Organización en GitHub",
