@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     template: '%s — Jonatan Kruszewski'
   },
   description:
-    'Software engineer who takes AI systems past the demo — frontend, backend, CI and automation. Author of the rxova libraries; contributor to immer, typedash and Pane.',
+    'Software engineer who takes AI systems past the demo — frontend, backend, CI and automation. Founder of rxova, the TypeScript library org; contributor to immer, typedash and Pane.',
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',

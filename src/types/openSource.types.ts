@@ -1,11 +1,15 @@
 export type OssRole = 'author' | 'contributor'
 
 /**
- * 'merged' — landed in the upstream repo.
- * 'open'   — proposed but not accepted. Anyone can click through and see this,
- *            so it must never be rendered as though it shipped.
+ * 'merged'   — landed in the upstream repo.
+ * 'open'     — proposed, still under review.
+ * 'closed'   — proposed and not accepted. The maintainers solved it another way.
+ * 'resolved' — a reported issue the maintainers closed as fixed.
+ *
+ * Anyone can click through to the upstream thread, so a contribution must never
+ * be rendered as though it shipped, and a closed one must never read as open.
  */
-export type ContributionStatus = 'merged' | 'open'
+export type ContributionStatus = 'merged' | 'open' | 'closed' | 'resolved'
 
 export type Contribution = {
   ref: string
@@ -34,6 +38,12 @@ export type OssOrg = {
   github: string
   taglineKey: string
   blurbKey: string
+  /**
+   * What I am to the org itself, not to any one repo. Founding and running the
+   * org — the name, the site, the release pipeline — is the work the per-repo
+   * 'author' role can't express.
+   */
+  roleKey: string
 }
 
 export type OssProject = {
@@ -45,6 +55,8 @@ export type OssProject = {
   language?: string
   npm?: string
   blurbKey: string
+  /** The project's page on the org docs site. Authored work only. */
+  docs?: string
   featured?: boolean
   /** Set on authored work; matches `OssOrg.id`. Absent on other people's repos. */
   org?: string

@@ -1,5 +1,5 @@
 import starCounts from '@/data/starCounts.json'
-import type { OssOrg, OssProject } from '@/types/openSource.types'
+import type { OssOrg, OssPackage, OssProject } from '@/types/openSource.types'
 
 /**
  * The open-source record. Data only — the functions that query it live in
@@ -13,6 +13,16 @@ import type { OssOrg, OssProject } from '@/types/openSource.types'
 const npmUrl = (name: string) => `https://www.npmjs.com/package/${name}`
 
 /**
+ * Docs live on the org site, one page per monorepo — keyed by project slug, not
+ * by package name (`/packages/journey-core/` is a 404; `/packages/journey/` is
+ * the page that documents all three of its packages).
+ */
+const docsUrl = (slug: string) => `https://rxova.org/packages/${slug}/`
+
+/** A published package, named once — the npm URL follows from the name. */
+const pkg = (name: string): OssPackage => ({ name, url: npmUrl(name) })
+
+/**
  * The org the authored work ships under. Naming it lets the page present one
  * org with a site, a GitHub home and a shared release pipeline, rather than a
  * list of repos that happen to share a prefix.
@@ -23,7 +33,8 @@ export const RXOVA_ORG: OssOrg = {
   url: 'https://rxova.org',
   github: 'https://github.com/rxova',
   taglineKey: 'oss.org.rxova.tagline',
-  blurbKey: 'oss.org.rxova.blurb'
+  blurbKey: 'oss.org.rxova.blurb',
+  roleKey: 'oss.org.rxova.role'
 }
 
 export const OSS_PROJECTS: OssProject[] = [
@@ -59,16 +70,14 @@ export const OSS_PROJECTS: OssProject[] = [
     language: 'TypeScript',
     npm: npmUrl('@rxova/journey-core'),
     blurbKey: 'oss.projects.journey.blurb',
+    docs: docsUrl('journey'),
     featured: true,
     org: RXOVA_ORG.id,
     packages: [
-      { name: '@rxova/journey-core', url: npmUrl('@rxova/journey-core') },
-      { name: '@rxova/journey-react', url: npmUrl('@rxova/journey-react') },
-      {
-        name: '@rxova/journey-devtools-bridge',
-        url: npmUrl('@rxova/journey-devtools-bridge')
-      }
-    ]
+      '@rxova/journey-core',
+      '@rxova/journey-react',
+      '@rxova/journey-devtools-bridge'
+    ].map(pkg)
   },
   {
     slug: 'react-inputs',
@@ -79,24 +88,24 @@ export const OSS_PROJECTS: OssProject[] = [
     language: 'TypeScript',
     npm: npmUrl('@rxova/react-inputs'),
     blurbKey: 'oss.projects.reactInputs.blurb',
+    docs: docsUrl('react-inputs'),
     featured: true,
     org: RXOVA_ORG.id,
+    // The suite first, then the nine inputs it bundles, then the codemod.
+    // @rxova/demo-kit and @rxova/utils are private workspace packages.
     packages: [
-      { name: '@rxova/react-inputs', url: npmUrl('@rxova/react-inputs') },
-      {
-        name: '@rxova/react-intl-currency-input',
-        url: npmUrl('@rxova/react-intl-currency-input')
-      },
-      {
-        name: '@rxova/react-otp-input',
-        url: npmUrl('@rxova/react-otp-input')
-      },
-      {
-        name: '@rxova/react-rating-input',
-        url: npmUrl('@rxova/react-rating-input')
-      },
-      { name: '@rxova/codemod', url: npmUrl('@rxova/codemod') }
-    ]
+      '@rxova/react-inputs',
+      '@rxova/react-date-input',
+      '@rxova/react-file-input',
+      '@rxova/react-intl-currency-input',
+      '@rxova/react-otp-input',
+      '@rxova/react-password-input',
+      '@rxova/react-phone-input',
+      '@rxova/react-rating-input',
+      '@rxova/react-tags-input',
+      '@rxova/react-time-input',
+      '@rxova/codemod'
+    ].map(pkg)
   },
   {
     slug: 'use-everywhere',
@@ -107,12 +116,16 @@ export const OSS_PROJECTS: OssProject[] = [
     language: 'TypeScript',
     npm: npmUrl('use-everywhere'),
     blurbKey: 'oss.projects.useEverywhere.blurb',
+    docs: docsUrl('use-everywhere'),
     featured: true,
     org: RXOVA_ORG.id,
+    // @use-everywhere/benchmarks and /tooling are private workspace packages.
     packages: [
-      { name: 'use-everywhere', url: npmUrl('use-everywhere') },
-      { name: '@use-everywhere/core', url: npmUrl('@use-everywhere/core') }
-    ]
+      'use-everywhere',
+      '@use-everywhere/core',
+      'eslint-plugin-use-everywhere',
+      '@use-everywhere/test-utils'
+    ].map(pkg)
   },
   {
     slug: 'typedash',
@@ -158,16 +171,22 @@ export const OSS_PROJECTS: OssProject[] = [
     blurbKey: 'oss.projects.immer.blurb',
     contributions: [
       {
-        ref: 'PR #1269',
-        url: 'https://github.com/immerjs/immer/pull/1269',
-        titleKey: 'oss.projects.immer.pr1269',
-        status: 'open'
+        ref: 'PR #1272',
+        url: 'https://github.com/immerjs/immer/pull/1272',
+        titleKey: 'oss.projects.immer.pr1272',
+        status: 'merged'
       },
       {
         ref: 'Issue #1268',
         url: 'https://github.com/immerjs/immer/issues/1268',
         titleKey: 'oss.projects.immer.issue1268',
-        status: 'open'
+        status: 'resolved'
+      },
+      {
+        ref: 'PR #1269',
+        url: 'https://github.com/immerjs/immer/pull/1269',
+        titleKey: 'oss.projects.immer.pr1269',
+        status: 'closed'
       }
     ]
   }
