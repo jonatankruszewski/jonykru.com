@@ -6,8 +6,8 @@ overrides:
   # next pins postcss 8.4.31 and sharp ^0.34.5, both of which carry advisories.
   # Our own devDependency ranges already sit on the patched lines; these force
   # next's nested copies onto them too.
-  postcss: ^8.5.23
-  sharp: ^0.35.3
+  postcss: ^8.5.28
+  sharp: ^0.35.4
   # Several eslint packages still ask for minimatch ^3, which pulls the
   # vulnerable brace-expansion 1.x. brace-expansion >=5 (the only patched line)
   # is not a drop-in for minimatch 3, so bump minimatch instead -- but only for

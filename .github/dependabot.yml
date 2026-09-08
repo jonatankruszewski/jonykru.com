@@ -5,14 +5,36 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    open-pull-requests-limit: 5
+    # One consolidated PR per week instead of a stream of single-dependency ones.
+    open-pull-requests-limit: 1
     groups:
-      # One PR for the routine dev-tooling churn instead of a dozen.
-      dev-dependencies:
-        dependency-type: "development"
+      # Everything — prod and dev — lands in a single PR.
+      all-dependencies:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      # Security fixes are grouped too, so an advisory batch is also one PR.
+      all-dependencies-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+    ignore:
+      # Stay on TypeScript 6: the 7.x rewrite is a breaking change we are not
+      # taking yet. Patch/minor 6.x bumps still come through.
+      - dependency-name: "typescript"
+        versions: [">=7"]
   # The Actions pinned in .github/workflows and .github/actions.
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 1
+    groups:
+      all-actions:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      all-actions-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
