@@ -7,6 +7,20 @@ if [ "$SKIP_CHECKS" = "true" ]; then
   exit 0
 fi
 
+# A push that only deletes remote branches or tags ships no code, so there is
+# nothing to verify — and GUI clients (Fork, Tower, …) run this hook on every
+# delete. Git feeds one "<local ref> <local sha> <remote ref> <remote sha>" line
+# per ref on stdin; a deletion is the one whose local sha is all zeros.
+only_deletes=true
+while read -r _local_ref local_sha _remote_ref _remote_sha; do
+  case "$local_sha" in
+    *[!0]*) only_deletes=false ;;
+  esac
+done
+if [ "$only_deletes" = true ]; then
+  exit 0
+fi
+
 echo "🧪 Running tests with coverage (pnpm test:coverage)..."
 if ! pnpm test:coverage; then
   echo "❌ Tests failed — push aborted. Use SKIP_CHECKS=true git push to bypass."
