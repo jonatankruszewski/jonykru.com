@@ -112,12 +112,28 @@ jobs:
           echo "New version: $NEW_VERSION"
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
-      - name: Commit version bump
+      # main only takes changes through a pull request (the "main" repository
+      # ruleset), so the bump goes out as a PR this job merges itself. That needs
+      # "Allow GitHub Actions to create and approve pull requests" on in the
+      # repository's Actions settings; without it `gh pr create` is refused.
+      - name: Merge version bump through a pull request
         if: steps.skip.outputs.skip != 'true'
+        id: merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.bump.outputs.version }}
         run: |
+          BRANCH="infra/bump-v${VERSION}"
+          TITLE="[INFRA] bump version to ${VERSION} [skip bump]"
+          git switch -c "$BRANCH"
           git add package.json
-          git commit -m "[INFRA] bump version to ${{ steps.bump.outputs.version }} [skip bump]"
-          git push
+          git commit -m "$TITLE"
+          git push origin "$BRANCH"
+          PR_URL=$(gh pr create --base main --head "$BRANCH" --title "$TITLE" --body "Automated version bump to v${VERSION}.")
+          gh pr merge "$PR_URL" --rebase --delete-branch
+          # A rebase merge lands a new commit on main; the tag belongs on that
+          # one, not on the branch commit this job made.
+          echo "sha=$(gh pr view "$PR_URL" --json mergeCommit -q .mergeCommit.oid)" >> $GITHUB_OUTPUT
 
       - name: Create Git Tag and Release
         if: steps.skip.outputs.skip != 'true'
@@ -125,7 +141,8 @@ jobs:
         run: |
           VERSION="${{ steps.bump.outputs.version }}"
           TAG_NAME="v${VERSION}"
-          git tag -a "${TAG_NAME}" -m "Release ${TAG_NAME}"
+          git fetch origin main
+          git tag -a "${TAG_NAME}" -m "Release ${TAG_NAME}" "${{ steps.merge.outputs.sha }}"
           git push origin "${TAG_NAME}"
           echo "tag=${TAG_NAME}" >> $GITHUB_OUTPUT
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
