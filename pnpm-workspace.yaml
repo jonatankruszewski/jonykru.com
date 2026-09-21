@@ -33,7 +33,11 @@ peerDependencyRules:
     eslint-plugin-jsx-a11y>eslint: '10'
     eslint-plugin-react>eslint: '10'
 
-onlyBuiltDependencies:
-  - esbuild
-  - sharp
-  - unrs-resolver
+# The three packages whose install scripts are allowed to run. pnpm 12 replaces
+# the older `onlyBuiltDependencies` list with this map, and errors rather than
+# warns when a package wants to build and has no entry here — which is what the
+# placeholder values pnpm's own migration left behind were doing.
+allowBuilds:
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
